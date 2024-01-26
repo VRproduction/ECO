@@ -1,0 +1,49 @@
+<section class="section-padding pb-5">
+    <div class="container">
+        <div class="section-title wow animate__animated animate__fadeIn" data-wow-delay="0">
+            <h3 class="">Kompaniyalar</h3>
+            <a class='show-all' href='shop-grid-right.html'>
+                All Deals
+                <i class="fi-rs-angle-right"></i>
+            </a>
+        </div>
+        <div class="row">
+            {% for company in companies %}
+            <div class="col-xl-3 col-lg-4 col-md-6 {% if forloop.counter == 3 %}d-none d-lg-block{% elif forloop.counter == 4 %}d-none d-xl-block{% endif %}">
+                <div class="product-cart-wrap style-2 wow animate__animated animate__fadeInUp" data-wow-delay="0">
+                    <div class="product-img-action-wrap">
+                        <div class="product-img">
+                            <a href='shop-product-right.html'>
+                                <img src="{{company.image.url}}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="product-content-wrap">
+                        <div class="deals-countdown-wrap">
+                            <div class="deals-countdown" data-countdown="{{company.finish_time|date:"Y/m/d"}} {{company.finish_time|date:"H:i:s"}}"></div>
+                        </div>
+                        <div class="deals-content">
+                            <h2><a href='shop-product-right.html'>{{company.product.title}}</a></h2>
+                            <div>
+                                <span class="font-small text-muted">By <a href='vendor-details-1.html'>NestFood</a></span>
+                            </div>
+                            <div class="product-card-bottom">
+                                <div class="product-price">
+                                    <span>{% if company.product.discount %}{{company.product.discount_price}}{% else %}${{company.product.price}}{% endif %}</span>
+                                    {% if company.product.discount %}
+                                    <span class="old-price">${{company.product.price}}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="add-cart">
+                                    <a class='add' href='shop-cart.html'><i class="fi-rs-shopping-cart mr-5"></i>Əlavə et</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!--End Deals-->

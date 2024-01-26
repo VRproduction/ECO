@@ -1,0 +1,21 @@
+<section class="home-slider position-relative mb-30">
+    <div class="container">
+        <div class="home-slide-cover mt-30">
+            <div class="hero-slider-1 style-4 dot-style-1 dot-style-1-position-1">
+                {% for slider in sliders %}
+                <div class="single-hero-slider single-animation-wrap" style="background-image: url({{slider.image.url}})">
+                    <div class="slider-content">
+                        <h1 class="display-2 mb-40">
+                            {{slider.title|safe}}
+                        </h1>
+                        <p class="mb-65">{{slider.description|safe}}</p>
+                        <form class="d-inline">
+                            <button class="btn" type="submit">Alış-verişə başla</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

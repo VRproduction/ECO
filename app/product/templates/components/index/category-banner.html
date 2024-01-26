@@ -1,0 +1,19 @@
+<section class="banners mb-25">
+    <div class="container">
+        <div class="row">
+            {% for banner in category_banners %}
+            <div class="col-lg-4 col-md-6">
+                <div class="banner-img wow animate__animated animate__fadeInUp" data-wow-delay="0">
+                    <img src="{{banner.image.url}}" alt="">
+                    <div class="banner-text">
+                        <h4>
+                            {{banner.title|safe}}
+                        </h4>
+                        <a class='btn btn-xs' href='shop-grid-right.html'>Alış-verişə başla <i class="fi-rs-arrow-small-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,13 @@
+<section class="container position-relative">
+    <div class="row align-items-center mb-50">
+        <div class="col-lg-6">
+            <img src="{{about.image.url}}" alt="" class="border-radius-15 mb-md-3 mb-lg-0 mb-sm-4">
+        </div>
+        <div class="col-lg-6">
+            <div class="pl-25">
+                <h2 class="mb-30">{{about.title}}</h2>
+                <p>{{about.description|striptags|safe|truncatechars:"500"}} {% if description|length <= 500 %}<a href="#">daha çox</a>{% endif %}</p>
+            </div>
+        </div>
+    </div>
+</section>

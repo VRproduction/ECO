@@ -1,0 +1,24 @@
+<div class="container pt-30 pb-30">
+    <div id="Faq" style="text-align: center;">
+        <h3 class="mb-4">Tez-Tez Verilən <span style="color: #29A56C;">Suallar</span></h3>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        {% for faq_item in faqs %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ faq_item.id }}">
+                <button class="accordion-button{% if forloop.first %} show{% endif %}" data-bs-toggle="collapse" data-bs-target="#collapse{{ faq_item.id }}"
+                    aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ faq_item.id }}">
+                    {{ faq_item.title }}
+                </button>
+            </h2>
+            <div id="collapse{{ faq_item.id }}" class="accordion-collapse collapse{% if forloop.first %} show{% endif %}" aria-labelledby="heading{{ faq_item.id }}"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>{{ faq_item.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<section class="product-tabs section-padding position-relative">
+    <div class="container">
+        <div class="section-title style-2 wow animate__animated animate__fadeIn">
+            <h3>Məhsullar</h3>
+            <ul class="nav nav-tabs links" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#tab-0" type="button" role="tab" aria-controls="tab-0" aria-selected="true">Hamısı</button>
+                </li>
+                {% for category in categories %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="nav-tab-{{forloop.counter}}" data-bs-toggle="tab" data-bs-target="#tab-{{forloop.counter}}" type="button" role="tab" aria-controls="tab-{{forloop.counter}}" aria-selected="false">{{category.title}}</button>
+                </li>
+                {% endfor %}
+                
+            </ul>
+        </div>
+        <!--End nav-tabs-->
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="tab-0" role="tabpanel" aria-labelledby="tab-0">
+                <div class="row product-grid-4">
+                    {% for product in products %}
+                    <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+                    {% include "components/product/product-item.html" with product=product%}
+                    </div>
+                    {% endfor %}
+                </div>
+                <!--End product-grid-4-->
+            </div>
+            <!--En tab one-->
+            {% for category in categories %}
+            <div class="tab-pane fade" id="tab-{{forloop.counter}}" role="tabpanel" aria-labelledby="tab-{{forloop.counter}}">
+                <div class="row product-grid-4">
+                    {% for category_product in category.products.all %}
+                    <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+                        {% include "components/product/product-item.html" with product=category_product%}
+                    </div>
+                    {% endfor %}
+                </div>
+                <!--End product-grid-4-->
+            </div>
+            {% endfor %}
+          
+        </div>
+        <!--End tab-content-->
+    </div>
+</section>

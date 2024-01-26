@@ -1,0 +1,19 @@
+<section class="featured section-padding">
+    <div class="container">
+        <div class="row">
+            {% for feature in features %}
+            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6 mb-md-4 mb-xl-0">
+                <div class="banner-left-icon d-flex align-items-center wow animate__animated animate__fadeInUp" data-wow-delay="0">
+                    <div class="banner-icon">
+                        <img src="{{feature.icon.url}}" alt="">
+                    </div>
+                    <div class="banner-text">
+                        <h3 class="icon-box-title">{{feature.title1}}</h3>
+                        <p>{{feature.title2}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,73 @@
+<section class="section-padding pb-30 ">
+    <div class="container">
+        <div class="section-title wow animate__animated animate__fadeIn">
+            <h3 class="deal-bottomm">Tərəfdaşlarımız</h3>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3 d-none d-lg-flex wow animate__animated animate__fadeIn">
+                <div class="banner-img style-2" style="height: 100% !important;">
+                    <div class="banner-text">
+                        <h2 id="changedh2"  class="mb-100"> Tərəfdaşlarımız
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-12 wow animate__animated animate__fadeIn " data-wow-delay=".4s">
+                <div class="tab-content" id="myTabContent-1">
+                    <div class="tab-pane fade show active" id="tab-one-1" role="tabpanel"
+                        aria-labelledby="tab-one-1">
+                        <div class="carausel-4-columns-cover arrow-center position-relative">
+                            <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow"
+                                id="carausel-4-columns-arrows">
+                            </div>
+                            <div class="carausel-3-columns carausel-arrow-center" id="carausel-4-columns">
+                           
+                                <!--End product Wrap-->
+                                {% for partner in partners %}
+                                <div class="team-card">
+                                    <img src="{{partner.image.url}}" alt="img">
+                                </div>
+                                {% endfor %}
+                                <!--End product Wrap-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--End tab-pane-->
+                 
+                </div>
+                <!--End tab-content-->
+            </div>
+            <!--End Col-lg-9-->
+        </div>
+
+
+        
+    </div>
+    <!-- artan reqemler -->
+      
+    <section class="container pt-30  d-none d-md-block">
+        <div class="row about-count" style="display: flex;justify-content: space-between;">
+            <div class="col-lg-1-5 col-md-6 text-center mb-lg-0 mb-md-5">
+                <h1 class="heading-1"><span class="count">{{statistic.year}}</span>+</h1>
+                <h4>İl xidmətinizdə</h4>
+            </div>
+            <div class="col-lg-1-5 col-md-6 text-center">
+                <h1 class="heading-1"><span class="count">{{statistic.product}}</span>+</h1>
+                <h4>Məhsul</h4>
+            </div>
+            <div class="col-lg-1-5 col-md-6 text-center">
+                <h1 class="heading-1"><span class="count">{{statistic.category}}</span>+</h1>
+                <h4>Çeşid</h4>
+            </div>
+            <div class="col-lg-1-5 col-md-6 text-center">
+                <h1 class="heading-1"><span class="count">{{statistic.brend}}</span>+</h1>
+                <h4>Brend</h4>
+            </div>
+            <div class="col-lg-1-5 col-md-6 text-center">
+                <h1 class="heading-1"><span class="count">{{statistic.new_taste}}</span>+</h1>
+                <h4>Yeni dad</h4>
+            </div>
+        </div>
+    </section>
+</section>

@@ -1,0 +1,46 @@
+<div class="product-cart-wrap mb-30">
+    <div class="product-img-action-wrap">
+        <div class="product-img product-img-zoom">
+            <a href='shop-product-right.html'>
+                <img class="default-img" src="{{product.image.url}}" alt="">
+            </a>
+        </div>
+        <div class="product-action-1">
+            <a aria-label='Add To Wishlist' class='action-btn' href='shop-wishlist.html'><i class="fi-rs-heart"></i></a>
+            <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
+        </div>
+        <div class="product-badges product-badges-position product-badges-mrg">
+            {% if product.badges == 1 %}
+            <span class="hot">Ən çox satılan</span>
+            {% elif product.badges == 2 %}
+            <span class="new">Yeni</span>
+            {% elif product.badges == 3 %}
+            <span class="best">Super endirim</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="product-content-wrap">
+        <div class="product-category">
+            <a href='shop-grid-right.html'>{{product.category}}</a>
+        </div>
+        <h2><a href='shop-product-right.html'>{{product.title}}</a></h2>
+        <div>
+        {% if product.vendor %}
+            <span class="font-small text-muted">By <a href='vendor-details-1.html'>{{product.vendor}}</a></span>
+        {% else %}
+        <br/>
+        {% endif %}
+        </div>
+        <div class="product-card-bottom">
+            <div class="product-price">
+                <span>{% if product.discount %}{{product.discount_price}}{% else %}${{product.price}}{% endif %}</span>
+                {% if product.discount %}
+                <span class="old-price">${{product.price}}</span>
+                {% endif %}
+            </div>
+            <div class="add-cart">
+                <a class='add' href='shop-cart.html'><i class="fi-rs-shopping-cart mr-5"></i>Əlavə et</a>
+            </div>
+        </div>
+    </div>
+</div>

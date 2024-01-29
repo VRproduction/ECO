@@ -12,15 +12,15 @@ services:
     env_file:
       - ./.env.dev
     depends_on:
-      - db
-  db:
+      - postgres
+  postgres:
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=ecoproduct
-      - POSTGRES_PASSWORD=ecoproduct
-      - POSTGRES_DB=ecoproduct_dev
+      - POSTGRES_USER=eco_product
+      - POSTGRES_PASSWORD=eco_product
+      - POSTGRES_DB=eco_product_dev
 
 volumes:
   postgres_data:

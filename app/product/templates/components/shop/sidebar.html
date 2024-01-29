@@ -1,0 +1,47 @@
+{% load static %}
+{% load urlhelper %}
+
+<div class="col-lg-1-5 primary-sidebar sticky-sidebar">
+    <div class="sidebar-widget widget-category-2 mb-30">
+        <h5 class="section-title style-1 mb-30">Kateqoriyalar</h5>
+        <ul>
+            {% for category in categories %}
+            <li>
+                <a href="{% edit_query request category=category.id %}"> <img src="{{category.image.url}}" alt="">{{category.title}}</a><span class="count">{{category.products.count}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <!-- Product sidebar Widget -->
+    <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
+        <h5 class="section-title style-1 mb-30">Yeni məhsullar</h5>
+        {% for product in new_products %}
+        <div class="single-post clearfix">
+            <div class="image">
+                <img src="{{product.image.url}}" alt="#">
+            </div>
+            <div class="content pt-10">
+                <h5><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}">{{product.title}}</a></h5>
+                <p class="price mb-0 mt-5">
+                    <span style="color:#3BB77E;">{% if product.discount %}{{product.discount_price}}{% else %}${{product.price}}{% endif %}</span>
+                    {% if product.discount %}
+                    <span style="font-size: 12px;" class="old-price"><del>${{product.price}}</del></span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+       {% endfor %}
+    </div>
+    <div class="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none">
+        <img src="{% static "assets/imgs/banner/banner-11.png" %}" alt="">
+        <div class="banner-text">
+            <span>Oganic</span>
+            <h4>
+                Save 17% <br>
+                on <span class="text-brand">Oganic</span><br>
+                Juice
+            </h4>
+        </div>
+    </div>
+</div>

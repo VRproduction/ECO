@@ -1,10 +1,10 @@
 <article class="row align-items-center hover-up">
     <figure class="col-md-4 mb-0">
-        <a href='shop-product-right.html'><img src="{{product.image.url}}" alt=""></a>
+        <a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}"><img src="{{product.image.url}}" alt=""></a>
     </figure>
     <div class="col-md-8 mb-0">
         <h6>
-            <a href='shop-product-right.html'>{{product.title}}</a>
+            <a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}">{{product.title}}</a>
         </h6>
         <div class="product-price">
             <span>{% if product.discount %}{{product.discount_price}}{% else %}${{product.price}}{% endif %}</span>
@@ -14,3 +14,4 @@
         </div>
     </div>
 </article>
+{% include "components/product/modal.html" %}

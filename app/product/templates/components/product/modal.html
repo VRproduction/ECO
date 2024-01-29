@@ -1,0 +1,78 @@
+{% load static %}
+<div class="modal fade custom-modal" id="quickViewModal{{product.id}}{% if category_product %}{{product.id}}{% endif %}" tabindex="-1" aria-labelledby="quickViewModalLabel{{product.id}}{% if category_product %}{{product.id}}{% endif %}"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
+                            <div class="detail-gallery">
+                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                <!-- MAIN SLIDES -->
+                                <div class="product-image-slider">
+                                    {% for image in product.images.all %}
+                                    <figure class="border-radius-10">
+                                        <img src="{{image.image.url}}" alt="product image">
+                                    </figure>
+                                    {% endfor %}
+                                </div>
+                                <!-- THUMBNAILS -->
+                                <div class="slider-nav-thumbnails">
+                                    {% for image in product.images.all %}
+                                    <div><img src="{{image.image.url}}" alt="product image"></div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- End Gallery -->
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="detail-info pr-30 pl-30">
+                                {% if product.discount %}<span class="stock-status out-stock">Endirim</span>{% endif %}
+                                <h3 class="title-detail"><a href="#" class="text-heading">{{product.title}}</a></h3>
+                              
+                                <div class="clearfix product-price-cover">
+                                    <div class="product-price primary-color float-left">
+                                        <span class="current-price text-brand">{% if product.discount %}{{product.discount_price}}{% else %}${{product.price}}{% endif %}</span>
+                                        {% if product.discount %}
+                                        <span>
+                                            <span class="save-price font-md color3 ml-15">{{product.discount}}%</span>
+                                            <span class="old-price font-md ml-15">{{product.price}} AZN</span>
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="detail-extralink mb-30">
+                                    {% comment %} <div class="detail-qty border radius">
+                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                        <span class="qty-val">1</span>
+                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                    </div> {% endcomment %}
+                                    <div class="product-extra-link2">
+                                        <button onclick="addToBasket({{ product.id }},1)" type="submit" class="button button-add-to-cart"><i
+                                                class="fi-rs-shopping-cart"></i>Karta əlavə et</button>
+                                    </div>
+                                </div>
+                                <div class="font-xs">
+                                    <ul>
+                                        <li class="mb-5">Brend: <span class="text-brand">{{product.vendor}}</span></li>
+                                        {% if product.using_time %}
+                                        <li class="mb-5">İstifadə müddəti:<span class="text-brand"> {{product.using_time}} ay</span></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                {% if product.description %}
+                                <div class="product-description mt-20">
+                                    <h4>Açıqlama:</h4>
+                                    <p>{{ product.description|safe }}</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- Detail Info -->
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

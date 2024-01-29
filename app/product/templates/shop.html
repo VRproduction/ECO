@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block main %}
+    {% include "components/page-header/page-header.html" with title="Məhsullar" %}
+    <div class="container mb-30">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-4-5">
+                {% include "components/shop/filter.html" %}
+                {% include "components/shop/product-list.html" %}
+                <!--product grid-->
+                {% include "components/shop/pagination.html" %}
+
+                {% include "components/index/companies.html" %}
+                <!--End Companies section-->
+            </div>
+            {% include "components/shop/sidebar.html" %}
+        </div>
+    </div>
+{% endblock main %}

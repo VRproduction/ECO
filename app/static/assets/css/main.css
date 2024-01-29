@@ -4265,6 +4265,8 @@ table .product-thumbnail img {
   background-color: #DEF9EC;
   font-size: 14px;
   font-weight: 700;
+  border: none;
+  color: #3BB77E;
 }
 
 .product-cart-wrap .product-card-bottom .add-cart .add:hover {

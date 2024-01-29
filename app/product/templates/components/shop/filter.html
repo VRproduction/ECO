@@ -1,0 +1,44 @@
+{% load urlhelper %}
+<div class="shop-product-fillter">
+    <div class="totall-product">
+        <p>Sizin üçün <strong class="text-brand">{{count}}</strong> məhsul tapdıq!</p>
+    </div>
+    <div class="sort-by-product-area">
+        <div class="sort-by-cover mr-10">
+            <div class="sort-by-product-wrap">
+                <div class="sort-by">
+                    <span><i class="fi-rs-apps"></i>Göstər:</span>
+                </div>
+                <div class="sort-by-dropdown-wrap">
+                    <span> {% if request.GET.show %}{{request.GET.show}}{% else %}{{ page_obj.paginator.per_page }}{% endif %} <i class="fi-rs-angle-small-down"></i></span>
+                </div>
+            </div>
+            <div class="sort-by-dropdown">
+                <ul>
+                    <li><a {% if request.GET.show == "10" or page_obj.paginator.per_page == 10 %}class="active"{% endif %} href="{% edit_query request show=10 %}">10</a></li>
+                    <li><a {% if request.GET.show == "20" or page_obj.paginator.per_page == 20 %}class="active"{% endif %} href="{% edit_query request show=20 %}">20</a></li>
+                    <li><a {% if request.GET.show == "30" or page_obj.paginator.per_page == 30 %}class="active"{% endif %} href="{% edit_query request show=30 %}">30</a></li>
+                    <li><a {% if request.GET.show == "40" or page_obj.paginator.per_page == 40 %}class="active"{% endif %} href="{% edit_query request show=40 %}">40</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sort-by-cover" {% if not request.GET.ordering == "-price" and not request.GET.ordering == "price" %}style="width:190px;"{% else %}{% endif %}>
+            <div class="sort-by-product-wrap">
+                <div class="sort-by">
+                    <span><i class="fi-rs-apps-sort"></i>Sırala:</span>
+                </div>
+                <div class="sort-by-dropdown-wrap">
+                    <span> {% if request.GET.ordering == "pk" %}Yeni{% elif request.GET.ordering == "price" %}Qiymət (azdan-çoxa){% elif request.GET.ordering == "-price" %}Qiymət (çoxdan-aza){% else %}Yeni{% endif %} <i class="fi-rs-angle-small-down"></i></span>
+                </div>
+            </div>
+            <div class="sort-by-dropdown">
+                <ul>
+                    <li><a {% if request.GET.ordering == "pk" or not request.GET.ordering %}class="active"{% endif %} href="{% edit_query request ordering="pk" %}">Yeni</a></li>
+                    <li><a href="#">Ən çox satılanlar</a></li>
+                    <li><a {% if request.GET.ordering == "price" %}class="active"{% endif %} href="{% edit_query request ordering="price" %}">Qiymət (azdan-çoxa)</a></li>
+                    <li><a {% if request.GET.ordering == "-price" %}class="active"{% endif %} href="{% edit_query request ordering="-price" %}">Qiymət (çoxdan-aza)</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

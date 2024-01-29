@@ -3,7 +3,7 @@
         <div class="section-title wow animate__animated animate__fadeIn" data-wow-delay="0">
             <h3 class="">Kompaniyalar</h3>
             <a class='show-all' href='shop-grid-right.html'>
-                All Deals
+                Hamısı
                 <i class="fi-rs-angle-right"></i>
             </a>
         </div>
@@ -13,7 +13,7 @@
                 <div class="product-cart-wrap style-2 wow animate__animated animate__fadeInUp" data-wow-delay="0">
                     <div class="product-img-action-wrap">
                         <div class="product-img">
-                            <a href='shop-product-right.html'>
+                            <a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{company.product.id}}">
                                 <img src="{{company.image.url}}" alt="">
                             </a>
                         </div>
@@ -23,9 +23,9 @@
                             <div class="deals-countdown" data-countdown="{{company.finish_time|date:"Y/m/d"}} {{company.finish_time|date:"H:i:s"}}"></div>
                         </div>
                         <div class="deals-content">
-                            <h2><a href='shop-product-right.html'>{{company.product.title}}</a></h2>
+                            <h2><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{company.product.id}}">{{company.product.title}}</a></h2>
                             <div>
-                                <span class="font-small text-muted">By <a href='vendor-details-1.html'>NestFood</a></span>
+                                <span class="font-small text-muted">By <a href='vendor-details-1.html'>{{company.product.vendor}}</a></span>
                             </div>
                             <div class="product-card-bottom">
                                 <div class="product-price">
@@ -35,13 +35,14 @@
                                     {% endif %}
                                 </div>
                                 <div class="add-cart">
-                                    <a class='add' href='shop-cart.html'><i class="fi-rs-shopping-cart mr-5"></i>Əlavə et</a>
+                                    <button class='add' {% if user.is_authenticated %}onclick="addToBasket({{ company.product.id }},1)"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Əlavə et</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% include "components/product/modal.html" with product=company.product %}
             {% endfor %}
         </div>
     </div>

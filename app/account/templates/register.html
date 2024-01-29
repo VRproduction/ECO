@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="page-content pt-50 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="login_wrap widget-taber-content background-white">
+                            <div class="padding_eight_all bg-white">
+                                <div class="heading_s1">
+                                    <h1 class="mb-5">Qeydiyyat</h1>
+                                    <p class="mb-30">Hesabın var? <a href='{% url "login" %}'>Daxil ol</a></p>
+                                </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-6 form-group">
+                                            {{ form.first_name }}
+                                            {% for error in form.first_name.errors %}
+                                                <p class="text-danger">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="col-6 form-group">
+                                            {{ form.last_name }}
+                                            {% for error in form.last_name.errors %}
+                                                <p class="text-danger">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.email }}
+                                        {% for error in form.email.errors %}
+                                            <p class="text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" placeholder="Password *" name="password1" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1">
+                                        {% for error in form.password1.errors %}
+                                            <p class="text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" placeholder="Password təkrar *" name="password2" autocomplete="new-password" required="" aria-describedby="id_password2_helptext" id="id_password2">
+                                        {% for error in form.password2.errors %}
+                                            <p class="text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-group mb-30">
+                                        <button type="submit" class="btn btn-fill-out btn-block hover-up font-weight-bold" name="register">Qeydiyyatdan keç</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 pr-30 d-none d-lg-block">
+                        <img class="border-radius-15" src="{{register_page.image.url}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

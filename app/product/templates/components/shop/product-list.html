@@ -1,0 +1,7 @@
+<div class="row product-grid">
+    {% for product in products %}
+    <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+        {% include "components/product/product-item.html" with product=product%}
+    </div>
+    {% endfor %}
+</div>

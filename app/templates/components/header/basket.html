@@ -1,0 +1,15 @@
+{% load static %}
+<div id="navbar-basket" class="cart-dropdown-wrap cart-dropdown-hm2 {% if not user.is_authenticated %}d-none{% endif %}">
+    <ul id="navbar-basket-items">
+      
+    </ul>
+    <div class="shopping-cart-footer">
+        <div class="shopping-cart-total">
+            <h4>Ümumi qiymət <span id="navbar-basket-total"></span></h4>
+        </div>
+        <div class="shopping-cart-button">
+            <a class='outline' href='{% url "basket" %}'>Səbətə bax</a>
+            <a href='shop-checkout.html'>Tamamla</a>
+        </div>
+    </div>
+</div>

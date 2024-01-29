@@ -1,21 +1,23 @@
-<div class="product-cart-wrap mb-30">
+{% load static %}
+{% load producthelper %}
+<div class="product-cart-wrap mb-30" data-product-id="{{ product.id }}">
     <div class="product-img-action-wrap">
         <div class="product-img product-img-zoom">
-            <a href='shop-product-right.html'>
+            <a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}{% if category_product %}{{product.id}}{% endif %}">
                 <img class="default-img" src="{{product.image.url}}" alt="">
             </a>
         </div>
         <div class="product-action-1">
-            <a aria-label='Add To Wishlist' class='action-btn' href='shop-wishlist.html'><i class="fi-rs-heart"></i></a>
-            <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
+            <a id="product_action_{{ product.id }}" aria-label='Sevimlilərə əlavə et' {% if user.is_authenticated %}onclick="toggleFavorite({{ product.id }})"{% else %}href="{% url "login" %}"{% endif %} class='action-btn'>{% if product|is_wished:request and user.is_authenticated %}<img style="width:15px;" src="{% static "assets/imgs/heart.png" %}" alt="">{% else %}<i class="fi-rs-heart"></i>{% endif %}</a>
+            <a aria-label="Sürətli bax" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}{% if category_product %}{{product.id}}{% endif %}"><i class="fi-rs-eye"></i></a>
         </div>
         <div class="product-badges product-badges-position product-badges-mrg">
             {% if product.badges == 1 %}
             <span class="hot">Ən çox satılan</span>
             {% elif product.badges == 2 %}
             <span class="new">Yeni</span>
-            {% elif product.badges == 3 %}
-            <span class="best">Super endirim</span>
+            {% elif product.badges == 3 and product.discount%}
+            <span class="best">{{product.discount}}%</span>
             {% endif %}
         </div>
     </div>
@@ -23,7 +25,7 @@
         <div class="product-category">
             <a href='shop-grid-right.html'>{{product.category}}</a>
         </div>
-        <h2><a href='shop-product-right.html'>{{product.title}}</a></h2>
+        <h2><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}">{{product.title}}</a></h2>
         <div>
         {% if product.vendor %}
             <span class="font-small text-muted">By <a href='vendor-details-1.html'>{{product.vendor}}</a></span>
@@ -39,8 +41,9 @@
                 {% endif %}
             </div>
             <div class="add-cart">
-                <a class='add' href='shop-cart.html'><i class="fi-rs-shopping-cart mr-5"></i>Əlavə et</a>
+                <button class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Əlavə et</button>
             </div>
         </div>
     </div>
 </div>
+{% include "components/product/modal.html" %}

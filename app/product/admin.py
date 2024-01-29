@@ -12,8 +12,15 @@ class HomePageSliderAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
     
 admin.site.register(ProductCategory)
-admin.site.register(Product)
 admin.site.register(Vendor)
+
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    inlines = [ProductImageInline, ]
+
 
 @admin.register(CategoryBanner)
 class CategoryBannerAdmin(admin.ModelAdmin):
@@ -53,3 +60,13 @@ class StatisticAdmin(admin.ModelAdmin):
 admin.site.register(FAQ)
 admin.site.register(Blog)
     
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+
+    inlines = [OrderItemInline, ]
+    
+admin.site.register(BasketItem)
+admin.site.register(Favorite)

@@ -46,7 +46,8 @@ class GeneralSettings(models.Model):
 
 class PhoneNumber(models.Model):
     number = models.CharField(max_length=200, blank=True, null = True)
-    setting = models.ForeignKey(GeneralSettings, on_delete = models.CASCADE, related_name = 'settings', null = True, blank = True)
+    setting = models.ForeignKey(GeneralSettings, on_delete = models.CASCADE, related_name = 'numbers', null = True, blank = True)
+    is_main = models.BooleanField(default = False)
 
     def __str__(self):
         return ('%s') % (self.number)

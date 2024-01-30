@@ -7,7 +7,7 @@
                 <img class="default-img" src="{{product.image.url}}" alt="">
             </a>
         </div>
-        <div class="product-action-1">
+        <div class="product-action-1 d-none d-sm-flex">
             <a id="product_action_{{ product.id }}" aria-label='Sevimlilərə əlavə et' {% if user.is_authenticated %}onclick="toggleFavorite({{ product.id }})"{% else %}href="{% url "login" %}"{% endif %} class='action-btn'>{% if product|is_wished:request and user.is_authenticated %}<img style="width:15px;" src="{% static "assets/imgs/heart.png" %}" alt="">{% else %}<i class="fi-rs-heart"></i>{% endif %}</a>
             <a aria-label="Sürətli bax" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}{% if category_product %}{{product.id}}{% endif %}"><i class="fi-rs-eye"></i></a>
         </div>
@@ -40,8 +40,11 @@
                 <span class="old-price">${{product.price}}</span>
                 {% endif %}
             </div>
+            <div style="margin-left: 80px;" class="add-cart d-md-none">
+                <a class='add' id="mobile_product_action_{{ product.id }}" aria-label='Sevimlilərə əlavə et' {% if user.is_authenticated %}onclick="toggleFavorite({{ product.id }})"{% else %}href="{% url "login" %}"{% endif %} class='action-btn'>{% if product|is_wished:request and user.is_authenticated %}<img style="width:14px !important;" src="{% static "assets/imgs/heart.png" %}" alt="">{% else %}<i class="fi-rs-heart"></i>{% endif %}</a>
+            </div>
             <div class="add-cart">
-                <button class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Əlavə et</button>
+                <button class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</button>
             </div>
         </div>
     </div>

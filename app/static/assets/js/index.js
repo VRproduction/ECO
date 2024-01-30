@@ -234,13 +234,17 @@ function toggleFavorite(productId) {
     .then(data => {
         // Favori durumuna göre UI güncelleme işlemleri
         const productCart = document.getElementById(`product_action_${productId}`)
+        const mobileproductCart = document.getElementById(`mobile_product_action_${productId}`)
         const favorite_count =  document.getElementById("favorite_count")
         if (data.action == 'added') {
-            productCart.innerHTML = `<img style="width:15px;" src="${window.location.origin}/static/assets/imgs/heart.png" alt="">
+            productCart.innerHTML = `<img style="width:14px;" src="${window.location.origin}/static/assets/imgs/heart.png" alt="">
+            `;
+            mobileproductCart.innerHTML = `<img style="width:14px;" src="${window.location.origin}/static/assets/imgs/heart.png" alt="">
             `;
             favorite_count.innerText = `${Number(favorite_count.innerText)+1}`
         } else {
             productCart.innerHTML = '<i class="fi-rs-heart"></i>';
+            mobileproductCart.innerHTML = '<i class="fi-rs-heart"></i>';
             favorite_count.innerText = `${Number(favorite_count.innerText)-1}`
         }
     })

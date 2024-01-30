@@ -4,13 +4,13 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="sec-title" style="padding:0;">
-                    <a href="#"><h2>Bloqlar</h2></a>
+                    <a href="{% url "blog" %}"><h2>Bloqlar</h2></a>
                 </div>
             </div>
         </div>
         <div class="row">
             {% for blog in blogs %}
-            <div class="col-xl-4 col-lg-4">
+            <div class="col-xl-3 col-lg-4">
                 <div class="single-blog-style1 wow fadeInLeft" data-wow-delay="100ms" data-wow-duration="1500ms">
                     <div class="img-holder">
                         <div class="inner">
@@ -21,16 +21,16 @@
                         </div>
                     </div> 
                     <div class="text-holder">
-                        <h3 class="blog-title"><a href="#">{{blog.title}}</a></h3>
+                        <h3 class="blog-title"><a href="{{blog.get_absolute_url}}">{{blog.title}}</a></h3>
                         <div class="text">
                             <p>{{blog.description|striptags|safe|truncatechars:"60"}}</p>    
                         </div>
                         <div class="bottom-box">
                             <div class="left">
-                                <a class="readmore" href="#">Daha çox</a>
+                                <a class="readmore" href="{{blog.get_absolute_url}}">Daha çox</a>
                             </div>
                             <div class="right">
-                                <a class="btn-style3" href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                <a class="btn-style3" href="{{blog.get_absolute_url}}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                         </div>
                     </div>

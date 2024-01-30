@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block main %}
+<!--Start Blog single Area-->
+<section class="blog-single-area ">
+    <div class="container">
+        <div class="row">
+            {% comment %} <div class="col-xl-8 col-lg-7"> {% endcomment %}
+                <div>
+                <div class="blog-post">
+                   
+                    <div class="single-blog-style1">
+                        <div class="img-holder">
+                            <img class="w-100" style="height:500px; object-fit:cover;" src="{{blog.image.url}}" alt="Awesome Image">
+                            <div class="date-box">
+                                <h5>{{blog.created|date:"d M Y"}}</h5>
+                            </div>
+                        </div> 
+                        <div class="text-holder">
+                            <h3 class="blog-title">{{blog.title}}</h3>
+                            <div class="text">
+                                <p>{{blog.description|safe}}</p>
+                            </div>
+                        </div>
+                    </div>       
+                </div>
+            </div>
+            
+            {% comment %} <!--Start sidebar Wrapper-->
+            <div class="col-xl-4 col-lg-5 col-md-9 col-sm-12">
+                <div class="sidebar-wrapper">
+                    <!--Start single sidebar-->
+                    <div class="single-sidebar latest-posts-box wow fadeInUp animated" data-wow-delay="0.5s" data-wow-duration="1200ms">
+                        <div class="title">
+                            <h3>Son bloqlar</h3>
+                        </div>
+                        <ul class="latest-posts">
+                            {% for last_blog in last_blogs %}
+                            <li>
+                                <div class="inner">   
+                                    <div class="img-box">
+                                        <img src="{{last_blog.image.url}}" alt="Awesome Image">
+                                        <div class="overlay-content">
+                                            <a href="{{last_blog.get_absolute_url}}"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                        </div>    
+                                    </div>
+                                    <div class="title-box">
+                                        <h4><a href="{{last_blog.get_absolute_url}}">{{last_blog.title}}</a></h4>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>     
+                    </div>
+                    <!--End single sidebar-->
+                </div>    
+            </div>
+            <!--End Sidebar Wrapper--> {% endcomment %}
+            
+        </div>
+    </div>    
+</section>
+<!--End Blog single Area-->
+{% endblock main %}

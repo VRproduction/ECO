@@ -3,25 +3,20 @@
     <div class="container">
         <div class="header-wrap">
             <div class="logo logo-width-1">
-                <a href='index.htm'><img src="{% static "assets/imgs/theme/logo.svg" %}" alt="logo"></a>
+                <a href='{% url "home" %}'><img src="{% if setting.logo %}{{setting.logo.url}}{% endif %}" alt="logo"></a>
             </div>
             <div class="header-right">
                 <div class="search-style-2">
-                    <form action="#">
-                        <select class="select-active">
-                            <option>All Categories</option>
-                            <option>Milks and Dairies</option>
-                            <option>Wines & Alcohol</option>
-                            <option>Clothing & Beauty</option>
-                            <option>Pet Foods & Toy</option>
-                            <option>Fast food</option>
-                            <option>Baking material</option>
-                            <option>Vegetables</option>
-                            <option>Fresh Seafood</option>
-                            <option>Noodles & Rice</option>
-                            <option>Ice cream</option>
+                    <form action="{% url "shop" %}" method="get">
+                        <select name="category" class="select-active">
+                            <option value="">Kateqoriyalar</option>
+                            {% for category in categories %}
+                            <option value="{{category.id}}">{{category.title}}</option>
+                            {% endfor %}
+                            
                         </select>
-                        <input type="text" placeholder="Search for items...">
+                        <input type="text" name="search" value="{{request.GET.search}}" placeholder="Axtar ...">
+                        <button type="submit" style="display:flex; align-items:center; padding: 0;"><img src="{% static "assets/imgs/theme/icons/search.png" %}" alt=""></button>
                     </form>
                 </div>
                 <div class="header-action-right">

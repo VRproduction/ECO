@@ -1,14 +1,16 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from django.http import JsonResponse
 from .models import FAQ, BasketItem, Blog, Favorite, IndexSlider, ProductCategory, Product, CategoryBanner, About, Feature, Company, Partner, Statistic
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from account.utils.login_helper import AuthView, IsNotAuthView
-
+from django.urls import reverse_lazy
+from .forms import ContactForm
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from django.views.generic.edit import FormView
 
 class HomePageView(TemplateView):
     template_name = 'index.html'
@@ -37,6 +39,7 @@ class AboutPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AboutPageView, self).get_context_data(**kwargs)
         context["about"] = About.objects.first()
+        context["partners"] = Partner.objects.all()
         return context
     
 
@@ -48,10 +51,20 @@ class ShopPageView(ListView):
 
     def get_queryset(self):
         category_id = self.request.GET.get('category')
-        queryset = Product.objects.filter(category__id=int(category_id)) if category_id and category_id.isdigit() else Product.objects.all()
         ordering = self.request.GET.get('ordering')
+        search_query = self.request.GET.get('search')
+
+        queryset = Product.objects.all()
+
+        if category_id and category_id.isdigit():
+            queryset = queryset.filter(category__id=int(category_id))
+
+        if search_query:
+            queryset = queryset.filter(title__icontains=search_query)
+
         if ordering:
             queryset = queryset.order_by(ordering)
+
         return queryset
     
     def get_paginate_by(self, queryset):
@@ -61,9 +74,21 @@ class ShopPageView(ListView):
         context = super().get_context_data(**kwargs)
         
         category_id = self.request.GET.get('category')
-        products = Product.objects.filter(category__id=int(category_id)) if category_id and category_id.isdigit() else Product.objects.all()
-        
-        context["count"] = products.count()
+        ordering = self.request.GET.get('ordering')
+        search_query = self.request.GET.get('search')
+
+        queryset = Product.objects.all()
+
+        if category_id and category_id.isdigit():
+            queryset = queryset.filter(category__id=int(category_id))
+
+        if search_query:
+            queryset = queryset.filter(title__icontains=search_query)
+
+        if ordering:
+            queryset = queryset.order_by(ordering)
+
+        context["count"] = queryset.count()
         context["categories"] = ProductCategory.objects.all()
         context["new_products"] = Product.objects.all().order_by("-id")[:3]
         context["companies"] = Company.objects.filter(is_active=True)[:4]
@@ -226,3 +251,40 @@ def toggle_favorite(request, product_id):
         # Eğer favoride değilse ekleyin
         Favorite.objects.create(product_id=product_id, user=user)
         return Response({'success': True, 'action': 'added'}, status=status.HTTP_200_OK)
+    
+class BlogPageView(TemplateView):
+    template_name = 'blogs.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["blogs"] = Blog.objects.all()
+        return context
+    
+class BlogDetailPageView(DetailView):
+    template_name = 'blog-detail.html'
+    model = Blog
+    context_object_name = "blog"
+    
+    def get_context_data(self, **kwargs):
+        context = super(BlogDetailPageView, self).get_context_data(**kwargs)
+        context["last_blogs"] = Blog.objects.exclude(pk = self.get_object().pk).order_by("-created")[:3]
+        return context
+    
+    
+class CompanyPageView(TemplateView):
+    template_name = 'companies.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies"] = Company.objects.all()
+        return context
+    
+class ContactPageView(FormView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('contact')
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Mesajınız göndərildi!')
+        return super().form_valid(form)

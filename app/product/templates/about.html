@@ -1,4 +1,30 @@
 {% extends "base.html" %}
 {% block main %}
-
+    <div class="page-content pt-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-10 col-lg-12 m-auto">
+                    <section class="row align-items-center mb-50">
+                        <div class="col-lg-6">
+                            <img src="{{about.image.url}}" alt="" class="border-radius-15 mb-md-3 mb-lg-0 mb-sm-4">
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="pl-25">
+                                <h2 class="mb-30">{{about.title}}</h2>
+                                <p class="mb-25">{{about.description|safe}}</p>
+                                <div class="carausel-3-columns-cover position-relative">
+                                    <div id="carausel-3-columns-arrows"></div>
+                                    <div class="carausel-3-columns" id="carausel-3-columns">
+                                        {% for partner in partners %}
+                                        <img src="{{partner.image.url}}" alt="">
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock main %}

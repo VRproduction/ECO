@@ -3,6 +3,18 @@ from .models import *
 
 MAX_OBJECTS = 1
 
+class PhoneNumberInline(admin.TabularInline):
+    model = PhoneNumber
+
+@admin.register(GeneralSettings)
+class SettingAdmin(admin.ModelAdmin):
+    inlines = [PhoneNumberInline, ]
+    
+    def has_add_permission(self, request):
+        if self.model.objects.count() >= MAX_OBJECTS:
+            return False
+        return super().has_add_permission(request)
+    
 @admin.register(IndexSlider)
 class HomePageSliderAdmin(admin.ModelAdmin):
 
@@ -70,3 +82,4 @@ class OrderAdmin(admin.ModelAdmin):
     
 admin.site.register(BasketItem)
 admin.site.register(Favorite)
+admin.site.register(Contact)

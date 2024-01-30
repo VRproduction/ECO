@@ -3,7 +3,7 @@
     <div class="container">
         <div class="header-wrap header-space-between position-relative">
             <div class="logo logo-width-1 d-block d-lg-none">
-                <a href='index.htm'><img src="{% static "assets/imgs/theme/logo.svg" %}" alt="logo"></a>
+                <a href='{% url "home" %}'><img src="{% if setting.logo %}{{setting.logo.url}}{% endif %}" alt="logo"></a>
             </div>
             <div class="header-nav d-none d-lg-flex">
                 <div class="main-categori-wrap d-none d-lg-block">
@@ -14,62 +14,52 @@
                     <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
                         <div class="d-flex categori-dropdown-inner">
                             <ul>
+                                {% for category in categories %}
+                                {% if forloop.counter < 6 %}
                                 <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-1.svg" %}" alt="">Milks and Dairies</a>
+                                    <a href='{% url "shop" %}?category={{category.id}} '> <img src="{{category.image.url}}" alt="">{{category.title}}</a>
                                 </li>
-                                <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-2.svg" %}" alt="">Clothing & beauty</a>
-                                </li>
-                                <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-3.svg" %}" alt="">Pet Foods & Toy</a>
-                                </li>
-                                <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-4.svg" %}" alt="">Baking material</a>
-                                </li>
-                                <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-5.svg" %}" alt="">Fresh Fruit</a>
-                                </li>
+                                {% endif %}
+                                {% endfor %}
                             </ul>
                             <ul class="end">
+                                {% for category in categories %}
+                                {% if forloop.counter < 11 and forloop.counter > 5 %}
                                 <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-6.svg" %}" alt="">Wines & Drinks</a>
+                                    <a href='{% url "shop" %}?category={{category.id}} '> <img src="{{category.image.url}}" alt="">{{category.title}}</a>
                                 </li>
-                                <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-7.svg" %}" alt="">Fresh Seafood</a>
-                                </li>
-                                <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-8.svg" %}" alt="">Fast food</a>
-                                </li>
-                                <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-9.svg" %}" alt="">Vegetables</a>
-                                </li>
-                                <li>
-                                    <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/category-10.svg" %}" alt="">Bread and Juice</a>
-                                </li>
+                                {% endif %}
+                                {% endfor %}
+                                
                             </ul>
                         </div>
+                        {% if categories.count > 10  %}
                         <div class="more_slide_open" style="display: none">
                             <div class="d-flex categori-dropdown-inner">
                                 <ul>
+                                    {% for category in categories %}
+                                    {% if forloop.counter > 10 and forloop.counter < 16 %}
                                     <li>
-                                        <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/icon-1.svg" %}" alt="">Milks and Dairies</a>
+                                        <a href='{% url "shop" %}?category={{category.id}} '> <img src="{{category.image.url}}" alt="">{{category.title}}</a>
                                     </li>
-                                    <li>
-                                        <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/icon-2.svg" %}" alt="">Clothing & beauty</a>
-                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
                                 </ul>
                                 <ul class="end">
+                                    {% for category in categories %}
+                                    {% if forloop.counter > 14 and forloop.counter < 21 %}
                                     <li>
-                                        <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/icon-3.svg" %}" alt="">Wines & Drinks</a>
+                                        <a href='{% url "shop" %}?category={{category.id}} '> <img src="{{category.image.url}}" alt="">{{category.title}}</a>
                                     </li>
-                                    <li>
-                                        <a href='shop-grid-right.html'> <img src="{% static "assets/imgs/theme/icons/icon-4.svg" %}" alt="">Fresh Seafood</a>
-                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
+                       
                         <div class="more_categories"><span class="icon"></span> <span class="heading-sm-1">Show more...</span></div>
-                    </div>
+                         {% endif %}
+                     </div>
                 </div>
                 <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                     <nav>
@@ -81,13 +71,16 @@
                                 <a href='{% url "about" %}'>Haqqımızda</a>
                             </li>
                             <li>
-                                <a href='{% url "shop" %}'>Məsullar</a>
+                                <a href='{% url "shop" %}'>Məhsullar</a>
                             </li>
                             <li>
-                                <a href='page-about.html'>Bloq</a>
+                                <a href='{% url "blog" %}'>Bloq</a>
                             </li>
                             <li>
-                                <a href='page-about.html'>Kampaniyalar</a>
+                                <a href='{% url "companies" %}'>Kompaniyalar</a>
+                            </li>
+                            <li>
+                                <a href='{% url "contact" %}'>Əlaqə</a>
                             </li>
                         </ul>
                     </nav>

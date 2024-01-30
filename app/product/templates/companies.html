@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container mb-80 mt-50">
+    <div class="row">
+        {% for company in companies %}
+        <div class="col-xl-3 col-lg-4 col-md-6 {% if forloop.counter == 3 %}d-none d-lg-block{% elif forloop.counter == 4 %}d-none d-xl-block{% endif %}">
+            <div class="product-cart-wrap style-2 wow animate__animated animate__fadeInUp" data-wow-delay="0">
+                <div class="product-img-action-wrap">
+                    <div class="product-img">
+                        <a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{company.product.id}}">
+                            <img src="{{company.image.url}}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="product-content-wrap">
+                    <div class="deals-countdown-wrap">
+                        <div class="deals-countdown" data-countdown="{{company.finish_time|date:"Y/m/d"}} {{company.finish_time|date:"H:i:s"}}"></div>
+                    </div>
+                    <div class="deals-content">
+                        <h2><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{company.product.id}}">{{company.product.title}}</a></h2>
+                        <div>
+                            <span class="font-small text-muted">By <a href='vendor-details-1.html'>{{company.product.vendor}}</a></span>
+                        </div>
+                        <div class="product-card-bottom">
+                            <div class="product-price">
+                                <span>{% if company.product.discount %}{{company.product.discount_price}}{% else %}${{company.product.price}}{% endif %}</span>
+                                {% if company.product.discount %}
+                                <span class="old-price">${{company.product.price}}</span>
+                                {% endif %}
+                            </div>
+                            <div class="add-cart">
+                                <button class='add' {% if user.is_authenticated %}onclick="addToBasket({{ company.product.id }},1)"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Əlavə et</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include "components/product/modal.html" with product=company.product %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock main %}

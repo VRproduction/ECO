@@ -5,6 +5,11 @@ urlpatterns = [
     path('', views.HomePageView.as_view(), name = 'home'),
     path('about/', views.AboutPageView.as_view(), name = 'about'),
     path('shop/', views.ShopPageView.as_view(), name = 'shop'),
+    path('blogs/', views.BlogPageView.as_view(), name = 'blog'),
+    path('contact/', views.ContactPageView.as_view(), name = 'contact'),
+    path('blogs/<int:pk>/', views.BlogDetailPageView.as_view(), name='blog-detail'),
+
+    path('companies/', views.CompanyPageView.as_view(), name = 'companies'),
    
     path('basket/', views.BasketPageView.as_view(), name = 'basket'),
     path('add-to-basket/<int:product_id>/', views.add_to_basket, name='add_to_basket'),

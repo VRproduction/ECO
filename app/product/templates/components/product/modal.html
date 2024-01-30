@@ -4,7 +4,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-body">
+                <div class="modal-body custom-modal-body">
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
                             <div class="detail-gallery">
@@ -18,18 +18,20 @@
                                     {% endfor %}
                                 </div>
                                 <!-- THUMBNAILS -->
+                                {% if product.images.count > 1 %}
                                 <div class="slider-nav-thumbnails">
                                     {% for image in product.images.all %}
                                     <div><img src="{{image.image.url}}" alt="product image"></div>
                                     {% endfor %}
                                 </div>
+                                {% endif %}
                             </div>
                             <!-- End Gallery -->
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="detail-info pr-30 pl-30">
                                 {% if product.discount %}<span class="stock-status out-stock">Endirim</span>{% endif %}
-                                <h3 class="title-detail"><a href="#" class="text-heading">{{product.title}}</a></h3>
+                                <h3 class="title-detail"><a class="text-heading">{{product.title}}</a></h3>
                               
                                 <div class="clearfix product-price-cover">
                                     <div class="product-price primary-color float-left">

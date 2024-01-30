@@ -55,10 +55,10 @@
             </div>
             <div class="mobile-social-icon mb-50">
                 <h6 class="mb-15">Bizi izləyin</h6>
-                <a href="#"><img src="{% static "assets/imgs/theme/icons/icon-facebook-white.svg" %}" alt=""></a>
-                <a href="#"><img src="{% static "assets/imgs/theme/icons/icon-instagram-white.svg" %}" alt=""></a>
-                <a href="#"><img src="{% static "assets/imgs/theme/icons/icon-youtube-white.svg" %}" alt=""></a>
-                <a href="#"><img src="{% static "assets/imgs/theme/icons/icons8-tiktok.svg" %}" alt=""></a>
+                <a href="{% if setting.facebook %}{{setting.facebook}}{% else %}#{% endif %}"><img src="{% static "assets/imgs/theme/icons/icon-facebook-white.svg" %}" alt=""></a>
+                <a href="{% if setting.instagram %}{{setting.instagram}}{% else %}#{% endif %}"><img src="{% static "assets/imgs/theme/icons/icon-instagram-white.svg" %}" alt=""></a>
+                <a href="{% if setting.youtube %}{{setting.youtube}}{% else %}#{% endif %}"><img src="{% static "assets/imgs/theme/icons/icon-youtube-white.svg" %}" alt=""></a>
+                <a href="{% if setting.tiktok %}{{setting.tiktok}}{% else %}#{% endif %}"><img src="{% static "assets/imgs/theme/icons/icons8-tiktok.svg" %}" alt=""></a>
             </div>
             <div class="site-copyright">Copyright {{current_year}} © <a href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}">{{setting.copyright_title}}</a></div>
         </div>

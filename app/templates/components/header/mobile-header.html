@@ -14,18 +14,15 @@
         </div>
         <div class="mobile-header-content-area">
             <div class="mobile-search search-style-3 mobile-header-border">
-                <form action="#">
-                    <input type="text" placeholder="Axtar …">
-                    <button type="submit"><i class="fi-rs-search"></i></button>
+                <form action="{% url "shop" %}" method="get">
+                    <input name="search" value="{{request.GET.search}}" type="text" placeholder="Axtar …">
+                    <button  type="submit"><i class="fi-rs-search"></i></button>
                 </form>
             </div>
             <div class="mobile-menu-wrap mobile-header-border">
                 <!-- mobile menu start -->
                 <nav>
                     <ul class="mobile-menu font-heading">
-                        <li class="menu-item-has-children">
-                            <a href='{% url "shop" %}'>Məhsullar</a>
-                        </li>
                         <li class="menu-item-has-children">
                             <a href='{% url "blog" %}'>Bloq</a>
                         </li>
@@ -57,12 +54,11 @@
                 </div>
             </div>
             <div class="mobile-social-icon mb-50">
-                <h6 class="mb-15">Follow Us</h6>
+                <h6 class="mb-15">Bizi izləyin</h6>
                 <a href="#"><img src="{% static "assets/imgs/theme/icons/icon-facebook-white.svg" %}" alt=""></a>
-                <a href="#"><img src="{% static "assets/imgs/theme/icons/icon-twitter-white.svg" %}" alt=""></a>
                 <a href="#"><img src="{% static "assets/imgs/theme/icons/icon-instagram-white.svg" %}" alt=""></a>
-                <a href="#"><img src="{% static "assets/imgs/theme/icons/icon-pinterest-white.svg" %}" alt=""></a>
                 <a href="#"><img src="{% static "assets/imgs/theme/icons/icon-youtube-white.svg" %}" alt=""></a>
+                <a href="#"><img src="{% static "assets/imgs/theme/icons/icons8-tiktok.svg" %}" alt=""></a>
             </div>
             <div class="site-copyright">Copyright {{current_year}} © <a href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}">{{setting.copyright_title}}</a></div>
         </div>

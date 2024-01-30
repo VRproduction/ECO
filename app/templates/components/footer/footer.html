@@ -54,9 +54,10 @@
                     <div class="mycenterclass">
                         <h4 class="widget-title">BİZİMLƏ ƏLAQƏ</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="#">nomre:</a></li>
-                            <li><a href="#">nomre:</a></li>
-                            <li><a href="#">email:</a></li>
+                            {% for number in setting.numbers.all %}
+                            <li><a href="tel:{{number.number}}"><i class="fi-rs-headphones"></i> {{number.number}} </a></li>
+                            {% endfor %}
+                            <li class="d-flex">Email: <a href="mailto:{{setting.email}}"> {{setting.email}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -69,7 +70,7 @@
             <div class="col-12 mb-30">
                 <div class="footer-bottom"></div>
             </div>
-            <div><a href="https://vrproduction.az/">© VR Production 2023 Bütün hüquqlar qorunur!</a></div>
+            <div>©<a href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}"> {{setting.copyright_title}} </a>{{current_year}} Bütün hüquqlar qorunur!</div>
         </div>
     </div>
 </footer>

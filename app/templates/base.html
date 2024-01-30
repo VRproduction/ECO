@@ -20,6 +20,8 @@
     {% block css %}
     <link rel="stylesheet" href="{% static "assets/css/blog.css" %}"> 
     {% endblock css %}
+    <link rel="stylesheet" href="{% static "assets/css/fixed-header.css" %}"> 
+
 </head>
 
 <body>
@@ -79,6 +81,8 @@
     
     {% include "components/header/header.html" %}
     {% include "components/header/mobile-header.html" %}
+    {% include "components/header/fixed-mobile-header.html" %}
+
     <!--End header-->
     <main class="main">
     {% block main %}{% endblock main %}

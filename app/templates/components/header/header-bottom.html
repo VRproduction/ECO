@@ -77,7 +77,7 @@
                                 <a href='{% url "blog" %}'>Bloq</a>
                             </li>
                             <li>
-                                <a href='{% url "companies" %}'>Kompaniyalar</a>
+                                <a href='{% url "companies" %}'>Kampaniyalar</a>
                             </li>
                             <li>
                                 <a href='{% url "contact" %}'>Əlaqə</a>
@@ -88,7 +88,11 @@
             </div>
             <div class="hotline d-none d-lg-flex">
                 <img src="{% static "assets/imgs/theme/icons/icon-headphone.svg" %}" alt="hotline">
-                <p>1900 - 888<span>24/7 Support Center</span></p>
+                <p>{% for number in setting.numbers.all %}
+                    {% if number.is_main and forloop.counter < 2 %}
+                    <a style="font-size:15px;" href="tel:{{number.number}}">{{number.number}} </a>
+                    {% endif %}
+                    {% endfor %}<span>24/7 Dəstək</span></p>
             </div>
             <div class="header-action-icon-2 d-block d-lg-none">
                 <div class="burger-icon burger-icon-white">

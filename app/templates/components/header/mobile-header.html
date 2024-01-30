@@ -43,9 +43,11 @@
                 <div class="single-mobile-header-info">
                     <a href="{{setting.g_adress}}"><i class="fi-rs-marker"></i> {{setting.adress}} </a>
                 </div>
+                {% if not user.is_authenticated %}
                 <div class="single-mobile-header-info">
                     <a href="{% url "login" %}"><i class="fi-rs-user"></i>Daxil ol / Qeydiyyat keç </a>
                 </div>
+                {% endif %}
                 <div class="single-mobile-header-info">
                     {% for number in setting.numbers.all %}
                     {% if number.is_main and forloop.counter < 2 %}

@@ -41,11 +41,12 @@
                     <div class="mycenterclass">
                         <h4 class="widget-title">LİNKLƏR</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="#">Ana Səhifə</a></li>
-                            <li><a href="#">Haqqında</a></li>
-                            <li><a href="#">Məhsullar</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Əlaqə</a></li>
+                            <li><a href="{% url "home" %}">Ana Səhifə</a></li>
+                            <li><a href="{% url "about" %}">Haqqında</a></li>
+                            <li><a href="{% url "shop" %}">Məhsullar</a></li>
+                            <li><a href="{% url "blog" %}">Bloq</a></li>
+                            <li><a href="{% url "companies" %}">Kampaniyalar</a></li>
+                            <li><a href="{% url "contact" %}">Əlaqə</a></li>
                         </ul>
                     </div>
                 </div>

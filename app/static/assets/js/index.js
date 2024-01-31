@@ -113,8 +113,8 @@ function updateNavbarBasket(data){
                         <a href='shop-product-right.html'><img alt="Nest" src="${item.product.image_url}"></a>
                     </div>
                     <div class="shopping-cart-title">
-                        <h4><a href='shop-product-right.html'>${item.product.title}</a></h4>
-                        <h4><span>${item.quantity} × </span>${item.product.price} AZN</h4>
+                        <h4><a data-bs-toggle="modal" data-bs-target="#quickViewModal${item.product.id}">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>
+                        <h4><span>${item.quantity} × </span>₼ ${item.product.price}</h4>
                     </div>
                     <div class="shopping-cart-delete">
                         <a onclick="removeFromBasket(${item.id})"><i class="fi-rs-cross-small"></i></a>
@@ -140,7 +140,7 @@ function updateBasketTable(data) {
             <h6 class="text-muted">Ümumi qiymət</h6>
         </td>
         <td class="cart_total_amount">
-            <h4 class="text-brand text-end">${data.totalPrice} AZN</h4>
+            <h4 class="text-brand text-end">₼ ${data.totalPrice}</h4>
         </td>
     `;
     
@@ -158,10 +158,10 @@ function updateBasketTable(data) {
         </td>
         <td class="image product-thumbnail"><img src="${item.product.image_url}" alt="#"></td>
         <td class="product-des product-name">
-            <h6 class="mb-5"><a class='product-name mb-10 text-heading' href='shop-product-right.html'>${item.product.title}</a></h6>
+            <h6 class="mb-5"><a class='product-name mb-10 text-heading' data-bs-toggle="modal" data-bs-target="#quickViewModal${item.product.id}">${item.product.title}</a></h6>
         </td>
         <td class="price" data-title="Price">
-            <h4 class="text-body">${item.product.price} AZN</h4>
+            <h4 class="text-body">₼ ${item.product.price}</h4>
         </td>
         <td class="text-center detail-info" data-title="Stock">
             <div class="detail-extralink mr-15">
@@ -173,7 +173,7 @@ function updateBasketTable(data) {
             </div>
         </td>
         <td class="price" data-title="Price">
-            <h4 class="text-brand">${item.total_price} AZN</h4>
+            <h4 class="text-brand">₼ ${item.total_price}</h4>
         </td>
         <td class="action text-center" data-title="Remove">
             <a href="#" class="text-body" onclick="removeFromBasket(${item.id})"><i class="fi-rs-trash"></i></a>

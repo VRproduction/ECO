@@ -51,6 +51,7 @@ class ShopPageView(ListView):
 
     def get_queryset(self):
         category_id = self.request.GET.get('category')
+        vendor_id = self.request.GET.get('vendor')
         ordering = self.request.GET.get('ordering')
         search_query = self.request.GET.get('search')
 
@@ -64,6 +65,9 @@ class ShopPageView(ListView):
 
         if ordering:
             queryset = queryset.order_by(ordering)
+
+        if vendor_id and vendor_id.isdigit():
+            queryset = queryset.filter(vendor__id=int(vendor_id))
 
         return queryset
     
@@ -74,6 +78,7 @@ class ShopPageView(ListView):
         context = super().get_context_data(**kwargs)
         
         category_id = self.request.GET.get('category')
+        vendor_id = self.request.GET.get('vendor')
         ordering = self.request.GET.get('ordering')
         search_query = self.request.GET.get('search')
 
@@ -87,6 +92,9 @@ class ShopPageView(ListView):
 
         if ordering:
             queryset = queryset.order_by(ordering)
+
+        if vendor_id and vendor_id.isdigit():
+            queryset = queryset.filter(vendor__id=int(vendor_id))
 
         context["count"] = queryset.count()
         context["categories"] = ProductCategory.objects.all()
@@ -102,6 +110,16 @@ class BasketPageView(TemplateView, IsNotAuthView):
         context["items"] = BasketItem.objects.filter(user = self.request.user).order_by("pk")
         return context
 
+def round_to_decimal(value):
+    try:
+        rounded_value = round(float(value), 2)
+        
+        rounded_value_str = "{:,.{decimal_places}f}".format(rounded_value, decimal_places=2).replace(',', '.')
+
+        return rounded_value_str
+    except (ValueError, TypeError):
+        return value
+
 def get_basket_items(request):
     try:
         # Kullanıcıya ait sepet öğelerini al
@@ -113,17 +131,17 @@ def get_basket_items(request):
             'product': {
                 'id': item.product.pk,
                 'title': item.product.title,
-                'price': item.product.price,
+                'price': round_to_decimal(item.product.price),
                 'image_url': item.product.image.url,
             },
             'quantity': item.quantity,
-            'total_price': item.total_price,
+            'total_price': round_to_decimal(item.total_price),
         } for item in basket_items]
 
         response_data = {
             'basketItemCount': basket_items.count(),
             'basketItems': basket_items_data,
-            'totalPrice': sum(item.total_price for item in basket_items),
+            'totalPrice': round_to_decimal(sum(item.total_price for item in basket_items)),
         }
 
         return JsonResponse(response_data)

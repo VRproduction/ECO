@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 {% load producthelper %}
 <div class="product-cart-wrap mb-30" data-product-id="{{ product.id }}">
     <div class="product-img-action-wrap">
@@ -23,21 +24,21 @@
     </div>
     <div class="product-content-wrap">
         <div class="product-category">
-            <a href='shop-grid-right.html'>{{product.category}}</a>
+            <a href='{% url "shop" %}?category={{product.category.id}}'>{{product.category}}</a>
         </div>
         <h2><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}">{{product.title}}</a></h2>
         <div>
         {% if product.vendor %}
-            <span class="font-small text-muted">By <a href='vendor-details-1.html'>{{product.vendor}}</a></span>
+            <span class="font-small text-muted">By <a href='{% url "shop" %}?vendor={{product.vendor.id}}'>{{product.vendor}}</a></span>
         {% else %}
         <br/>
         {% endif %}
         </div>
         <div class="product-card-bottom">
             <div class="product-price">
-                <span>{% if product.discount %}{{product.discount_price}}{% else %}${{product.price}}{% endif %}</span>
+                <span>₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
                 {% if product.discount %}
-                <span class="old-price">${{product.price}}</span>
+                <span class="old-price">₼ {{product.price|format_decimal:2}}</span>
                 {% endif %}
             </div>
             <div style="margin-left: 80px;" class="add-cart d-md-none">

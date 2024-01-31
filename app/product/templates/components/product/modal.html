@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <div class="modal fade custom-modal" id="quickViewModal{{product.id}}{% if category_product %}{{product.id}}{% endif %}" tabindex="-1" aria-labelledby="quickViewModalLabel{{product.id}}{% if category_product %}{{product.id}}{% endif %}"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -35,11 +36,11 @@
                               
                                 <div class="clearfix product-price-cover">
                                     <div class="product-price primary-color float-left">
-                                        <span class="current-price text-brand">{% if product.discount %}{{product.discount_price}}{% else %}${{product.price}}{% endif %}</span>
+                                        <span class="current-price text-brand">₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
                                         {% if product.discount %}
                                         <span>
                                             <span class="save-price font-md color3 ml-15">{{product.discount}}%</span>
-                                            <span class="old-price font-md ml-15">{{product.price}} AZN</span>
+                                            <span class="old-price font-md ml-15">₼ {{product.price|format_decimal:2}}</span>
                                         </span>
                                         {% endif %}
                                     </div>

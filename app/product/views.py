@@ -19,7 +19,7 @@ class HomePageView(TemplateView):
         context = super(HomePageView, self).get_context_data(**kwargs)
         context["sliders"] = IndexSlider.objects.all()[:2]
         context["categories"] = ProductCategory.objects.all()
-        context["products"] = Product.objects.filter(is_main_page = True).order_by("badges")[:10]
+        context["products"] = Product.objects.filter(is_main_page = True).order_by("-badges")[:10]
         context["category_banners"] = CategoryBanner.objects.all()[:3]
         context["about"] = About.objects.first()
         context["features"] = Feature.objects.all()

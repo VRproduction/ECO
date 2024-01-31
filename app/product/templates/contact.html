@@ -17,7 +17,7 @@
                                     {% csrf_token %}
                                     <div class="row">
                                         <!-- Name Input Field -->
-                                        {{form}}
+                                        {% comment %} {{form}} {% endcomment %}
                                         <div class="col-lg-6 col-md-6">
                                             <div class="input-style mb-20">
                                                 <input name="name" placeholder="Ad Soyad" type="text">
@@ -48,7 +48,7 @@
                                         <!-- Message Textarea Field -->
                                         <div class="col-lg-12 col-md-12">
                                             <div class="textarea-style mb-30">
-                                                <textarea name="message" placeholder="Mesaj"></textarea>
+                                                <textarea name="text" placeholder="Mesaj"></textarea>
                                             </div>
                                             
                                             <!-- Submit Button -->
@@ -70,7 +70,7 @@
 
                         <!-- Image Section (Optional) -->
                         <div class="col-lg-4 pl-50 d-lg-block d-none">
-                            <img class="border-radius-15 mt-50" src="{% static "assets/imgs/page/contact-2.png" %}" alt="">
+                            <img class="border-radius-15 mt-50" src="{{page.image.url}}" alt="">
                         </div>
                     </div>
                 </section>

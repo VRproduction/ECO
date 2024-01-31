@@ -7090,7 +7090,7 @@ h6.post-title {
 }
 
 .logo a {
-  display: block;
+  display: flex;
 }
 
 .logo.logo-width-1 {
@@ -7098,8 +7098,8 @@ h6.post-title {
 }
 
 .logo.logo-width-1 a img {
-  width: 180px;
-  min-width: 180px;
+  width: 60px;
+  min-width: 60px;
 }
 
 .search-style-1 form {
@@ -9706,7 +9706,7 @@ footer .hotline img {
   height: 32px;
   color: #253D4E;
   right: 30px;
-  bottom: 30px;
+  bottom: 65px;
   border-radius: 30px;
   text-align: center;
   overflow: hidden;
@@ -11289,13 +11289,13 @@ footer .hotline img {
   .logo.logo-width-1 {
     margin-right: 0;
     position: absolute;
-    right: -80px;
+    right: -30px;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
   }
   .logo.logo-width-1 a img {
-    width: 150px;
-    min-width: 150px;
+    /* width: 150px;
+    min-width: 150px; */
   }
   .header-bottom {
     padding: 20px 0;
@@ -11353,7 +11353,7 @@ footer .hotline img {
     border-bottom: 1px solid #ececec;
   }
   .mobile-header-wrapper-style .mobile-header-wrapper-inner .mobile-header-top .mobile-header-logo a img {
-    width: 140px;
+    width: 65px;
   }
   .mobile-header-wrapper-style .mobile-header-wrapper-inner .mobile-header-content-area {
     padding: 30px;

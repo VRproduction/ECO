@@ -7,7 +7,7 @@
         <div class="sort-by-cover mr-10">
             <div class="sort-by-product-wrap">
                 <div class="sort-by">
-                    <span><i class="fi-rs-apps"></i>Göstər:</span>
+                    <span><i class="fi-rs-apps"></i><span class="d-none d-md-inline">Göstər:</span></span>
                 </div>
                 <div class="sort-by-dropdown-wrap">
                     <span> {% if request.GET.show %}{{request.GET.show}}{% else %}{{ page_obj.paginator.per_page }}{% endif %} <i class="fi-rs-angle-small-down"></i></span>
@@ -25,7 +25,7 @@
         <div class="sort-by-cover" {% if not request.GET.ordering == "-price" and not request.GET.ordering == "price" %}style="width:190px;"{% else %}{% endif %}>
             <div class="sort-by-product-wrap">
                 <div class="sort-by">
-                    <span><i class="fi-rs-apps-sort"></i>Sırala:</span>
+                    <span><i class="fi-rs-apps-sort"></i><span class="d-none d-md-inline">Sırala:</span></span>
                 </div>
                 <div class="sort-by-dropdown-wrap">
                     <span> {% if request.GET.ordering == "pk" %}Yeni{% elif request.GET.ordering == "price" %}Qiymət (azdan-çoxa){% elif request.GET.ordering == "-price" %}Qiymət (çoxdan-aza){% else %}Yeni{% endif %} <i class="fi-rs-angle-small-down"></i></span>

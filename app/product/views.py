@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView, ListView, DetailView
 from django.http import JsonResponse
-from .models import FAQ, BasketItem, Blog, Favorite, IndexSlider, ProductCategory, Product, CategoryBanner, About, Feature, Company, Partner, Statistic
+from .models import FAQ, BasketItem, Blog, ContactPage, Favorite, IndexSlider, ProductCategory, Product, CategoryBanner, About, Feature, Company, Partner, Statistic
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from account.utils.login_helper import AuthView, IsNotAuthView
@@ -17,7 +17,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
-        context["sliders"] = IndexSlider.objects.all()[:2]
+        context["sliders"] = IndexSlider.objects.all()
         context["categories"] = ProductCategory.objects.all()
         context["products"] = Product.objects.filter(is_main_page = True).order_by("-badges")[:10]
         context["category_banners"] = CategoryBanner.objects.all()[:3]
@@ -307,9 +307,17 @@ class ContactPageView(FormView):
         messages.success(self.request, 'Mesajınız göndərildi!')
         return super().form_valid(form)
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page"] = ContactPage.objects.first()
+        return context
+    
+
 class AccountPageView(TemplateView, IsNotAuthView):
     template_name = 'account.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+    
+

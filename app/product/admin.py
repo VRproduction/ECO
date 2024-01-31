@@ -17,11 +17,7 @@ class SettingAdmin(admin.ModelAdmin):
     
 @admin.register(IndexSlider)
 class HomePageSliderAdmin(admin.ModelAdmin):
-
-    def has_add_permission(self, request):
-        if self.model.objects.count() >= 2:
-            return False
-        return super().has_add_permission(request)
+    pass
     
 admin.site.register(ProductCategory)
 admin.site.register(Vendor)

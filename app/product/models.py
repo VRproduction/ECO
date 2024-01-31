@@ -71,6 +71,7 @@ class IndexSlider(models.Model):
 class ProductCategory(models.Model):
     title = models.CharField(max_length = 200)
     image = models.ImageField(upload_to = 'category')
+    is_main_page = models.BooleanField(default = True)
 
     def __str__(self):
         return self.title
@@ -313,3 +314,13 @@ class Contact(models.Model):
     class Meta:
         verbose_name = "Mesaj"
         verbose_name_plural = "Mesajlar"
+
+class ContactPage(models.Model):
+    image = models.ImageField(upload_to = 'contact_page')
+
+    def __str__(self):
+        return "Əlaqə səhifəsi"
+
+    class Meta:
+        verbose_name = "Əlaqə səhifəsi"
+        verbose_name_plural = "Əlaqə səhifəsi"

@@ -20,7 +20,7 @@
                     <div class="deals-content">
                         <h2><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{company.product.id}}">{{company.product.title}}</a></h2>
                         <div>
-                            <span class="font-small text-muted">By <a href='vendor-details-1.html'>{{company.product.vendor}}</a></span>
+                            <span class="font-small text-muted">By <a href='{% url "shop" %}?vendor={{company.product.vendor.id}}'>{{company.product.vendor}}</a></span>
                         </div>
                         <div class="product-card-bottom">
                             <div class="product-price">

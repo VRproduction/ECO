@@ -4260,7 +4260,7 @@ table .product-thumbnail img {
 .product-cart-wrap .product-card-bottom .add-cart .add {
   position: relative;
   display: inline-block;
-  padding: 6px 20px 6px 20px;
+  padding: 4px 12px 4px 12px;
   border-radius: 4px;
   background-color: #DEF9EC;
   font-size: 14px;

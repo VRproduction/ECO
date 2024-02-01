@@ -90,6 +90,27 @@ class Vendor(models.Model):
         verbose_name = 'Vendor'
         verbose_name_plural = 'Vendorlar'
 
+class Coupon(models.Model):
+    coupon = models.CharField(max_length=50)
+    discount_percent = models.FloatField(null=True, blank=True)  # İndirim yüzdesi (örneğin, 10% için 10.0)
+    discount_amount = models.FloatField(null=True, blank=True)  # Sepetin toplam fiyatına uygulanacak indirim miktarı
+
+    def __str__(self):
+        return self.coupon
+    
+    def apply_discount(self, basket_total):
+        if self.discount_percent:
+            return basket_total * (100 - self.discount_percent) / 100
+        elif self.discount_amount:
+            return max(basket_total - self.discount_amount, 0)
+        else:
+            return basket_total
+        
+    class Meta:
+        verbose_name = 'Kupon'
+        verbose_name_plural = 'Kuponlar'
+
+
 class Product(models.Model):
     NUMBERS = [
         (1, "Ən çox satılan"),
@@ -133,6 +154,7 @@ class Favorite(models.Model):
         verbose_name = 'Məhsul'
         verbose_name_plural = 'Sevimlilər'
 
+
 class BasketItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'basket_items', null = True, blank = True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name = 'basket_items', null = True, blank = True)
@@ -148,7 +170,8 @@ class BasketItem(models.Model):
 
     class Meta:
         verbose_name = 'Məhsul'
-        verbose_name_plural = 'Səbət'
+        verbose_name_plural = 'Səbətdəki məhsullar'
+
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'orders', null = True, blank = True)

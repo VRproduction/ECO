@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 {% block main %}
 <!--Start Blog single Area-->
-<section class="blog-single-area ">
+<section class="blog-single-area">
     <div class="container">
         <div class="row">
-            {% comment %} <div class="col-xl-8 col-lg-7"> {% endcomment %}
-                <div>
+            <div class="col-xl-8 col-lg-7">
                 <div class="blog-post">
                    
                     <div class="single-blog-style1">
                         <div class="img-holder">
-                            <img class="w-100" style="height:500px; object-fit:cover;" src="{{blog.image.url}}" alt="Awesome Image">
+                            <img class="w-100" style="height:500px; object-fit:cover;border-radius:15px;" src="{{blog.image.url}}" alt="Awesome Image">
                             <div class="date-box">
                                 <h5>{{blog.created|date:"d M Y"}}</h5>
                             </div>
@@ -25,7 +24,7 @@
                 </div>
             </div>
             
-            {% comment %} <!--Start sidebar Wrapper-->
+            <!--Start sidebar Wrapper-->
             <div class="col-xl-4 col-lg-5 col-md-9 col-sm-12">
                 <div class="sidebar-wrapper">
                     <!--Start single sidebar-->
@@ -54,7 +53,7 @@
                     <!--End single sidebar-->
                 </div>    
             </div>
-            <!--End Sidebar Wrapper--> {% endcomment %}
+            <!--End Sidebar Wrapper-->
             
         </div>
     </div>    

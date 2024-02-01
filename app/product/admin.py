@@ -76,6 +76,8 @@ class OrderAdmin(admin.ModelAdmin):
 
     inlines = [OrderItemInline, ]
     
-admin.site.register(BasketItem)
 admin.site.register(Favorite)
 admin.site.register(Contact)
+admin.site.register(Coupon)
+admin.site.register(BasketItem)
+

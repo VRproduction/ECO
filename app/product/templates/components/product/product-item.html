@@ -41,7 +41,7 @@
                 <span class="old-price">₼ {{product.price|format_decimal:2}}</span>
                 {% endif %}
             </div>
-            <div style="margin-left: 80px;" class="add-cart d-md-none">
+            <div style="margin-left: 70px;" class="add-cart d-md-none">
                 <a class='add' id="mobile_product_action_{{ product.id }}" aria-label='Sevimlilərə əlavə et' {% if user.is_authenticated %}onclick="toggleFavorite({{ product.id }})"{% else %}href="{% url "login" %}"{% endif %} class='action-btn'>{% if product|is_wished:request and user.is_authenticated %}<img style="width:14px !important;" src="{% static "assets/imgs/heart.png" %}" alt="">{% else %}<i class="fi-rs-heart"></i>{% endif %}</a>
             </div>
             <div class="add-cart">

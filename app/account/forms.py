@@ -21,7 +21,7 @@ class EmailAuthenticationForm(AuthenticationForm):
         widget=forms.TextInput(attrs={'autofocus': True, 'placeholder':'Email *'}),
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password *'}),
+        widget=forms.PasswordInput(attrs={'placeholder': 'Parol *'}),
     )
     error_messages = {
         'invalid_login': "Düzgün email və password daxil edin!",
@@ -44,6 +44,6 @@ class RegisterForm(UserCreationForm):
 
         widgets = {
             'email': forms.EmailInput(attrs={'placeholder': 'Email *'}),
-            'password1': forms.PasswordInput(attrs={'placeholder': 'Password *'}),
-            'password2': forms.PasswordInput(attrs={'placeholder': 'Password yenidən *'}),
+            'password1': forms.PasswordInput(attrs={'placeholder': 'Parol *'}),
+            'password2': forms.PasswordInput(attrs={'placeholder': 'Parol yenidən *'}),
         }

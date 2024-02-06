@@ -92,13 +92,17 @@ class Vendor(models.Model):
 
 class Coupon(models.Model):
     coupon = models.CharField(max_length=50)
-    discount_percent = models.FloatField(null=True, blank=True)  # İndirim yüzdesi (örneğin, 10% için 10.0)
-    discount_amount = models.FloatField(null=True, blank=True)  # Sepetin toplam fiyatına uygulanacak indirim miktarı
+    discount_percent = models.FloatField(null=True, blank=True) 
+    discount_amount = models.FloatField(null=True, blank=True)  
 
     def __str__(self):
         return self.coupon
     
-    def apply_discount(self, basket_total):
+    def apply_discount(self,user, basket_total):
+        # Kullanım kontrolü ekleniyor
+        if not self.can_user_use_coupon(user):
+            raise ValidationError('Siz artıq bu kuponu istifadə etmisiz!')
+
         if self.discount_percent:
             return basket_total * (100 - self.discount_percent) / 100
         elif self.discount_amount:
@@ -106,11 +110,38 @@ class Coupon(models.Model):
         else:
             return basket_total
         
+    def can_user_use_coupon(self, user):
+        used_count = CouponUsage.objects.filter(user=user, coupon=self).first().max_coupon_usage_count
+        return used_count > 0
+        
     class Meta:
         verbose_name = 'Kupon'
         verbose_name_plural = 'Kuponlar'
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
+        # Create CouponUsage for all users
+        users = User.objects.all()
+        for user in users:
+            CouponUsage.objects.get_or_create(user=user, coupon=self, defaults={'max_coupon_usage_count': 1})
+
+
+
+class CouponUsage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'coupon_usages')
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, related_name = 'coupon_usages')
+    max_coupon_usage_count = models.PositiveIntegerField(default=1)
+    used_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ['user', 'coupon']
+        verbose_name = 'Kupon'
+        verbose_name_plural = 'İstifadə edilən kuponlar'
+    
+    def __str__(self):
+        return f"{self.coupon}"
+    
 class Product(models.Model):
     NUMBERS = [
         (1, "Ən çox satılan"),
@@ -163,7 +194,7 @@ class BasketItem(models.Model):
 
     @property
     def total_price(self):
-        return self.product.price*self.quantity
+        return self.quantity * (self.product.discount_price) if self.product.discount else (self.product.price)
     
     def __str__(self):
         return f"{self.quantity} x {self.product.title} for {self.user.email}"
@@ -176,7 +207,17 @@ class BasketItem(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'orders', null = True, blank = True)
     total_amount = models.FloatField()
+    discount = models.FloatField(null = True, blank = True)
+    discount_amount = models.FloatField(null = True, blank = True)
     created_at = models.DateTimeField(auto_now_add=True)
+    coupon = models.ForeignKey(Coupon, on_delete = models.CASCADE, related_name = 'orders', null = True, blank = True)
+    status = models.CharField(max_length=20, choices=[
+        ('Gözləmədə', 'Pending'),
+        ('İşlənir', 'Processing'),
+        ('Göndərilib', 'Shipped'),
+        ('Çatdırılıb', 'Delivered'),
+        ('Ləğv edilib', 'Cancelled'),
+    ], default='Gözləmədə')
 
     def __str__(self):
         return f"Order for {self.user.email}"
@@ -184,6 +225,8 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Sifariş'
         verbose_name_plural = 'Sifarişlər'
+        ordering = ['-created_at']
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name = 'order_items', null = True, blank = True)
@@ -253,7 +296,6 @@ class Company(models.Model):
     discount = models.FloatField(null = True, blank = True)
     finish_time = models.DateTimeField()
     created = models.DateTimeField(auto_now_add = True)
-    is_active = models.BooleanField(default = True)
 
     def clean(self):
         super().clean()
@@ -286,6 +328,7 @@ class Statistic(models.Model):
     category = models.IntegerField(blank = True, null = True)
     brend = models.IntegerField(blank = True, null = True)
     new_taste = models.IntegerField(blank = True, null = True)
+    image = models.ImageField(upload_to = 'statistic', verbose_name = "img(610x315)", blank = True, null = True)
 
     def __str__(self):
         return 'Statistika'

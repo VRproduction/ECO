@@ -23,6 +23,7 @@ urlpatterns = [
     path('update_basket_item_count/<int:product_id>/', views.update_basket_item_count, name='update_basket_item_count'),
     path('clear-basket/', views.clear_basket, name='clear_basket'),
     path('delete_selected_basket_items/', views.delete_selected_basket_items, name='delete_selected_basket_items'),
+    path('checkout/', views.checkout, name='checkout'),
 
     path('wish-list/', views.WishListPageView.as_view(), name='wish_list'),
     path('favorite_toggle/<int:product_id>/', views.toggle_favorite, name='toggle_favorite_api'),

@@ -46,8 +46,8 @@
     </div>
     <!-- artan reqemler -->
       
-    <section class="container pt-30  d-none d-md-block">
-        <div class="row about-count" style="display: flex;justify-content: space-between;">
+    <section class="container pt-30  d-none d-md-block" >
+        <div class="row about-count" style="display: flex;justify-content: space-between; {% if statistic.image %}background: url({{statistic.image.url}}) no-repeat center center;{% endif %}">
             <div class="col-lg-1-5 col-md-6 text-center mb-lg-0 mb-md-5">
                 <h1 class="heading-1"><span class="count">{{statistic.year}}</span>+</h1>
                 <h4>İl xidmətinizdə</h4>

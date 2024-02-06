@@ -1,16 +1,19 @@
 from django.views.generic import TemplateView, ListView, DetailView
 from django.http import JsonResponse
-from .models import FAQ, BasketItem, Blog, ContactPage, Favorite, IndexSlider, ProductCategory, Product, CategoryBanner, About, Feature, Company, Partner, Statistic
+from .models import FAQ, BasketItem, Blog, ContactPage, CouponUsage, Favorite, IndexSlider, Order, OrderItem, ProductCategory, Product, CategoryBanner, About, Feature, Company, Partner, Statistic, Coupon
 from django.contrib import messages
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from account.utils.login_helper import AuthView, IsNotAuthView
 from django.urls import reverse_lazy
-from .forms import ContactForm
+from .forms import AccountUpdateForm, ContactForm
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from django.views.generic.edit import FormView
+import datetime
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 class HomePageView(TemplateView):
     template_name = 'index.html'
@@ -23,7 +26,7 @@ class HomePageView(TemplateView):
         context["category_banners"] = CategoryBanner.objects.all()[:3]
         context["about"] = About.objects.first()
         context["features"] = Feature.objects.all()
-        context["companies"] = Company.objects.filter(is_active = True)[:4]
+        context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
         context["most_selling_products"] = Product.objects.all().order_by("?")[:3]
         context["most_search_products"] = Product.objects.all().order_by("?")[:3]
         context["trending_products"] = Product.objects.all().order_by("?")[:3]
@@ -99,7 +102,7 @@ class ShopPageView(ListView):
         context["count"] = queryset.count()
         context["categories"] = ProductCategory.objects.all()
         context["new_products"] = Product.objects.all().order_by("-id")[:3]
-        context["companies"] = Company.objects.filter(is_active=True)[:4]
+        context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
         return context
 
 class BasketPageView(TemplateView, IsNotAuthView):
@@ -120,10 +123,17 @@ def round_to_decimal(value):
     except (ValueError, TypeError):
         return value
 
+def apply_coupon(user, basket_items, coupon):
+    basket_total = sum(item.total_price for item in basket_items)
+    discounted_total = coupon.apply_discount(user, basket_total)
+    return discounted_total
+
 def get_basket_items(request):
     try:
         # Kullanıcıya ait sepet öğelerini al
         basket_items = BasketItem.objects.filter(user=request.user).order_by("pk")
+        
+        coupon_code = request.GET.get('coupon_code', None)
         
         # Sepet içeriğini JSON formatında döndür
         basket_items_data = [{
@@ -131,23 +141,40 @@ def get_basket_items(request):
             'product': {
                 'id': item.product.pk,
                 'title': item.product.title,
-                'price': round_to_decimal(item.product.price),
+                'price': round_to_decimal(item.product.discount_price) if item.product.discount else round_to_decimal(item.product.price),
                 'image_url': item.product.image.url,
             },
             'quantity': item.quantity,
             'total_price': round_to_decimal(item.total_price),
         } for item in basket_items]
+        
+        basket_total = sum(item.total_price for item in basket_items)
 
+    
         response_data = {
             'basketItemCount': basket_items.count(),
             'basketItems': basket_items_data,
-            'totalPrice': round_to_decimal(sum(item.total_price for item in basket_items)),
+            'totalPrice': round_to_decimal(basket_total),
         }
+        applied_coupon = None
+
+        if coupon_code:
+            try:
+                applied_coupon = Coupon.objects.get(coupon=coupon_code)
+                # Kuponun kullanılabilir olup olmadığını kontrol et
+            except Coupon.DoesNotExist:
+                response_data['error'] = 'Kupon mövcud deyil!'
+                return JsonResponse(response_data)
+        if applied_coupon:
+            discounted_total = apply_coupon(request.user ,basket_items, applied_coupon)
+            response_data["discountPrice"] = round_to_decimal(discounted_total)
+            response_data["discount"] = round_to_decimal(basket_total - discounted_total),
 
         return JsonResponse(response_data)
 
     except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+        response_data['error'] = 'Siz artıq bu kuponu istifadə etmisiz!'
+        return JsonResponse(response_data)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -248,6 +275,105 @@ def delete_selected_basket_items(request):
 
     return Response(response_data, status=status.HTTP_200_OK)
 
+
+# def checkout(request):
+#     basket_items = BasketItem.objects.filter(user=request.user)
+#     # Stok kontrolü
+#     for item in basket_items:
+#         product = Product.objects.get(id=item.product.id)
+#         if item.quantity > product.stock:
+#             messages.error(request, f"Not enough stock for {product.title}.")
+#             return redirect('basket')
+
+#     total_amount =  sum(item.total_price for item in basket_items)
+#     order = Order.objects.create(user=request.user, total_amount=total_amount)
+
+#     # Siparişe ürünleri ekleyin ve stok güncelleyin
+#     for item in basket_items:
+#         product = Product.objects.get(id=item.product.id)
+#         OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
+
+#         # Stok düşürme
+#         product.stock -= item.quantity
+#         product.save()
+
+#     # Sepeti temizleme (veya kendi sepet yönetimine göre uyarla)
+#     basket_items.delete()
+
+#     return redirect('basket')
+
+from django.db import transaction
+
+@transaction.atomic
+def checkout(request):
+    try:
+        basket_items = BasketItem.objects.filter(user=request.user)
+
+        if basket_items.count() == 0:
+            messages.error(request, 'Səbətdə məhsul yoxdur!')
+            return redirect('basket')
+        
+        # Stok kontrolü
+        for item in basket_items:
+            product = Product.objects.get(id=item.product.id)
+            if item.quantity > product.stock:
+                messages.error(request, f"Stokda '{product.title}' yoxdur.")
+                return redirect('basket')
+
+        # Toplam ücret hesapla
+        total_amount = sum(item.total_price for item in basket_items)
+
+        # Kupon işlemleri
+        coupon_code = request.GET.get('coupon_code')
+        applied_coupon = None
+
+        if coupon_code:
+            try:
+                applied_coupon = Coupon.objects.get(coupon=coupon_code)
+                # Kuponun kullanılabilir olup olmadığını kontrol et
+                if not applied_coupon.can_user_use_coupon(request.user):
+                    messages.error(request, 'Siz artıq bu kuponu istifadə etmisiz!')
+                    return redirect('basket')
+              
+            except Coupon.DoesNotExist:
+                messages.error(request, 'Kupon mövcud deyil!')
+                return redirect('basket')
+
+        # İndirimli toplam tutarı hesapla
+
+        # Sipariş oluştur
+        with transaction.atomic():
+            order = Order.objects.create(
+                user=request.user,
+                total_amount=total_amount,  # İndirimli toplam tutarı kullan
+                discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+                discount_amount = apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+                coupon=applied_coupon,
+            )
+
+            # Siparişe ürünleri ekle ve stok güncelle
+            for item in basket_items:
+                product = Product.objects.get(id=item.product.id)
+                OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
+
+                # Stok düşürme
+                product.stock -= item.quantity
+                product.save()
+
+        # Sepeti temizle (veya kendi sepet yönetimine göre uyarla)
+        basket_items.delete()
+        if coupon_code:
+            coupon_usage = CouponUsage.objects.get(user=request.user, coupon = applied_coupon)
+            coupon_usage.max_coupon_usage_count -= 1
+            coupon_usage.save()
+        messages.success(request, 'Siparişiniz uğurla qeydə alındı.')
+        return redirect('basket')
+
+    except Exception as e:
+        messages.error(request, 'Sipariş oluşturulurken bir hata oluştu.')
+        return redirect('basket')
+
+
 class WishListPageView(TemplateView, IsNotAuthView):
     template_name = 'wish_list.html'
 
@@ -294,7 +420,7 @@ class CompanyPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["companies"] = Company.objects.all()
+        context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())
         return context
     
 class ContactPageView(FormView):
@@ -318,6 +444,35 @@ class AccountPageView(TemplateView, IsNotAuthView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["orders"] = Order.objects.filter(user=self.request.user)
+        context["form"] = AccountUpdateForm(instance=self.request.user)
+        context["password_form"] = PasswordChangeForm(user=self.request.user)
+        
         return context
-    
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        if request.POST.get("submit") == 'account_submit':
+            form = AccountUpdateForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                messages.success(self.request, 'Hesab məlumatları uğurla yeniləndi!')
+            else:
+                messages.error(self.request, 'Məlumatları düzgün daxil edin!')
+            context = self.get_context_data()
+            context['form'] = form
+            context['tab'] = 2
+            return self.render_to_response(context)
+        elif request.POST.get("submit") == 'password_submit':
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                password_form.save()
+                update_session_auth_hash(request, password_form.user)  # Oturumu güncelle
+                messages.success(request, 'Parol uğurla dəyişdirildi!')
+            else:
+                messages.error(self.request, 'Parolu düzgün daxil edin!')
+            context = self.get_context_data()
+            context['tab'] = 3
+            return self.render_to_response(context)
+
 

@@ -78,6 +78,13 @@ class OrderAdmin(admin.ModelAdmin):
     
 admin.site.register(Favorite)
 admin.site.register(Contact)
-admin.site.register(Coupon)
 admin.site.register(BasketItem)
 
+
+class CouponUsageInline(admin.TabularInline):
+    model = CouponUsage
+
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+
+    inlines = [CouponUsageInline, ]

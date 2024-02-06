@@ -20,3 +20,6 @@
 .fixed-navbar ul li a:hover{
     color: #317f75;
 }
+.mobile-active svg, .mobile-active span{
+    color: #317f75;
+}

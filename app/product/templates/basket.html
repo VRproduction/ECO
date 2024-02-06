@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% block main %}
     <div class="container mb-80 mt-50">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-success{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
         <div class="row">
             <div class="col-lg-8 mb-40">
                 <h1 class="heading-2 mb-10">Səbət</h1>
@@ -62,53 +69,24 @@
                     </table>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div  class="col-lg-4">
                 <div class="border p-md-4 cart-totals ml-30">
                     <h4 class="mb-10">Kupon tətbiq et</h4>
-                            <form class="mb-3" action="#">
+                            <form  id="couponForm" class="mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <input class="font-medium mr-15 coupon" style name="Coupon" placeholder="Kupon">
-                                    <button style="width:265px;" class="btn"><i class="fi-rs-label mr-10"></i>Tətbiq et</button>
+                                    <input class="font-medium mr-15 coupon"  name="coupon_code" placeholder="Kupon">
+                                    <button onclick="applyCoupon()" type="button" style="width:265px;padding:0;" class="btn"><i class="fi-rs-label mr-10"></i>Tətbiq et</button>
                                 </div>
+                                <div id="coupon_error" class="mt-3 text-danger"></div>
                             </form>
                     <div class="table-responsive">
                         <table class="table no-border">
                             <tbody id="basket-item-checkout">
-                                <tr id="basket-item-total">
-                                    <td class="cart_total_label">
-                                        <h6 class="text-muted">Ümumi qiymət</h6>
-                                    </td>
-                                    <td class="cart_total_amount">
-                                        <h4 class="text-brand text-end">$12.31</h4>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td scope="col" colspan="2">
-                                        <div class="divider-2 mt-10 mb-10"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cart_total_label">
-                                        <h6 class="text-muted">Endirim</h6>
-                                    </td>
-                                    <td class="cart_total_amount">
-                                        <h5 class="text-heading text-end">0</h5></td> </tr> <tr>
-                                    <td scope="col" colspan="2">
-                                        <div class="divider-2 mt-10 mb-10"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cart_total_label">
-                                        <h6 class="text-muted">Son qiymət</h6>
-                                    </td>
-                                    <td class="cart_total_amount">
-                                        <h4 class="text-brand text-end">$12.31</h4>
-                                    </td>
-                                </tr>
+                               
                             </tbody>
                         </table>
                     </div>
-                    <a href="#" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a href="{% url "checkout" %}" id="checkout_button" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></a>
                 </div>
             </div>
         </div>

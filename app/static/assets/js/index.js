@@ -86,15 +86,41 @@ function decrementQuantity(product_id) {
     })
     .catch(error => console.error('Error:', error));
 }
+function updateURLParameter(key, value) {
+    // Get the current URL
+    var url = new URL(window.location.href);
 
-function fetchBasketItems() {
-    fetch('/get-basket-items/')
+    // Set or update the parameter in the URL
+    url.searchParams.set(key, value);
+
+    // Replace the current URL with the updated one
+    history.replaceState(null, null, url.href);
+}
+function applyCoupon() {
+    var form = document.getElementById('couponForm');
+    var input = form.querySelector('input[name="coupon_code"]');
+    var couponValue = input.value;
+
+    // Update URL with coupon code
+    updateURLParameter('coupon_code', couponValue);
+
+    // Call the fetchBasketItems function with the coupon code
+    fetchBasketItems(couponValue);
+
+    var checkoutLink = document.getElementById('checkout_button');
+    checkoutLink.href = "/checkout/?coupon_code=" + couponValue;
+}
+
+
+function fetchBasketItems(coupon_code) {
+    fetch(`/get-basket-items/${coupon_code?`?coupon_code=${coupon_code}`:''}`)
         .then(response => response.json())
         .then(data => {
             updateNavbarBasket(data);
             if(window.location.pathname == "/basket/"){
             updateBasketTable(data);
             }
+            console.log(coupon_code)
         })
         .catch(error => console.error('Error:', error));
 }
@@ -135,15 +161,46 @@ function updateBasketTable(data) {
     // Sepet tablosunu güncelleme kodları buraya eklenebilir
     // Örneğin, data içindeki bilgileri kullanarak HTML içeriğini dinamik olarak oluşturabilirsiniz.
     document.getElementById('basket-item-count').innerText = data.basketItemCount;
-    document.getElementById('basket-item-total').innerHTML = `
-        <td class="cart_total_label">
-            <h6 class="text-muted">Ümumi qiymət</h6>
-        </td>
-        <td class="cart_total_amount">
-            <h4 class="text-brand text-end">₼ ${data.totalPrice}</h4>
-        </td>
+    document.getElementById('basket-item-checkout').innerHTML = `
+            <tr id="basket-item-total">
+                <td class="cart_total_label">
+                    <h6 class="text-muted">Ümumi qiymət</h6>
+                </td>
+                <td class="cart_total_amount">
+                    <h4 class="text-brand text-end">₼ ${data.totalPrice}</h4>
+                </td>
+            </tr>
+            <tr>
+                <td scope="col" colspan="2">
+                    <div class="divider-2 mt-10 mb-10"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="cart_total_label">
+                    <h6 class="text-muted">Endirim</h6>
+                </td>
+                <td class="cart_total_amount">
+                    <h5 class="text-heading text-end">₼ ${data.discount ? data.discount : 0}</h5></td> </tr> <tr>
+                <td scope="col" colspan="2">
+                    <div class="divider-2 mt-10 mb-10"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="cart_total_label">
+                    <h6 class="text-muted">Yekun qiymət</h6>
+                </td>
+                <td class="cart_total_amount">
+                    <h4 class="text-brand text-end">₼ ${data.discount ? data.discountPrice : data.totalPrice}</h4>
+                </td>
+            </tr>
     `;
-    
+    const coupon_error = document.getElementById('coupon_error')
+
+    if (data.error) {
+        coupon_error.innerText = `* ${data.error}`;
+    }else{
+        coupon_error.innerText = '';
+    }
     const basketItemsBody = document.getElementById('basket-items-body');
     basketItemsBody.innerHTML = ''; // Önce mevcut içeriği temizle
 

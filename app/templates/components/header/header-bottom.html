@@ -65,22 +65,22 @@
                     <nav>
                         <ul>
                             <li>
-                                <a href='{% url "home" %}'>Ana səhifə</a>
+                                <a {% if request.path == '/' %}class="active"{% endif %} href='{% url "home" %}'>Ana səhifə</a>
                             </li>
                             <li>
-                                <a href='{% url "about" %}'>Haqqımızda</a>
+                                <a {% if request.path == '/about/' %}class="active"{% endif %} href='{% url "about" %}'>Haqqımızda</a>
                             </li>
                             <li>
-                                <a href='{% url "shop" %}'>Məhsullar</a>
+                                <a {% if request.path == '/shop/' %}class="active"{% endif %} href='{% url "shop" %}'>Məhsullar</a>
                             </li>
                             <li>
-                                <a href='{% url "blog" %}'>Bloq</a>
+                                <a {% if request.path|slice:":7" == '/blogs/' %}class="active"{% endif %} href='{% url "blog" %}'>Bloq</a>
                             </li>
                             <li>
-                                <a href='{% url "companies" %}'>Kampaniyalar</a>
+                                <a {% if request.path == '/companies/' %}class="active"{% endif %} href='{% url "companies" %}'>Kampaniyalar</a>
                             </li>
                             <li>
-                                <a href='{% url "contact" %}'>Əlaqə</a>
+                                <a {% if request.path == '/contact/' %}class="active"{% endif %} href='{% url "contact" %}'>Əlaqə</a>
                             </li>
                         </ul>
                     </nav>

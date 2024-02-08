@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
+    'payment.apps.PaymentConfig',
 
     'ckeditor',
     'rest_framework'

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Nest - Multipurpose eCommerce HTML Template</title>
+    <title>{{setting.site_title}}</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,7 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/theme/favicon.svg">
+    <link rel="shortcut icon" type="image/x-icon" href="{{setting.favicon.url}}">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/plugins/animate.min.css' %}">
     <link rel="stylesheet" href="{% static "assets/css/main.css" %}"> 
@@ -22,6 +22,7 @@
     {% endblock css %}
     <link rel="stylesheet" href="{% static "assets/css/fixed-header.css" %}"> 
     <link rel="stylesheet" href="{% static "assets/css/custom-modal-body.css" %}"> 
+    <link rel="stylesheet" href="{% static "assets/css/faq.css" %}"> 
 
 </head>
 
@@ -90,7 +91,7 @@
     </main>
     {% include "components/footer/footer.html" %}
     <!-- Preloader Start -->
-  {% comment %} <div id="preloader-active">
+   <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="text-center">
@@ -98,7 +99,7 @@
                 </div>
             </div>
         </div>
-    </div>  {% endcomment %}
+    </div> 
     <!-- Vendor JS-->
     {% for product in all_products %}
     {% include "components/product/modal.html" with product=product %}

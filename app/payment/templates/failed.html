@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block main %}
+<style>
+    .container-error {
+        max-width: 400px;
+        margin-top: 50px;
+    }
+    
+    .alert-danger {
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        color: #a94442;
+    }
+</style>
+<div class="container-error mx-auto">
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Ödeme Hatası!</h4>
+      <p>Ödeme işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin veya destek ekibimizle iletişime geçin.</p>
+      <hr>
+      <p class="mb-0">Tekrar denemek için <a href="">buraya tıklayın</a>.</p>
+    </div>
+  </div>
+{% endblock main %}

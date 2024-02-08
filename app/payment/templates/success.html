@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block main %}
+<style>
+    .container-success {
+    max-width: 400px;
+    margin-top: 50px;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+}
+</style>
+<div class="container-success mx-auto">
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Ödeme Başarılı!</h4>
+      <p>Ödemeniz başarıyla tamamlandı. Teşekkür ederiz!</p>
+      <hr>
+      <p class="mb-0">Başka bir ödeme yapmak için <a href="">buraya tıklayın</a>.</p>
+    </div>
+  </div>
+{% endblock main %}

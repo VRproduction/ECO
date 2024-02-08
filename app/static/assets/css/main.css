@@ -3486,7 +3486,7 @@ table .product-thumbnail img {
   border-radius: 15px;
   overflow: hidden;
   height: 520px;
-  background: url(../imgs/banner/banner-4.png) no-repeat center bottom;
+  background: url(../imgs/banner/brend-bg.jpg) no-repeat center bottom;
   background-size: cover;
   width: 100%;
 }
@@ -3495,6 +3495,10 @@ table .product-thumbnail img {
   top: 50px;
   -webkit-transform: none;
           transform: none;
+}
+.banner-img.style-2 .banner-text h2{
+  color: white;
+  font-style: italic;
 }
 
 .banner-img.style-3 {

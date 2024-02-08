@@ -28,9 +28,9 @@
                 <div class="single-hero-slider  single-animation-wrap" style="{% if slider.mobile_image %}background-image: url({{slider.mobile_image.url}});{% endif %}">
                     <div class="slider-content">
                         <h1 class="display-2 mb-40">
-                            {{slider.title|safe}}
+                            {{slider.mobile_title|safe}}
                         </h1>
-                        <p class="mb-65">{{slider.description|safe}}</p>
+                        <p class="mb-65">{{slider.mobile_description|safe}}</p>
                         <form class="d-inline">
                             <a class="btn btn-mobile" href="{% url "shop" %}">Alış-verişə başla</a>
                         </form>

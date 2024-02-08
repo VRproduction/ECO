@@ -60,6 +60,7 @@ class IndexSlider(models.Model):
     title = models.CharField(max_length = 500)
     description = models.CharField(max_length = 500)
     image = models.ImageField(upload_to = 'index_slider')
+    mobile_image = models.ImageField(upload_to = 'index_slider_mobile',verbose_name = 'Mobile photo(366x350px)', null = True, blank = True)
 
     def __str__(self):
         return self.title

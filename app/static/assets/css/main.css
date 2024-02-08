@@ -11968,11 +11968,15 @@ footer .hotline img {
     max-width: 100%;
   }
   .single-content blockquote p {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 22px;
   }
+  .btn-mobile{
+    padding: 7px 15px;
+  }
+  
   .hero-slider-1 .single-hero-slider .display-2 {
-    font-size: 32px;
+    font-size: 24px;
   }
   .hero-slider-1 .single-hero-slider .slider-content p {
     font-size: 16px;
@@ -12382,6 +12386,34 @@ footer .hotline img {
     max-width: 100%;
     font-size: 35px;
   }
+
   
 }
 /*# sourceMappingURL=main.css.map */
+@media only screen and (max-width: 667px) {
+  .single-content blockquote p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .btn-mobile{
+    padding: 7px 15px;
+  }
+  
+  .hero-slider-1 .single-hero-slider .display-2 {
+    font-size: 24px;
+  }
+  .display-section-desktop{
+    display: none;
+  }
+  .display-section-mobile{
+    display: block;
+  }
+}
+@media only screen and (min-width: 667px) {
+  .display-section-desktop{
+    display: block;
+  }
+  .display-section-mobile{
+    display: none;
+  }
+}

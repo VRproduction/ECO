@@ -1,17 +1,38 @@
 {% if sliders %}
-<section class="home-slider position-relative mb-30">
+<section class="home-slider display-section-desktop position-relative mb-30">
     <div class="container">
         <div class="home-slide-cover mt-30">
             <div class="hero-slider-1 style-4 dot-style-1 dot-style-1-position-1">
                 {% for slider in sliders %}
-                <div class="single-hero-slider single-animation-wrap" style="background-image: url({{slider.image.url}})">
+                <div class="single-hero-slider  single-animation-wrap" style="background-image: url({{slider.image.url}})">
                     <div class="slider-content">
                         <h1 class="display-2 mb-40">
                             {{slider.title|safe}}
                         </h1>
                         <p class="mb-65">{{slider.description|safe}}</p>
                         <form class="d-inline">
-                            <a class="btn" href="{% url "shop" %}">Alış-verişə başla</a>
+                            <a class="btn btn-mobile" href="{% url "shop" %}">Alış-verişə başla</a>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="home-slider display-section-mobile position-relative mb-30">
+    <div class="container">
+        <div class="home-slide-cover mt-30">
+            <div class="hero-slider-1 style-4 dot-style-1 dot-style-1-position-1">
+                {% for slider in sliders %}
+                <div class="single-hero-slider  single-animation-wrap" style="background-image: url({{slider.mobile_image.url}})">
+                    <div class="slider-content">
+                        <h1 class="display-2 mb-40">
+                            {{slider.title|safe}}
+                        </h1>
+                        <p class="mb-65">{{slider.description|safe}}</p>
+                        <form class="d-inline">
+                            <a class="btn btn-mobile" href="{% url "shop" %}">Alış-verişə başla</a>
                         </form>
                     </div>
                 </div>

@@ -193,6 +193,23 @@ function updateBasketTable(data) {
                     <h4 class="text-brand text-end">₼ ${data.discount ? data.discountPrice : data.totalPrice}</h4>
                 </td>
             </tr>
+            <tr>
+                <td scope="col" colspan="2">
+                    <div class="divider-2 mt-10 mb-10"></div>
+                </td>
+            </tr>
+            <tr>
+                <td scope="col"  colspan="2">
+                    <div class="payment-grid">
+                        <div>
+                            <button class="payment-option w-100" data-value="credit_card">Kuriyer ilə çatdırılma</button>
+                        </div>
+                        <div>
+                            <button class="payment-option w-100" data-value="cash_on_delivery">Yerində ödə</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
     `;
     const coupon_error = document.getElementById('coupon_error')
 

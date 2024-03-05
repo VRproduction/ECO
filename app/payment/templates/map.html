@@ -93,6 +93,7 @@ function onMapClick(e) {
                 currentLocationMarker.bindPopup("Hal hazırda buradasınız.").openPopup();
                 
                 map.setView([latitude, longitude], 15); // Konumu merkez al ve yakınlaştır
+                console.log("geolocation start")
             });
         } else {
             alert("Tarayıcınız konum belirleme özelliğini desteklemiyor.");

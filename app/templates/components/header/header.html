@@ -6,7 +6,7 @@
     {% comment %} {% include "components/header/header-top.html" %} {% endcomment %}
 
     {% include "components/header/header-middle.html" %}
-
+    {% if not show_bottom == 'False' %}
     {% include "components/header/header-bottom.html" %}
-
+    {% endif %}
 </header>

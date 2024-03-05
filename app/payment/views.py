@@ -11,3 +11,6 @@ def failed(request):
 
 def result(request):
     return render(request, 'result.html')
+
+def map(request):
+    return render(request, 'map.html')

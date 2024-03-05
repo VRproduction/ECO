@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
     'payment.apps.PaymentConfig',
+    'wolt.apps.WoltConfig',
 
     'ckeditor',
     'rest_framework'
@@ -171,3 +172,7 @@ CKEDITOR_CONFIGS = {
             ]),
         },
 }
+
+WOLT_API_KEY = "PUNlJQGSVyqo8ShrDCd4uULMfzviPh8V5ywt6LdjYIY"
+WOLT_VENUE_ID = "65cf2245fc643985912ab003"
+WOLT_MERCHANT_ID = "65cf21d501026216134fd3c6"

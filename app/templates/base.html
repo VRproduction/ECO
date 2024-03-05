@@ -80,8 +80,9 @@
             </div>
         </div>
     </div>
-    
+    {% block header %}
     {% include "components/header/header.html" %}
+    {% endblock header %}
     {% include "components/header/mobile-header.html" %}
     {% include "components/header/fixed-mobile-header.html" %}
 
@@ -136,7 +137,7 @@
     <script src="{% static "assets/js/main.js" %}"></script>
     <script src="{% static "assets/js/shop.js" %}"></script> 
     <script src="{% static "assets/js/index.js" %}"></script> 
-    
+    {% block js %}{% endblock js %}
 </body>
 
 </html>

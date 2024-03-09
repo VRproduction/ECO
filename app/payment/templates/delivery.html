@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+{% load producthelper %}
+{% block css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+crossorigin="localhost"/>
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+crossorigin="localhost"></script>
+<style>
+    #map {
+        height: 320px; 
+        {% comment %} filter: grayscale(100%); {% endcomment %}
+    }
+    #map2 {
+        height: 320px; 
+        {% comment %} filter: grayscale(100%); {% endcomment %}
+    }
+    #map-container {
+        position: relative;
+    }
+    #map2-container {
+        position: relative;
+    }
+    .map-button {
+        position: absolute;
+        top: 90px;
+        left: 11px;
+        z-index: 1000; /* Haritanın üzerinde en üstte olması için */
+        background: white;
+        border: 2px solid rgb(169, 169, 169);
+        border-radius: 3px;
+        padding: 2px 2px 0px 2px;
+    }
+    .map-button img{
+        width: 25px;
+    }
+    .delivery-img{
+        width: 25px;
+    }
+    .map-basket-item img{
+        width: 50px;
+    }
+    .addressResults ul li:hover{
+        background-color: whitesmoke;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+{% endblock css %}
+
+{% block header %}
+{% include "components/header/header.html" with show_bottom="False" %}
+{% endblock header %}
+
+{% block main %}
+    <div id="map-container">
+        <div id="map"></div>
+        <button onclick="centerMapToCurrentLocation()" class="map-button">
+            <img src="{% static "/assets/imgs/location.png" %}" alt="" srcset="">
+        </button>
+    </div>
+    <div class="container-sm mb-80 mt-50">
+        <div class="row">
+            <div class="col-lg-8" >
+                <h3>Çatdırılma metodu və vaxt</h3>
+                {% include "components/delivery/modal1.html" %}
+                
+                <h3>Seçilmiş məhsullar</h3>
+                <div>
+                    {% for item in items %}
+                    <div class="map-basket-item d-flex my-4 align-items-center">
+                        <img class="border rounded p-1" src="{{item.product.image.url}}" alt="Title" />
+                        <div class="ps-3 w-100">
+                            <h5 class="font-weight-normal">{{item.product.title}}</h5>
+                            <p class="text-primary">₼ {% if item.product.discount %}{{item.product.discount_price|format_decimal:2}}{% else %}{{item.product.price|format_decimal:2}}{% endif %}</p>
+                        </div>
+                        <div class="text-primary w-25 d-flex align-items-center justify-content-end">
+                            <span class="border border-secondary rounded py-2 px-3">{{item.quantity}}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div  class="col-lg-4">
+                <div class="border p-md-4 cart-totals ml-30">
+                    <div class="table-responsive">
+                        <table class="table no-border">
+                            <tbody >
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Ümumi qiymət</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-brand text-end" id="map_total_price"></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="col" colspan="2">
+                                        <div class="divider-2 mt-10 mb-10"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Endirim</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h5 class="text-heading text-end" id="map_discount"></h5>
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td scope="col" colspan="2">
+                                        <div class="divider-2 mt-10 mb-10"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Çatdırılma</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-heading text-end">₼ 10</h4>
+                                    </td>
+                                    <td scope="col" colspan="2">
+                                        <div class="divider-2 mt-10 mb-10"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="col" colspan="2">
+                                        <div class="divider-2 mt-10 mb-10"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Yekun qiymət</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-brand text-end" id="map_discount_price"></h4>
+                                    </td>
+                                    <td scope="col" colspan="2">
+                                        <div class="divider-2 mt-10 mb-10"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="col" colspan="2">
+                                        <div class="divider-2 mt-10 mb-10"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="col" colspan="2">
+                                        <a href="/payment/" id="checkout_button" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}
+
+{% block js %}
+<script>
+        var map = L.map('map').setView([40.36815635,  49.8210362], 15);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+    
+        var marker = L.marker([40.3685008, 49.8338029]).addTo(map);
+        var circle = L.circle([40.3685008, 49.8338029], {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 100
+        }).addTo(map);
+        marker.bindPopup("ECO").openPopup();
+        
+        var popup = L.popup();
+    
+        var previousMarker = null; // Önceki işaretçiyi tutacak değişken
+    
+        // Haritaya tıklandığında bir işaretçi (marker) oluşturan fonksiyon
+        function onMapClick(e) {
+            // Önceki işaretçiyi kaldır
+            if (previousMarker !== null) {
+                map.removeLayer(previousMarker);
+            }
+    
+            // Yeni işaretçi oluştur
+            var clickedMarker = L.marker(e.latlng).addTo(map);
+            clickedMarker.bindPopup("Buranı seçdiniz.").openPopup();
+    
+            // Önceki işaretçiyi güncelle
+            previousMarker = clickedMarker;
+            locationInfo(e.latlng.lat, e.latlng.lng)
+            // Ters jeokodlama yapmak için Nominatim servisini kullan
+            
+        }
+        function locationInfo(lat, lon){
+            return new Promise((resolve, reject) => {
+                var url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon + '&accept-language=az'; // Azerbaycanca dilini kullanmak için
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.display_name) {
+                            const addressComponents = data.display_name.split(', ');
+                            const filteredAddress = addressComponents.slice(0, -4);
+                            const newAddress = filteredAddress.join(', ');
+                            resolve(newAddress); // Adres bilgisini resolve ile döndür
+                        } else {
+                            reject('Geçersiz veri');
+                        }
+                    })
+                    .catch(error => {
+                        reject('Hata:', error);
+                    });
+            });
+        }
+
+        // Haritaya tıklama olayını dinleyen olay dinleyici ekleyin
+        map.on('click', onMapClick);
+    
+        // Kullanıcının konumunu güncelleyen fonksiyon
+        function updateCurrentLocation(onload = false) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+    
+                    // Eğer kullanıcı daha önce bir işaretçi eklediyse kaldır
+                    if (currentLocationMarker) {
+                        map.removeLayer(currentLocationMarker);
+                        map.removeLayer(currentLocationCircle);
+                    }
+    
+                    var icon = L.icon({
+                        iconUrl: '{% static "/assets/imgs/location.png" %}', // Ok simgesi resmi
+                        iconSize: [38, 38], // Resim boyutu
+                        iconAnchor: [19, 38] // Okun konumu
+                    });
+    
+                    currentLocationMarker = L.marker([latitude, longitude], {icon: icon, rotationAngle: position.coords.heading}).addTo(map);
+    
+                    currentLocationCircle = L.circle([latitude, longitude], {
+                        color: 'transparent',
+                        fillColor: 'transparent',
+                        fillOpacity: 0.5,
+                        radius: 100
+                    }).addTo(map);
+    
+                    if(onload == true){
+                        map.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
+                        console.log("geolocation start")
+                        // document.getElementById("map-location-info").innerText = locationInfo(latitude, longitude)
+                        locationInfo(latitude, longitude)
+                        .then(address => {
+                            document.getElementById("map-location-info").innerText = address
+                            document.getElementById("option1Label").innerText = address
+
+                        })
+                        .catch(error => {
+                            console.error('Hata:', error);
+                        });
+
+                    }
+                });
+            } else {
+                alert("Tarayıcınız konum belirleme özelliğini desteklemiyor.");
+                console.log("geolocation xeta")
+    
+            }
+        }
+    
+        var currentLocationMarker = null;
+        var currentLocationCircle = null;
+
+        window.onload = updateCurrentLocation(onload = true)
+        // Konumu güncelleme işlemini belirli aralıklarla yapmak için setInterval kullanarak fonksiyonu çağırın
+        setInterval(updateCurrentLocation, 5000); // Her 10 saniyede bir güncelle
+        function centerMapToCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    map.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
+                });
+            } else {
+                alert("Tarayıcınız konum belirleme özelliğini desteklemiyor.");
+                console.log("geolocation xeta")
+            }
+        }
+</script>
+<script src="{% static "assets/js/map.js" %}"></script>
+{% endblock js %}

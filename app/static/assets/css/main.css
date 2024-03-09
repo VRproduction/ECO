@@ -12436,9 +12436,9 @@ footer .hotline img {
 }
 
 .payment-option:hover {
-  background-color: yellow; /* Hover durumunda daha koyu bir mavi */
+  background-color: orange; /* Hover durumunda daha koyu bir mavi */
 }
 
 .payment-option:active {
-  background-color: yellow; /* Tıklama durumunda daha koyu bir mavi */
+  background-color: orange; /* Tıklama durumunda daha koyu bir mavi */
 }

@@ -1,0 +1,66 @@
+{% load static %}
+<!-- Button trigger modal -->
+<button data-bs-toggle="modal" data-bs-target="#modelDelivery"
+    class="my-4 p-4 w-100 text-start bg-transparent border rounded d-flex align-items-center" type="button">
+    <img class="delivery-img" src="{% static "assets/imgs/delivery.png" %}" alt="">
+    <div class="w-100 ms-2"><span id="map-location-info" class="font-weight-bold"></span> 10 dəqiqəyə çatdırılma</div>
+    <div class="w-25 d-flex justify-content-end align-items-center">
+        <img class="delivery-img" src="{% static "assets/imgs/right-arrow.png" %}" alt="">
+    </div>
+</button>
+
+<!-- Modal Delivery -->
+<div class="modal fade" id="modelDelivery" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+    aria-hidden="true">
+    <div class="h-100 d-flex align-items-center">
+        <div class="modal-dialog" role="document" style="width: 650px; max-width: 650px;">
+            <div class="modal-content">
+                <div class="modal-header py-4">
+                    <h6 class="modal-title text-center w-100" id="modalTitleId">
+                        Çatdırılma məlumatları
+                    </h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Hara çatdırılacaq?</h6>
+                    <div id="radio-list">
+                        <div class="form-check my-2 ms-1">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                value="option1" checked>
+                            <label id="option1Label" class="form-check-label text-dark" for="exampleRadios1">
+
+                            </label>
+                        </div>
+                    </div>
+                    <button 
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalAddress"
+                        class="mt-2 bg-transparent border-0 p-0 m-0 d-flex align-items-center "
+                        style="margin-left: 1px !important;">
+                        <img style="width: 15px;" src="{% static "assets/imgs/plus.png" %}" alt="">
+                        <span class="ms-2 text-primary">Yeni address əlavə edin</span>
+                    </button>
+                </div>
+                <div class="modal-footer py-4">
+                    <button type="button" class="btn btn-primary w-100">Təsdiq edin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "components/delivery/modal2.html" %}
+
+<script>
+    var modalDelivery = document.getElementById('modelDelivery');
+
+    modalDelivery.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        let button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        let recipient = button.getAttribute('data-bs-whatever');
+
+        // Use above variables to manipulate the DOM
+    });
+</script>

@@ -1,0 +1,87 @@
+{% load static %}
+<div class="modal fade" id="modalMap" tabindex="-1" role="dialog" aria-labelledby="modalMapId" aria-hidden="true">
+    <div class="h-100 d-flex align-items-center">
+        <div class="modal-dialog" role="document" style="width: 650px; max-width: 650px;">
+            <div class="modal-content py-3">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="modalMapId">
+                        Adress seçin
+                    </h5>
+                    <button onclick="closeMap()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="map2-container" style="display: none;"> <!-- Harita başlangıçta gizli -->
+                        <div id="map2"></div>
+                    </div>
+                    <span id="selected_map_info"></span>
+                </div>
+                <div class="modal-footer border-0">
+                    <button onclick="addRadio(true)" type="button" class="btn btn-primary w-100">Əlavə edin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var map2Shown = false; // Harita başlangıçta gizli
+
+    function closeMap(){
+        document.getElementById("modalMap").style.display = "none"
+        document.getElementById("modalMap").style.opacity = 0
+        if (map2Shown) {
+            hideMap();
+        } else {
+            showMap();
+        }
+        map2Shown = !map2Shown; // Durumu tersine çevir
+    }
+
+    function toggleMap() {
+        document.getElementById("modalMap").style.display = "block"
+        document.getElementById("modalMap").style.opacity = 1
+        if (map2Shown) {
+            hideMap();
+        } else {
+            showMap();
+        }
+        map2Shown = !map2Shown; // Durumu tersine çevir
+    }
+
+    function showMap() {
+        document.getElementById("map2-container").style.display = "block"; // Haritayı göster
+        map2.invalidateSize(); // Harita boyutunu güncelle
+    }
+
+    function hideMap() {
+        document.getElementById("map2-container").style.display = "none"; // Haritayı gizle
+
+    }
+
+    var map2 = L.map('map2').setView([40.36815635,  49.8210362], 15);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map2);
+
+    var marker2 = L.marker([40.3685008, 49.8338029]).addTo(map2);
+    var circle2 = L.circle([40.3685008, 49.8338029], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 100
+    }).addTo(map2);
+    marker2.bindPopup("ECO").openPopup();
+    
+    var popup2 = L.popup();
+
+    var mapCenter = map2.getCenter();
+
+    // Yeni işaretçiyi ekranın ortasına sabitle
+    var newMarker = L.marker(mapCenter).addTo(map2);
+
+    // Yeni işaretçi konumunu değiştirdiğinizde enlem ve boylam değerlerini güncelle
+    map2.on('move', function(){
+        var newLatLng = map2.getCenter();
+        newMarker.setLatLng(newLatLng);
+    });     
+</script>

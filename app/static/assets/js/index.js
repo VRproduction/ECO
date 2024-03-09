@@ -201,16 +201,18 @@ function updateBasketTable(data) {
             <tr>
                 <td scope="col"  colspan="2">
                     <div class="payment-grid">
-                        <div>
-                            <button class="payment-option w-100" data-value="credit_card">Kuriyer ilə çatdırılma</button>
+                        <div class="payment-option w-100" data-value="credit_card">
+                            <a class="text-light text-center d-block w-100" href="/payment/map/">Kuriyer ilə çatdırılma</a>
                         </div>
-                        <div>
-                            <button class="payment-option w-100" data-value="cash_on_delivery">Yerində ödə</button>
+                        <div class="payment-option w-100" data-value="cash_on_delivery">
+                            <a class="text-light text-center d-block w-100" href="">Yerində ödə</a>
                         </div>
                     </div>
                 </td>
             </tr>
     `;
+    saveDataToLocalStorage(data);
+
     const coupon_error = document.getElementById('coupon_error')
 
     if (data.error) {
@@ -261,6 +263,13 @@ function updateBasketTable(data) {
         });
     });
 }
+
+function saveDataToLocalStorage(data) {
+    localStorage.setItem('discount', data.discount);
+    localStorage.setItem('totalPrice', data.totalPrice);
+    localStorage.setItem('discountPrice', data.discountPrice);
+}
+
 
 // Sayfa yüklendiğinde sepeti getir
 function deleteSelectedBasketItems() {

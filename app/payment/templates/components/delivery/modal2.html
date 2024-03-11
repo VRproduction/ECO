@@ -1,32 +1,36 @@
 {% load static %}
 <!-- Modal New Address -->
+
 <div class="modal fade " id="modalAddress" tabindex="-1" role="dialog" aria-labelledby="modalAddressId"
     aria-hidden="true">
     <div class="h-100 d-flex align-items-center">
         <div class="modal-dialog" role="document" style="width: 650px; max-width: 650px;">
             <div class="modal-content py-3">
-                <div class="modal-header border-0 pb-0">
+                <div class="modal-header ">
                     <h5 class="modal-title" id="modalAddressId">
                         Yeni adress əlavə edin
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button onclick="hideAddressModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body py-4">
+                    <div id="addressError"></div>
                     <button 
                         type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalMap"
                         onclick="toggleMap()"
-                        class="my-2 bg-transparent border-0 p-0 m-0 d-flex align-items-center "
+                        class="mb-5 bg-transparent border-0 p-0 m-0 d-flex align-items-center "
                         style="margin-left: 1px !important;">
                         <img style="width: 25px;" src="{% static "assets/imgs/map-setting.png" %}" alt="">
                         <span class="ms-2 text-dark">Xəritədə seçin</span>
                     </button>
-                    <input id="streetInput" style="height: 40px;" class="" type="text" placeholder="Küçə adı və nömrəsi">
+                    <input id="streetInput" style="height: 40px;" class="mt-2" type="text" placeholder="Küçə adı və nömrəsi">
                     <div id="addressResults" class="addressResults">
                        
                     </div>
                 </div>
-                <div class="modal-footer border-0">
-                    <button onclick="addRadio()" type="button" class="btn btn-primary w-100">Davam edin</button>
+                <div class="modal-footer">
+                    <button disabled id="modalAddressBtn" onclick="addRadio()" type="button" class="btn btn-primary w-100">Davam edin</button>
                 </div>
             </div>
         </div>

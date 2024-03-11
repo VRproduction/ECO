@@ -24,39 +24,7 @@
 </div>
 
 <script>
-    var map2Shown = false; // Harita başlangıçta gizli
-
-    function closeMap(){
-        document.getElementById("modalMap").style.display = "none"
-        document.getElementById("modalMap").style.opacity = 0
-        if (map2Shown) {
-            hideMap();
-        } else {
-            showMap();
-        }
-        map2Shown = !map2Shown; // Durumu tersine çevir
-    }
-
-    function toggleMap() {
-        document.getElementById("modalMap").style.display = "block"
-        document.getElementById("modalMap").style.opacity = 1
-        if (map2Shown) {
-            hideMap();
-        } else {
-            showMap();
-        }
-        map2Shown = !map2Shown; // Durumu tersine çevir
-    }
-
-    function showMap() {
-        document.getElementById("map2-container").style.display = "block"; // Haritayı göster
-        map2.invalidateSize(); // Harita boyutunu güncelle
-    }
-
-    function hideMap() {
-        document.getElementById("map2-container").style.display = "none"; // Haritayı gizle
-
-    }
+   
 
     var map2 = L.map('map2').setView([40.36815635,  49.8210362], 15);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {

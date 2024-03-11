@@ -26,7 +26,6 @@ TABLE CONTENT
  WP STYPE
  Custom amine
 ***/
-@import url(../../css);
 /*import vendors*/
 @import url(vendors/normalize.css);
 @import url(vendors/bootstrap.min.css);
@@ -2070,6 +2069,7 @@ input.qty-val {
 }
 
 .slider-arrow.slider-arrow-2 .slider-btn {
+  display: none !important;
   width: 40px;
   height: 40px;
   line-height: 44px;
@@ -3486,7 +3486,7 @@ table .product-thumbnail img {
   border-radius: 15px;
   overflow: hidden;
   height: 520px;
-  background: url(../imgs/banner/banner-4.png) no-repeat center bottom;
+  background: url(../imgs/banner/brend-bg.jpg) no-repeat center bottom;
   background-size: cover;
   width: 100%;
 }
@@ -3495,6 +3495,10 @@ table .product-thumbnail img {
   top: 50px;
   -webkit-transform: none;
           transform: none;
+}
+.banner-img.style-2 .banner-text h2{
+  color: white;
+  font-style: italic;
 }
 
 .banner-img.style-3 {
@@ -3813,7 +3817,6 @@ table .product-thumbnail img {
   z-index: 100;
   position: relative;
   color: #fff;
-  background: url(../imgs/page/about-9.png) no-repeat center center;
   border-radius: 15px;
   padding: 100px 0;
   overflow: hidden;
@@ -4260,11 +4263,13 @@ table .product-thumbnail img {
 .product-cart-wrap .product-card-bottom .add-cart .add {
   position: relative;
   display: inline-block;
-  padding: 6px 20px 6px 20px;
+  padding: 4px 12px 4px 12px;
   border-radius: 4px;
   background-color: #DEF9EC;
   font-size: 14px;
   font-weight: 700;
+  border: none;
+  color: #3BB77E;
 }
 
 .product-cart-wrap .product-card-bottom .add-cart .add:hover {
@@ -6741,6 +6746,13 @@ h6.post-title {
   width: 30px;
 }
 
+@media only screen and (min-width: 992px) {
+  .custom-blog-page{
+    padding-left: 100px;
+    padding-right: 100px;
+
+  }
+}
 /*Responsive*/
 @media only screen and (max-width: 992px) {
   .invoice .invoice-header {
@@ -7081,7 +7093,7 @@ h6.post-title {
 }
 
 .logo a {
-  display: block;
+  display: flex;
 }
 
 .logo.logo-width-1 {
@@ -7089,8 +7101,8 @@ h6.post-title {
 }
 
 .logo.logo-width-1 a img {
-  width: 180px;
-  min-width: 180px;
+  width: 60px;
+  min-width: 60px;
 }
 
 .search-style-1 form {
@@ -7605,7 +7617,7 @@ h6.post-title {
   width: 100%;
   max-width: 683px;
   font-size: 14px;
-  background-image: url(../imgs/theme/icons/search.png);
+  /* background-image: url(../imgs/theme/icons/search.png); */
   background-repeat: no-repeat;
   background-position: center right;
   padding-left: 0;
@@ -9697,7 +9709,7 @@ footer .hotline img {
   height: 32px;
   color: #253D4E;
   right: 30px;
-  bottom: 30px;
+  bottom: 65px;
   border-radius: 30px;
   text-align: center;
   overflow: hidden;
@@ -11280,13 +11292,13 @@ footer .hotline img {
   .logo.logo-width-1 {
     margin-right: 0;
     position: absolute;
-    left: 50%;
+    right: -30px;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
   }
   .logo.logo-width-1 a img {
-    width: 150px;
-    min-width: 150px;
+    /* width: 150px;
+    min-width: 150px; */
   }
   .header-bottom {
     padding: 20px 0;
@@ -11344,7 +11356,7 @@ footer .hotline img {
     border-bottom: 1px solid #ececec;
   }
   .mobile-header-wrapper-style .mobile-header-wrapper-inner .mobile-header-top .mobile-header-logo a img {
-    width: 140px;
+    width: 65px;
   }
   .mobile-header-wrapper-style .mobile-header-wrapper-inner .mobile-header-content-area {
     padding: 30px;
@@ -11956,11 +11968,15 @@ footer .hotline img {
     max-width: 100%;
   }
   .single-content blockquote p {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 22px;
   }
+  .btn-mobile{
+    padding: 7px 15px;
+  }
+  
   .hero-slider-1 .single-hero-slider .display-2 {
-    font-size: 32px;
+    font-size: 24px;
   }
   .hero-slider-1 .single-hero-slider .slider-content p {
     font-size: 16px;
@@ -12370,5 +12386,59 @@ footer .hotline img {
     max-width: 100%;
     font-size: 35px;
   }
+
+  
 }
 /*# sourceMappingURL=main.css.map */
+@media only screen and (max-width: 667px) {
+  .single-content blockquote p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .btn-mobile{
+    padding: 7px 15px;
+  }
+  
+  .hero-slider-1 .single-hero-slider .display-2 {
+    font-size: 24px;
+  }
+  .display-section-desktop{
+    display: none;
+  }
+  .display-section-mobile{
+    display: block;
+  }
+}
+@media only screen and (min-width: 667px) {
+  .display-section-desktop{
+    display: block;
+  }
+  .display-section-mobile{
+    display: none;
+  }
+}
+.payment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px; /* Boşlukları biraz daha genişlettik */
+}
+
+.payment-option {
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3BB77E; /* Mavi renk kullanabilirsiniz */
+  color: #fff; /* Beyaz metin rengi */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Geçiş efekti */
+}
+
+.payment-option:hover {
+  background-color: orange; /* Hover durumunda daha koyu bir mavi */
+}
+
+.payment-option:active {
+  background-color: orange; /* Tıklama durumunda daha koyu bir mavi */
+}

@@ -7,4 +7,6 @@ urlpatterns = [
     path('failed/', views.failed, name = 'failed'),
     path('result/', views.result, name = 'result'),
     path('map/', views.map, name = 'map'),
+    path('map/shipment_promises/', views.shipment_promises, name = 'shipment_promises'),
+    path('map/deliveries/', views.deliveries, name = 'deliveries'),
 ]

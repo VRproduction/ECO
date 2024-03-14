@@ -23,33 +23,3 @@
     </div>
 </div>
 
-<script>
-   
-
-    var map2 = L.map('map2').setView([40.36815635,  49.8210362], 15);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-    }).addTo(map2);
-
-    var marker2 = L.marker([40.3685008, 49.8338029]).addTo(map2);
-    var circle2 = L.circle([40.3685008, 49.8338029], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 100
-    }).addTo(map2);
-    marker2.bindPopup("ECO").openPopup();
-    
-    var popup2 = L.popup();
-
-    var mapCenter = map2.getCenter();
-
-    // Yeni işaretçiyi ekranın ortasına sabitle
-    var newMarker = L.marker(mapCenter).addTo(map2);
-
-    // Yeni işaretçi konumunu değiştirdiğinizde enlem ve boylam değerlerini güncelle
-    map2.on('move', function(){
-        var newLatLng = map2.getCenter();
-        newMarker.setLatLng(newLatLng);
-    });     
-</script>

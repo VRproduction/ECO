@@ -31,10 +31,15 @@
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="detail-info pr-30 pl-30">
-                                {% if product.discount %}<span class="stock-status out-stock">Endirim</span>{% endif %}
+                                {% if product.stock > 0 %}
+                                    {% if product.discount %}<span class="stock-status out-stock">Endirim</span>{% endif %}
+                                {% else %}
+                                    <span class="stock-status out-stock">Stokda yoxdur</span>
+                                {% endif %}
                                 <h3 class="title-detail"><a class="text-heading">{{product.title}}</a></h3>
                               
                                 <div class="clearfix product-price-cover">
+                                    {% if product.stock > 0%}
                                     <div class="product-price primary-color float-left">
                                         <span class="current-price text-brand">₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
                                         {% if product.discount %}
@@ -44,17 +49,19 @@
                                         </span>
                                         {% endif %}
                                     </div>
+                                    {% else %}
+                                    <div class="product-price primary-color float-left">
+                                        <span class="current-price text-brand">₼ {{product.price|format_decimal:2}}</span>
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 <div class="detail-extralink mb-30">
-                                    {% comment %} <div class="detail-qty border radius">
-                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                        <span class="qty-val">1</span>
-                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                    </div> {% endcomment %}
+                                    {% if product.stock > 0%}
                                     <div class="product-extra-link2">
                                         <button onclick="addToBasket({{ product.id }},1)" type="submit" class="button button-add-to-cart"><i
                                                 class="fi-rs-shopping-cart"></i>Karta əlavə et</button>
                                     </div>
+                                    {% endif %}
                                 </div>
                                 <div class="font-xs">
                                     <ul>

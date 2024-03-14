@@ -3,8 +3,17 @@
 <button data-bs-toggle="modal" data-bs-target="#modelDelivery"
     class="my-4 p-4 w-100 text-start bg-transparent border rounded d-flex align-items-center" type="button">
     <img class="delivery-img" src="{% static "assets/imgs/delivery.png" %}" alt="">
-    <div class="w-100 ms-2"><span id="map-location-info" class="font-weight-bold"></span> 10 dəqiqəyə çatdırılma</div>
-    <div class="w-25 d-flex justify-content-end align-items-center">
+    <div class="w-100 ps-3"><span id="map-location-info" class="font-weight-bold me-2"></span><br class="d-md-none"> <span id="delivery_time" style="font-size: 10px;"></span></div>
+    <div style="width: 10%;" class="d-flex justify-content-end align-items-center">
+        <img class="delivery-img" src="{% static "assets/imgs/right-arrow.png" %}" alt="">
+    </div>
+</button>
+
+<button data-bs-toggle="modal" data-bs-target="#modalPhone"
+    class="my-4 p-4 w-100 text-start bg-transparent border rounded d-flex align-items-center" type="button">
+    <img class="delivery-img" src="{% static "assets/imgs/telephone.png" %}" alt="">
+    <div class="w-100 ps-3"><span id="phone-info" class="font-weight-bold me-2 text-danger">Əlaqə məlumatlarını daxil edin</span></div>
+    <div style="width: 10%;" class="d-flex justify-content-end align-items-center">
         <img class="delivery-img" src="{% static "assets/imgs/right-arrow.png" %}" alt="">
     </div>
 </button>
@@ -51,6 +60,37 @@
     </div>
 </div>
 
+<!-- Modal Phone -->
+<div class="modal fade" id="modalPhone" tabindex="-1" role="dialog" aria-labelledby="modalPhone"
+    aria-hidden="true">
+    <div class="h-100 d-flex align-items-center">
+        <div class="modal-dialog" role="document" style="width: 650px; max-width: 650px;">
+            <div class="modal-content">
+                <div class="modal-header py-4">
+                    <h6 class="modal-title text-center w-100" id="modalTitleId">
+                        Əlaqə məlumatları
+                    </h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Ad soyad</h6>
+                    <div class="form-check ps-0 my-2">
+                        <input id="nameInput" style="height: 40px;" class="mt-2" type="text" placeholder="Ad Soyad" oninput="validateName()">
+                        <div id="nameErrorMessages" style="color: red;"></div>
+                    </div>
+                    <h6>Nömrə</h6>
+                    <div class="form-check ps-0 my-2">
+                        <input id="phoneNumberInput" style="height: 40px;" class="mt-2" type="tel" maxlength="10" placeholder="0XXXXXXXXX" oninput="validatePhoneNumber()">
+                        <div id="errorMessages" style="color: red;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer py-4">
+                    <button onclick="phoneButton()" id="phoneButton" type="button" class="btn btn-primary w-100">Təsdiq edin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% include "components/delivery/modal2.html" %}
 
 <script>

@@ -1,3 +1,6 @@
+let eco_lan = 40.3656998
+let eco_lon = 49.8227329
+
 function getDataFromLocalStorage() {
     const data = {
         totalPrice: localStorage.getItem('totalPrice'),
@@ -13,6 +16,185 @@ const data = getDataFromLocalStorage();
 document.getElementById("map_total_price").innerText = "₼ " + data.totalPrice;
 document.getElementById("map_discount").innerText = `₼ ${data.discount != 'undefined'? data.discount : 0}`;
 document.getElementById("map_discount_price").innerText = `₼ ${data.discount != 'undefined'? data.discountPrice : data.totalPrice}`;
+
+
+
+//******************************************************************* */
+//                           Main MAP                                 */
+//******************************************************************* */
+
+var map = L.map('map').setView([40.36815635,  49.8210362], 15);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+var marker = L.marker([eco_lan, eco_lon]).addTo(map);
+var circle = L.circle([eco_lan, eco_lon], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 100
+}).addTo(map);
+marker.bindPopup("ECO").openPopup();
+
+var popup = L.popup();
+
+var previousMarker = null; // Önceki işaretçiyi tutacak değişken
+
+// Haritaya tıklandığında bir işaretçi (marker) oluşturan fonksiyon
+function onMapClick(e) {
+    // Önceki işaretçiyi kaldır
+    if (previousMarker !== null) {
+        map.removeLayer(previousMarker);
+    }
+
+    // Yeni işaretçi oluştur
+    var clickedMarker = L.marker(e.latlng).addTo(map);
+    clickedMarker.bindPopup("Buranı seçdiniz.").openPopup();
+
+    // Önceki işaretçiyi güncelle
+    previousMarker = clickedMarker;
+    locationInfo(e.latlng.lat, e.latlng.lng)
+    // Ters jeokodlama yapmak için Nominatim servisini kullan
+    
+}
+function locationInfo(lat, lon){
+    return new Promise((resolve, reject) => {
+        var url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon + '&accept-language=az'; // Azerbaycanca dilini kullanmak için
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.display_name) {
+                    const addressComponents = data.display_name.split(', ');
+                    const filteredAddress = addressComponents.slice(0, -4);
+                    const newAddress = filteredAddress.join(', ');
+                    resolve(newAddress); // Adres bilgisini resolve ile döndür
+                } else {
+                    reject('Geçersiz veri');
+                }
+            })
+            .catch(error => {
+                reject('Hata:', error);
+            });
+    });
+}
+
+// Haritaya tıklama olayını dinleyen olay dinleyici ekleyin
+// map.on('click', onMapClick);
+
+// Kullanıcının konumunu güncelleyen fonksiyon
+function updateCurrentLocation(onload = false) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            let currentInput = document.getElementById("location1")
+            currentInput.setAttribute("data-lat", latitude);
+            currentInput.setAttribute("data-lon", longitude);
+
+
+
+            // Eğer kullanıcı daha önce bir işaretçi eklediyse kaldır
+            if (currentLocationMarker) {
+                map.removeLayer(currentLocationMarker);
+                map.removeLayer(currentLocationCircle);
+            }
+
+            var icon = L.icon({
+                iconUrl: '/static/assets/imgs/location.png', // Ok simgesi resmi
+                iconSize: [38, 38], // Resim boyutu
+                iconAnchor: [19, 38] // Okun konumu
+            });
+
+            currentLocationMarker = L.marker([latitude, longitude], {icon: icon, rotationAngle: position.coords.heading}).addTo(map);
+
+            currentLocationCircle = L.circle([latitude, longitude], {
+                color: 'transparent',
+                fillColor: 'transparent',
+                fillOpacity: 0.5,
+                radius: 100
+            }).addTo(map);
+
+            if(onload == true){
+                map.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
+                // document.getElementById("map-location-info").innerText = locationInfo(latitude, longitude)
+                locationInfo(latitude, longitude)
+                .then(address => {
+                    currentInput.value = address;
+                    document.getElementById("option1Label").innerHTML = `${address} <span class="text-danger">(* Hal hazırda olduğunuz məkan)</span>`
+                    updateMapLocationInfo(latitude, longitude, address)
+
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                });
+
+            }
+        });
+    } else {
+        alert("Tarayıcınız konum belirleme özelliğini desteklemiyor.");
+        console.log("geolocation xeta")
+
+    }
+}
+
+var currentLocationMarker = null;
+var currentLocationCircle = null;
+
+window.onload = updateCurrentLocation(onload = true)
+// Konumu güncelleme işlemini belirli aralıklarla yapmak için setInterval kullanarak fonksiyonu çağırın
+setInterval(updateCurrentLocation, 5000); // Her 10 saniyede bir güncelle
+function centerMapToCurrentLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            map.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
+        });
+    } else {
+        alert("Tarayıcınız konum belirleme özelliğini desteklemiyor.");
+        console.log("geolocation xeta")
+    }
+}
+
+//******************************************************************* */
+//                            Main MAP END                            */
+//******************************************************************* */
+
+
+//******************************************************************* */
+//                           Modal MAP                                */
+//******************************************************************* */
+var map2 = L.map('map2').setView([40.36815635,  49.8210362], 15);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map2);
+
+    var marker2 = L.marker([eco_lan, eco_lon]).addTo(map2);
+    var circle2 = L.circle([eco_lan, eco_lon], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 100
+    }).addTo(map2);
+    marker2.bindPopup("ECO").openPopup();
+    
+    var popup2 = L.popup();
+
+    var mapCenter = map2.getCenter();
+
+    // Yeni işaretçiyi ekranın ortasına sabitle
+    var newMarker = L.marker(mapCenter).addTo(map2);
+
+    // Yeni işaretçi konumunu değiştirdiğinizde enlem ve boylam değerlerini güncelle
+    map2.on('move', function(){
+        var newLatLng = map2.getCenter();
+        newMarker.setLatLng(newLatLng);
+    });   
+//******************************************************************* */
+//                           Modal MAP End                            */
+//******************************************************************* */
+
 
 function getAddressInfo(streetName) {
     return new Promise((resolve, reject) => {
@@ -67,6 +249,8 @@ streetInput.addEventListener('input', function() {
                         li.addEventListener('click', function() {
                             // Seçilen adresin içeriğini al ve input değerine ata
                             streetInput.value = result.display_name.split(', ').slice(0, -4).join(', ');
+                            streetInput.setAttribute("data-lat", result.lat);
+                            streetInput.setAttribute("data-lon", result.lon);
                             selectedInputValue = result.display_name.split(', ').slice(0, -4).join(', ');
                             canAddRadioList = true
                             document.getElementById("modalAddressBtn").disabled = false;
@@ -201,60 +385,132 @@ function hideDeliveryModal(){
 let radioList = [];
 
 function addRadio(marker = false) {
-    // Yeni bir radio düğmesi yarat
     var newRadio = document.createElement('div');
     newRadio.classList.add('form-check', 'my-2', 'ms-1');
-    var radioId = generateUniqueId(); // Benzersiz bir id oluştur
+    var radioId = generateUniqueId();
 
     if (marker == true) {
         var markerCoordinates = newMarker.getLatLng();
         locationInfo(markerCoordinates.lat, markerCoordinates.lng)
-        .then(address => {
-            if (!radioList.includes(address)) {
-                newRadio.innerHTML = `
-                <input class="form-check-input" type="radio" name="location" id="location${radioId}"
-                    value="${address}">
-                <label class="form-check-label text-dark" for="location${radioId}">
-                    ${address}
-                </label>
-                `;  
-                radioList.push(address);
-                var modalElement = document.getElementById("modalAddress");
-                var modalInstance = bootstrap.Modal.getInstance(modalElement);
-                modalInstance.hide();
-                document.querySelector('#radio-list').appendChild(newRadio);
-                closeMap(for_add = true);
-            } else {
-            }
-        })
-        .catch(error => {
-            console.error('Hata:', error);
-        });
+            .then(address => {
+                if (!radioList.some(item => item.address === address)) {
+                    var radioData = {
+                        address: address,
+                        lat: markerCoordinates.lat,
+                        lon: markerCoordinates.lng
+                    };
 
-    } else {  
+                    newRadio.innerHTML = `
+                        <input class="form-check-input" type="radio" name="location" id="location${radioId}"
+                            value="${address}" data-lat="${markerCoordinates.lat}" data-lon="${markerCoordinates.lng}">
+                        <label class="form-check-label text-dark" for="location${radioId}">
+                            ${address}
+                        </label>
+                    `;
+
+                    radioList.push(radioData);
+                    saveToLocalStorage('radioList', radioList);
+                    var modalElement = document.getElementById("modalAddress");
+                    var modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+                    document.querySelector('#radio-list').appendChild(newRadio);
+                    closeMap(for_add = true);
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+            });
+
+    } else {
         if (canAddRadioList == true) {
             let streetValue = streetInput.value;
             let errorDiv = document.getElementById("addressError")
-            if (!radioList.includes(streetValue)) {
+            if (!radioList.some(item => item.address === streetValue)) {
+                var radioData = {
+                    address: streetValue,
+                    lat: streetInput.getAttribute("data-lat"),
+                    lon: streetInput.getAttribute("data-lon")
+                };
+
                 newRadio.innerHTML = `
-                <input class="form-check-input" type="radio" name="location" id="location${radioId}"
-                    value="${streetValue}">
-                <label class="form-check-label text-dark" for="location${radioId}">
-                    ${streetValue}
-                </label>
-                `; 
-                radioList.push(streetValue);
+                    <input class="form-check-input" type="radio" name="location" id="location${radioId}"
+                        value="${streetValue}" data-lat="${streetInput.getAttribute("data-lat")}" data-lon="${streetInput.getAttribute("data-lon")}">
+                    <label class="form-check-label text-dark" for="location${radioId}">
+                        ${streetValue}
+                    </label>
+                `;
+
+                radioList.push(radioData);
+                saveToLocalStorage('radioList', radioList);
                 errorDiv.innerText = "";
                 errorDiv.classList.remove("text-danger", "mb-2");
                 document.querySelector('#radio-list').appendChild(newRadio);
                 hideAddressModal();
             } else {
-                errorDiv.innerText = "* Bu address artıq əlavə edilib!";
+                errorDiv.innerText = "* Bu adres zaten eklenmiş!";
                 errorDiv.classList.add("text-danger", "mb-2");
             }
         }
     }
 }
+
+function saveToLocalStorage(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+function updateRadioButtons() {
+    var radioListContainer = document.getElementById('radio-list');
+    
+    // İlk input elementini sakla
+    var firstRadio = radioListContainer.firstElementChild;
+    
+    // Var olan içeriği temizle
+    radioListContainer.innerHTML = '';
+
+    // Eğer ilk input elementi varsa tekrar ekle
+    if (firstRadio) {
+        radioListContainer.appendChild(firstRadio);
+    }
+
+    for (var i = 0; i < radioList.length; i++) {
+        var radioId = generateUniqueId();
+        var newRadio = document.createElement('div');
+        newRadio.classList.add('form-check', 'my-2', 'ms-1');
+
+        newRadio.innerHTML = `
+            <input class="form-check-input" type="radio" name="location" id="location${radioId}"
+                value="${radioList[i].address}" data-lat="${radioList[i].lat}" data-lon="${radioList[i].lon}">
+            <label class="form-check-label text-dark" for="location${radioId}">
+                ${radioList[i].address}
+            </label>
+        `;
+
+        radioListContainer.appendChild(newRadio);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Sayfa yüklendiğinde localStorage'den veriyi çek
+    var storedRadioList = getFromLocalStorage('radioList');
+
+    if (storedRadioList) {
+        // localStorage'den çekilen veriyi mevcut radioList'e ekle
+        radioList = radioList.concat(storedRadioList);
+
+        // Var olan radioList ile sayfadaki radio butonları güncellenir
+        updateRadioButtons();
+    }
+});
+
+// LocalStorage'dan veri çeken yardımcı fonksiyon
+function getFromLocalStorage(key) {
+    var storedData = localStorage.getItem(key);
+
+    // JSON formatındaki veriyi parse ederek döndür
+    return storedData ? JSON.parse(storedData) : null;
+}
+
+
 
 // Benzersiz bir ID oluşturmak için kullanılabilir bir fonksiyon
 function generateUniqueId() {
@@ -266,12 +522,162 @@ function generateUniqueId() {
 //******************************************************************* */
 
 function deilveryButton() {
-    var selectedValue = document.querySelector('input[name="location"]:checked').value;
-    console.log("Seçilen değer:", selectedValue);
-    // Burada seçilen değeri kullanabilirsiniz, örneğin bir AJAX isteği gönderebilirsiniz.
+    var selectedRadio = document.querySelector('input[name="location"]:checked');
+    updateMapLocationInfo(selectedRadio.getAttribute("data-lat"),  selectedRadio.getAttribute("data-lon"), selectedRadio.value);
+    hideDeliveryModal()
 }
-
 
 //******************************************************************* */
 //                        Delivery Button End                         */
 //******************************************************************* */
+
+//******************************************************************* */
+//                        Phone Button                                */
+//******************************************************************* */
+
+function hidePhoneModal(){
+    var modalElement = document.getElementById("modalPhone");
+    var modalInstance = bootstrap.Modal.getInstance(modalElement);
+    modalInstance.hide();
+}
+
+function validateName() {
+    var nameInput = document.getElementById('nameInput');
+    var nameErrorMessages = document.getElementById('nameErrorMessages');
+    var phoneButton = document.getElementById('phoneButton');
+    var name = nameInput.value.trim();
+
+    var errors = [];
+    if (name.length == 0) {
+        errors.push('* Ad Soyad edilməlidir.');
+    }else if (name.length < 3) {
+        errors.push('* Ad Soyad minimum 3 hərf olmalıdır.');
+    }
+
+    // Display errors
+    nameErrorMessages.innerHTML = errors.join('<br>');
+    // Enable/disable button based on errors
+    phoneButton.disabled = errors.length > 0;
+}
+
+function validatePhoneNumber() {
+    var phoneNumberInput = document.getElementById('phoneNumberInput');
+    var errorMessages = document.getElementById('errorMessages');
+    var phoneButton = document.getElementById('phoneButton');
+    var phoneNumber = phoneNumberInput.value.replace(/\s+/g, ''); // Remove whitespaces
+
+    var validPrefixes = ['050', '070', '077', '055', '099', '060', '051', '010'];
+
+    var errors = [];
+
+    if (!phoneNumber.trim()) {
+        errors.push('* Nömrə daxil edilməlidir.');
+    } else if (!/^\d{10}$/.test(phoneNumber) || validPrefixes.indexOf(phoneNumber.substr(0, 3)) === -1 || /[01]/.test(phoneNumber.charAt(3))) {
+        errors.push('* Nömrəni düzgün daxil edin.');
+    }
+
+    // Display errors
+    errorMessages.innerHTML = errors.join('<br>');
+    // Enable/disable button based on errors
+    phoneButton.disabled = errors.length > 0;
+}
+
+function phoneButton() {
+    var phoneNumberInput = document.getElementById('phoneNumberInput');
+    var nameInput = document.getElementById('nameInput');
+
+    var phoneNumber = phoneNumberInput.value.replace(/\s+/g, ''); // Remove whitespaces
+    var name = nameInput.value.trim();
+
+    localStorage.setItem('phoneNumber', phoneNumber);
+    localStorage.setItem('name', name);
+    document.getElementById('phone-info').innerHTML = `<span class="text-dark">${name}</span>
+    <span class="ms-2 text-success border-1 border-solid rounded p-1 border-success " style="font-size:10px;">${phoneNumber}</span>`;
+    document.getElementById('phoneNumberInput').value = phoneNumber;
+    document.getElementById('checkout_phone_error').classList.add("d-none");
+
+    checkCheckoutButtonStatus();
+    hidePhoneModal();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Sayfa yüklendiğinde localStorage'den telefon numarasını al ve buton metin içeriğine yerleştir
+    var phoneNumber = localStorage.getItem('phoneNumber');
+    var name = localStorage.getItem('name');
+    if (phoneNumber) {
+        document.getElementById('phone-info').innerHTML = `<span class="text-dark">${name}</span>
+        <span class="ms-2 text-success border-1 border-solid rounded p-1 border-success " style="font-size:10px;">${phoneNumber}</span>`;
+        document.getElementById('phoneNumberInput').value = phoneNumber;
+        document.getElementById('nameInput').value = name;
+
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    validatePhoneNumber();
+    validateName()
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    var phoneNumber = localStorage.getItem('phoneNumber')
+    if (phoneNumber) {
+        // localStorage'de phonenumber varsa, checkout_phone_error'ı gizle
+        var phoneErrorElement = document.getElementById('checkout_phone_error');
+        if (phoneErrorElement) {
+            phoneErrorElement.classList.add('d-none');
+        }
+    }
+});
+
+//******************************************************************* */
+//                           Phone Button End                         */
+//******************************************************************* */
+
+
+//************************************************************************/
+//                           Checkout Button                             */
+//************************************************************************/
+function checkCheckoutButtonStatus() {
+    var addressErrorElement = document.getElementById('checkout_address_error');
+    var phoneErrorElement = document.getElementById('checkout_phone_error');
+    var checkoutButton = document.getElementById('checkout_button');
+
+    // En az bir hata varsa veya her ikisi de görünürse, checkout_button'u devre dışı bırak
+    if ((addressErrorElement && !addressErrorElement.classList.contains('d-none')) ||
+        (phoneErrorElement && !phoneErrorElement.classList.contains('d-none'))) {
+        checkoutButton.disabled = true;
+    } else {
+        checkoutButton.disabled = false;
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+    checkCheckoutButtonStatus();
+});
+
+function checkoutButton(){
+    var selectedRadio = document.querySelector('input[name="location"]:checked');
+    var lat = selectedRadio.getAttribute("data-lat");
+    var lon = selectedRadio.getAttribute("data-lon");
+    var amount = localStorage.getItem('delivery_amount')
+    var recipient_name = localStorage.getItem('name')
+    var recipient_phone = localStorage.getItem('phoneNumber')
+    var shipment_promise_id = localStorage.getItem('shipment_promise_id')
+
+    var deliveryData = {
+        lat: lat,
+        lon: lon,
+        amount: amount,
+        recipient_name: recipient_name,
+        recipient_phone: recipient_phone,
+        shipment_promise_id: shipment_promise_id
+      };
+      console.log(deliveryData)
+    if (amount > 0 && amount) {
+        sendDeliveryCreation(lat, lon, amount, recipient_name, recipient_phone, shipment_promise_id)
+    }
+    window.location.href = '/checkout/'
+
+    
+}
+//************************************************************************/
+//                           Checkout Button End                         */
+//************************************************************************/

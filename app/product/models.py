@@ -175,6 +175,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Məhsul'
         verbose_name_plural = 'Məhsullar'
+        ordering = ['-stock']
 
 
 class Favorite(models.Model):
@@ -202,6 +203,16 @@ class BasketItem(models.Model):
     def __str__(self):
         return f"{self.quantity} x {self.product.title} for {self.user.email}"
 
+    def to_dict_for_wolt_delivery(self):
+        return {
+            "price": {
+                "amount": round(self.total_price, 2),
+                "currency": "AZN"  # Replace with your actual currency
+            },
+            "description": self.product.title,
+            "count": self.quantity
+        }
+
     class Meta:
         verbose_name = 'Məhsul'
         verbose_name_plural = 'Səbətdəki məhsullar'
@@ -221,6 +232,7 @@ class Order(models.Model):
         ('Çatdırılıb', 'Delivered'),
         ('Ləğv edilib', 'Cancelled'),
     ], default='Gözləmədə')
+    tracing_url = models.URLField(null = True)
 
     def __str__(self):
         return f"Order for {self.user.email}"

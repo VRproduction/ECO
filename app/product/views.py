@@ -22,7 +22,7 @@ class HomePageView(TemplateView):
         context = super(HomePageView, self).get_context_data(**kwargs)
         context["sliders"] = IndexSlider.objects.all()
         context["categories"] = ProductCategory.objects.all()
-        context["products"] = Product.objects.filter(is_main_page = True).order_by("-badges")[:10]
+        context["products"] = Product.objects.filter(is_main_page = True, stock__gt=0).order_by("-badges")[:10]
         context["category_banners"] = CategoryBanner.objects.all()[:3]
         context["about"] = About.objects.first()
         context["features"] = Feature.objects.all()
@@ -301,6 +301,34 @@ def delete_selected_basket_items(request):
 #     basket_items.delete()
 
 #     return redirect('basket')
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def checkout(request):
+    basket_items = BasketItem.objects.filter(user=request.user)
+
+    for item in basket_items:
+        product = get_object_or_404(Product, id=item.product.id)
+        if item.quantity > product.stock:
+            return Response({"error": f"Not enough stock for {product.title}."}, status=status.HTTP_400_BAD_REQUEST)
+
+    total_amount = sum(item.total_price for item in basket_items)
+    tracing_url = request.data.get("tracing_url")  
+
+    order = Order.objects.create(user=request.user, total_amount=total_amount, tracing_url=tracing_url)
+
+    for item in basket_items:
+        product = get_object_or_404(Product, id=item.product.id)
+        OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
+
+        # Update stock
+        product.stock -= item.quantity
+        product.save()
+
+    basket_items.delete()
+
+    return Response({"success": "Order placed successfully.", "tracing_url": tracing_url}, status=status.HTTP_201_CREATED)
+
 
 from django.db import transaction
 

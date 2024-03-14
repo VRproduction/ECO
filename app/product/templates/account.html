@@ -56,7 +56,7 @@
                                                             <td>{{order.created_at}}</td>
                                                             <td>{{order.status}}</td>
                                                             <td>₼ {% if order.discount %}{{order.discount_amount}}{% else %}{{order.total_amount}}{% endif %} {{order.order_items.count}} məhsul</td>
-                                                            <td><a href="#" class="btn-small d-block">Gör</a></td>
+                                                            <td><a href="{% if order.tracing_url %}{{order.tracing_url}}{% else %}#{% endif %}" class="btn-small d-block">Sifarişi izlə</a></td>
                                                         </tr>
                                                         {% endfor %}
                                                     </tbody>

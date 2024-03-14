@@ -13,12 +13,16 @@
             <a aria-label="Sürətli bax" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}{% if category_product %}{{product.id}}{% endif %}"><i class="fi-rs-eye"></i></a>
         </div>
         <div class="product-badges product-badges-position product-badges-mrg">
-            {% if product.badges == 1 %}
-            <span class="hot">Ən çox satılan</span>
-            {% elif product.badges == 2 %}
-            <span class="new">Yeni</span>
-            {% elif product.badges == 3 and product.discount%}
-            <span class="best">{{product.discount}}%</span>
+            {% if product.stock > 0 %}
+                {% if product.badges == 1 %}
+                <span class="hot">Ən çox satılan</span>
+                {% elif product.badges == 2 %}
+                <span class="new">Yeni</span>
+                {% elif product.badges == 3 and product.discount%}
+                <span class="best">{{product.discount}}%</span>
+                {% endif %}
+            {% else %}
+            <span class="hot">Stokda yoxdur</span>
             {% endif %}
         </div>
     </div>
@@ -35,17 +39,25 @@
         {% endif %}
         </div>
         <div class="product-card-bottom">
+            {% if product.stock > 0 %}
             <div class="product-price">
                 <span>₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
                 {% if product.discount %}
                 <span class="old-price">₼ {{product.price|format_decimal:2}}</span>
                 {% endif %}
             </div>
+            {% else %}
+            <div class="product-price">
+                <span>₼ {{product.price|format_decimal:2}}</span>
+            </div>
+            {% endif %}
             <div style="margin-left: 70px;" class="add-cart d-md-none">
                 <a class='add' id="mobile_product_action_{{ product.id }}" aria-label='Sevimlilərə əlavə et' {% if user.is_authenticated %}onclick="toggleFavorite({{ product.id }})"{% else %}href="{% url "login" %}"{% endif %} class='action-btn'>{% if product|is_wished:request and user.is_authenticated %}<img style="width:14px !important;" src="{% static "assets/imgs/heart.png" %}" alt="">{% else %}<i class="fi-rs-heart"></i>{% endif %}</a>
             </div>
             <div class="add-cart">
+                {% if product.stock > 0 %}
                 <button class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</button>
+                {% endif %}
             </div>
         </div>
     </div>

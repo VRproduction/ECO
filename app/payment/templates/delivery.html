@@ -66,7 +66,7 @@ crossorigin="localhost"></script>
     <div class="container-sm mb-80 mt-50">
         <div class="row">
             <div class="col-lg-8" >
-                <h3>Çatdırılma metodu və vaxt</h3>
+                <h3>Çatdırılma metodu, vaxt və əlaqə məlumatları</h3>
                 {% include "components/delivery/modal1.html" %}
                 
                 <h3>Seçilmiş məhsullar</h3>
@@ -121,7 +121,7 @@ crossorigin="localhost"></script>
                                         <h6 class="text-muted">Çatdırılma</h6>
                                     </td>
                                     <td class="cart_total_amount">
-                                        <h4 class="text-heading text-end">₼ 10</h4>
+                                        <h4 class="text-heading text-end" id="map_total_delivery">₼ 0</h4>
                                     </td>
                                     <td scope="col" colspan="2">
                                         <div class="divider-2 mt-10 mb-10"></div>
@@ -150,7 +150,11 @@ crossorigin="localhost"></script>
                                 </tr>
                                 <tr>
                                     <td scope="col" colspan="2">
-                                        <a href="/payment/" id="checkout_button" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></a>
+                                        <button  id="checkout_button" onclick="checkoutButton()" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></button>
+                                        <ul>
+                                            <li id="checkout_address_error" class="text-danger">* Düzgün address seçin!</li>
+                                            <li id="checkout_phone_error" class="text-danger">* Əlaqə məlumatlarını daxil edin!</li>
+                                        </ul>
                                     </td>
                                 </tr>
                             </tbody>
@@ -163,135 +167,7 @@ crossorigin="localhost"></script>
 {% endblock main %}
 
 {% block js %}
-<script>
-        var map = L.map('map').setView([40.36815635,  49.8210362], 15);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
-    
-        var marker = L.marker([40.3685008, 49.8338029]).addTo(map);
-        var circle = L.circle([40.3685008, 49.8338029], {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.5,
-            radius: 100
-        }).addTo(map);
-        marker.bindPopup("ECO").openPopup();
-        
-        var popup = L.popup();
-    
-        var previousMarker = null; // Önceki işaretçiyi tutacak değişken
-    
-        // Haritaya tıklandığında bir işaretçi (marker) oluşturan fonksiyon
-        function onMapClick(e) {
-            // Önceki işaretçiyi kaldır
-            if (previousMarker !== null) {
-                map.removeLayer(previousMarker);
-            }
-    
-            // Yeni işaretçi oluştur
-            var clickedMarker = L.marker(e.latlng).addTo(map);
-            clickedMarker.bindPopup("Buranı seçdiniz.").openPopup();
-    
-            // Önceki işaretçiyi güncelle
-            previousMarker = clickedMarker;
-            locationInfo(e.latlng.lat, e.latlng.lng)
-            // Ters jeokodlama yapmak için Nominatim servisini kullan
-            
-        }
-        function locationInfo(lat, lon){
-            return new Promise((resolve, reject) => {
-                var url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon + '&accept-language=az'; // Azerbaycanca dilini kullanmak için
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data && data.display_name) {
-                            const addressComponents = data.display_name.split(', ');
-                            const filteredAddress = addressComponents.slice(0, -4);
-                            const newAddress = filteredAddress.join(', ');
-                            resolve(newAddress); // Adres bilgisini resolve ile döndür
-                        } else {
-                            reject('Geçersiz veri');
-                        }
-                    })
-                    .catch(error => {
-                        reject('Hata:', error);
-                    });
-            });
-        }
-
-        // Haritaya tıklama olayını dinleyen olay dinleyici ekleyin
-        map.on('click', onMapClick);
-    
-        // Kullanıcının konumunu güncelleyen fonksiyon
-        function updateCurrentLocation(onload = false) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-    
-                    // Eğer kullanıcı daha önce bir işaretçi eklediyse kaldır
-                    if (currentLocationMarker) {
-                        map.removeLayer(currentLocationMarker);
-                        map.removeLayer(currentLocationCircle);
-                    }
-    
-                    var icon = L.icon({
-                        iconUrl: '{% static "/assets/imgs/location.png" %}', // Ok simgesi resmi
-                        iconSize: [38, 38], // Resim boyutu
-                        iconAnchor: [19, 38] // Okun konumu
-                    });
-    
-                    currentLocationMarker = L.marker([latitude, longitude], {icon: icon, rotationAngle: position.coords.heading}).addTo(map);
-    
-                    currentLocationCircle = L.circle([latitude, longitude], {
-                        color: 'transparent',
-                        fillColor: 'transparent',
-                        fillOpacity: 0.5,
-                        radius: 100
-                    }).addTo(map);
-    
-                    if(onload == true){
-                        map.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
-                        console.log("geolocation start")
-                        // document.getElementById("map-location-info").innerText = locationInfo(latitude, longitude)
-                        locationInfo(latitude, longitude)
-                        .then(address => {
-                            document.getElementById("map-location-info").innerText = address
-                            document.getElementById("option1Label").innerText = address
-
-                        })
-                        .catch(error => {
-                            console.error('Hata:', error);
-                        });
-
-                    }
-                });
-            } else {
-                alert("Tarayıcınız konum belirleme özelliğini desteklemiyor.");
-                console.log("geolocation xeta")
-    
-            }
-        }
-    
-        var currentLocationMarker = null;
-        var currentLocationCircle = null;
-
-        window.onload = updateCurrentLocation(onload = true)
-        // Konumu güncelleme işlemini belirli aralıklarla yapmak için setInterval kullanarak fonksiyonu çağırın
-        setInterval(updateCurrentLocation, 5000); // Her 10 saniyede bir güncelle
-        function centerMapToCurrentLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-                    map.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
-                });
-            } else {
-                alert("Tarayıcınız konum belirleme özelliğini desteklemiyor.");
-                console.log("geolocation xeta")
-            }
-        }
-</script>
+<script src="{% static "assets/js/delivery.js" %}"></script>
 <script src="{% static "assets/js/map.js" %}"></script>
+
 {% endblock js %}

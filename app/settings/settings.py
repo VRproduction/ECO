@@ -176,3 +176,11 @@ CKEDITOR_CONFIGS = {
 WOLT_API_KEY = "PUNlJQGSVyqo8ShrDCd4uULMfzviPh8V5ywt6LdjYIY"
 WOLT_VENUE_ID = "65cf2245fc643985912ab003"
 WOLT_MERCHANT_ID = "65cf21d501026216134fd3c6"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.example.com'  
+EMAIL_PORT = 587  
+EMAIL_HOST_USER = 'ilqarhsnzad@gmail.com'  
+EMAIL_HOST_PASSWORD = 'ecla fykh xuej abxu'
+EMAIL_USE_TLS = True  
+DEFAULT_FROM_EMAIL = 'your_email@example.com'  

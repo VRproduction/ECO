@@ -25,6 +25,8 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+
 function addToBasket(product_id, quantity) {
     fetch(`/add-to-basket/${product_id}/`, {
         method: 'POST',
@@ -95,6 +97,11 @@ function updateURLParameter(key, value) {
 
     // Replace the current URL with the updated one
     history.replaceState(null, null, url.href);
+
+}
+var coupon_is_applied = false;
+if (window.location.pathname == '/basket/') {
+    localStorage.removeItem('coupon_code');
 }
 function applyCoupon() {
     var form = document.getElementById('couponForm');
@@ -106,9 +113,35 @@ function applyCoupon() {
 
     // Call the fetchBasketItems function with the coupon code
     fetchBasketItems(couponValue);
+    if (couponValue !== '') {
+        coupon_is_applied = true
+    }
+    localStorage.setItem('coupon_code', couponValue);
+}
+function notApplyCoupon() {
+    localStorage.removeItem('discount');
+    fetchBasketItems();
+    coupon_is_applied = false
+    localStorage.removeItem('coupon_code');
+    updateURLParameter('coupon_code', '');
+}
 
-    var checkoutLink = document.getElementById('checkout_button');
-    checkoutLink.href = "/checkout/?coupon_code=" + couponValue;
+function check_stock_status() {
+    return new Promise((resolve, reject) => {
+        fetch(`/check-stock-status/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                resolve(data); // Veriyi döndür
+            })
+            .catch(error => {
+                reject(error); // Hata durumunda hata nesnesini döndür
+            });
+    });
 }
 
 
@@ -120,7 +153,6 @@ function fetchBasketItems(coupon_code) {
             if(window.location.pathname == "/basket/"){
             updateBasketTable(data);
             }
-            console.log(coupon_code)
         })
         .catch(error => console.error('Error:', error));
 }
@@ -160,56 +192,79 @@ function updateNavbarBasket(data){
 function updateBasketTable(data) {
     // Sepet tablosunu güncelleme kodları buraya eklenebilir
     // Örneğin, data içindeki bilgileri kullanarak HTML içeriğini dinamik olarak oluşturabilirsiniz.
+    var urlParams = new URLSearchParams(window.location.search);
+    var couponCode = urlParams.get('coupon_code');
     document.getElementById('basket-item-count').innerText = data.basketItemCount;
-    document.getElementById('basket-item-checkout').innerHTML = `
-            <tr id="basket-item-total">
-                <td class="cart_total_label">
-                    <h6 class="text-muted">Ümumi qiymət</h6>
-                </td>
-                <td class="cart_total_amount">
-                    <h4 class="text-brand text-end">₼ ${data.totalPrice}</h4>
-                </td>
-            </tr>
-            <tr>
-                <td scope="col" colspan="2">
-                    <div class="divider-2 mt-10 mb-10"></div>
-                </td>
-            </tr>
-            <tr>
-                <td class="cart_total_label">
-                    <h6 class="text-muted">Endirim</h6>
-                </td>
-                <td class="cart_total_amount">
-                    <h5 class="text-heading text-end">₼ ${data.discount ? data.discount : 0}</h5></td> </tr> <tr>
-                <td scope="col" colspan="2">
-                    <div class="divider-2 mt-10 mb-10"></div>
-                </td>
-            </tr>
-            <tr>
-                <td class="cart_total_label">
-                    <h6 class="text-muted">Yekun qiymət</h6>
-                </td>
-                <td class="cart_total_amount">
-                    <h4 class="text-brand text-end">₼ ${data.discount ? data.discountPrice : data.totalPrice}</h4>
-                </td>
-            </tr>
-            <tr>
-                <td scope="col" colspan="2">
-                    <div class="divider-2 mt-10 mb-10"></div>
-                </td>
-            </tr>
-            <tr>
-                <td scope="col"  colspan="2">
-                    <div class="payment-grid">
-                        <div class="payment-option w-100" data-value="credit_card">
-                            <a class="text-light text-center d-block w-100" href="/payment/map/">Kuriyer ilə çatdırılma</a>
-                        </div>
-                        <div class="payment-option w-100" data-value="cash_on_delivery">
-                            <a class="text-light text-center d-block w-100" href="">Yerində ödə</a>
-                        </div>
+    document.getElementById('basket-checkout-form').innerHTML = `
+            <div class="border p-md-4 cart-totals ml-30">
+                ${!data.stock_status ? `<p class="text-danger">* Stokda olmayan məhsullar var</p>`: ''}
+                <h4 class="mb-10">Kupon tətbiq et</h4>
+                <form  id="couponForm" class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <input class="font-medium mr-15 coupon" ${couponCode ? `value="${couponCode}"`: ''} name="coupon_code" placeholder="Kupon">
+                        ${coupon_is_applied ? `
+                        <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="notApplyCoupon()" type="button" style="width:265px;padding:0;" class="btn"><i class="fi-rs-label mr-10"></i>Ləğv et</button>
+                        `:`
+                        <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="applyCoupon()" type="button" style="width:265px;padding:0;" class="btn"><i class="fi-rs-label mr-10"></i>Tətbiq et</button>
+                        `}
                     </div>
-                </td>
-            </tr>
+                    <div id="coupon_error" class="mt-3 text-danger"></div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table no-border">
+                        <tbody id="basket-item-checkout">
+                            <tr id="basket-item-total">
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Ümumi qiymət</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h4 class="text-brand text-end">₼ ${data.totalPrice}</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="col" colspan="2">
+                                    <div class="divider-2 mt-10 mb-10"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Endirim</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h5 class="text-heading text-end">₼ ${data.discount ? data.discount : 0}</h5></td> </tr> <tr>
+                                <td scope="col" colspan="2">
+                                    <div class="divider-2 mt-10 mb-10"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Yekun qiymət</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h4 class="text-brand text-end">₼ ${data.discount ? data.discountPrice : data.totalPrice}</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="col" colspan="2">
+                                    <div class="divider-2 mt-10 mb-10"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="col"  colspan="2">
+                                    <div class="payment-grid">
+                                        <div class="payment-option w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-danger' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `style="cursor: not-allowed;"`: ''} data-value="credit_card">
+                                            <a class="text-light text-center d-block w-100" ${data.totalPrice == 0  || !data.stock_status ? `style="cursor: not-allowed;"`: `href="/payment/map/"`}>Kuriyer ilə çatdırılma</a>
+                                        </div>
+                                        <button onclick="checkoutButton()" class="payment-option text-center w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-success' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `style="cursor: not-allowed;"`: ''} data-value="cash_on_delivery">
+                                            Yerində ödə
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     `;
     saveDataToLocalStorage(data);
 
@@ -217,6 +272,7 @@ function updateBasketTable(data) {
 
     if (data.error) {
         coupon_error.innerText = `* ${data.error}`;
+        localStorage.removeItem('coupon_code')
     }else{
         coupon_error.innerText = '';
     }
@@ -235,22 +291,28 @@ function updateBasketTable(data) {
         <td class="image product-thumbnail"><img src="${item.product.image_url}" alt="#"></td>
         <td class="product-des product-name">
             <h6 class="mb-5"><a class='product-name mb-10 text-heading' data-bs-toggle="modal" data-bs-target="#quickViewModal${item.product.id}">${item.product.title}</a></h6>
+            ${item.product.stock > 0 && item.product.stock < item.quantity ? '<span class="text-danger border-solid border-1 border-danger rounded p-1">Stokda kifayət qədər yoxdur</span>' :''}
+            ${item.product.stock == 0 ? '<span class="text-danger border-solid border-1 border-danger rounded p-1">Stokda yoxdur</span>' :''}
         </td>
-        <td class="price" data-title="Price">
+        <td class="price" data-title="Qiymət">
             <h4 class="text-body">₼ ${item.product.price}</h4>
         </td>
-        <td class="text-center detail-info" data-title="Stock">
+        ${item.product.stock > 0 ? `
+        <td class="text-center detail-info" data-title="Say">
             <div class="detail-extralink mr-15">
                 <div class="detail-qty border radius">
                     <a onclick="decrementQuantity(${ item.product.id })" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
                     <span class="qty-val">${item.quantity}</span>
+                    ${item.product.stock > item.quantity ? `
                     <a onclick="incrementQuantity(${ item.product.id })" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                    `: ''}
                 </div>
             </div>
         </td>
-        <td class="price" data-title="Price">
+        <td class="price" data-title="Ümumi qiymət">
             <h4 class="text-brand">₼ ${item.total_price}</h4>
         </td>
+        ` : '<td></td><td></td>'}
         <td class="action text-center" data-title="Remove">
             <a href="#" class="text-body" onclick="removeFromBasket(${item.id})"><i class="fi-rs-trash"></i></a>
         </td>

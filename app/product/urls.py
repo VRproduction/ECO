@@ -20,6 +20,7 @@ urlpatterns = [
     path('clear-basket/', views.clear_basket, name='clear_basket'),
     path('delete_selected_basket_items/', views.delete_selected_basket_items, name='delete_selected_basket_items'),
     path('checkout/', views.checkout, name='checkout'),
+    path('check-stock-status/', views.check_stock_api, name='check_stock'),
 
     path('wish-list/', views.WishListPageView.as_view(), name='wish_list'),
     path('favorite_toggle/<int:product_id>/', views.toggle_favorite, name='toggle_favorite_api'),

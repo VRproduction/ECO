@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load custom_filters %}
+{% load producthelper %}
 {% block main %}
     <div class="page-content pt-50 pb-50">
         <div class="container">
@@ -55,8 +57,8 @@
                                                             <td>#{{order.id}}</td>
                                                             <td>{{order.created_at}}</td>
                                                             <td>{{order.status}}</td>
-                                                            <td>₼ {% if order.discount %}{{order.discount_amount}}{% else %}{{order.total_amount}}{% endif %} {{order.order_items.count}} məhsul</td>
-                                                            <td><a href="{% if order.tracing_url %}{{order.tracing_url}}{% else %}#{% endif %}" class="btn-small d-block">Sifarişi izlə</a></td>
+                                                            <td>₼ {% if order.discount %}{{order.discount_amount|format_decimal:2}}{% else %}{{order.total_amount|format_decimal:2}}{% endif %} {{order.order_items.count}} məhsul</td>
+                                                            <td><a href="{% if order.tracking_url %}{{order.tracking_url}}{% else %}#{% endif %}" class="btn-small d-block">Sifarişi izlə</a></td>
                                                         </tr>
                                                         {% endfor %}
                                                     </tbody>

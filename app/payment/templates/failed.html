@@ -14,10 +14,10 @@
 </style>
 <div class="container-error mx-auto">
     <div class="alert alert-danger" role="alert">
-      <h4 class="alert-heading">Ödeme Hatası!</h4>
-      <p>Ödeme işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin veya destek ekibimizle iletişime geçin.</p>
+      <h4 class="alert-heading">Ödəniş xətası!</h4>
+      <p>Ödəniş zamanı xəta baş verdi.</p>
       <hr>
-      <p class="mb-0">Tekrar denemek için <a href="">buraya tıklayın</a>.</p>
+      <p class="mb-0"><a href="{% if payment_redirect_url %}{{payment_redirect_url}}{% else %}#{% endif %}">Təkrar yoxlayın</a></p>
     </div>
   </div>
 {% endblock main %}

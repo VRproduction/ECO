@@ -217,7 +217,6 @@ class BasketItem(models.Model):
         verbose_name = 'Məhsul'
         verbose_name_plural = 'Səbətdəki məhsullar'
 
-
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'orders', null = True, blank = True)
     total_amount = models.FloatField()
@@ -232,7 +231,9 @@ class Order(models.Model):
         ('Çatdırılıb', 'Delivered'),
         ('Ləğv edilib', 'Cancelled'),
     ], default='Gözləmədə')
-    tracing_url = models.URLField(null = True)
+    tracking_url = models.URLField(null = True, blank = True)
+    tracking_id = models.CharField(max_length = 100, null = True, blank = True)
+    wolt_order_reference_id = models.CharField(max_length = 100, null = True, blank = True)
 
     def __str__(self):
         return f"Order for {self.user.email}"

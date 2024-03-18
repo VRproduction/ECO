@@ -8,6 +8,10 @@ function getDataFromLocalStorage() {
 }
 const localStorageData = getDataFromLocalStorage();
 
+localStorage.removeItem('delivery_amount');
+
+
+
 function sendShipmentPromises(lat, lon, street) {
     const url = `/payment/map/shipment_promises/?lat=${lat}&lon=${lon}&street=${street}`;
   
@@ -27,34 +31,149 @@ function sendShipmentPromises(lat, lon, street) {
       });
   }
 
-function sendDeliveryCreation(lat, lon, amount, recipient_name, recipient_phone, shipment_promise_id){
-  const requestData = {
-    lat: lat,
-    lon: lon,
-    amount: amount,
-    recipient_name: recipient_name,
-    recipient_phone: recipient_phone,
-    shipment_promise_id: shipment_promise_id,
-  };
-  fetch(`/payment/map/deliveries/`,{
-      method: 'POST',
+  function sendDeliveryCreationRequest(lat, lon, amount, recipient_name, recipient_phone, shipment_promise_id) {
+    return new Promise((resolve, reject) => {
+      const requestData = {
+        lat: lat,
+        lon: lon,
+        amount: amount,
+        recipient_name: recipient_name,
+        recipient_phone: recipient_phone,
+        shipment_promise_id: shipment_promise_id,
+      };
+  
+      fetch(`/payment/map/deliveries/`, {
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken'),  // Add this function to get the CSRF token
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),  // Add this function to get the CSRF token
         },
         body: JSON.stringify(requestData),
-  })
-  .then(data => {
-    console.log(data)
-    if (data) {
-      // console.log(data)        
-    } else {
-       console.log('Bir hata oluştu.');
-    }
-  })
-  .catch(error => console.error('Error:', error));
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error, status = ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        resolve(data); // HTTP isteğinin başarılı bir şekilde tamamlanması durumunda veriyi döndür
+      })
+      .catch(error => {
+        reject(error); // Hata durumunda hatayı döndür
+      });
+    });
+  }
 
-}
+  function sendOrderCreationRequest(tracking_url, tracking_id, wolt_order_reference_id){
+    return new Promise((resolve, reject) => {
+      const requestData = {
+        tracking_url: tracking_url,
+        tracking_id: tracking_id,
+        wolt_order_reference_id: wolt_order_reference_id,
+      };
+  
+      fetch(`/checkout/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),  // Add this function to get the CSRF token
+        },
+        body: JSON.stringify(requestData),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error, status = ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        resolve(data); // HTTP isteğinin başarılı bir şekilde tamamlanması durumunda veriyi döndür
+      })
+      .catch(error => {
+        reject(error); // Hata durumunda hatayı döndür
+      });
+    });
+  }
+  
+  function sendPaymentRequest(amount){
+    return new Promise((resolve, reject) => {
+      const requestData = {
+        amount: amount,
+      };
+  
+      fetch(`/payment/checkout-request-api-view/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),  // Add this function to get the CSRF token
+        },
+        body: JSON.stringify(requestData),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error, status = ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        resolve(data); // HTTP isteğinin başarılı bir şekilde tamamlanması durumunda veriyi döndür
+      })
+      .catch(error => {
+        reject(error); // Hata durumunda hatayı döndür
+      });
+    });
+  }
+
+  function sendTransactionCreateRequest(transaction, payment_redirect_url, coupon_code, lat, lon, amount, recipient_name, recipient_phone, shipment_promise_id, is_wolt = false){
+    return new Promise((resolve, reject) => {
+      let requestData;
+
+      if (is_wolt) {
+        requestData = {
+          value: transaction,
+          payment_redirect_url: payment_redirect_url,
+          lat: lat,
+          lon: lon,
+          amount: amount,
+          recipient_name: recipient_name,
+          recipient_phone: recipient_phone,
+          shipment_promise_id: shipment_promise_id,
+          is_wolt: true
+        }
+      } else {
+        requestData = {
+          value: transaction,
+          payment_redirect_url: payment_redirect_url,
+        }
+      }
+      if (coupon_code) {
+        requestData["coupon_code"] = coupon_code
+      }
+      console.log(coupon_code)
+  
+      fetch(`/payment/transactions/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),  // Add this function to get the CSRF token
+        },
+        body: JSON.stringify(requestData),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error, status = ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        resolve(data); // HTTP isteğinin başarılı bir şekilde tamamlanması durumunda veriyi döndür
+      })
+      .catch(error => {
+        reject(error); // Hata durumunda hatayı döndür
+      });
+    });
+  }
 
 function updateMapLocationInfo(lat, lon, street){
     sendShipmentPromises(lat, lon, street)
@@ -94,3 +213,42 @@ function updateMapLocationInfo(lat, lon, street){
     });
   }
   
+  function checkoutButton(){
+    var delivery_amount = localStorage.getItem('delivery_amount');
+    var total_price_with_delivery;
+    var coupon_code = localStorage.getItem('coupon_code');
+    if (delivery_amount) {
+        total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined'? Number(localStorage.getItem('discountPrice'))+Number(delivery_amount) : Number(localStorage.getItem('totalPrice'))+Number(delivery_amount)}`);
+    }else{
+      total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined'? Number(localStorage.getItem('discountPrice')) : Number(localStorage.getItem('totalPrice'))}`);
+    }
+    sendPaymentRequest(total_price_with_delivery)
+    .then(responseData => {
+        if (responseData["status"] === "success") {
+            console.log(responseData)
+            if (window.location.pathname === '/payment/map/') {
+              delivery_data = getDeliveryData()
+              sendTransactionCreateRequest(transaction = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], amount = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
+              .then(transactionData => {
+                  // console.log(transactionData)
+                  window.location.href = responseData["redirect_url"];
+              })
+              .catch(error => {
+                  console.error('HTTP isteği sırasında bir hata oluştu:', error);
+              });
+            }else{
+              sendTransactionCreateRequest(transaction = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code)
+              .then(transactionData => {
+                  // console.log(transactionData)
+                  window.location.href = responseData["redirect_url"];
+              })
+              .catch(error => {
+                  console.error('HTTP isteği sırasında bir hata oluştu:', error);
+              });
+            }
+        }
+    })
+    .catch(error => {
+        console.error('HTTP isteği sırasında bir hata oluştu:', error);
+    });
+}

@@ -14,6 +14,7 @@ from django.views.generic.edit import FormView
 import datetime
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from urllib.parse import urlparse
 
 class HomePageView(TemplateView):
     template_name = 'index.html'
@@ -110,9 +111,13 @@ class BasketPageView(TemplateView, IsNotAuthView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["items"] = BasketItem.objects.filter(user = self.request.user).order_by("pk")
+        basket_items = BasketItem.objects.filter(user=self.request.user).order_by("pk")
+        
+        all_items_in_stock = all(item.product.stock >= item.quantity for item in basket_items)
+        context["items"] = basket_items
+        context["all_items_in_stock"] = all_items_in_stock
+        
         return context
-
 def round_to_decimal(value):
     try:
         rounded_value = round(float(value), 2)
@@ -141,8 +146,9 @@ def get_basket_items(request):
             'product': {
                 'id': item.product.pk,
                 'title': item.product.title,
-                'price': round_to_decimal(item.product.discount_price) if item.product.discount else round_to_decimal(item.product.price),
+                'price': round_to_decimal(item.product.discount_price) if item.product.discount and item.product.stock > 0 else round_to_decimal(item.product.price),
                 'image_url': item.product.image.url,
+                'stock': item.product.stock
             },
             'quantity': item.quantity,
             'total_price': round_to_decimal(item.total_price),
@@ -155,6 +161,7 @@ def get_basket_items(request):
             'basketItemCount': basket_items.count(),
             'basketItems': basket_items_data,
             'totalPrice': round_to_decimal(basket_total),
+            'stock_status': all(item.product.stock >= item.quantity for item in basket_items)
         }
         applied_coupon = None
 
@@ -276,83 +283,115 @@ def delete_selected_basket_items(request):
     return Response(response_data, status=status.HTTP_200_OK)
 
 
+from django.db import transaction
+
+# @transaction.atomic
 # def checkout(request):
-#     basket_items = BasketItem.objects.filter(user=request.user)
-#     # Stok kontrolü
-#     for item in basket_items:
-#         product = Product.objects.get(id=item.product.id)
-#         if item.quantity > product.stock:
-#             messages.error(request, f"Not enough stock for {product.title}.")
+#     try:
+#         basket_items = BasketItem.objects.filter(user=request.user)
+
+#         if basket_items.count() == 0:
+#             messages.error(request, 'Səbətdə məhsul yoxdur!')
 #             return redirect('basket')
+        
+#         # Stok kontrolü
+#         for item in basket_items:
+#             product = Product.objects.get(id=item.product.id)
+#             if item.quantity > product.stock:
+#                 messages.error(request, f"Stokda '{product.title}' yoxdur.")
+#                 return redirect('basket')
 
-#     total_amount =  sum(item.total_price for item in basket_items)
-#     order = Order.objects.create(user=request.user, total_amount=total_amount)
+#         # Toplam ücret hesapla
+#         total_amount = sum(item.total_price for item in basket_items)
 
-#     # Siparişe ürünleri ekleyin ve stok güncelleyin
-#     for item in basket_items:
-#         product = Product.objects.get(id=item.product.id)
-#         OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
+#         # Kupon işlemleri
+#         coupon_code = request.GET.get('coupon_code')
+#         applied_coupon = None
 
-#         # Stok düşürme
-#         product.stock -= item.quantity
-#         product.save()
+#         if coupon_code:
+#             try:
+#                 applied_coupon = Coupon.objects.get(coupon=coupon_code)
+#                 # Kuponun kullanılabilir olup olmadığını kontrol et
+#                 if not applied_coupon.can_user_use_coupon(request.user):
+#                     messages.error(request, 'Siz artıq bu kuponu istifadə etmisiz!')
+#                     return redirect('basket')
+              
+#             except Coupon.DoesNotExist:
+#                 messages.error(request, 'Kupon mövcud deyil!')
+#                 return redirect('basket')
 
-#     # Sepeti temizleme (veya kendi sepet yönetimine göre uyarla)
-#     basket_items.delete()
+#         # İndirimli toplam tutarı hesapla
 
-#     return redirect('basket')
+#         # Sipariş oluştur
+#         with transaction.atomic():
+#             order = Order.objects.create(
+#                 user=request.user,
+#                 total_amount=total_amount,  # İndirimli toplam tutarı kullan
+#                 discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+#                 discount_amount = apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+#                 coupon=applied_coupon,
+#             )
 
+#             # Siparişe ürünleri ekle ve stok güncelle
+#             for item in basket_items:
+#                 product = Product.objects.get(id=item.product.id)
+#                 OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
+
+#                 # Stok düşürme
+#                 product.stock -= item.quantity
+#                 product.save()
+
+#         # Sepeti temizle (veya kendi sepet yönetimine göre uyarla)
+#         basket_items.delete()
+#         if coupon_code:
+#             coupon_usage = CouponUsage.objects.get(user=request.user, coupon = applied_coupon)
+#             coupon_usage.max_coupon_usage_count -= 1
+#             coupon_usage.save()
+#         messages.success(request, 'Sifarişiniz uğurla qeydə alındı.')
+#         return redirect('basket')
+
+#     except Exception as e:
+#         messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
+#         return redirect('basket')
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def checkout(request):
-    basket_items = BasketItem.objects.filter(user=request.user)
+    tracking_url = request.data.get("tracking_url")
+    tracking_id = request.data.get("tracking_id")
+    wolt_order_reference_id = request.data.get("wolt_order_reference_id")
+        
+    errors = []
 
-    for item in basket_items:
-        product = get_object_or_404(Product, id=item.product.id)
-        if item.quantity > product.stock:
-            return Response({"error": f"Not enough stock for {product.title}."}, status=status.HTTP_400_BAD_REQUEST)
+    if not tracking_url:
+        errors.append("Tracking URL is missing.")
+    if not tracking_id:
+        errors.append("Tracking ID is missing.")
+    if not wolt_order_reference_id:
+        errors.append("Wolt order reference ID is missing.")
 
-    total_amount = sum(item.total_price for item in basket_items)
-    tracing_url = request.data.get("tracing_url")  
+    if errors:
+        return Response({'error': errors}, status=status.HTTP_400_BAD_REQUEST)
+    parsed_url = urlparse(tracking_url)
+    if not all([parsed_url.scheme, parsed_url.netloc]):
+        return Response({'error': "Tracking url doesn't exists."}, status=status.HTTP_400_BAD_REQUEST)
 
-    order = Order.objects.create(user=request.user, total_amount=total_amount, tracing_url=tracing_url)
-
-    for item in basket_items:
-        product = get_object_or_404(Product, id=item.product.id)
-        OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
-
-        # Update stock
-        product.stock -= item.quantity
-        product.save()
-
-    basket_items.delete()
-
-    return Response({"success": "Order placed successfully.", "tracing_url": tracing_url}, status=status.HTTP_201_CREATED)
-
-
-from django.db import transaction
-
-@transaction.atomic
-def checkout(request):
     try:
         basket_items = BasketItem.objects.filter(user=request.user)
 
         if basket_items.count() == 0:
-            messages.error(request, 'Səbətdə məhsul yoxdur!')
-            return redirect('basket')
+            return Response({'error': 'Səbətdə məhsul yoxdur!'}, status=status.HTTP_400_BAD_REQUEST)
         
         # Stok kontrolü
         for item in basket_items:
             product = Product.objects.get(id=item.product.id)
             if item.quantity > product.stock:
-                messages.error(request, f"Stokda '{product.title}' yoxdur.")
-                return redirect('basket')
+                return Response({'error': f"Stokda '{product.title}' yoxdur."}, status=status.HTTP_400_BAD_REQUEST)
 
         # Toplam ücret hesapla
         total_amount = sum(item.total_price for item in basket_items)
 
         # Kupon işlemleri
-        coupon_code = request.GET.get('coupon_code')
+        coupon_code = request.data.get('coupon_code')
         applied_coupon = None
 
         if coupon_code:
@@ -360,23 +399,25 @@ def checkout(request):
                 applied_coupon = Coupon.objects.get(coupon=coupon_code)
                 # Kuponun kullanılabilir olup olmadığını kontrol et
                 if not applied_coupon.can_user_use_coupon(request.user):
-                    messages.error(request, 'Siz artıq bu kuponu istifadə etmisiz!')
-                    return redirect('basket')
+                    return Response({'error': 'Siz artıq bu kuponu istifadə etmisiz!'}, status=status.HTTP_400_BAD_REQUEST)
               
             except Coupon.DoesNotExist:
-                messages.error(request, 'Kupon mövcud deyil!')
-                return redirect('basket')
+                return Response({'error': 'Kupon mövcud deyil!'}, status=status.HTTP_400_BAD_REQUEST)
 
         # İndirimli toplam tutarı hesapla
 
         # Sipariş oluştur
+
         with transaction.atomic():
             order = Order.objects.create(
                 user=request.user,
                 total_amount=total_amount,  # İndirimli toplam tutarı kullan
-                discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-                discount_amount = apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+                discount=total_amount - apply_coupon(request.user, basket_items, applied_coupon) if applied_coupon else None,
+                discount_amount=apply_coupon(request.user, basket_items, applied_coupon) if applied_coupon else None,
                 coupon=applied_coupon,
+                tracking_url = tracking_url,
+                tracking_id = tracking_id,
+                wolt_order_reference_id = wolt_order_reference_id
             )
 
             # Siparişe ürünleri ekle ve stok güncelle
@@ -391,15 +432,35 @@ def checkout(request):
         # Sepeti temizle (veya kendi sepet yönetimine göre uyarla)
         basket_items.delete()
         if coupon_code:
-            coupon_usage = CouponUsage.objects.get(user=request.user, coupon = applied_coupon)
+            coupon_usage = CouponUsage.objects.get(user=request.user, coupon=applied_coupon)
             coupon_usage.max_coupon_usage_count -= 1
             coupon_usage.save()
-        messages.success(request, 'Siparişiniz uğurla qeydə alındı.')
-        return redirect('basket')
+        return Response({'success': 'Sifarişiniz uğurla qeydə alındı.'}, status=status.HTTP_200_OK)
 
     except Exception as e:
-        messages.error(request, 'Sipariş oluşturulurken bir hata oluştu.')
-        return redirect('basket')
+        return Response({'error': 'Sifariş oluşturulurken bir hata oluştu.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_stock_api(request):
+    """
+    Sepetteki ürünlerin stok durumunu kontrol eden REST API fonksiyonu.
+    """
+    try:
+        basket_items = BasketItem.objects.filter(user=request.user)
+        # Stok kontrolü
+        errors = []
+        for basket_item in basket_items:
+            if basket_item.quantity > basket_item.product.stock:
+                errors.append({'error': f"Stokda '{basket_item.product.title}' yoxdur."})
+
+        if errors:
+            return Response({'status': False, 'message': errors}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'status': True, 'message': 'Tüm ürünler stokta mevcut.'}, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response({'error': 'Stok kontrolü yapılırken bir hata oluştu.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class WishListPageView(TemplateView, IsNotAuthView):

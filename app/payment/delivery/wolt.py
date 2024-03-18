@@ -33,7 +33,6 @@ class Delivery():
     
     def deliveries(self, amount, recipient_name, recipient_phone, parcel_list, shipment_promise_id):
         customer_support = Wolt.objects.first()
-        print(customer_support)
         data = {
             "dropoff": {
                 "location": {
@@ -67,7 +66,6 @@ class Delivery():
 
         response = requests.post(self.base_url+'deliveries', json = data, headers = self.getHeaders())
         response_data = response.json()
-        print(response_data)
-        return JsonResponse(response_data)
+        return response_data
 
 

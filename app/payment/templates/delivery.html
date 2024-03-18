@@ -13,6 +13,7 @@ crossorigin="localhost"></script>
 <style>
     #map {
         height: 320px; 
+        z-index: -1;
         {% comment %} filter: grayscale(100%); {% endcomment %}
     }
     #map2 {
@@ -150,6 +151,7 @@ crossorigin="localhost"></script>
                                 </tr>
                                 <tr>
                                     <td scope="col" colspan="2">
+                                        {% comment %} <button  id="checkout_button" onclick="checkoutButton()" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></button> {% endcomment %}
                                         <button  id="checkout_button" onclick="checkoutButton()" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></button>
                                         <ul>
                                             <li id="checkout_address_error" class="text-danger">* Düzgün address seçin!</li>
@@ -167,7 +169,6 @@ crossorigin="localhost"></script>
 {% endblock main %}
 
 {% block js %}
-<script src="{% static "assets/js/delivery.js" %}"></script>
 <script src="{% static "assets/js/map.js" %}"></script>
 
 {% endblock js %}

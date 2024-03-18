@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,41 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ödeme Sayfası</title>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static "assets/css/payment.css" %}" rel="stylesheet">
+
 </head>
 <body>
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Ödeme Bilgileri</h5>
-                    <form>
-                        <div class="form-group">
-                            <label for="cardNumber">Kart Numarası</label>
-                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
-                        </div>
-                        <div class="form-group">
-                            <label for="expirationDate">Son Kullanma Tarihi</label>
-                            <input type="text" class="form-control" id="expirationDate" placeholder="MM/YY">
-                        </div>
-                        <div class="form-group">
-                            <label for="cvv">CVV</label>
-                            <input type="text" class="form-control" id="cvv" placeholder="123">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Kart Üzerindeki İsim</label>
-                            <input type="text" class="form-control" id="name" placeholder="Ad Soyad">
-                        </div>
-                        <button type="button" class="btn btn-primary">Ödemeyi Tamamla</button>
-                    </form>
+    <div class="container p-0">
+        <div class="card px-4">
+            <p class="h8 py-3">Ödəniş</p>
+            <div class="row gx-3">
+                <div class="col-12">
+                    <div class="d-flex flex-column">
+                        <p class="text mb-1">Ad, Soyad</p>
+                        <input class="form-control mb-3" type="text" placeholder="Isa Hasanli" >
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="d-flex flex-column">
+                        <p class="text mb-1">Kart nömrəsi</p>
+                        <input class="form-control mb-3" type="text" placeholder="1234 5678 435678">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex flex-column">
+                        <p class="text mb-1">Expiry</p>
+                        <input class="form-control mb-3" type="text" placeholder="MM/YYYY">
+                        {% comment %} <input class="form-control mb-3" type="text" placeholder="MM/YYYY"> {% endcomment %}
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex flex-column">
+                        <p class="text mb-1">CVV/CVC</p>
+                        <input class="form-control mb-3 pt-2 " type="password" placeholder="***">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="btn btn-primary mb-3">
+                        <span class="ps-3">Pay $243</span>
+                        <span class="fas fa-arrow-right"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
 <!-- Bootstrap JS ve Popper.js -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

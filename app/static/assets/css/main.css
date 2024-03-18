@@ -12415,7 +12415,7 @@ footer .hotline img {
 }
 .payment-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* grid-template-columns: repeat(2, 1fr); */
   gap: 10px; /* Boşlukları biraz daha genişlettik */
 }
 
@@ -12424,17 +12424,20 @@ footer .hotline img {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #3BB77E; /* Mavi renk kullanabilirsiniz */
   color: #fff; /* Beyaz metin rengi */
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s; /* Geçiş efekti */
 }
-
-.payment-option:hover {
-  background-color: orange; /* Hover durumunda daha koyu bir mavi */
+.payment-option:nth-child(1){
+  background-color: red; /* Mavi renk kullanabilirsiniz */
 }
-
-.payment-option:active {
-  background-color: orange; /* Tıklama durumunda daha koyu bir mavi */
+.payment-option:nth-child(2){
+  background-color: #3bb77e; /* Mavi renk kullanabilirsiniz */
+}
+.payment-option:nth-child(1):hover {
+  background-color: #d85040; /* Hover durumunda daha koyu bir mavi */
+}
+.payment-option:nth-child(2):hover {
+  background-color: #45ad76; /* Hover durumunda daha koyu bir mavi */
 }

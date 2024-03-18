@@ -653,7 +653,52 @@ document.addEventListener("DOMContentLoaded", function () {
     checkCheckoutButtonStatus();
 });
 
-function checkoutButton(){
+// function checkoutButtonCurrier(){
+//     var selectedRadio = document.querySelector('input[name="location"]:checked');
+//     var lat = selectedRadio.getAttribute("data-lat");
+//     var lon = selectedRadio.getAttribute("data-lon");
+//     var amount = localStorage.getItem('delivery_amount')
+//     var recipient_name = localStorage.getItem('name')
+//     var recipient_phone = localStorage.getItem('phoneNumber')
+//     var shipment_promise_id = localStorage.getItem('shipment_promise_id')
+
+//     var deliveryData = {
+//         lat: lat,
+//         lon: lon,
+//         amount: amount,
+//         recipient_name: recipient_name,
+//         recipient_phone: recipient_phone,
+//         shipment_promise_id: shipment_promise_id
+//       };
+//     console.log(deliveryData)
+//     check_stock_status()
+//     .then(response => {
+//         if (response.status == true && amount > 0 && amount) {
+//             sendDeliveryCreationRequest(lat, lon, amount, recipient_name, recipient_phone, shipment_promise_id)
+//             .then(responseData => {
+//                 let tracking_id = responseData["tracking"]["id"]
+//                 let tracking_url = responseData["tracking"]["url"]
+//                 let wolt_order_reference_id = responseData["wolt_order_reference_id"]
+//                 sendOrderCreationRequest(tracking_url, tracking_id, wolt_order_reference_id)
+//                     .then(orderData => {
+//                         console.log(orderData)
+//                     })
+//                     .catch(error => {
+//                         console.error('HTTP isteği sırasında bir hata oluştu:', error);
+//                     });
+//             })
+//               .catch(error => {
+//                 console.error('HTTP isteği sırasında bir hata oluştu:', error);
+//             });
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error); // Hata durumunda işlem yap
+//     });
+    
+// }
+
+function getDeliveryData(){
     var selectedRadio = document.querySelector('input[name="location"]:checked');
     var lat = selectedRadio.getAttribute("data-lat");
     var lon = selectedRadio.getAttribute("data-lon");
@@ -670,14 +715,10 @@ function checkoutButton(){
         recipient_phone: recipient_phone,
         shipment_promise_id: shipment_promise_id
       };
-      console.log(deliveryData)
-    if (amount > 0 && amount) {
-        sendDeliveryCreation(lat, lon, amount, recipient_name, recipient_phone, shipment_promise_id)
-    }
-    window.location.href = '/checkout/'
-
+    return deliveryData
     
 }
+
 //************************************************************************/
 //                           Checkout Button End                         */
 //************************************************************************/

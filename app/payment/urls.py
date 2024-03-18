@@ -9,4 +9,6 @@ urlpatterns = [
     path('map/', views.map, name = 'map'),
     path('map/shipment_promises/', views.shipment_promises, name = 'shipment_promises'),
     path('map/deliveries/', views.deliveries, name = 'deliveries'),
+    path('checkout-request-api-view/', views.checkout_request_api_view, name = 'checkout_request_api_view'),
+    path('transactions/', views.TransactionCreateAPIView.as_view()),
 ]

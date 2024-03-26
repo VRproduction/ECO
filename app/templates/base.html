@@ -12,6 +12,11 @@
     <meta property="og:type" content="">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
+
+    <!-- Meta Pixel Code Google -->
+    <meta name="google-site-verification" content="EjJslNGIBTSS7Tmwhd-1B8nvpBZ_QCgoODNiEjljEBc" />
+    <!-- End Meta Pixel Code Google -->
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{setting.favicon.url}}">
     <!-- Template CSS -->
@@ -23,6 +28,34 @@
     <link rel="stylesheet" href="{% static "assets/css/fixed-header.css" %}"> 
     <link rel="stylesheet" href="{% static "assets/css/custom-modal-body.css" %}"> 
     <link rel="stylesheet" href="{% static "assets/css/faq.css" %}"> 
+    <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '3602899766643790');
+        fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=3602899766643790&ev=PageView&noscript=1"
+        /></noscript>
+        <!-- End Meta Pixel Code -->
+    
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4DZDXSCEJF"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-4DZDXSCEJF');
+    </script>
+        <!-- End Google tag (gtag.js) -->
 
 </head>
 

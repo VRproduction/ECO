@@ -125,7 +125,7 @@ function sendShipmentPromises(lat, lon, street) {
     });
   }
 
-  function sendTransactionCreateRequest(transaction, payment_redirect_url, coupon_code, lat, lon, amount, recipient_name, recipient_phone, shipment_promise_id, is_wolt = false){
+  function sendTransactionCreateRequest(transaction, payment_redirect_url, coupon_code, lat, lon, amount, recipient_name, recipient_phone, dropoff_comment, shipment_promise_id, is_wolt = false){
     return new Promise((resolve, reject) => {
       let requestData;
 
@@ -138,6 +138,7 @@ function sendShipmentPromises(lat, lon, street) {
           amount: amount,
           recipient_name: recipient_name,
           recipient_phone: recipient_phone,
+          dropoff_comment: dropoff_comment,
           shipment_promise_id: shipment_promise_id,
           is_wolt: true
         }
@@ -199,10 +200,10 @@ function updateMapLocationInfo(lat, lon, street){
             delivery_time.classList.remove("text-danger", "border-danger")
             delivery_time.classList.add("text-success", "border-success")
             document.getElementById("checkout_address_error").classList.add('d-none');
-            document.getElementById("map_total_delivery").innerText = `₼ ${data["price"]["amount"]}`;
-            localStorage.setItem('delivery_amount', data["price"]["amount"]);
+            document.getElementById("map_total_delivery").innerText = `₼ ${Number(data["price"]["amount"])/100}`;
+            localStorage.setItem('delivery_amount', Number(data["price"]["amount"])/100);
             localStorage.setItem('shipment_promise_id', data["id"]);
-            document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined'? Number(localStorageData.discountPrice)+Number(data["price"]["amount"]) : Number(localStorageData.totalPrice)+Number(data["price"]["amount"])}`;
+            document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined'? Number(localStorageData.discountPrice)+Number(data["price"]["amount"])/100 : Number(localStorageData.totalPrice)+Number(data["price"]["amount"])/100}`;
 
             console.log(data)
         }
@@ -228,7 +229,7 @@ function updateMapLocationInfo(lat, lon, street){
             console.log(responseData)
             if (window.location.pathname === '/payment/map/') {
               delivery_data = getDeliveryData()
-              sendTransactionCreateRequest(transaction = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], amount = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
+              sendTransactionCreateRequest(transaction = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], amount = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], dropoff_comment = delivery_data["dropoff_comment"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
               .then(transactionData => {
                   // console.log(transactionData)
                   window.location.href = responseData["redirect_url"];

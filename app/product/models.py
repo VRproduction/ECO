@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from payment.models import Transaction
 
 User = get_user_model()
 
@@ -161,8 +162,12 @@ class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'products')
     price = models.FloatField()
     discount = models.PositiveIntegerField(null = True, blank = True)
-    is_main_page = models.BooleanField(default = False)
+    is_main_page = models.BooleanField(default = False, verbose_name = "Ana səhifədə görünən")
     stock = models.PositiveIntegerField(default=0, null = True)
+    sale_count = models.PositiveIntegerField(default=0, null = True, verbose_name = "Satış sayı")
+    is_best_seller = models.BooleanField(default = False, verbose_name = "Ən çox satılan")
+    is_most_wonted = models.BooleanField(default = False, verbose_name = "Ən çox axtarılan")
+    is_trending = models.BooleanField(default = False, verbose_name = "Trenddə olan")
 
     def __str__(self):
         return self.title
@@ -175,8 +180,24 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Məhsul'
         verbose_name_plural = 'Məhsullar'
-        ordering = ['-stock']
+        ordering = ['-stock', '-pk']
+    
+    def clean(self):
+        super().clean()
+        if self.is_best_seller:
+            best_sellers_count = Product.objects.filter(is_best_seller=True).count()
+            if best_sellers_count >= 3 and not Product.objects.filter(is_best_seller=True, pk = self.pk).exists():
+                raise ValidationError("Ən çox 3 'Ən çox satılan' ola bilər.")
 
+        if self.is_most_wonted:
+            most_wonted_count = Product.objects.filter(is_most_wonted=True).count()
+            if most_wonted_count >= 3 and not Product.objects.filter(is_most_wonted=True, pk = self.pk).exists():
+                raise ValidationError("Ən çox 3 'Ən çox axtarılan' ola bilər.")
+
+        if self.is_trending:
+            trending_count = Product.objects.filter(is_trending=True).count()
+            if trending_count >= 3 and not Product.objects.filter(is_trending=True, pk = self.pk).exists():
+                raise ValidationError("Ən çox 3 'Trenddə olan' ola bilər.")
 
 class Favorite(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE, related_name = 'favorites')
@@ -224,25 +245,68 @@ class Order(models.Model):
     discount_amount = models.FloatField(null = True, blank = True)
     created_at = models.DateTimeField(auto_now_add=True)
     coupon = models.ForeignKey(Coupon, on_delete = models.CASCADE, related_name = 'orders', null = True, blank = True)
-    status = models.CharField(max_length=20, choices=[
-        ('Gözləmədə', 'Pending'),
-        ('İşlənir', 'Processing'),
-        ('Göndərilib', 'Shipped'),
-        ('Çatdırılıb', 'Delivered'),
-        ('Ləğv edilib', 'Cancelled'),
-    ], default='Gözləmədə')
     tracking_url = models.URLField(null = True, blank = True)
     tracking_id = models.CharField(max_length = 100, null = True, blank = True)
     wolt_order_reference_id = models.CharField(max_length = 100, null = True, blank = True)
+    is_wolt = models.BooleanField(default = False)
+    transaction = models.OneToOneField(Transaction, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'order')
+
 
     def __str__(self):
-        return f"Order for {self.user.email}"
+        return f"{self.pk}"
 
     class Meta:
         verbose_name = 'Sifariş'
         verbose_name_plural = 'Sifarişlər'
         ordering = ['-created_at']
 
+    def get_confirmed_statuses(self):
+        return self.statuses.filter(is_confirmed=True)
+    
+    @property
+    def confirmed_status(self):
+        confirmed_status_obj = self.statuses.filter(is_confirmed=True).order_by('-ordering').first()
+        if confirmed_status_obj:
+            return confirmed_status_obj.status
+        return None
+
+class Status(models.Model):
+    status = models.CharField(max_length=20, choices=[
+        ('Gözləmədə', 'Gözləmədə'),
+        ('Hazırlandı', 'Hazırlandı'),
+        ('Göndərilib', 'Göndərilib'),
+        ('Çatdırılıb', 'Çatdırılıb'),
+        ('Ləğv edilib', 'Ləğv edilib'),
+    ], default='Gözləmədə')
+    is_confirmed = models.BooleanField(default=False, verbose_name="Təsdiqlənib")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='statuses')
+    ordering = models.IntegerField(default=1)
+
+    def save(self, *args, **kwargs):
+        if not self.pk: 
+            highest_ordering = Status.objects.filter(order=self.order).aggregate(models.Max('ordering'))['ordering__max']
+            if highest_ordering is not None:
+                self.ordering = highest_ordering + 1
+
+                
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+
+        existing_instance = Status.objects.get(pk=self.pk)
+        if not self.is_confirmed and self.pk and existing_instance.is_confirmed:
+            raise ValidationError("Artıq status təsdiqlənib!")
+            
+
+    def __str__(self):
+        return f"{self.status}"
+
+    class Meta:
+        verbose_name = 'Status'
+        verbose_name_plural = 'Statuslar'
+        ordering = ['order', 'ordering']
+        unique_together = (('status', 'order'),)
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name = 'order_items', null = True, blank = True)
@@ -251,6 +315,20 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.title} in Order {self.order.id}"
+    
+    @property
+    def total_price(self):
+        return self.quantity * (self.product.discount_price) if self.product.discount else (self.product.price)
+    
+    def to_dict_for_wolt_delivery(self):
+        return {
+            "price": {
+                "amount": round(self.total_price, 2),
+                "currency": "AZN"  # Replace with your actual currency
+            },
+            "description": self.product.title,
+            "count": self.quantity
+        }
     
     class Meta:
         verbose_name = 'Məhsul'

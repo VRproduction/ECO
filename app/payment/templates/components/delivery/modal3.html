@@ -12,6 +12,9 @@
                 <div class="modal-body">
                     <div id="map2-container" style="display: none;"> <!-- Harita başlangıçta gizli -->
                         <div id="map2"></div>
+                        <button onclick="centerMapToCurrentLocation()" class="map-button">
+                            <img src="{% static "/assets/imgs/location.png" %}" alt="" srcset="">
+                        </button>
                     </div>
                     <span id="selected_map_info"></span>
                 </div>

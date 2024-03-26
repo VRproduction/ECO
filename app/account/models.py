@@ -48,6 +48,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
+    is_email_verified = models.BooleanField(_("email verified"), default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

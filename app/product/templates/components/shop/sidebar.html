@@ -25,7 +25,7 @@
             <div class="content pt-10">
                 <h5><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}">{{product.title}}</a></h5>
                 <p class="price mb-0 mt-5">
-                    <span style="color:#3BB77E;">₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
+                    <span style="color:#039D2E;">₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
                     {% if product.discount %}
                     <span style="font-size: 12px;" class="old-price">₼ <del>{{product.price|format_decimal:2}}</del></span>
                     {% endif %}

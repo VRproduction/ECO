@@ -5,15 +5,15 @@
 
         </div>
         <div class="row">
-            <div class="col-lg-3 d-none d-lg-flex wow animate__animated animate__fadeIn">
+            {% comment %} <div class="col-lg-3 d-none d-lg-flex wow animate__animated animate__fadeIn">
                 <div class="banner-img style-2" style="height: 100% !important;">
                     <div class="banner-text">
                         <h2 id="changedh2"  class="mb-100"> Brendlər
                         </h2>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-9 col-md-12 wow animate__animated animate__fadeIn " data-wow-delay=".4s">
+            </div> {% endcomment %}
+            <div class="wow animate__animated animate__fadeIn " data-wow-delay=".4s">
                 <div class="tab-content" id="myTabContent-1">
                     <div class="tab-pane fade show active" id="tab-one-1" role="tabpanel"
                         aria-labelledby="tab-one-1">
@@ -21,12 +21,12 @@
                             <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow"
                                 id="carausel-4-columns-arrows">
                             </div>
-                            <div class="carausel-3-columns carausel-arrow-center" id="carausel-4-columns">
+                            <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns">
                            
                                 <!--End product Wrap-->
                                 {% for partner in partners %}
-                                <div class="team-card">
-                                    <img src="{{partner.image.url}}" alt="img">
+                                <div class="team-card" style="padding:0 10px;">
+                                    <img src="{{partner.image.url}}" alt="img" style="width: 100%">
                                 </div>
                                 {% endfor %}
                                 <!--End product Wrap-->

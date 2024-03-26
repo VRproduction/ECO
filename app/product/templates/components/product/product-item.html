@@ -56,7 +56,7 @@
             </div>
             <div class="add-cart">
                 {% if product.stock > 0 %}
-                <button class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</button>
+                <a class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</a>
                 {% endif %}
             </div>
         </div>

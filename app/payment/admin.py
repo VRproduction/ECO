@@ -12,4 +12,7 @@ class WoltAdmin(admin.ModelAdmin):
             return False
         return super().has_add_permission(request)
     
-admin.site.register(Transaction)
+
+@admin.register(Transaction)
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ['user', 'value', 'is_wolt', 'order']

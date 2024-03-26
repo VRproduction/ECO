@@ -28,9 +28,9 @@ class HomePageView(TemplateView):
         context["about"] = About.objects.first()
         context["features"] = Feature.objects.all()
         context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
-        context["most_selling_products"] = Product.objects.all().order_by("?")[:3]
-        context["most_search_products"] = Product.objects.all().order_by("?")[:3]
-        context["trending_products"] = Product.objects.all().order_by("?")[:3]
+        context["most_selling_products"] = Product.objects.filter(is_best_seller = True).order_by("?")[:3]
+        context["most_search_products"] = Product.objects.filter(is_most_wonted = True).order_by("?")[:3]
+        context["trending_products"] = Product.objects.filter(is_trending = True).order_by("?")[:3]
         context["partners"] = Partner.objects.all()
         context["statistic"] = Statistic.objects.first()
         context["faqs"] = FAQ.objects.all()
@@ -68,7 +68,7 @@ class ShopPageView(ListView):
             queryset = queryset.filter(title__icontains=search_query)
 
         if ordering:
-            queryset = queryset.order_by(ordering)
+            queryset = queryset.order_by('-stock', ordering)
 
         if vendor_id and vendor_id.isdigit():
             queryset = queryset.filter(vendor__id=int(vendor_id))
@@ -285,74 +285,6 @@ def delete_selected_basket_items(request):
 
 from django.db import transaction
 
-# @transaction.atomic
-# def checkout(request):
-#     try:
-#         basket_items = BasketItem.objects.filter(user=request.user)
-
-#         if basket_items.count() == 0:
-#             messages.error(request, 'Səbətdə məhsul yoxdur!')
-#             return redirect('basket')
-        
-#         # Stok kontrolü
-#         for item in basket_items:
-#             product = Product.objects.get(id=item.product.id)
-#             if item.quantity > product.stock:
-#                 messages.error(request, f"Stokda '{product.title}' yoxdur.")
-#                 return redirect('basket')
-
-#         # Toplam ücret hesapla
-#         total_amount = sum(item.total_price for item in basket_items)
-
-#         # Kupon işlemleri
-#         coupon_code = request.GET.get('coupon_code')
-#         applied_coupon = None
-
-#         if coupon_code:
-#             try:
-#                 applied_coupon = Coupon.objects.get(coupon=coupon_code)
-#                 # Kuponun kullanılabilir olup olmadığını kontrol et
-#                 if not applied_coupon.can_user_use_coupon(request.user):
-#                     messages.error(request, 'Siz artıq bu kuponu istifadə etmisiz!')
-#                     return redirect('basket')
-              
-#             except Coupon.DoesNotExist:
-#                 messages.error(request, 'Kupon mövcud deyil!')
-#                 return redirect('basket')
-
-#         # İndirimli toplam tutarı hesapla
-
-#         # Sipariş oluştur
-#         with transaction.atomic():
-#             order = Order.objects.create(
-#                 user=request.user,
-#                 total_amount=total_amount,  # İndirimli toplam tutarı kullan
-#                 discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-#                 discount_amount = apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-#                 coupon=applied_coupon,
-#             )
-
-#             # Siparişe ürünleri ekle ve stok güncelle
-#             for item in basket_items:
-#                 product = Product.objects.get(id=item.product.id)
-#                 OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
-
-#                 # Stok düşürme
-#                 product.stock -= item.quantity
-#                 product.save()
-
-#         # Sepeti temizle (veya kendi sepet yönetimine göre uyarla)
-#         basket_items.delete()
-#         if coupon_code:
-#             coupon_usage = CouponUsage.objects.get(user=request.user, coupon = applied_coupon)
-#             coupon_usage.max_coupon_usage_count -= 1
-#             coupon_usage.save()
-#         messages.success(request, 'Sifarişiniz uğurla qeydə alındı.')
-#         return redirect('basket')
-
-#     except Exception as e:
-#         messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
-#         return redirect('basket')
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def checkout(request):

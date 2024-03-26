@@ -20,6 +20,7 @@ class Transaction(models.Model):
     amount = models.CharField(max_length = 100, null = True, blank = True)
     recipient_name = models.CharField(max_length = 100, null = True, blank = True)
     recipient_phone = models.CharField(max_length = 100, null = True, blank = True)
+    dropoff_comment = models.CharField(max_length = 100, null = True, blank = True)
     shipment_promise_id = models.CharField(max_length = 100, null = True, blank = True)
     is_wolt = models.BooleanField(default = False)
     coupon_code= models.CharField(max_length = 100, null = True, blank = True)

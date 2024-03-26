@@ -41,6 +41,20 @@ var popup = L.popup();
 var previousMarker = null; // Önceki işaretçiyi tutacak değişken
 
 // Haritaya tıklandığında bir işaretçi (marker) oluşturan fonksiyon
+var markerSelected = null; // Define marker variable outside to make it accessible globally
+function createMarker(lat, lon, selectedRadio) {
+    // Remove previous marker if exists
+    if (markerSelected !== null) {
+        map.removeLayer(markerSelected);
+    }
+    // Create new marker at given coordinates
+    if (selectedRadio !== document.querySelector("#location1")) {
+        markerSelected = L.marker([lat, lon]).addTo(map);
+        markerSelected.bindPopup("Seçdiyiniz məkan").openPopup();
+    }
+    map.setView([lat, lon], 14);
+}
+
 function onMapClick(e) {
     // Önceki işaretçiyi kaldır
     if (previousMarker !== null) {
@@ -98,6 +112,8 @@ function updateCurrentLocation(onload = false) {
             if (currentLocationMarker) {
                 map.removeLayer(currentLocationMarker);
                 map.removeLayer(currentLocationCircle);
+                map2.removeLayer(currentLocationMarker);
+                map2.removeLayer(currentLocationCircle);
             }
 
             var icon = L.icon({
@@ -107,6 +123,7 @@ function updateCurrentLocation(onload = false) {
             });
 
             currentLocationMarker = L.marker([latitude, longitude], {icon: icon, rotationAngle: position.coords.heading}).addTo(map);
+            currentLocationMarker = L.marker([latitude, longitude], {icon: icon, rotationAngle: position.coords.heading}).addTo(map2);
 
             currentLocationCircle = L.circle([latitude, longitude], {
                 color: 'transparent',
@@ -114,9 +131,17 @@ function updateCurrentLocation(onload = false) {
                 fillOpacity: 0.5,
                 radius: 100
             }).addTo(map);
+            currentLocationCircle = L.circle([latitude, longitude], {
+                color: 'transparent',
+                fillColor: 'transparent',
+                fillOpacity: 0.5,
+                radius: 100
+            }).addTo(map2);
 
             if(onload == true){
                 map.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
+                map2.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
+
                 // document.getElementById("map-location-info").innerText = locationInfo(latitude, longitude)
                 locationInfo(latitude, longitude)
                 .then(address => {
@@ -150,6 +175,7 @@ function centerMapToCurrentLocation() {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             map.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
+            map2.setView([latitude, longitude], 14); // Konumu merkez al ve yakınlaştır
         });
     } else {
         alert("Tarayıcınız konum belirleme özelliğini desteklemiyor.");
@@ -239,7 +265,8 @@ streetInput.addEventListener('input', function() {
                     const ul = document.createElement('ul');
                     data.forEach((result, index) => {
                         const li = document.createElement('li');
-                        li.innerHTML = `<img style="width: 25px;" src="/static/assets/imgs/map-setting.png" alt=""><span class="ms-2">${result.display_name.split(', ').slice(0, -4).join(', ')}</span>`
+                        li.innerHTML = `<img style="width: 25px;" src="/static/assets/imgs/map-setting.png" alt=""><span class="ms-2">${result.display_name}</span>`
+                        // li.innerHTML = `<img style="width: 25px;" src="/static/assets/imgs/map-setting.png" alt=""><span class="ms-2">${result.display_name.split(', ').slice(0, -4).join(', ')}</span>`
                         li.classList.add("text-dark")
                         li.classList.add("my-2")
                         li.classList.add("mx-3")
@@ -248,10 +275,12 @@ streetInput.addEventListener('input', function() {
                         li.classList.add("align-items-center")
                         li.addEventListener('click', function() {
                             // Seçilen adresin içeriğini al ve input değerine ata
-                            streetInput.value = result.display_name.split(', ').slice(0, -4).join(', ');
+                            // streetInput.value = result.display_name.split(', ').slice(0, -4).join(', ');
+                            streetInput.value = result.display_name
                             streetInput.setAttribute("data-lat", result.lat);
                             streetInput.setAttribute("data-lon", result.lon);
-                            selectedInputValue = result.display_name.split(', ').slice(0, -4).join(', ');
+                            selectedInputValue = result.display_name
+                            // selectedInputValue = result.display_name.split(', ').slice(0, -4).join(', ');
                             canAddRadioList = true
                             document.getElementById("modalAddressBtn").disabled = false;
 
@@ -386,7 +415,7 @@ let radioList = [];
 
 function addRadio(marker = false) {
     var newRadio = document.createElement('div');
-    newRadio.classList.add('form-check', 'my-2', 'ms-1');
+    newRadio.classList.add('form-check', 'my-2', 'ms-1', 'd-flex', 'justify-content-between');
     var radioId = generateUniqueId();
 
     if (marker == true) {
@@ -401,11 +430,13 @@ function addRadio(marker = false) {
                     };
 
                     newRadio.innerHTML = `
-                        <input class="form-check-input" type="radio" name="location" id="location${radioId}"
-                            value="${address}" data-lat="${markerCoordinates.lat}" data-lon="${markerCoordinates.lng}">
-                        <label class="form-check-label text-dark" for="location${radioId}">
-                            ${address}
-                        </label>
+                        <div class="w-100"> 
+                            <input class="form-check-input" type="radio" name="location" id="location${radioId}"
+                                value="${address}" data-lat="${markerCoordinates.lat}" data-lon="${markerCoordinates.lng}">
+                            <label class="form-check-label text-dark" for="location${radioId}">
+                                ${address}
+                            </label>
+                        </div>
                     `;
 
                     radioList.push(radioData);
@@ -414,6 +445,11 @@ function addRadio(marker = false) {
                     var modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide();
                     document.querySelector('#radio-list').appendChild(newRadio);
+
+                    // Silme düğmesini ekle
+                    var deleteButton = addRadioDeleteButton(radioData);
+                    newRadio.appendChild(deleteButton);
+
                     closeMap(for_add = true);
                 }
             })
@@ -433,11 +469,13 @@ function addRadio(marker = false) {
                 };
 
                 newRadio.innerHTML = `
-                    <input class="form-check-input" type="radio" name="location" id="location${radioId}"
-                        value="${streetValue}" data-lat="${streetInput.getAttribute("data-lat")}" data-lon="${streetInput.getAttribute("data-lon")}">
-                    <label class="form-check-label text-dark" for="location${radioId}">
-                        ${streetValue}
-                    </label>
+                    <div class="w-100">
+                        <input class="form-check-input" type="radio" name="location" id="location${radioId}"
+                            value="${streetValue}" data-lat="${streetInput.getAttribute("data-lat")}" data-lon="${streetInput.getAttribute("data-lon")}">
+                        <label class="form-check-label text-dark" for="location${radioId}">
+                            ${streetValue}
+                        </label>
+                    </div>
                 `;
 
                 radioList.push(radioData);
@@ -445,6 +483,11 @@ function addRadio(marker = false) {
                 errorDiv.innerText = "";
                 errorDiv.classList.remove("text-danger", "mb-2");
                 document.querySelector('#radio-list').appendChild(newRadio);
+
+                // Silme düğmesini ekle
+                var deleteButton = addRadioDeleteButton(radioData);
+                newRadio.appendChild(deleteButton);
+
                 hideAddressModal();
             } else {
                 errorDiv.innerText = "* Bu adres zaten eklenmiş!";
@@ -458,12 +501,33 @@ function saveToLocalStorage(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
+function addRadioDeleteButton(radioData) {
+    var deleteButton = document.createElement('button');
+    deleteButton.innerHTML = '<img src="/static/assets/imgs/rubbish-bin.png" alt="" style="width:20px;">'; // Silme simgesi ekleniyor
+    deleteButton.classList.add("border-0", "bg-transparent", "m-0", "p-0")
+    deleteButton.addEventListener('click', function() {
+        deleteRadio(radioData);
+    });
+
+    return deleteButton;
+}
+function deleteRadio(radioData) {
+    // Radio listesinden radyoyu kaldır
+    radioList = radioList.filter(item => item.address !== radioData.address);
+
+    // LocalStorage'deki veriyi güncelle
+    saveToLocalStorage('radioList', radioList);
+
+    // Radio butonlarını güncelle
+    updateRadioButtons();
+}
+
 function updateRadioButtons() {
     var radioListContainer = document.getElementById('radio-list');
-    
+
     // İlk input elementini sakla
     var firstRadio = radioListContainer.firstElementChild;
-    
+
     // Var olan içeriği temizle
     radioListContainer.innerHTML = '';
 
@@ -475,19 +539,26 @@ function updateRadioButtons() {
     for (var i = 0; i < radioList.length; i++) {
         var radioId = generateUniqueId();
         var newRadio = document.createElement('div');
-        newRadio.classList.add('form-check', 'my-2', 'ms-1');
+        newRadio.classList.add('form-check', 'my-2', 'ms-1', 'd-flex', 'justify-content-between');
 
         newRadio.innerHTML = `
-            <input class="form-check-input" type="radio" name="location" id="location${radioId}"
-                value="${radioList[i].address}" data-lat="${radioList[i].lat}" data-lon="${radioList[i].lon}">
-            <label class="form-check-label text-dark" for="location${radioId}">
-                ${radioList[i].address}
-            </label>
+            <div class="w-100">
+                <input class="form-check-input" type="radio" name="location" id="location${radioId}"
+                    value="${radioList[i].address}" data-lat="${radioList[i].lat}" data-lon="${radioList[i].lon}">
+                <label class="form-check-label text-dark" for="location${radioId}">
+                    ${radioList[i].address}
+                </label>
+            </div>
         `;
+
+        // Silme düğmesini ekleyin ve radyo butonuyla birlikte yerleştirin
+        var deleteButton = addRadioDeleteButton(radioList[i]);
+        newRadio.appendChild(deleteButton);
 
         radioListContainer.appendChild(newRadio);
     }
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     // Sayfa yüklendiğinde localStorage'den veriyi çek
@@ -524,6 +595,9 @@ function generateUniqueId() {
 function deilveryButton() {
     var selectedRadio = document.querySelector('input[name="location"]:checked');
     updateMapLocationInfo(selectedRadio.getAttribute("data-lat"),  selectedRadio.getAttribute("data-lon"), selectedRadio.value);
+    var eco_lan = parseFloat(selectedRadio.getAttribute("data-lat"));
+    var eco_lon = parseFloat(selectedRadio.getAttribute("data-lon"));
+    createMarker(eco_lan, eco_lon, selectedRadio);
     hideDeliveryModal()
 }
 
@@ -550,14 +624,38 @@ function validateName() {
     var errors = [];
     if (name.length == 0) {
         errors.push('* Ad Soyad edilməlidir.');
-    }else if (name.length < 3) {
+    } else if (name.length < 3) {
         errors.push('* Ad Soyad minimum 3 hərf olmalıdır.');
     }
 
     // Display errors
     nameErrorMessages.innerHTML = errors.join('<br>');
-    // Enable/disable button based on errors
-    phoneButton.disabled = errors.length > 0;
+    // Disable phoneButton if any error is present in any field
+    if (errors.length > 0 || validateDescriptionErrors() || validatePhoneNumberErrors()) {
+        phoneButton.disabled = true;
+    } else {
+        phoneButton.disabled = false;
+    }
+}
+
+function validateDescription() {
+    var descriptionInput = document.getElementById('descriptionInput');
+    var descriptionErrorMessages = document.getElementById('descriptionErrorMessages');
+    var phoneButton = document.getElementById('phoneButton');
+    var name = descriptionInput.value.trim();
+    var errors = [];
+    if (name.length == 0) {
+        errors.push('* Tələb olunur.');
+    }
+
+    // Display errors
+    descriptionErrorMessages.innerHTML = errors.join('<br>');
+    // Disable phoneButton if any error is present in any field
+    if (errors.length > 0 || validateNameErrors() || validatePhoneNumberErrors()) {
+        phoneButton.disabled = true;
+    } else {
+        phoneButton.disabled = false;
+    }
 }
 
 function validatePhoneNumber() {
@@ -578,9 +676,40 @@ function validatePhoneNumber() {
 
     // Display errors
     errorMessages.innerHTML = errors.join('<br>');
-    // Enable/disable button based on errors
-    phoneButton.disabled = errors.length > 0;
+    // Disable phoneButton if any error is present in any field
+    if (errors.length > 0 || validateNameErrors() || validateDescriptionErrors()) {
+        phoneButton.disabled = true;
+    } else {
+        phoneButton.disabled = false;
+    }
 }
+
+// Function to check if there are errors in name validation
+function validateNameErrors() {
+    var nameInput = document.getElementById('nameInput');
+    var name = nameInput.value.trim();
+
+    return name.length == 0 || name.length < 3;
+}
+
+// Function to check if there are errors in description validation
+function validateDescriptionErrors() {
+    var descriptionInput = document.getElementById('descriptionInput');
+    var description = descriptionInput.value.trim();
+
+    return description.length == 0;
+}
+
+// Function to check if there are errors in phone number validation
+function validatePhoneNumberErrors() {
+    var phoneNumberInput = document.getElementById('phoneNumberInput');
+    var phoneNumber = phoneNumberInput.value.replace(/\s+/g, ''); // Remove whitespaces
+
+    var validPrefixes = ['050', '070', '077', '055', '099', '060', '051', '010'];
+
+    return !phoneNumber.trim() || !/^\d{10}$/.test(phoneNumber) || validPrefixes.indexOf(phoneNumber.substr(0, 3)) === -1 || /[01]/.test(phoneNumber.charAt(3));
+}
+
 
 function phoneButton() {
     var phoneNumberInput = document.getElementById('phoneNumberInput');
@@ -605,8 +734,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var phoneNumber = localStorage.getItem('phoneNumber');
     var name = localStorage.getItem('name');
     if (phoneNumber) {
-        document.getElementById('phone-info').innerHTML = `<span class="text-dark">${name}</span>
-        <span class="ms-2 text-success border-1 border-solid rounded p-1 border-success " style="font-size:10px;">${phoneNumber}</span>`;
+        // document.getElementById('phone-info').innerHTML = `<span class="text-dark">${name}</span>
+        // <span class="ms-2 text-success border-1 border-solid rounded p-1 border-success " style="font-size:10px;">${phoneNumber}</span>`;
         document.getElementById('phoneNumberInput').value = phoneNumber;
         document.getElementById('nameInput').value = name;
 
@@ -614,12 +743,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 document.addEventListener("DOMContentLoaded", function () {
     validatePhoneNumber();
-    validateName()
+    validateName();
+    validateDescription();
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    var phoneNumber = localStorage.getItem('phoneNumber')
-    if (phoneNumber) {
+    var phoneNumber = document.querySelector("#nameInput")
+    var phoneNumberInput = document.querySelector("#phoneNumberInput")
+    var descriptionInput = document.querySelector("#descriptionInput")
+    if (phoneNumber.value!=='' && phoneNumberInput.value!=='' && descriptionInput.value!=='') {
         // localStorage'de phonenumber varsa, checkout_phone_error'ı gizle
         var phoneErrorElement = document.getElementById('checkout_phone_error');
         if (phoneErrorElement) {
@@ -653,58 +785,14 @@ document.addEventListener("DOMContentLoaded", function () {
     checkCheckoutButtonStatus();
 });
 
-// function checkoutButtonCurrier(){
-//     var selectedRadio = document.querySelector('input[name="location"]:checked');
-//     var lat = selectedRadio.getAttribute("data-lat");
-//     var lon = selectedRadio.getAttribute("data-lon");
-//     var amount = localStorage.getItem('delivery_amount')
-//     var recipient_name = localStorage.getItem('name')
-//     var recipient_phone = localStorage.getItem('phoneNumber')
-//     var shipment_promise_id = localStorage.getItem('shipment_promise_id')
-
-//     var deliveryData = {
-//         lat: lat,
-//         lon: lon,
-//         amount: amount,
-//         recipient_name: recipient_name,
-//         recipient_phone: recipient_phone,
-//         shipment_promise_id: shipment_promise_id
-//       };
-//     console.log(deliveryData)
-//     check_stock_status()
-//     .then(response => {
-//         if (response.status == true && amount > 0 && amount) {
-//             sendDeliveryCreationRequest(lat, lon, amount, recipient_name, recipient_phone, shipment_promise_id)
-//             .then(responseData => {
-//                 let tracking_id = responseData["tracking"]["id"]
-//                 let tracking_url = responseData["tracking"]["url"]
-//                 let wolt_order_reference_id = responseData["wolt_order_reference_id"]
-//                 sendOrderCreationRequest(tracking_url, tracking_id, wolt_order_reference_id)
-//                     .then(orderData => {
-//                         console.log(orderData)
-//                     })
-//                     .catch(error => {
-//                         console.error('HTTP isteği sırasında bir hata oluştu:', error);
-//                     });
-//             })
-//               .catch(error => {
-//                 console.error('HTTP isteği sırasında bir hata oluştu:', error);
-//             });
-//         }
-//     })
-//     .catch(error => {
-//         console.error('Error:', error); // Hata durumunda işlem yap
-//     });
-    
-// }
-
 function getDeliveryData(){
     var selectedRadio = document.querySelector('input[name="location"]:checked');
     var lat = selectedRadio.getAttribute("data-lat");
     var lon = selectedRadio.getAttribute("data-lon");
     var amount = localStorage.getItem('delivery_amount')
-    var recipient_name = localStorage.getItem('name')
-    var recipient_phone = localStorage.getItem('phoneNumber')
+    var recipient_name = document.querySelector('#nameInput').value;
+    var recipient_phone = document.querySelector('#phoneNumberInput').value;
+    var dropoff_comment = document.querySelector('#descriptionInput').value;
     var shipment_promise_id = localStorage.getItem('shipment_promise_id')
 
     var deliveryData = {
@@ -713,6 +801,7 @@ function getDeliveryData(){
         amount: amount,
         recipient_name: recipient_name,
         recipient_phone: recipient_phone,
+        dropoff_comment: dropoff_comment,
         shipment_promise_id: shipment_promise_id
       };
     return deliveryData

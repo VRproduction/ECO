@@ -25,16 +25,16 @@
         <div class="sort-by-cover" {% if not request.GET.ordering == "-price" and not request.GET.ordering == "price" %}style="width:190px;"{% else %}{% endif %}>
             <div class="sort-by-product-wrap">
                 <div class="sort-by">
-                    <span><i class="fi-rs-apps-sort"></i><span class="d-none d-md-inline">Sırala:</span></span>
+                    <span><i class="fi-rs-apps-sort"></i>{% if not request.GET.ordering == "-is_best_seller" %}<span class="d-none d-md-inline">Sırala:</span>{% endif %}</span>
                 </div>
                 <div class="sort-by-dropdown-wrap">
-                    <span> {% if request.GET.ordering == "pk" %}Yeni{% elif request.GET.ordering == "price" %}Qiymət (azdan-çoxa){% elif request.GET.ordering == "-price" %}Qiymət (çoxdan-aza){% else %}Yeni{% endif %} <i class="fi-rs-angle-small-down"></i></span>
+                    <span> {% if request.GET.ordering == "pk" %}Yeni{% elif request.GET.ordering == "-is_best_seller" %}Ən çox satılanlar{% elif request.GET.ordering == "price" %}Qiymət (azdan-çoxa){% elif request.GET.ordering == "-price" %}Qiymət (çoxdan-aza){% else %}Yeni{% endif %} <i class="fi-rs-angle-small-down"></i></span>
                 </div>
             </div>
             <div class="sort-by-dropdown">
                 <ul>
                     <li><a {% if request.GET.ordering == "pk" or not request.GET.ordering %}class="active"{% endif %} href="{% edit_query request ordering="pk" %}">Yeni</a></li>
-                    <li><a href="#">Ən çox satılanlar</a></li>
+                    {% comment %} <li><a {% if request.GET.ordering == "-is_best_seller" %}class="active"{% endif %} href="{% edit_query request ordering="-is_best_seller" %}">Ən çox satılanlar</a></li> {% endcomment %}
                     <li><a {% if request.GET.ordering == "price" %}class="active"{% endif %} href="{% edit_query request ordering="price" %}">Qiymət (azdan-çoxa)</a></li>
                     <li><a {% if request.GET.ordering == "-price" %}class="active"{% endif %} href="{% edit_query request ordering="-price" %}">Qiymət (çoxdan-aza)</a></li>
                 </ul>

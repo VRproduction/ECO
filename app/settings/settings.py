@@ -32,6 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+SITE_ID = 1
 
 # Application definition
 
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize', #new
+    'django.contrib.sites', #new
+
 
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
@@ -135,7 +138,7 @@ AUTH_USER_MODEL = 'account.CustomUser'
 
 LANGUAGE_CODE = 'az'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Baku'
 
 USE_I18N = True
 
@@ -178,9 +181,9 @@ WOLT_VENUE_ID = "65cf2245fc643985912ab003"
 WOLT_MERCHANT_ID = "65cf21d501026216134fd3c6"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.example.com'  
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  
 EMAIL_HOST_USER = 'ilqarhsnzad@gmail.com'  
 EMAIL_HOST_PASSWORD = 'ecla fykh xuej abxu'
 EMAIL_USE_TLS = True  
-DEFAULT_FROM_EMAIL = 'your_email@example.com'  
+DEFAULT_FROM_EMAIL = 'ilqarhsnzad@gmail.com'  

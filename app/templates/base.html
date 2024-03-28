@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{% static "assets/css/fixed-header.css" %}"> 
     <link rel="stylesheet" href="{% static "assets/css/custom-modal-body.css" %}"> 
     <link rel="stylesheet" href="{% static "assets/css/faq.css" %}"> 
+    <link rel="stylesheet" href="{% static "assets/css/notification.css" %}"> 
     <!-- Meta Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s)
@@ -60,6 +61,8 @@
 </head>
 
 <body>
+    {% include "components/basket-notification/notification.html" %}
+
     <!-- Modal -->
     {% comment %} <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -172,6 +175,7 @@
     <script src="{% static "assets/js/index.js" %}"></script> 
 
     <script src="{% static "assets/js/delivery.js" %}"></script>
+    <script src="{% static "assets/js/notification.js" %}"></script>
 
     {% block js %}{% endblock js %}
 </body>

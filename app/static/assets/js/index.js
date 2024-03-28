@@ -42,6 +42,7 @@ function addToBasket(product_id, quantity) {
             fetchBasketItems();
             // Sepet ikonunu güncelle
             $('#basket-item-count').text(data.basket_item_count);
+            showNotification("Məshul səbətə əlavə edildi")
         } else {
            console.log('Bir hata oluştu.');
         }
@@ -168,7 +169,7 @@ function updateNavbarBasket(data){
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <div class="shopping-cart-img">
-                        <a href='shop-product-right.html'><img alt="Nest" src="${item.product.image_url}"></a>
+                        <a data-bs-toggle="modal" data-bs-target="#quickViewModal${item.product.id}"><img alt="Nest" src="${item.product.image_url}"></a>
                     </div>
                     <div class="shopping-cart-title">
                         <h4><a data-bs-toggle="modal" data-bs-target="#quickViewModal${item.product.id}">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>

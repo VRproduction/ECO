@@ -25,6 +25,7 @@ class Delivery():
             "lat": self.lat, 
             "lon": self.lon,
             "language": "az",
+            "min_preparation_time_minutes": 20,
         }
 
         response = requests.post(self.base_url+'shipment-promises', json = data, headers = self.getHeaders())
@@ -34,6 +35,11 @@ class Delivery():
     def deliveries(self, amount, recipient_name, recipient_phone, dropoff_comment, parcel_list, shipment_promise_id):
         customer_support = Wolt.objects.first()
         data = {
+            "pickup": {
+                "options": {
+                    "min_preparation_time_minutes": 20
+                }
+            },
             "dropoff": {
                 "location": {
                     "coordinates": {

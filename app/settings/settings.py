@@ -181,9 +181,10 @@ WOLT_VENUE_ID = "65cf2245fc643985912ab003"
 WOLT_MERCHANT_ID = "65cf21d501026216134fd3c6"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587  
-EMAIL_HOST_USER = 'ilqarhsnzad@gmail.com'  
-EMAIL_HOST_PASSWORD = 'ecla fykh xuej abxu'
-EMAIL_USE_TLS = True  
-DEFAULT_FROM_EMAIL = 'ilqarhsnzad@gmail.com'  
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'sales@ecoproduct.az'  
+EMAIL_HOST_PASSWORD = 'nkepqjrjsjwjnosz'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

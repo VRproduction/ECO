@@ -15,6 +15,9 @@ import datetime
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from urllib.parse import urlparse
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
 
 class HomePageView(TemplateView):
     template_name = 'index.html'
@@ -451,6 +454,30 @@ class ContactPageView(FormView):
 
     def form_valid(self, form):
         form.save()
+        name = form.cleaned_data['name']
+        number = form.cleaned_data['number']
+        email = form.cleaned_data['email']
+        subject = form.cleaned_data['subject']
+        text = form.cleaned_data['text']
+        
+        data = {
+            'name': name,
+            'number' : number,
+            'email': email,
+            'subject': subject,
+            'text': text,
+
+        }
+       
+        message = render_to_string('mail/contact.html', data)
+
+        send_mail(
+            "Ecoproduct.az, müştəridən müraciət gəlib",
+            message,
+            settings.EMAIL_HOST_USER,
+            [settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False, html_message=message
+        )   
         messages.success(self.request, 'Mesajınız göndərildi!')
         return super().form_valid(form)
     

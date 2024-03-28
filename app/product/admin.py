@@ -120,7 +120,12 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Favorite)
-admin.site.register(Contact)
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'subject', 'created']
+    search_fields = ['email']
+    readonly_fields = ['name', 'email','number', 'subject', 'text', 'created']
+
 admin.site.register(BasketItem)
 
 

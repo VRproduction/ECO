@@ -6,7 +6,8 @@ from ..models import Wolt
 
 class Delivery():
     def __init__(self, lat, lon, street = None):
-        self.base_url = f"https://daas-public-api.development.dev.woltapi.com/v1/venues/{settings.WOLT_VENUE_ID}/"
+        self.base_url = f"https://daas-public-api.wolt.com/v1/venues/{settings.WOLT_VENUE_ID}/"
+        self.test_url = f"https://daas-public-api.development.dev.woltapi.com/v1/venues/{settings.WOLT_VENUE_ID_TEST}/"
         self.lat = lat
         self.lon = lon
         self.street = street

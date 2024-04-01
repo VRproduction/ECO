@@ -57,15 +57,15 @@ class ShopPageView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        category_id = self.request.GET.get('category')
-        vendor_id = self.request.GET.get('vendor')
+        category_slug = self.request.GET.get('category')
+        vendor_slug = self.request.GET.get('vendor')
         ordering = self.request.GET.get('ordering')
         search_query = self.request.GET.get('search')
 
         queryset = Product.objects.all()
 
-        if category_id and category_id.isdigit():
-            queryset = queryset.filter(category__id=int(category_id))
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
 
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
@@ -73,8 +73,8 @@ class ShopPageView(ListView):
         if ordering:
             queryset = queryset.order_by('-stock', ordering)
 
-        if vendor_id and vendor_id.isdigit():
-            queryset = queryset.filter(vendor__id=int(vendor_id))
+        if vendor_slug:
+            queryset = queryset.filter(vendor__slug=vendor_slug)
 
         return queryset
     
@@ -84,15 +84,15 @@ class ShopPageView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        category_id = self.request.GET.get('category')
-        vendor_id = self.request.GET.get('vendor')
+        category_slug = self.request.GET.get('category')
+        vendor_slug = self.request.GET.get('vendor')
         ordering = self.request.GET.get('ordering')
         search_query = self.request.GET.get('search')
 
         queryset = Product.objects.all()
 
-        if category_id and category_id.isdigit():
-            queryset = queryset.filter(category__id=int(category_id))
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
 
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
@@ -100,14 +100,25 @@ class ShopPageView(ListView):
         if ordering:
             queryset = queryset.order_by(ordering)
 
-        if vendor_id and vendor_id.isdigit():
-            queryset = queryset.filter(vendor__id=int(vendor_id))
+        if vendor_slug:
+            queryset = queryset.filter(vendor__slug=vendor_slug)
 
         context["count"] = queryset.count()
         context["categories"] = ProductCategory.objects.all()
         context["new_products"] = Product.objects.all().order_by("-id")[:3]
         context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
         return context
+
+class ProductDetailPageView(DetailView):
+    template_name = 'product-detail.html'
+    model = Product
+    context_object_name = "product"
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailPageView, self).get_context_data(**kwargs)
+        context["related_products"] = Product.objects.exclude(pk = self.get_object().pk).filter(category = self.get_object().category).order_by("-pk")[:4]
+        return context
+    
 
 class BasketPageView(TemplateView, IsNotAuthView):
     template_name = 'basket.html'
@@ -149,6 +160,7 @@ def get_basket_items(request):
             'product': {
                 'id': item.product.pk,
                 'title': item.product.title,
+                'slug': item.product.slug,
                 'price': round_to_decimal(item.product.discount_price) if item.product.discount and item.product.stock > 0 else round_to_decimal(item.product.price),
                 'image_url': item.product.image.url,
                 'stock': item.product.stock

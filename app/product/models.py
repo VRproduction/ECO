@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from payment.models import Transaction
+from django.urls import reverse
+from .utils.custom_slugify import custom_az_slugify
 
 User = get_user_model()
 
@@ -73,7 +75,8 @@ class IndexSlider(models.Model):
         verbose_name_plural = 'Ana səhifə | Slayder'
 
 class ProductCategory(models.Model):
-    title = models.CharField(max_length = 200)
+    title = models.CharField(max_length = 200, unique = True)
+    slug = models.SlugField(blank=True, null=True, unique = True)
     image = models.ImageField(upload_to = 'category')
     is_main_page = models.BooleanField(default = True)
 
@@ -84,8 +87,13 @@ class ProductCategory(models.Model):
         verbose_name = 'Kateqoriya'
         verbose_name_plural = 'Kateqoriyalar'
 
+    def save(self, *args, **kwargs):
+        self.slug = custom_az_slugify(self.title)
+        super(ProductCategory, self).save(*args, **kwargs)
+
 class Vendor(models.Model):
     title = models.CharField(max_length = 200)
+    slug = models.SlugField(blank=True, null=True, unique = True)
 
     def __str__(self):
         return self.title
@@ -93,6 +101,10 @@ class Vendor(models.Model):
     class Meta:
         verbose_name = 'Vendor'
         verbose_name_plural = 'Vendorlar'
+
+    def save(self, *args, **kwargs):
+        self.slug = custom_az_slugify(self.title)
+        super(Vendor, self).save(*args, **kwargs)
 
 class Coupon(models.Model):
     coupon = models.CharField(max_length=50)
@@ -153,7 +165,8 @@ class Product(models.Model):
         (3, "Endirim"),
         (4, "4-cü"),
     ]
-    title = models.CharField(max_length = 500)
+    title = models.CharField(max_length = 500, unique = True)
+    slug = models.SlugField(blank=True, null=True, unique = True)
     description = RichTextUploadingField(null = True, blank = True)
     using_time = models.PositiveIntegerField(null = True, blank = True, verbose_name = "İstifadə müddəti")
     category = models.ForeignKey(ProductCategory, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'products')
@@ -198,6 +211,13 @@ class Product(models.Model):
             trending_count = Product.objects.filter(is_trending=True).count()
             if trending_count >= 3 and not Product.objects.filter(is_trending=True, pk = self.pk).exists():
                 raise ValidationError("Ən çox 3 'Trenddə olan' ola bilər.")
+            
+    def save(self, *args, **kwargs):
+        self.slug = custom_az_slugify(self.title)
+        super(Product, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("product-detail", args=[str(self.slug)])
 
 class Favorite(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE, related_name = 'favorites')
@@ -443,7 +463,8 @@ class FAQ(models.Model):
         verbose_name_plural = "Suallar"
 
 class Blog(models.Model):
-    title = models.CharField(max_length = 500)
+    title = models.CharField(max_length = 500, unique = True)
+    slug = models.SlugField(blank=True, null=True, unique = True)
     description = RichTextUploadingField()
     image = models.ImageField(upload_to = 'blogs', verbose_name = "photo(370x290)")
     created = models.DateTimeField(auto_now_add = True)
@@ -458,7 +479,11 @@ class Blog(models.Model):
         verbose_name_plural = "Bloglar"
 
     def get_absolute_url(self):
-        return reverse("blog-detail", args=[str(self.pk)])
+        return reverse("blog-detail", args=[str(self.slug)])
+    
+    def save(self, *args, **kwargs):
+        self.slug = custom_az_slugify(self.title)
+        super(Blog, self).save(*args, **kwargs)
 
 class Contact(models.Model):
     name = models.CharField(max_length = 200)

@@ -1,0 +1,111 @@
+{% extends "base.html" %}4
+{% load custom_filters %}
+{% block main %}
+<div class="page-header breadcrumb-wrap">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href={% url "home" %} rel='nofollow'><i class="fi-rs-home mr-5"></i>Ana səhifə</a>
+            <span></span> <a href='{% url "shop" %}?category={{product.category.id}}'>{{product.category.title}}</a> <span></span> {{product.title}}
+        </div>
+    </div>
+</div>
+<div class="container mb-30">
+    <div class="row">
+        <div class="col-xl-10 col-lg-12 m-auto">
+            <div class="product-detail accordion-detail">
+                <div class="row mb-50 mt-30">
+                    <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
+                        <div class="detail-gallery">
+                            <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                            <!-- MAIN SLIDES -->
+                            <div class="product-image-slider">
+                                {% for image in product.images.all %}
+                                <figure class="border-radius-10">
+                                    <img src="{{image.image.url}}" alt="product image">
+                                </figure>
+                                {% endfor %}
+                            </div>
+                            <!-- THUMBNAILS -->
+                            {% if product.images.count > 1 %}
+                            <div class="slider-nav-thumbnails">
+                                {% for image in product.images.all %}
+                                <div><img src="{{image.image.url}}" alt="product image"></div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <!-- End Gallery -->
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="detail-info pr-30 pl-30">
+                            {% if product.stock > 0 %}
+                                {% if product.discount %}<span class="stock-status out-stock">Endirim</span>{% endif %}
+                            {% else %}
+                                <span class="stock-status out-stock">Stokda yoxdur</span>
+                            {% endif %}
+                            <h3 class="title-detail"><a class="text-heading">{{product.title}}</a></h3>
+                          
+                            <div class="clearfix product-price-cover">
+                                {% if product.stock > 0%}
+                                <div class="product-price primary-color float-left">
+                                    <span class="current-price text-brand">₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
+                                    {% if product.discount %}
+                                    <span>
+                                        <span class="save-price font-md color3 ml-15">{{product.discount}}%</span>
+                                        <span class="old-price font-md ml-15">₼ {{product.price|format_decimal:2}}</span>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                {% else %}
+                                <div class="product-price primary-color float-left">
+                                    <span class="current-price text-brand">₼ {{product.price|format_decimal:2}}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="detail-extralink mb-30">
+                                {% if product.stock > 0%}
+                                <div class="product-extra-link2">
+                                    <button onclick="addToBasket({{ product.id }},1)" type="submit" class="button button-add-to-cart"><i
+                                            class="fi-rs-shopping-cart"></i>Səbətə əlavə et</button>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="font-xs">
+                                <ul>
+                                    <li class="mb-5">Brend: <span class="text-brand">{{product.vendor}}</span></li>
+                                    {% if product.using_time %}
+                                    <li class="mb-5">İstifadə müddəti:<span class="text-brand"> {{product.using_time}} ay</span></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            {% if product.description %}
+                            <div class="product-description mt-20">
+                                <h4>Açıqlama:</h4>
+                                <p>{{ product.description|safe }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <!-- Detail Info -->
+                        
+                    </div>
+                </div>
+                
+                <div class="row mt-60">
+                    <div class="col-12">
+                        <h2 class="section-title style-1 mb-30">Bənzər məhsullar</h2>
+                    </div>
+                    <div class="col-12">
+                        <div class="row related-products">
+                            {% for related_product in related_products %}
+                            <div class="col-lg-3 col-md-4 col-12 col-sm-6 {% if forloop.counter > 3 %}d-lg-block d-none{% endif %}">
+                                {% include "components/product/product-item.html" with product=related_product%}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

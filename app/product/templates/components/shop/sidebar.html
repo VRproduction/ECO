@@ -8,7 +8,7 @@
         <ul>
             {% for category in categories %}
             <li>
-                <a href="{% edit_query request category=category.id %}"> <img src="{{category.image.url}}" alt="">{{category.title}}</a><span class="count">{{category.products.count}}</span>
+                <a href="{% edit_query request category=category.slug %}"> <img src="{{category.image.url}}" alt="">{{category.title}}</a><span class="count">{{category.products.count}}</span>
             </li>
             {% endfor %}
         </ul>
@@ -23,7 +23,7 @@
                 <img src="{{product.image.url}}" alt="#">
             </div>
             <div class="content pt-10">
-                <h5><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}">{{product.title}}</a></h5>
+                <h5><a href="{{product.get_absolute_url}}">{{product.title}}</a></h5>
                 <p class="price mb-0 mt-5">
                     <span style="color:#039D2E;">₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
                     {% if product.discount %}

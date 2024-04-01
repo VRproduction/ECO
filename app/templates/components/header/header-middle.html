@@ -11,7 +11,7 @@
                         <select name="category" class="select-active">
                             <option value="">Kateqoriyalar</option>
                             {% for category in categories %}
-                            <option value="{{category.id}}">{{category.title}}</option>
+                            <option {% if request.GET.category == category.slug %}selected{% endif %} value="{{category.slug}}">{{category.title}}</option>
                             {% endfor %}
                             
                         </select>

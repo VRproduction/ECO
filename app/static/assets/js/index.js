@@ -169,10 +169,10 @@ function updateNavbarBasket(data){
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <div class="shopping-cart-img">
-                        <a data-bs-toggle="modal" data-bs-target="#quickViewModal${item.product.id}"><img alt="Nest" src="${item.product.image_url}"></a>
+                        <a href="/products/${item.product.slug}/"><img alt="Nest" src="${item.product.image_url}"></a>
                     </div>
                     <div class="shopping-cart-title">
-                        <h4><a data-bs-toggle="modal" data-bs-target="#quickViewModal${item.product.id}">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>
+                        <h4><a href="/products/${item.product.slug}/">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>
                         <h4><span>${item.quantity} × </span>₼ ${item.product.price}</h4>
                     </div>
                     <div class="shopping-cart-delete">

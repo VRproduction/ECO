@@ -1,11 +1,11 @@
 {% load custom_filters %}
 <article class="row align-items-center hover-up">
     <figure class="col-md-4 mb-0">
-        <a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}"><img src="{{product.image.url}}" alt=""></a>
+        <a href="{{product.get_absolute_url}}"><img src="{{product.image.url}}" alt=""></a>
     </figure>
     <div class="col-md-8 mb-0">
         <h6>
-            <a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{product.id}}">{{product.title}}</a>
+            <a href="{{product.get_absolute_url}}">{{product.title}}</a>
         </h6>
         <div class="product-price">
             <span>₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
@@ -15,4 +15,3 @@
         </div>
     </div>
 </article>
-{% include "components/product/modal.html" %}

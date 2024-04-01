@@ -14,7 +14,7 @@
                 <div class="product-cart-wrap style-2 wow animate__animated animate__fadeInUp" data-wow-delay="0">
                     <div class="product-img-action-wrap">
                         <div class="product-img">
-                            <a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{company.product.id}}">
+                            <a  href="{{company.product.get_absolute_url}}">
                                 <img src="{{company.image.url}}" alt="">
                             </a>
                         </div>
@@ -24,9 +24,9 @@
                             <div class="deals-countdown" data-countdown="{{company.finish_time|date:"Y/m/d"}} {{company.finish_time|date:"H:i:s"}}"></div>
                         </div>
                         <div class="deals-content">
-                            <h2><a aria-label="Quick view" data-bs-toggle="modal" data-bs-target="#quickViewModal{{company.product.id}}">{{company.product.title}}</a></h2>
+                            <h2><a  href="{{company.product.get_absolute_url}}">{{company.product.title}}</a></h2>
                             <div>
-                                <span class="font-small text-muted">By <a href='{% url "shop" %}?vendor={{company.product.vendor.id}}'>{{company.product.vendor}}</a></span>
+                                <span class="font-small text-muted">By <a href='{% url "shop" %}?vendor={{company.product.vendor.slug}}'>{{company.product.vendor}}</a></span>
                             </div>
                             <div class="product-card-bottom">
                                 <div class="product-price">
@@ -36,7 +36,7 @@
                                     {% endif %}
                                 </div>
                                 <div class="add-cart">
-                                    <button class='add' {% if user.is_authenticated %}onclick="addToBasket({{ company.product.id }},1)"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</button>
+                                    <a class='add' {% if user.is_authenticated %}onclick="addToBasket({{ company.product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</a>
                                 </div>
                             </div>
                         </div>

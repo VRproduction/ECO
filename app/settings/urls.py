@@ -19,6 +19,14 @@ from django.urls import path, include
 from . import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.sitemaps.views import sitemap
+from .sitemap import StaticSitemap, BlogSitemap, ProductSitemap
+
+sitemaps = {
+    'static': StaticSitemap,
+    'blog': BlogSitemap,
+    'service': ProductSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +35,10 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('payment/', include('payment.urls')),
     path('wolt/', include('wolt.urls')),
+    path('sitemap.xml', sitemap, {
+      'sitemaps': sitemaps,
+      'template_name': 'custom-sitemap.html'
+    }, name='django.contrib.sitemaps.views.sitemap'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

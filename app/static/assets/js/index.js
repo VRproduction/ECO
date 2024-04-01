@@ -182,6 +182,11 @@ function updateNavbarBasket(data){
             basketItemsBody.appendChild(li);
             }
         })
+        if (data.totalPrice == 0 || !data.stock_status) {
+            document.getElementById("navbar-basket-checkout").disabled = true;
+        }else{
+            document.getElementById("navbar-basket-checkout").disabled = false;
+        }
         document.getElementById('navbar-basket').classList.remove("d-none");
     }else{
         document.getElementById('navbar-basket').classList.add("d-none");
@@ -256,7 +261,7 @@ function updateBasketTable(data) {
                                         <div class="payment-option w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-danger' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `style="cursor: not-allowed;"`: ''} data-value="credit_card">
                                             <a class="text-light text-center d-block w-100" ${data.totalPrice == 0  || !data.stock_status ? `style="cursor: not-allowed;"`: `href="/payment/map/"`}>Kuriyer ilə çatdırılma</a>
                                         </div>
-                                        <button onclick="checkoutButton()" class="payment-option text-center w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-success' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `style="cursor: not-allowed;"`: ''} data-value="cash_on_delivery">
+                                        <button onclick="checkoutButton()" class="payment-option text-center w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-success' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `disabled style="cursor: not-allowed;"`: ''} data-value="cash_on_delivery">
                                             Yerində ödə
                                         </button>
                                     </div>

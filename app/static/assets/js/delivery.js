@@ -214,6 +214,30 @@ function updateMapLocationInfo(lat, lon, street){
     });
   }
   
+  // function checkStockStatus(amount){
+  //   return new Promise((resolve, reject) => {
+  //     fetch(`/check-stock-status/`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'X-CSRFToken': getCookie('csrftoken'),  // Add this function to get the CSRF token
+  //       },
+  //     })
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error('HTTP error, status = ' + response.status);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       resolve(data); // HTTP isteğinin başarılı bir şekilde tamamlanması durumunda veriyi döndür
+  //     })
+  //     .catch(error => {
+  //       reject(error); // Hata durumunda hatayı döndür
+  //     });
+  //   });
+  // }
+
   function checkoutButton(){
     var delivery_amount = localStorage.getItem('delivery_amount');
     var total_price_with_delivery;

@@ -387,7 +387,7 @@ def checkout(request):
     except Exception as e:
         return Response({'error': 'Sifariş oluşturulurken bir hata oluştu.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def check_stock_api(request):
     """

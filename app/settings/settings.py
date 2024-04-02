@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'payment.apps.PaymentConfig',
     'wolt.apps.WoltConfig',
+    'seo.apps.SeoConfig',
 
     'ckeditor',
     'rest_framework'

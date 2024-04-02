@@ -48,6 +48,9 @@ class ProductAdmin(admin.ModelAdmin):
         ('Special Markers', {
             'fields': ('is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
         }),
+        ('SEO', {
+            'fields': ('keywords', 'meta_description')
+        }),
     )
 
 

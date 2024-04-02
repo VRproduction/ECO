@@ -182,12 +182,19 @@ class Product(models.Model):
     is_most_wonted = models.BooleanField(default = False, verbose_name = "Ən çox axtarılan")
     is_trending = models.BooleanField(default = False, verbose_name = "Trenddə olan")
 
+    keywords = models.TextField(null=True, blank=True)
+    meta_description = models.TextField(null=True, blank=True)
+
     def __str__(self):
         return self.title
     
     @property
     def discount_price(self):
         return self.price*(100-self.discount)/100
+    
+    @property
+    def sitemap_image(self):
+        return self.image.url if self.image else None
     
 
     class Meta:
@@ -470,6 +477,13 @@ class Blog(models.Model):
     created = models.DateTimeField(auto_now_add = True)
     updated = models.DateTimeField(auto_now = True)
     is_main_page  = models.BooleanField(default = False, verbose_name = "Əsas səhifədə görünsün?")
+ 
+    keywords = models.TextField(null=True, blank=True)
+    meta_description = models.TextField(null=True, blank=True)
+
+    @property
+    def sitemap_image(self):
+        return self.image.url if self.image else None
 
     def __str__(self):
         return ('%s') % (self.title)

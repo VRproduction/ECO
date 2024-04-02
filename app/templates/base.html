@@ -4,14 +4,27 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-navbutton-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
+    
+    {% block title %}
     <title>{{setting.site_title}}</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
+    {% endblock title %}
+
+    {% block seo %}
+    {% endblock seo%}
+
+    <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+    <link rel="canonical" href="{{ request.build_absolute_uri }}"/>
+    <meta property="og:locale" content="az_AZ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+    <meta property="og:site_name" content="{{site_url}}"/>
+    <link rel="shortcut icon" href="{% if setting.favicon %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ setting.favicon.url }}{% endif %}" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="{% if setting.favicon %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ setting.favicon.url }}{% endif %}"/>
 
     <!-- Meta Pixel Code Google -->
     <meta name="google-site-verification" content="EjJslNGIBTSS7Tmwhd-1B8nvpBZ_QCgoODNiEjljEBc" />
@@ -21,8 +34,6 @@
     <meta name="facebook-domain-verification" content="zvwk2agigwho58o0gkdounc8eoxivs" />
     <!-- End Meta Pixel Code Facebook -->
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{setting.favicon.url}}">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/plugins/animate.min.css' %}">
     <link rel="stylesheet" href="{% static "assets/css/main.css" %}"> 
@@ -135,10 +146,6 @@
     </main>
     {% include "components/footer/footer.html" %}
 
-    {% for product in all_products %}
-    {% include "components/product/modal.html" with product=product %}
-    {% endfor %}
-    
     <script>
         document.onreadystatechange = function () {
             if (document.readyState === "complete") {

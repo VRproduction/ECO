@@ -18,6 +18,7 @@ from urllib.parse import urlparse
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
+from seo.models import AboutPageSeo, BlogPageSeo, ShopPageSeo, HomePageSeo, ContactPageSeo, CompaniesPageSeo
 
 class HomePageView(TemplateView):
     template_name = 'index.html'
@@ -38,6 +39,7 @@ class HomePageView(TemplateView):
         context["statistic"] = Statistic.objects.first()
         context["faqs"] = FAQ.objects.all()
         context["blogs"] = Blog.objects.filter(is_main_page = True)[:3]
+        context["seo"] = HomePageSeo.objects.first()
         return context
     
 class AboutPageView(TemplateView):
@@ -47,6 +49,7 @@ class AboutPageView(TemplateView):
         context = super(AboutPageView, self).get_context_data(**kwargs)
         context["about"] = About.objects.first()
         context["partners"] = Partner.objects.all()
+        context["seo"] = AboutPageSeo.objects.first()
         return context
     
 
@@ -107,6 +110,9 @@ class ShopPageView(ListView):
         context["categories"] = ProductCategory.objects.all()
         context["new_products"] = Product.objects.all().order_by("-id")[:3]
         context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
+        context["seo"] = ShopPageSeo.objects.first()
+        context["about"] = About.objects.first()
+
         return context
 
 class ProductDetailPageView(DetailView):
@@ -438,6 +444,8 @@ class BlogPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["blogs"] = Blog.objects.all()
+        context["seo"] = BlogPageSeo.objects.first()
+        context["about"] = About.objects.first()
         return context
     
 class BlogDetailPageView(DetailView):
@@ -457,6 +465,8 @@ class CompanyPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())
+        context["seo"] = CompaniesPageSeo.objects.first()
+        context["about"] = About.objects.first()
         return context
     
 class ContactPageView(FormView):
@@ -496,6 +506,9 @@ class ContactPageView(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page"] = ContactPage.objects.first()
+        context["seo"] = ContactPageSeo.objects.first()
+        context["about"] = About.objects.first()
+
         return context
     
 

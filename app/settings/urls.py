@@ -22,9 +22,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.sitemaps.views import sitemap
 from .sitemap import StaticSitemap, BlogSitemap, ProductSitemap
 from django.views.static import serve  
+from django.views.generic import TemplateView
 
 sitemaps = {
-    'static': StaticSitemap,
+    # 'static': StaticSitemap,
     'blog': BlogSitemap,
     'service': ProductSitemap,
 }
@@ -40,6 +41,7 @@ urlpatterns = [
       'sitemaps': sitemaps,
       'template_name': 'custom-sitemap.html'
     }, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt/', TemplateView.as_view(template_name='robots.txt', content_type="text/plain")),
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]

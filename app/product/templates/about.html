@@ -1,4 +1,21 @@
 {% extends "base.html" %}
+
+{% block title %}
+{% if seo.title %}
+<title>{{ seo.title }}</title>
+{% else %}
+<title>{{setting.site_title}}</title>
+{% endif %}
+{% endblock title %}
+
+{% block seo %}
+    <meta name="description" content="{% if seo.description %}{{ seo.description }}{% endif %}">
+    <meta name="keywords" content="{% if seo.keyword %}{{ seo.keyword }}{% endif %}">
+    <meta property="og:title" content="{% if seo.title %}{{ seo.title }}{% endif %}"/>
+    <meta property="og:description" content="{% if seo.description %}{{ seo.description }}{% endif %}"/>
+    <meta property="og:image" content="{% if about.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ about.image.url }}{% endif %}"/>
+{% endblock seo%}
+
 {% block main %}
     <div class="page-content pt-50">
         <div class="container">

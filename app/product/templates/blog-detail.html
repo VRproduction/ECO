@@ -1,4 +1,21 @@
 {% extends "base.html" %}
+
+{% block title %}
+{% if seo.title %}
+<title>{{setting.site_title}} - {{ blog.title }}</title>
+{% else %}
+<title>{{setting.site_title}}</title>
+{% endif %}
+{% endblock title %}
+
+{% block seo %}
+    <meta name="description" content="{% if blog.meta_description %}{{blog.meta_description }}{% endif %}">
+    <meta name="keywords" content="{% if blog.keyword %}{{ blog.keyword }}{% endif %}">
+    <meta property="og:title" content="{% if blog.title %}{{ blog.title }}{% endif %}"/>
+    <meta property="og:description" content="{% if blog.meta_description %}{{ blog.meta_description }}{% endif %}"/>
+    <meta property="og:image" content="{% if blog.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ blog.image.url }}{% endif %}"/>
+{% endblock seo%}
+
 {% block main %}
 <!--Start Blog single Area-->
 <section class="blog-single-area">

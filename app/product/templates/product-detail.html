@@ -1,5 +1,22 @@
 {% extends "base.html" %}4
 {% load custom_filters %}
+
+{% block title %}
+{% if seo.title %}
+<title>{{setting.site_title}} - {{ product.title }}</title>
+{% else %}
+<title>{{setting.site_title}}</title>
+{% endif %}
+{% endblock title %}
+
+{% block seo %}
+    <meta name="description" content="{% if product.meta_description %}{{product.meta_description }}{% endif %}">
+    <meta name="keywords" content="{% if product.keyword %}{{ product.keyword }}{% endif %}">
+    <meta property="og:title" content="{% if product.title %}{{ product.title }}{% endif %}"/>
+    <meta property="og:description" content="{% if product.meta_description %}{{ product.meta_description }}{% endif %}"/>
+    <meta property="og:image" content="{% if product.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ product.image.url }}{% endif %}"/>
+{% endblock seo%}
+
 {% block main %}
 <div class="page-header breadcrumb-wrap">
     <div class="container">

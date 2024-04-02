@@ -12445,3 +12445,7 @@ footer .hotline img {
 .selected-radio-input:hover{
   background-color: whitesmoke;
 }
+
+.mobile-active{
+  color: #039D2E !important;
+}

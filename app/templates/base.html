@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{% static "assets/css/custom-modal-body.css" %}"> 
     <link rel="stylesheet" href="{% static "assets/css/faq.css" %}"> 
     <link rel="stylesheet" href="{% static "assets/css/notification.css" %}"> 
+    <link rel="stylesheet" href="{% static "assets/css/custom_loader.css" %}"> 
     <!-- Meta Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s)
@@ -66,6 +67,8 @@
 
 <body>
     {% include "components/basket-notification/notification.html" %}
+    <div id="overlay" class="overlay"></div>
+    <div id="loader" class="loader"></div>
 
     <!-- Modal -->
     {% comment %} <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
@@ -131,20 +134,24 @@
     {% block main %}{% endblock main %}
     </main>
     {% include "components/footer/footer.html" %}
-    <!-- Preloader Start -->
-   {% comment %} <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center">
-                    <img src="{% static "assets/imgs/theme/loading.gif" %}" alt="">
-                </div>
-            </div>
-        </div>
-    </div>  {% endcomment %}
-    <!-- Vendor JS-->
+
     {% for product in all_products %}
     {% include "components/product/modal.html" with product=product %}
     {% endfor %}
+    
+    <script>
+        document.onreadystatechange = function () {
+            if (document.readyState === "complete") {
+                setTimeout(function () {
+                    document.getElementById("loader").style.display = "none"; 
+                    document.getElementById("overlay").style.display = "none"; 
+                }, 10); 
+            } else {
+                document.getElementById("loader").style.display = "block";
+                document.getElementById("overlay").style.display = "block"; 
+            }
+        };
+    </script>
     {% if user.is_authenticated %}
         <script>
             var isAuthenticated = true;
@@ -180,7 +187,9 @@
 
     <script src="{% static "assets/js/delivery.js" %}"></script>
     <script src="{% static "assets/js/notification.js" %}"></script>
-
+    {% comment %} <script src="{% static "assets/js/laoder.js" %}"></script> {% endcomment %}
+    
+   
     {% block js %}{% endblock js %}
 </body>
 

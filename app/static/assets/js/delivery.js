@@ -203,7 +203,7 @@ function updateMapLocationInfo(lat, lon, street){
             document.getElementById("map_total_delivery").innerText = `₼ ${Number(data["price"]["amount"])/100}`;
             localStorage.setItem('delivery_amount', Number(data["price"]["amount"])/100);
             localStorage.setItem('shipment_promise_id', data["id"]);
-            document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined'? Number(localStorageData.discountPrice)+Number(data["price"]["amount"])/100 : Number(localStorageData.totalPrice)+Number(data["price"]["amount"])/100}`;
+            document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined'? (Number(localStorageData.discountPrice)+Number(data["price"]["amount"])/100).toFixed(2) : (Number(localStorageData.totalPrice)+Number(data["price"]["amount"])/100).toFixed(2)}`;
 
             console.log(data)
         }

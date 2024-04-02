@@ -24,13 +24,19 @@
                 <nav>
                     <ul class="mobile-menu font-heading">
                         <li class="menu-item-has-children">
-                            <a href='{% url "blog" %}'>Bloq</a>
+                            <a {% if request.path == '/shop/' %}class="mobile-active"{% endif %} href='{% url "shop" %}'>Məhsullar</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href='{% url "companies" %}'>Kampaniyalar</a>
+                            <a {% if request.path == '/about/' %}class="mobile-active"{% endif %} href='{% url "about" %}'>Haqqımızda</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href='{% url "contact" %}'>Əlaqə</a>
+                            <a {% if request.path|slice:":7" == '/blogs/' %}class="mobile-active"{% endif %} href='{% url "blog" %}'>Bloq</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a {% if request.path == '/companies/' %}class="mobile-active"{% endif %} href='{% url "companies" %}'>Kampaniyalar</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a {% if request.path == '/contact/' %}class="mobile-active"{% endif %} href='{% url "contact" %}'>Əlaqə</a>
                         </li>
                     </ul>
                 </nav>

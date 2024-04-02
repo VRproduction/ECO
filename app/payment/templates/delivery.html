@@ -13,7 +13,7 @@ crossorigin="localhost"></script>
 <style>
     #map {
         height: 320px; 
-        {% comment %} z-index: -1; {% endcomment %}
+        z-index: 10;
         {% comment %} filter: grayscale(100%); {% endcomment %}
     }
     #map2 {
@@ -52,11 +52,6 @@ crossorigin="localhost"></script>
     }
 </style>
 {% endblock css %}
-
-{% block header %}
-{% include "components/header/header.html" with show_bottom="False" %}
-{% endblock header %}
-
 {% block main %}
     <div id="map-container">
         <div id="map"></div>

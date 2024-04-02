@@ -127,6 +127,7 @@ class ContactAdmin(admin.ModelAdmin):
     readonly_fields = ['name', 'email','number', 'subject', 'text', 'created']
 
 admin.site.register(BasketItem)
+admin.site.register(ContactPage)
 
 
 class CouponUsageInline(admin.TabularInline):

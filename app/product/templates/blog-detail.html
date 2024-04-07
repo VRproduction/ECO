@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block title %}
 {% if seo.title %}
 <title>{{setting.site_title}} - {{ blog.title }}</title>
@@ -47,7 +47,7 @@
                     <!--Start single sidebar-->
                     <div class="single-sidebar latest-posts-box wow fadeInUp animated" data-wow-delay="0.5s" data-wow-duration="1200ms">
                         <div class="title">
-                            <h3>Son bloqlar</h3>
+                            <h3>{% trans "Son bloqlar" %}</h3>
                         </div>
                         <ul class="latest-posts">
                             {% for last_blog in last_blogs %}

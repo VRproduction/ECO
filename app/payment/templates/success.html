@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block main %}
 <style>
     .container-success {
@@ -14,11 +15,11 @@
 </style>
 <div class="container-success mx-auto">
     <div class="alert alert-success" role="alert">
-      <h4 class="alert-heading">Uğurlu ödəniş!</h4>
-      <p>Ödəniş uğurla tamamlandı. Təşəkkürlər!</p>
+      <h4 class="alert-heading">{% trans "Uğurlu ödəniş!" %}</h4>
+      <p>{% trans "Ödəniş uğurla tamamlandı. Təşəkkürlər!" %}</p>
       {% if tracking_url %}
       <hr>
-      <p class="mb-0">Sifarişi <a href="{{tracking_url}}">buradan</a> izləyə bilərsiniz.</p>
+      <p class="mb-0">{% trans "Sifarişi buradan izləyə bilərsiniz." %} <a href="{{tracking_url}}">Keç</a></p>
       {% endif %}
     </div>
   </div>

@@ -1,0 +1,682 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-04 16:09+0400\n"
+"PO-Revision-Date: 2024-04-04 15:06+0400\n"
+"Last-Translator:   <admin@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: account/models.py:27
+msgid "The Email must be set"
+msgstr ""
+
+#: account/models.py:43
+msgid "Superuser must have is_staff=True."
+msgstr ""
+
+#: account/models.py:45
+msgid "Superuser must have is_superuser=True."
+msgstr ""
+
+#: account/models.py:50
+msgid "email address"
+msgstr ""
+
+#: account/models.py:51
+msgid "email verified"
+msgstr ""
+
+#: account/templates/login.html:16 account/templates/login.html:45
+#: account/templates/password_reset_complete.html:10
+#: account/templates/register.html:14
+#: templates/components/header/header-middle.html:58
+msgid "Daxil ol"
+msgstr ""
+
+#: account/templates/login.html:17
+msgid "Hesabın yoxdur?"
+msgstr ""
+
+#: account/templates/login.html:17 account/templates/register.html:51
+#: templates/components/header/header-middle.html:61
+msgid "Qeydiyyatdan keç"
+msgstr ""
+
+#: account/templates/login.html:22 product/templates/account.html:90
+#: product/templates/contact.html:49 templates/components/footer/footer.html:61
+msgid "Email"
+msgstr ""
+
+#: account/templates/login.html:29 account/templates/register.html:39
+msgid "Parol"
+msgstr ""
+
+#: account/templates/login.html:39 product/templates/account.html:94
+#: product/templates/account.html:120
+msgid "Yadda saxla"
+msgstr ""
+
+#: account/templates/login.html:42
+msgid "Parolu unutmusan?"
+msgstr ""
+
+#: account/templates/password_reset.html:14
+msgid "Parolunuzu Sıfırlayın"
+msgstr ""
+
+#: account/templates/password_reset.html:19
+msgid "E-mail Adresi"
+msgstr ""
+
+#: account/templates/password_reset.html:22
+#: account/templates/password_reset_confirm.html:38
+msgid "Sıfırla"
+msgstr ""
+
+#: account/templates/password_reset_complete.html:9
+msgid "Parol Sıfırlama Tamamlandı"
+msgstr ""
+
+#: account/templates/password_reset_complete.html:10
+msgid "Parolunuz uğurla sıfırlandı. Yeni parolunuzla daxil ola bilərsiniz."
+msgstr ""
+
+#: account/templates/password_reset_confirm.html:13
+msgid "Parol Sıfırlama"
+msgstr ""
+
+#: account/templates/password_reset_confirm.html:20
+msgid "Yeni Parol"
+msgstr ""
+
+#: account/templates/password_reset_confirm.html:29
+msgid "Yeni Parol Təkrar Daxil edin"
+msgstr ""
+
+#: account/templates/password_reset_done.html:9
+msgid "Parol Sıfırlama Sorğusu Göndərilib"
+msgstr ""
+
+#: account/templates/password_reset_done.html:10
+msgid ""
+"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa "
+"e-poçt qutunuzu yoxlayın."
+msgstr ""
+
+#: account/templates/register.html:13
+msgid "Qeydiyyat"
+msgstr ""
+
+#: account/templates/register.html:14
+msgid "Hesabın var?"
+msgstr ""
+
+#: account/templates/register.html:45
+msgid "Parol təkrar"
+msgstr ""
+
+#: account/templates/register_success.html:9
+msgid "Qeydiyyat Uğurla Tamamlandı"
+msgstr ""
+
+#: account/templates/register_success.html:10
+msgid "Hesabınızı aktivləşdirmək üçün e-poçtunuzu yoxlayın."
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:16
+msgid "Əlaqə məlumatlarını daxil edin"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:30
+msgid "Çatdırılma məlumatları"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:35
+msgid "Hara çatdırılacaq?"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:55
+msgid "Yeni address əlavə edin"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:59
+#: payment/templates/components/delivery/modal1.html:96
+msgid "Təsdiq edin"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:74
+msgid "Əlaqə məlumatları"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:79
+msgid "Ad soyad"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:81
+#: product/templates/contact.html:42
+msgid "Ad Soyad"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:84
+#: product/templates/contact.html:56
+msgid "Nömrə"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:89
+msgid "Çatdırılma üçün ətraflı məlumat"
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:91
+msgid "Mərtəbə, blok,  mənzil"
+msgstr ""
+
+#: payment/templates/components/delivery/modal2.html:12
+msgid "Yeni adress əlavə edin"
+msgstr ""
+
+#: payment/templates/components/delivery/modal2.html:26
+msgid "Xəritədə seçin"
+msgstr ""
+
+#: payment/templates/components/delivery/modal2.html:28
+msgid "Küçə adı və nömrəsi"
+msgstr ""
+
+#: payment/templates/components/delivery/modal2.html:34
+msgid "Davam edin"
+msgstr ""
+
+#: payment/templates/components/delivery/modal3.html:9
+msgid "Adress seçin"
+msgstr ""
+
+#: payment/templates/components/delivery/modal3.html:23
+msgid "Əlavə edin"
+msgstr ""
+
+#: payment/templates/delivery.html:68
+msgid "Çatdırılma metodu, vaxt və əlaqə məlumatları"
+msgstr ""
+
+#: payment/templates/delivery.html:71
+msgid "Seçilmiş məhsullar"
+msgstr ""
+
+#: payment/templates/delivery.html:94 product/templates/basket.html:35
+#: templates/components/header/basket.html:9
+msgid "Ümumi qiymət"
+msgstr ""
+
+#: payment/templates/delivery.html:107
+#: product/templates/components/product/modal.html:36
+#: product/templates/product-detail.html:60
+msgid "Endirim"
+msgstr ""
+
+#: payment/templates/delivery.html:120
+msgid "Çatdırılma"
+msgstr ""
+
+#: payment/templates/delivery.html:136
+msgid "Yekun qiymət"
+msgstr ""
+
+#: payment/templates/delivery.html:152
+#: templates/components/header/basket.html:13
+msgid "Tamamla"
+msgstr ""
+
+#: payment/templates/delivery.html:154
+msgid "Düzgün address seçin!"
+msgstr ""
+
+#: payment/templates/delivery.html:155
+msgid "Əlaqə məlumatlarını daxil edin!"
+msgstr ""
+
+#: payment/templates/failed.html:18
+msgid "Ödəniş xətası!"
+msgstr ""
+
+#: payment/templates/failed.html:19
+msgid "Ödəniş zamanı xəta baş verdi."
+msgstr ""
+
+#: payment/templates/failed.html:21
+msgid "Təkrar yoxlayın"
+msgstr ""
+
+#: payment/templates/success.html:18
+msgid "Uğurlu ödəniş!"
+msgstr ""
+
+#: payment/templates/success.html:19
+msgid "Ödəniş uğurla tamamlandı. Təşəkkürlər!"
+msgstr ""
+
+#: payment/templates/success.html:22
+msgid "Sifarişi buradan izləyə bilərsiniz."
+msgstr ""
+
+#: product/templates/account.html:15
+msgid "Sifarişlər"
+msgstr ""
+
+#: product/templates/account.html:18
+msgid "Hesab məlumatları"
+msgstr ""
+
+#: product/templates/account.html:21
+msgid "Parolu yenilə"
+msgstr ""
+
+#: product/templates/account.html:24
+#: templates/components/header/header-middle.html:52
+msgid "Çıxış"
+msgstr ""
+
+#: product/templates/account.html:41
+msgid "Sifarişləriniz"
+msgstr ""
+
+#: product/templates/account.html:48
+msgid "Sifariş"
+msgstr ""
+
+#: product/templates/account.html:49
+msgid "Tarix"
+msgstr ""
+
+#: product/templates/account.html:50
+msgid "Status"
+msgstr ""
+
+#: product/templates/account.html:51 product/templates/basket.html:33
+msgid "Qiymət"
+msgstr ""
+
+#: product/templates/account.html:52
+msgid "Keçidlər"
+msgstr ""
+
+#: product/templates/account.html:61
+msgid "məhsul"
+msgstr ""
+
+#: product/templates/account.html:64
+msgid "Sifarişi izlə"
+msgstr ""
+
+#: product/templates/account.html:82
+msgid "Ad"
+msgstr ""
+
+#: product/templates/account.html:86
+msgid "Soyad"
+msgstr ""
+
+#: product/templates/account.html:108
+msgid "Hazırki parol"
+msgstr ""
+
+#: product/templates/account.html:112
+msgid "Yeni parol"
+msgstr ""
+
+#: product/templates/account.html:116
+msgid "Parolu təkrarla"
+msgstr ""
+
+#: product/templates/basket.html:15
+#: templates/components/header/fixed-mobile-header.html:33
+#: templates/components/header/header-middle.html:37
+msgid "Səbət"
+msgstr ""
+
+#: product/templates/basket.html:17
+msgid "Səbətdə"
+msgstr ""
+
+#: product/templates/basket.html:17
+msgid "məhsul var"
+msgstr ""
+
+#: product/templates/basket.html:18
+msgid "Səbəti təmizlə"
+msgstr ""
+
+#: product/templates/basket.html:32
+#: product/templates/components/index/partners.html:59
+msgid "Məhsul"
+msgstr ""
+
+#: product/templates/basket.html:34
+msgid "Say"
+msgstr ""
+
+#: product/templates/basket.html:36
+msgid "Sil"
+msgstr ""
+
+#: product/templates/basket.html:51 product/templates/basket.html:63
+msgid "AZN"
+msgstr ""
+
+#: product/templates/blog-detail.html:50
+msgid "Son bloqlar"
+msgstr ""
+
+#: product/templates/blogs.html:41
+#: product/templates/components/index/blog.html:31
+msgid "Daha çox"
+msgstr ""
+
+#: product/templates/companies.html:50
+#: product/templates/components/index/companies.html:40
+#: product/templates/components/product/product-item.html:60
+msgid "Seç"
+msgstr ""
+
+#: product/templates/components/index/about.html:11
+msgid "daha çox"
+msgstr ""
+
+#: product/templates/components/index/blog.html:8
+msgid "Bloqlar"
+msgstr ""
+
+#: product/templates/components/index/category-banner.html:13
+#: product/templates/components/index/home-slider.html:15
+#: product/templates/components/index/home-slider.html:36
+msgid "Alış-verişə başla"
+msgstr ""
+
+#: product/templates/components/index/companies.html:6
+#: templates/components/footer/footer.html:49
+#: templates/components/header/header-bottom.html:81
+#: templates/components/header/mobile-header.html:37
+msgid "Kampaniyalar"
+msgstr ""
+
+#: product/templates/components/index/companies.html:8
+#: product/templates/components/index/product-tab.html:8
+msgid "Hamısı"
+msgstr ""
+
+#: product/templates/components/index/companies.html:30
+msgid "By"
+msgstr ""
+
+#: product/templates/components/index/faq.html:7
+msgid "Tez-tez verilən suallar"
+msgstr ""
+
+#: product/templates/components/index/filtering-section.html:6
+#: product/templates/components/shop/filter.html:32
+msgid "Ən çox satılanlar"
+msgstr ""
+
+#: product/templates/components/index/filtering-section.html:14
+msgid "Ən çox axtarılanlar"
+msgstr ""
+
+#: product/templates/components/index/filtering-section.html:22
+msgid "Trenddə olanlar"
+msgstr ""
+
+#: product/templates/components/index/partners.html:5
+msgid "Tərəfdaşlarımız"
+msgstr ""
+
+#: product/templates/components/index/partners.html:55
+msgid "İl xidmətinizdə"
+msgstr ""
+
+#: product/templates/components/index/partners.html:63
+msgid "Çeşid"
+msgstr ""
+
+#: product/templates/components/index/partners.html:67
+#: product/templates/components/product/modal.html:76
+#: product/templates/product-detail.html:100
+msgid "Brend"
+msgstr ""
+
+#: product/templates/components/index/partners.html:71
+msgid "Yeni dad"
+msgstr ""
+
+#: product/templates/components/index/popular-categories.html:6
+msgid "Seçilmiş kateqoriyalar"
+msgstr ""
+
+#: product/templates/components/index/popular-categories.html:18
+msgid "items"
+msgstr ""
+
+#: product/templates/components/index/product-tab.html:5
+#: templates/components/footer/footer.html:47
+#: templates/components/header/fixed-mobile-header.html:17
+#: templates/components/header/header-bottom.html:75
+#: templates/components/header/mobile-header.html:28
+msgid "Məhsullar"
+msgstr ""
+
+#: product/templates/components/page-header/page-header.html:9
+#: product/templates/product-detail.html:25
+#: templates/components/header/fixed-mobile-header.html:9
+#: templates/components/header/header-bottom.html:69
+msgid "Ana səhifə"
+msgstr ""
+
+#: product/templates/components/product/modal.html:38
+#: product/templates/components/product/product-item.html:26
+#: product/templates/product-detail.html:62
+msgid "Stokda yoxdur"
+msgstr ""
+
+#: product/templates/components/product/modal.html:64
+#: product/templates/components/product/modal.html:68
+#: product/templates/product-detail.html:88
+#: product/templates/product-detail.html:92
+msgid "Səbətə əlavə et"
+msgstr ""
+
+#: product/templates/components/product/modal.html:78
+#: product/templates/product-detail.html:102
+msgid "İstifadə müddəti"
+msgstr ""
+
+#: product/templates/components/product/modal.html:78
+#: product/templates/product-detail.html:102
+msgid "ay"
+msgstr ""
+
+#: product/templates/components/product/modal.html:84
+#: product/templates/product-detail.html:108
+msgid "Açıqlama"
+msgstr ""
+
+#: product/templates/components/product/product-item.html:19
+msgid "Ən çox satılan"
+msgstr ""
+
+#: product/templates/components/product/product-item.html:21
+#: product/templates/components/shop/filter.html:32
+#: product/templates/components/shop/filter.html:37
+msgid "Yeni"
+msgstr ""
+
+#: product/templates/components/shop/filter.html:5
+msgid "Sizin üçün"
+msgstr ""
+
+#: product/templates/components/shop/filter.html:5
+msgid "məhsul tapdıq!"
+msgstr ""
+
+#: product/templates/components/shop/filter.html:11
+msgid "Göstər"
+msgstr ""
+
+#: product/templates/components/shop/filter.html:29
+msgid "Sırala"
+msgstr ""
+
+#: product/templates/components/shop/filter.html:32
+#: product/templates/components/shop/filter.html:40
+msgid "Qiymət (azdan-çoxa)"
+msgstr ""
+
+#: product/templates/components/shop/filter.html:32
+#: product/templates/components/shop/filter.html:41
+msgid "Qiymət (çoxdan-aza)"
+msgstr ""
+
+#: product/templates/components/shop/sidebar.html:8
+#: templates/components/header/header-bottom.html:12
+#: templates/components/header/header-middle.html:13
+msgid "Kateqoriyalar"
+msgstr ""
+
+#: product/templates/components/shop/sidebar.html:20
+msgid "Yeni məhsullar"
+msgstr ""
+
+#: product/templates/contact.html:31 templates/components/footer/footer.html:50
+#: templates/components/header/header-bottom.html:84
+#: templates/components/header/mobile-header.html:40
+msgid "Əlaqə"
+msgstr ""
+
+#: product/templates/contact.html:63
+msgid "Mövzu"
+msgstr ""
+
+#: product/templates/contact.html:70
+msgid "Mesaj"
+msgstr ""
+
+#: product/templates/contact.html:74
+msgid "Göndər"
+msgstr ""
+
+#: product/templates/product-detail.html:120
+msgid "Bənzər məhsullar"
+msgstr ""
+
+#: settings/settings.py:159
+msgid "Azerbaijani"
+msgstr ""
+
+#: settings/settings.py:160
+msgid "Russian"
+msgstr ""
+
+#: settings/settings.py:161
+msgid "English"
+msgstr ""
+
+#: templates/components/footer/footer.html:32
+msgid "SOSİAL ŞƏBƏKƏLƏR"
+msgstr ""
+
+#: templates/components/footer/footer.html:34
+msgid "İnstagram"
+msgstr ""
+
+#: templates/components/footer/footer.html:35
+msgid "Facebook"
+msgstr ""
+
+#: templates/components/footer/footer.html:36
+msgid "Youtube"
+msgstr ""
+
+#: templates/components/footer/footer.html:37
+msgid "Tiktok"
+msgstr ""
+
+#: templates/components/footer/footer.html:43
+msgid "LİNKLƏR"
+msgstr ""
+
+#: templates/components/footer/footer.html:45
+msgid "Ana Səhifə"
+msgstr ""
+
+#: templates/components/footer/footer.html:46
+msgid "Haqqında"
+msgstr "About"
+
+#: templates/components/footer/footer.html:48
+#: templates/components/header/header-bottom.html:78
+#: templates/components/header/mobile-header.html:34
+msgid "Bloq"
+msgstr ""
+
+#: templates/components/footer/footer.html:56
+msgid "BİZİMLƏ ƏLAQƏ"
+msgstr ""
+
+#: templates/components/footer/footer.html:74
+msgid "Bütün hüquqlar qorunur!"
+msgstr ""
+
+#: templates/components/header/basket.html:12
+msgid "Səbətə bax"
+msgstr ""
+
+#: templates/components/header/fixed-mobile-header.html:25
+#: templates/components/header/header-middle.html:30
+msgid "Sevimlilər"
+msgstr ""
+
+#: templates/components/header/fixed-mobile-header.html:42
+#: templates/components/header/header-middle.html:44
+#: templates/components/header/header-middle.html:49
+msgid "Hesab"
+msgstr ""
+
+#: templates/components/header/header-bottom.html:61
+msgid "Show more"
+msgstr ""
+
+#: templates/components/header/header-bottom.html:72
+#: templates/components/header/mobile-header.html:31
+msgid "Haqqımızda"
+msgstr "About"
+
+#: templates/components/header/header-bottom.html:96
+msgid "24/7 Dəstək"
+msgstr ""
+
+#: templates/components/header/header-middle.html:19
+#: templates/components/header/mobile-header.html:19
+msgid "Axtar"
+msgstr ""
+
+#: templates/components/header/mobile-header.html:52
+msgid "Daxil ol / Qeydiyyat keç"
+msgstr ""
+
+#: templates/components/header/mobile-header.html:64
+msgid "Bizi izləyin"
+msgstr ""
+
+#: templates/components/header/mobile-header.html:70
+msgid "Copyright"
+msgstr ""

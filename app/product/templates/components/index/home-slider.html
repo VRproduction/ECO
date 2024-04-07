@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if sliders %}
 <section class="home-slider display-section-desktop position-relative mb-30">
     <div class="container">
@@ -11,7 +12,7 @@
                         </h1>
                         <p class="mb-65">{{slider.description|safe}}</p>
                         <form class="d-inline">
-                            <a class="btn btn-mobile" href="{% url "shop" %}">Alış-verişə başla</a>
+                            <a class="btn btn-mobile" href="{% url "shop" %}">{% trans "Alış-verişə başla" %}</a>
                         </form>
                     </div>
                 </div>
@@ -32,7 +33,7 @@
                         </h1>
                         <p class="mb-65">{{slider.mobile_description|safe}}</p>
                         <form class="d-inline">
-                            <a class="btn btn-mobile" href="{% url "shop" %}">Alış-verişə başla</a>
+                            <a class="btn btn-mobile" href="{% url "shop" %}">{% trans "Alış-verişə başla" %}</a>
                         </form>
                     </div>
                 </div>

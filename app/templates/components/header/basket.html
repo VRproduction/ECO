@@ -1,15 +1,16 @@
 {% load static %}
+{% load i18n %}
 <div id="navbar-basket" class="cart-dropdown-wrap cart-dropdown-hm2 {% if not user.is_authenticated %}d-none{% endif %}">
     <ul id="navbar-basket-items">
       
     </ul>
     <div class="shopping-cart-footer">
         <div class="shopping-cart-total">
-            <h4>Ümumi qiymət <span id="navbar-basket-total"></span></h4>
+            <h4>{% trans "Ümumi qiymət" %} <span id="navbar-basket-total"></span></h4>
         </div>
         <div class="shopping-cart-button">
-            <a class='outline' href='{% url "basket" %}'>Səbətə bax</a>
-            <button id="navbar-basket-checkout" onclick="checkoutButton()" style="background-color: #039D2E; padding: 6px 25px;" class="text-light rounded border-0" >Tamamla</button>
+            <a class='outline' href='{% url "basket" %}'>{% trans "Səbətə bax" %}</a>
+            <button id="navbar-basket-checkout" onclick="checkoutButton()" style="background-color: #039D2E; padding: 6px 25px;" class="text-light rounded border-0" >{% trans "Tamamla" %}</button>
         </div>
     </div>
 </div>

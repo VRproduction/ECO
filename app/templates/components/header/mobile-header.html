@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <div class="mobile-header-active mobile-header-wrapper-style">
     <div class="mobile-header-wrapper-inner">
         <div class="mobile-header-top">
@@ -15,7 +16,7 @@
         <div class="mobile-header-content-area">
             <div class="mobile-search search-style-3 mobile-header-border">
                 <form action="{% url "shop" %}" method="get">
-                    <input name="search" value="{{request.GET.search}}" type="text" placeholder="Axtar …">
+                    <input name="search" value="{{request.GET.search}}" type="text" placeholder="{% trans "Axtar" %} …">
                     <button  type="submit"><i class="fi-rs-search"></i></button>
                 </form>
             </div>
@@ -24,19 +25,19 @@
                 <nav>
                     <ul class="mobile-menu font-heading">
                         <li class="menu-item-has-children">
-                            <a {% if request.path == '/shop/' %}class="mobile-active"{% endif %} href='{% url "shop" %}'>Məhsullar</a>
+                            <a {% if request.path == '/shop/' or request.path|slice:"3:" == '/shop/' %}class="mobile-active"{% endif %} href='{% url "shop" %}'>{% trans "Məhsullar" %}</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a {% if request.path == '/about/' %}class="mobile-active"{% endif %} href='{% url "about" %}'>Haqqımızda</a>
+                            <a {% if request.path == '/about/' or request.path|slice:"3:" == '/about/' %}class="mobile-active"{% endif %} href='{% url "about" %}'>{% trans "Haqqımızda" %}</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a {% if request.path|slice:":7" == '/blogs/' %}class="mobile-active"{% endif %} href='{% url "blog" %}'>Bloq</a>
+                            <a {% if request.path|slice:":7" == '/blogs/' or request.path|slice:"3:10" == '/blogs/' %}class="mobile-active"{% endif %} href='{% url "blog" %}'>{% trans "Bloq" %}</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a {% if request.path == '/companies/' %}class="mobile-active"{% endif %} href='{% url "companies" %}'>Kampaniyalar</a>
+                            <a {% if request.path == '/companies/' or request.path|slice:"3:" == '/companies/' %}class="mobile-active"{% endif %} href='{% url "companies" %}'>{% trans "Kampaniyalar" %}</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a {% if request.path == '/contact/' %}class="mobile-active"{% endif %} href='{% url "contact" %}'>Əlaqə</a>
+                            <a {% if request.path == '/contact/' or request.path|slice:"3:" == '/contact/' %}class="mobile-active"{% endif %} href='{% url "contact" %}'>{% trans "Əlaqə" %}</a>
                         </li>
                     </ul>
                 </nav>
@@ -48,7 +49,7 @@
                 </div>
                 {% if not user.is_authenticated %}
                 <div class="single-mobile-header-info">
-                    <a href="{% url "login" %}"><i class="fi-rs-user"></i>Daxil ol / Qeydiyyat keç </a>
+                    <a href="{% url "login" %}"><i class="fi-rs-user"></i>{% trans "Daxil ol / Qeydiyyat keç" %} </a>
                 </div>
                 {% endif %}
                 <div class="single-mobile-header-info">
@@ -60,13 +61,13 @@
                 </div>
             </div>
             <div class="mobile-social-icon mb-50">
-                <h6 class="mb-15">Bizi izləyin</h6>
+                <h6 class="mb-15">{% trans "Bizi izləyin" %}</h6>
                 <a href="{% if setting.facebook %}{{setting.facebook}}{% else %}#{% endif %}"><img src="{% static "assets/imgs/theme/icons/icon-facebook-white.svg" %}" alt=""></a>
                 <a href="{% if setting.instagram %}{{setting.instagram}}{% else %}#{% endif %}"><img src="{% static "assets/imgs/theme/icons/icon-instagram-white.svg" %}" alt=""></a>
                 <a href="{% if setting.youtube %}{{setting.youtube}}{% else %}#{% endif %}"><img src="{% static "assets/imgs/theme/icons/icon-youtube-white.svg" %}" alt=""></a>
                 <a href="{% if setting.tiktok %}{{setting.tiktok}}{% else %}#{% endif %}"><img src="{% static "assets/imgs/theme/icons/icons8-tiktok.svg" %}" alt=""></a>
             </div>
-            <div class="site-copyright">Copyright {{current_year}} © <a href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}">{{setting.copyright_title}}</a></div>
+            <div class="site-copyright">{% trans "Copyright" %} {{current_year}} © <a href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}">{{setting.copyright_title}}</a></div>
         </div>
     </div>
 </div>

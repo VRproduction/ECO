@@ -7,6 +7,7 @@ from django.urls import reverse
 from payment.models import Transaction
 from django.urls import reverse
 from .utils.custom_slugify import custom_az_slugify
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -160,10 +161,10 @@ class CouponUsage(models.Model):
     
 class Product(models.Model):
     NUMBERS = [
-        (1, "Ən çox satılan"),
-        (2, "Yeni"),
-        (3, "Endirim"),
-        (4, "4-cü"),
+        (1, _("Ən çox satılan")),
+        (2, _("Yeni")),
+        (3, _("Endirim")),
+        (4, _("4-cü")),
     ]
     title = models.CharField(max_length = 500, unique = True)
     slug = models.SlugField(blank=True, null=True, unique = True)
@@ -299,11 +300,11 @@ class Order(models.Model):
 
 class Status(models.Model):
     status = models.CharField(max_length=20, choices=[
-        ('Gözləmədə', 'Gözləmədə'),
-        ('Hazırlandı', 'Hazırlandı'),
-        ('Göndərilib', 'Göndərilib'),
-        ('Çatdırılıb', 'Çatdırılıb'),
-        ('Ləğv edilib', 'Ləğv edilib'),
+        ('Gözləmədə', _('Gözləmədə')),
+        ('Hazırlandı', _('Hazırlandı')),
+        ('Göndərilib', _('Göndərilib')),
+        ('Çatdırılıb', _('Çatdırılıb')),
+        ('Ləğv edilib', _('Ləğv edilib')),
     ], default='Gözləmədə')
     is_confirmed = models.BooleanField(default=False, verbose_name="Təsdiqlənib")
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='statuses')

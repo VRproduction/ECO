@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block main %}
 <div class="page-content pt-50 pb-100">
     <div class="container">
@@ -9,8 +10,8 @@
                         <div class="login_wrap widget-taber-content background-white">
                             <div class="padding_eight_all bg-white">
                                 <div class="heading_s1">
-                                    <h1 class="mb-5">Qeydiyyat</h1>
-                                    <p class="mb-30">Hesabın var? <a href='{% url "login" %}'>Daxil ol</a></p>
+                                    <h1 class="mb-5">{% trans "Qeydiyyat" %}</h1>
+                                    <p class="mb-30">{% trans "Hesabın var?" %} <a href='{% url "login" %}'>{% trans "Daxil ol" %}</a></p>
                                 </div>
                                 <form method="post">
                                     {% csrf_token %}
@@ -35,19 +36,19 @@
                                         {% endfor %}
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" placeholder="Parol *" name="password1" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1">
+                                        <input type="password" placeholder="{% trans "Parol" %} *" name="password1" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1">
                                         {% for error in form.password1.errors %}
                                             <p class="text-danger">{{ error }}</p>
                                         {% endfor %}
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" placeholder="Parol təkrar *" name="password2" autocomplete="new-password" required="" aria-describedby="id_password2_helptext" id="id_password2">
+                                        <input type="password" placeholder="{% trans "Parol təkrar" %} *" name="password2" autocomplete="new-password" required="" aria-describedby="id_password2_helptext" id="id_password2">
                                         {% for error in form.password2.errors %}
                                             <p class="text-danger">{{ error }}</p>
                                         {% endfor %}
                                     </div>
                                     <div class="form-group mb-30">
-                                        <button type="submit" class="btn btn-fill-out btn-block hover-up font-weight-bold w-100" name="register">Qeydiyyatdan keç</button>
+                                        <button type="submit" class="btn btn-fill-out btn-block hover-up font-weight-bold w-100" name="register">{% trans "Qeydiyyatdan keç" %}</button>
                                     </div>
                                 </form>
                             </div>

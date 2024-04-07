@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load custom_filters %}
 {% load producthelper %}
+{% load i18n %}
 {% block main %}
     <div class="page-content pt-50 pb-50">
         <div class="container">
@@ -11,16 +12,16 @@
                             <div class="dashboard-menu">
                                 <ul class="nav flex-column" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link {% if not tab == 2 and not tab == 3 %}active{% endif %}" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Sifarişlər</a>
+                                        <a class="nav-link {% if not tab == 2 and not tab == 3 %}active{% endif %}" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>{% trans "Sifarişlər" %}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {% if tab == 2 %}active{% endif %}" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Hesab məlumatları</a>
+                                        <a class="nav-link {% if tab == 2 %}active{% endif %}" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>{% trans "Hesab məlumatları" %}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {% if tab == 3 %}active{% endif %}" id="password-tab" data-bs-toggle="tab" href="#password-panel" role="tab" aria-controls="password-panel" aria-selected="true"><i class="fi-rs-settings-sliders mr-10"></i>Parolu yenilə</a>
+                                        <a class="nav-link {% if tab == 3 %}active{% endif %}" id="password-tab" data-bs-toggle="tab" href="#password-panel" role="tab" aria-controls="password-panel" aria-selected="true"><i class="fi-rs-settings-sliders mr-10"></i>{% trans "Parolu yenilə" %}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class='nav-link' href='{% url "logout" %}'><i class="fi-rs-sign-out mr-10"></i>Çıxış</a>
+                                        <a class='nav-link' href='{% url "logout" %}'><i class="fi-rs-sign-out mr-10"></i>{% trans "Çıxış" %}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -37,18 +38,18 @@
                                 <div class="tab-pane fade {% if not tab == 2 and not tab == 3 %}active show{% endif %}" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="mb-0">Sifarişləriniz</h3>
+                                            <h3 class="mb-0">{% trans "Sifarişləriniz" %}</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Sifariş</th>
-                                                            <th>Tarix</th>
-                                                            <th>Status</th>
-                                                            <th>Qiymət</th>
-                                                            <th>Keçidlər</th>
+                                                            <th>{% trans "Sifariş" %}</th>
+                                                            <th>{% trans "Tarix" %}</th>
+                                                            <th>{% trans "Status" %}</th>
+                                                            <th>{% trans "Qiymət" %}</th>
+                                                            <th>{% trans "Keçidlər" %}</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -57,10 +58,10 @@
                                                             <td>#{{order.id}}</td>
                                                             <td>{{order.created_at}}</td>
                                                             <td>{{order.confirmed_status}}</td>
-                                                            <td>₼ {% if order.discount %}{{order.discount_amount|format_decimal:2}}{% else %}{{order.total_amount|format_decimal:2}}{% endif %} {{order.order_items.count}} məhsul</td>
+                                                            <td>₼ {% if order.discount %}{{order.discount_amount|format_decimal:2}}{% else %}{{order.total_amount|format_decimal:2}}{% endif %} {{order.order_items.count}} {% trans "məhsul" %}</td>
                                                             <td>
                                                                 {% if order.tracking_url %}
-                                                                <a href="{{order.tracking_url}}" class="btn-small d-block">Sifarişi izlə</a>
+                                                                <a href="{{order.tracking_url}}" class="btn-small d-block">{% trans "Sifarişi izlə" %}</a>
                                                                 {% endif %}
                                                             </td>
                                                         </tr>
@@ -78,19 +79,19 @@
                                                 {% csrf_token %}
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
-                                                        <label>Ad<span class="required">*</span></label>
+                                                        <label>{% trans "Ad" %}<span class="required">*</span></label>
                                                         <input class="form-control" value="{{user.first_name}}" name="first_name" type="text">
                                                     </div>
                                                     <div class="form-group col-md-6">
-                                                        <label>Soyad <span class="required">*</span></label>
+                                                        <label>{% trans "Soyad" %} <span class="required">*</span></label>
                                                         <input class="form-control" value="{{user.last_name}}" name="last_name" type="text">
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label>Email <span class="required">*</span></label>
+                                                        <label>{% trans "Email" %} <span class="required">*</span></label>
                                                         <input class="form-control"value="{{user.email}}" name="email" type="email">
                                                     </div> 
                                                     <div class="col-md-12">
-                                                        <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="account_submit">Yadda saxla</button>
+                                                        <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="account_submit">{% trans "Yadda saxla" %}</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -104,19 +105,19 @@
                                                 {% csrf_token %}
                                                 <div class="row">
                                                     <div class="form-group col-md-12">
-                                                        <label>Hazırki parol <span class="required">*</span></label>
+                                                        <label>{% trans "Hazırki parol" %} <span class="required">*</span></label>
                                                         <input class="form-control" name="old_password" type="password">
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label>Yeni parol <span class="required">*</span></label>
+                                                        <label>{% trans "Yeni parol" %} <span class="required">*</span></label>
                                                         <input class="form-control" name="new_password1" type="password">
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label>Parolu təkrarla <span class="required">*</span></label>
+                                                        <label>{% trans "Parolu təkrarla" %} <span class="required">*</span></label>
                                                         <input class="form-control" name="new_password2" type="password">
                                                     </div>
                                                     <div class="col-md-12">
-                                                        <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="password_submit">Yadda saxla</button>
+                                                        <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="password_submit">{% trans "Yadda saxla" %}</button>
                                                     </div>
                                                 </div>
                                             </form>

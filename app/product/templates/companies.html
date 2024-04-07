@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load custom_filters %}
-
+{% load i18n %}
 {% block title %}
 {% if seo.title %}
 <title>{{ seo.title }}</title>
@@ -47,7 +47,7 @@
                                 {% endif %}
                             </div>
                             <div class="add-cart">
-                                <a class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ company.product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</a>
+                                <a class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ company.product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>{% trans "Seç" %}</a>
                             </div>
                         </div>
                     </div>

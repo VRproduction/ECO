@@ -1,8 +1,9 @@
+{% load i18n %}
 <section class="popular-categories section-padding">
     <div class="container wow animate__animated animate__fadeIn">
         <div class="section-title">
             <div class="title">
-                <h3>Seçilmiş kateqoriyalar</h3>
+                <h3>{% trans "Seçilmiş kateqoriyalar" %}</h3>
             </div>
             <div class="slider-arrow slider-arrow-2 flex-right carausel-10-columns-arrow" id="carausel-10-columns-arrows"></div>
         </div>
@@ -14,7 +15,7 @@
                         <a href='shop-grid-right.html'><img src="{{category.image.url}}" alt=""></a>
                     </figure>
                     <h6><a href='shop-grid-right.html'>{{category.title}}</a></h6>
-                    <span>26 items</span>
+                    <span>26 {% trans "items" %}</span>
                 </div>
                 {% endfor %}
                 

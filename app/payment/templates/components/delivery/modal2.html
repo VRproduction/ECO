@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!-- Modal New Address -->
 
 <div class="modal fade " id="modalAddress" tabindex="-1" role="dialog" aria-labelledby="modalAddressId"
@@ -8,7 +9,7 @@
             <div class="modal-content py-3">
                 <div class="modal-header ">
                     <h5 class="modal-title" id="modalAddressId">
-                        Yeni adress əlavə edin
+                        {% trans "Yeni adress əlavə edin" %}
                     </h5>
                     <button onclick="hideAddressModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -22,15 +23,15 @@
                         class="mb-5 bg-transparent border-0 p-0 m-0 d-flex align-items-center "
                         style="margin-left: 1px !important;">
                         <img style="width: 25px;" src="{% static "assets/imgs/map-setting.png" %}" alt="">
-                        <span class="ms-2 text-dark">Xəritədə seçin</span>
+                        <span class="ms-2 text-dark">{% trans "Xəritədə seçin" %}</span>
                     </button>
-                    <input id="streetInput" style="height: 40px;" class="mt-2" type="text" placeholder="Küçə adı və nömrəsi">
+                    <input id="streetInput" style="height: 40px;" class="mt-2" type="text" placeholder="{% trans "Küçə adı və nömrəsi" %}">
                     <div id="addressResults" class="addressResults">
                        
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button disabled id="modalAddressBtn" onclick="addRadio()" type="button" class="btn btn-primary w-100">Davam edin</button>
+                    <button disabled id="modalAddressBtn" onclick="addRadio()" type="button" class="btn btn-primary w-100">{% trans "Davam edin" %}</button>
                 </div>
             </div>
         </div>

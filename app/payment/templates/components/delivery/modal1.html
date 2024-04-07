@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!-- Button trigger modal -->
 <button data-bs-toggle="modal" data-bs-target="#modelDelivery"
     class="my-4 p-4 w-100 text-start bg-transparent border rounded d-flex align-items-center" type="button">
@@ -12,7 +13,7 @@
 <button data-bs-toggle="modal" data-bs-target="#modalPhone"
     class="my-4 p-4 w-100 text-start bg-transparent border rounded d-flex align-items-center" type="button">
     <img class="delivery-img" src="{% static "assets/imgs/telephone.png" %}" alt="">
-    <div class="w-100 ps-3"><span id="phone-info" class="font-weight-bold me-2 text-danger">Əlaqə məlumatlarını daxil edin</span></div>
+    <div class="w-100 ps-3"><span id="phone-info" class="font-weight-bold me-2 text-danger">{% trans "Əlaqə məlumatlarını daxil edin" %}</span></div>
     <div style="width: 10%;" class="d-flex justify-content-end align-items-center">
         <img class="delivery-img" src="{% static "assets/imgs/right-arrow.png" %}" alt="">
     </div>
@@ -26,12 +27,12 @@
             <div class="modal-content">
                 <div class="modal-header py-4">
                     <h6 class="modal-title text-center w-100" id="modalTitleId">
-                        Çatdırılma məlumatları
+                        {% trans "Çatdırılma məlumatları" %}
                     </h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Hara çatdırılacaq?</h6>
+                    <h6>{% trans "Hara çatdırılacaq?" %}</h6>
                     <div id="radio-list">
                         <div class="form-check my-2 ms-1">
                             <div class="w-100">
@@ -51,11 +52,11 @@
                         class="mt-2 bg-transparent border-0 p-0 m-0 d-flex align-items-center "
                         style="margin-left: 1px !important;">
                         <img style="width: 15px;" src="{% static "assets/imgs/plus.png" %}" alt="">
-                        <span class="ms-2 text-primary">Yeni address əlavə edin</span>
+                        <span class="ms-2 text-primary">{% trans "Yeni address əlavə edin" %}</span>
                     </button>
                 </div>
                 <div class="modal-footer py-4">
-                    <button onclick="deilveryButton()" type="button" class="btn btn-primary w-100">Təsdiq edin</button>
+                    <button onclick="deilveryButton()" type="button" class="btn btn-primary w-100">{% trans "Təsdiq edin" %}</button>
                 </div>
             </div>
         </div>
@@ -70,29 +71,29 @@
             <div class="modal-content">
                 <div class="modal-header py-4">
                     <h6 class="modal-title text-center w-100" id="modalTitleId">
-                        Əlaqə məlumatları
+                        {% trans "Əlaqə məlumatları" %}
                     </h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Ad soyad</h6>
+                    <h6>{% trans "Ad soyad" %}</h6>
                     <div class="form-check ps-0 my-2">
-                        <input id="nameInput" style="height: 40px;" class="mt-2" type="text" placeholder="Ad Soyad" oninput="validateName()">
+                        <input id="nameInput" style="height: 40px;" class="mt-2" type="text" placeholder="{% trans "Ad Soyad" %}" oninput="validateName()">
                         <div id="nameErrorMessages" style="color: red;"></div>
                     </div>
-                    <h6>Nömrə</h6>
+                    <h6>{% trans "Nömrə" %}</h6>
                     <div class="form-check ps-0 my-2">
                         <input id="phoneNumberInput" style="height: 40px;" class="mt-2" type="tel" maxlength="10" placeholder="0XXXXXXXXX" oninput="validatePhoneNumber()">
                         <div id="errorMessages" style="color: red;"></div>
                     </div>
-                    <h6>Çatdırılma üçün ətraflı məlumat</h6>
+                    <h6>{% trans "Çatdırılma üçün ətraflı məlumat" %}</h6>
                     <div class="form-check ps-0 my-2">
-                        <input id="descriptionInput" style="height: 40px;" class="mt-2" type="text" placeholder="Mərtəbə, blok,  mənzil " oninput="validateDescription()">
+                        <input id="descriptionInput" style="height: 40px;" class="mt-2" type="text" placeholder="{% trans "Mərtəbə, blok,  mənzil" %} " oninput="validateDescription()">
                         <div id="descriptionErrorMessages" style="color: red;"></div>
                     </div>
                 </div>
                 <div class="modal-footer py-4">
-                    <button onclick="phoneButton()" id="phoneButton" type="button" class="btn btn-primary w-100">Təsdiq edin</button>
+                    <button onclick="phoneButton()" id="phoneButton" type="button" class="btn btn-primary w-100">{% trans "Təsdiq edin" %}</button>
                 </div>
             </div>
         </div>

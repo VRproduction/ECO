@@ -1,10 +1,11 @@
 {% load custom_filters %}
+{% load i18n %}
 <section class="section-padding pb-5">
     <div class="container">
         <div class="section-title wow animate__animated animate__fadeIn" data-wow-delay="0">
-            <h3 class="">Kampaniyalar</h3>
+            <h3 class="">{% trans "Kampaniyalar" %}</h3>
             <a class='show-all' href='{% url "companies" %}'>
-                Hamısı
+                {% trans "Hamısı" %}
                 <i class="fi-rs-angle-right"></i>
             </a>
         </div>
@@ -26,7 +27,7 @@
                         <div class="deals-content">
                             <h2><a  href="{{company.product.get_absolute_url}}">{{company.product.title}}</a></h2>
                             <div>
-                                <span class="font-small text-muted">By <a href='{% url "shop" %}?vendor={{company.product.vendor.slug}}'>{{company.product.vendor}}</a></span>
+                                <span class="font-small text-muted">{% trans "By" %} <a href='{% url "shop" %}?vendor={{company.product.vendor.slug}}'>{{company.product.vendor}}</a></span>
                             </div>
                             <div class="product-card-bottom">
                                 <div class="product-price">
@@ -36,7 +37,7 @@
                                     {% endif %}
                                 </div>
                                 <div class="add-cart">
-                                    <a class='add' {% if user.is_authenticated %}onclick="addToBasket({{ company.product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</a>
+                                    <a class='add' {% if user.is_authenticated %}onclick="addToBasket({{ company.product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>{% trans "Seç" %}</a>
                                 </div>
                             </div>
                         </div>

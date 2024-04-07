@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% load custom_filters %}
 {% load producthelper %}
 {% block css %}
@@ -62,10 +63,10 @@ crossorigin="localhost"></script>
     <div class="container-sm mb-80 mt-50">
         <div class="row">
             <div class="col-lg-8" >
-                <h3>Çatdırılma metodu, vaxt və əlaqə məlumatları</h3>
+                <h3>{% trans "Çatdırılma metodu, vaxt və əlaqə məlumatları" %}</h3>
                 {% include "components/delivery/modal1.html" %}
                 
-                <h3>Seçilmiş məhsullar</h3>
+                <h3>{% trans "Seçilmiş məhsullar" %}</h3>
                 <div>
                     {% for item in items %}
                     <div class="map-basket-item d-flex my-4 align-items-center">
@@ -88,7 +89,7 @@ crossorigin="localhost"></script>
                             <tbody >
                                 <tr>
                                     <td class="cart_total_label">
-                                        <h6 class="text-muted">Ümumi qiymət</h6>
+                                        <h6 class="text-muted">{% trans "Ümumi qiymət" %}</h6>
                                     </td>
                                     <td class="cart_total_amount">
                                         <h4 class="text-brand text-end" id="map_total_price"></h4>
@@ -101,7 +102,7 @@ crossorigin="localhost"></script>
                                 </tr>
                                 <tr>
                                     <td class="cart_total_label">
-                                        <h6 class="text-muted">Endirim</h6>
+                                        <h6 class="text-muted">{% trans "Endirim" %}</h6>
                                     </td>
                                     <td class="cart_total_amount">
                                         <h5 class="text-heading text-end" id="map_discount"></h5>
@@ -114,7 +115,7 @@ crossorigin="localhost"></script>
                                 </tr>
                                 <tr>
                                     <td class="cart_total_label">
-                                        <h6 class="text-muted">Çatdırılma</h6>
+                                        <h6 class="text-muted">{% trans "Çatdırılma" %}</h6>
                                     </td>
                                     <td class="cart_total_amount">
                                         <h4 class="text-heading text-end" id="map_total_delivery">₼ 0</h4>
@@ -130,7 +131,7 @@ crossorigin="localhost"></script>
                                 </tr>
                                 <tr>
                                     <td class="cart_total_label">
-                                        <h6 class="text-muted">Yekun qiymət</h6>
+                                        <h6 class="text-muted">{% trans "Yekun qiymət" %}</h6>
                                     </td>
                                     <td class="cart_total_amount">
                                         <h4 class="text-brand text-end" id="map_discount_price"></h4>
@@ -146,11 +147,10 @@ crossorigin="localhost"></script>
                                 </tr>
                                 <tr>
                                     <td scope="col" colspan="2">
-                                        {% comment %} <button  id="checkout_button" onclick="checkoutButton()" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></button> {% endcomment %}
-                                        <button  id="checkout_button" onclick="checkoutButton()" class="btn mb-20 w-100">Tamamla<i class="fi-rs-sign-out ml-15"></i></button>
+                                        <button  id="checkout_button" onclick="checkoutButton()" class="btn mb-20 w-100">{% trans "Tamamla" %}<i class="fi-rs-sign-out ml-15"></i></button>
                                         <ul>
-                                            <li id="checkout_address_error" class="text-danger">* Düzgün address seçin!</li>
-                                            <li id="checkout_phone_error" class="text-danger">* Əlaqə məlumatlarını daxil edin!</li>
+                                            <li id="checkout_address_error" class="text-danger">* {% trans "Düzgün address seçin!" %}</li>
+                                            <li id="checkout_phone_error" class="text-danger">* {% trans "Əlaqə məlumatlarını daxil edin!" %}</li>
                                         </ul>
                                     </td>
                                 </tr>

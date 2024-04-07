@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <footer class="main footer_desktop">
 
 
@@ -28,36 +29,36 @@
 
                 <div class="footer-link-widget col wow animate__animated animate__fadeInUp  " data-wow-delay=".2s">
                     <div class="mycenterclass">
-                        <h4 class="widget-title">SOSİAL ŞƏBƏKƏLƏR </h4>
+                        <h4 class="widget-title">{% trans "SOSİAL ŞƏBƏKƏLƏR" %} </h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="{% if setting.instagram %}{{setting.instagram}}{% else %}#{% endif %}">İnstagram</a></li>
-                            <li><a href="{% if setting.facebook %}{{setting.facebook}}{% else %}#{% endif %}">Facebook</a></li>
-                            <li><a href="{% if setting.youtube %}{{setting.youtube}}{% else %}#{% endif %}">Youtube</a></li>
-                            <li><a href="{% if setting.tiktok %}{{setting.tiktok}}{% else %}#{% endif %}">Tiktok</a></li>
+                            <li><a href="{% if setting.instagram %}{{setting.instagram}}{% else %}#{% endif %}">{% trans "İnstagram" %}</a></li>
+                            <li><a href="{% if setting.facebook %}{{setting.facebook}}{% else %}#{% endif %}">{% trans "Facebook" %}</a></li>
+                            <li><a href="{% if setting.youtube %}{{setting.youtube}}{% else %}#{% endif %}">{% trans "Youtube" %}</a></li>
+                            <li><a href="{% if setting.tiktok %}{{setting.tiktok}}{% else %}#{% endif %}">{% trans "Tiktok" %}</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="footer-link-widget col wow animate__animated animate__fadeInUp " data-wow-delay=".3s">
                     <div class="mycenterclass">
-                        <h4 class="widget-title">LİNKLƏR</h4>
+                        <h4 class="widget-title">{% trans "LİNKLƏR" %}</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="{% url "home" %}">Ana Səhifə</a></li>
-                            <li><a href="{% url "about" %}">Haqqında</a></li>
-                            <li><a href="{% url "shop" %}">Məhsullar</a></li>
-                            <li><a href="{% url "blog" %}">Bloq</a></li>
-                            <li><a href="{% url "companies" %}">Kampaniyalar</a></li>
-                            <li><a href="{% url "contact" %}">Əlaqə</a></li>
+                            <li><a href="{% url "home" %}">{% trans "Ana Səhifə" %}</a></li>
+                            <li><a href="{% url "about" %}">{% trans "Haqqında" %}</a></li>
+                            <li><a href="{% url "shop" %}">{% trans "Məhsullar" %}</a></li>
+                            <li><a href="{% url "blog" %}">{% trans "Bloq" %}</a></li>
+                            <li><a href="{% url "companies" %}">{% trans "Kampaniyalar" %}</a></li>
+                            <li><a href="{% url "contact" %}">{% trans "Əlaqə" %}</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="footer-link-widget col wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
                     <div class="mycenterclass">
-                        <h4 class="widget-title">BİZİMLƏ ƏLAQƏ</h4>
+                        <h4 class="widget-title">{% trans "BİZİMLƏ ƏLAQƏ" %}</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
                             {% for number in setting.numbers.all %}
                             <li><a href="tel:{{number.number}}"><i class="fi-rs-headphones"></i> {{number.number}} </a></li>
                             {% endfor %}
-                            <li class="d-flex">Email: <a href="mailto:{{setting.email}}"> {{setting.email}}</a></li>
+                            <li class="d-flex">{% trans "Email" %}: <a href="mailto:{{setting.email}}"> {{setting.email}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -70,7 +71,7 @@
             <div class="col-12 mb-30">
                 <div class="footer-bottom"></div>
             </div>
-            <div>©<a href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}"> {{setting.copyright_title}} </a>{{current_year}} Bütün hüquqlar qorunur!</div>
+            <div>©<a href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}"> {{setting.copyright_title}} </a>{{current_year}} {% trans "Bütün hüquqlar qorunur!" %}</div>
         </div>
     </div>
 </footer>

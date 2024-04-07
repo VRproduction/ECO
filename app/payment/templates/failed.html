@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block main %}
 <style>
     .container-error {
@@ -14,10 +15,10 @@
 </style>
 <div class="container-error mx-auto">
     <div class="alert alert-danger" role="alert">
-      <h4 class="alert-heading">Ödəniş xətası!</h4>
-      <p>Ödəniş zamanı xəta baş verdi.</p>
+      <h4 class="alert-heading">{% trans "Ödəniş xətası!" %}</h4>
+      <p>{% trans "Ödəniş zamanı xəta baş verdi." %}</p>
       <hr>
-      <p class="mb-0"><a href="{% if payment_redirect_url %}{{payment_redirect_url}}{% else %}#{% endif %}">Təkrar yoxlayın</a></p>
+      <p class="mb-0"><a href="{% if payment_redirect_url %}{{payment_redirect_url}}{% else %}#{% endif %}">{% trans "Təkrar yoxlayın" %}</a></p>
     </div>
   </div>
 {% endblock main %}

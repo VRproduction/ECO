@@ -1,7 +1,8 @@
+{% load i18n %}
 <section class="section-padding pb-30 ">
     <div class="container">
         <div class="section-title wow animate__animated animate__fadeIn">
-            <h3 class="deal-bottomm">Tərəfdaşlarımız</h3>
+            <h3 class="deal-bottomm">{% trans "Tərəfdaşlarımız" %}</h3>
 
         </div>
         <div class="row">
@@ -50,23 +51,23 @@
         <div class="row about-count" style="display: flex;justify-content: space-between; {% if statistic.image %}background: url({{statistic.image.url}}) no-repeat center center;{% endif %}">
             <div class="col-lg-1-5 col-md-6 text-center mb-lg-0 mb-md-5">
                 <h1 style="color: #039D2E;" class="heading-1"><span class="count">{{statistic.year}}</span>+</h1>
-                <h4 style="color: #039D2E;">İl xidmətinizdə</h4>
+                <h4 style="color: #039D2E;">{% trans "İl xidmətinizdə" %}</h4>
             </div>
             <div class="col-lg-1-5 col-md-6 text-center">
                 <h1 style="color: #039D2E;" class="heading-1"><span class="count">{{statistic.product}}</span>+</h1>
-                <h4 style="color: #039D2E;">Məhsul</h4>
+                <h4 style="color: #039D2E;">{% trans "Məhsul" %}</h4>
             </div>
             <div class="col-lg-1-5 col-md-6 text-center">
                 <h1 style="color: #039D2E;" class="heading-1"><span class="count">{{statistic.category}}</span>+</h1>
-                <h4 style="color: #039D2E;">Çeşid</h4>
+                <h4 style="color: #039D2E;">{% trans "Çeşid" %}</h4>
             </div>
             <div class="col-lg-1-5 col-md-6 text-center">
                 <h1 style="color: #039D2E;" class="heading-1"><span class="count">{{statistic.brend}}</span>+</h1>
-                <h4 style="color: #039D2E;">Brend</h4>
+                <h4 style="color: #039D2E;">{% trans "Brend" %}</h4>
             </div>
             <div class="col-lg-1-5 col-md-6 text-center">
                 <h1 style="color: #039D2E;" class="heading-1"><span class="count">{{statistic.new_taste}}</span>+</h1>
-                <h4 style="color: #039D2E;">Yeni dad</h4>
+                <h4 style="color: #039D2E;">{% trans "Yeni dad" %}</h4>
             </div>
         </div>
     </section>

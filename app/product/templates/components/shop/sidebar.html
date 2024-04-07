@@ -1,10 +1,11 @@
 {% load static %}
 {% load urlhelper %}
 {% load custom_filters %}
+{% load i18n %}
 
 <div class="col-lg-1-5 primary-sidebar sticky-sidebar">
     <div class="sidebar-widget widget-category-2 mb-30">
-        <h5 class="section-title style-1 mb-30">Kateqoriyalar</h5>
+        <h5 class="section-title style-1 mb-30">{% trans "Kateqoriyalar" %}</h5>
         <ul>
             {% for category in categories %}
             <li>
@@ -16,7 +17,7 @@
     
     <!-- Product sidebar Widget -->
     <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
-        <h5 class="section-title style-1 mb-30">Yeni məhsullar</h5>
+        <h5 class="section-title style-1 mb-30">{% trans "Yeni məhsullar" %}</h5>
         {% for product in new_products %}
         <div class="single-post clearfix">
             <div class="image">

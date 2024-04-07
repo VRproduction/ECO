@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-
+{% load static %}
+{% load i18n %}
 {% block title %}
 {% if seo.title %}
 <title>{{ seo.title }}</title>
@@ -37,7 +38,7 @@
                     </div>
                     <div class="bottom-box">
                         <div class="left">
-                            <a class="readmore" href="{{blog.get_absolute_url}}">Daha çox</a>
+                            <a class="readmore" href="{{blog.get_absolute_url}}">{% trans "Daha çox" %}</a>
                         </div>
                         <div class="right">
                             <a class="btn-style3" href="{{blog.get_absolute_url}}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>

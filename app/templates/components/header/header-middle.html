@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
     <div class="container">
         <div class="header-wrap">
@@ -9,13 +10,13 @@
                 <div class="search-style-2">
                     <form action="{% url "shop" %}" method="get">
                         <select name="category" class="select-active">
-                            <option value="">Kateqoriyalar</option>
+                            <option value="">{% trans "Kateqoriyalar" %}</option>
                             {% for category in categories %}
                             <option {% if request.GET.category == category.slug %}selected{% endif %} value="{{category.slug}}">{{category.title}}</option>
                             {% endfor %}
                             
                         </select>
-                        <input type="text" name="search" value="{{request.GET.search}}" placeholder="Axtar ...">
+                        <input type="text" name="search" value="{{request.GET.search}}" placeholder="{% trans "Axtar" %} ...">
                         <button type="submit" style="display:flex; align-items:center; padding: 0;"><img src="{% static "assets/imgs/theme/icons/search.png" %}" alt=""></button>
                     </form>
                 </div>
@@ -26,38 +27,38 @@
                                 <img class="svgInject" alt="Nest" src="{% static "assets/imgs/theme/icons/icon-heart.svg" %}">
                                 <span class="pro-count blue" id="favorite_count">{% if user.is_authenticated %}{{favorite_count}}{% else %}0{% endif %}</span>
                             </a>
-                            <a href='{% url "wish_list" %}'><span class="lable">Sevimlilər</span></a>
+                            <a href="{% if user.is_authenticated %}{% url "wish_list" %}{% else %}{% url "login" %}?next={% url "wish_list" %}{% endif %}"><span class="lable">{% trans "Sevimlilər" %}</span></a>
                         </div>
                         <div class="header-action-icon-2">
                             <a class='mini-cart-icon' href='{% url "basket" %}'>
                                 <img alt="Nest" src="{% static "assets/imgs/theme/icons/icon-cart.svg" %}">
                                 <span id="header-basket-count" class="pro-count blue">0</span>
                             </a>
-                            <a href='{% url "basket" %}'><span class="lable">Səbət</span></a>
+                            <a href="{% if user.is_authenticated %}{% url "basket" %}{% else %}{% url "login" %}?next={% url "basket" %}{% endif %}"><span class="lable">{% trans "Səbət" %}</span></a>
                             {% include "components/header/basket.html" %}
                         </div>
                         <div class="header-action-icon-2">
                             <a href='{% url "account" %}'>
                                 <img class="svgInject" alt="Nest" src="{% static "assets/imgs/theme/icons/icon-user.svg" %}">
                             </a>
-                            <a href="{% if user.is_authenticated %}{% url "account" %}{% else %}{% url "login" %}{% endif %}"><span class="lable ml-0">Hesab</span></a>
+                            <a href="{% if user.is_authenticated %}{% url "account" %}{% else %}{% url "login" %}?next={% url "account" %}{% endif %}"><span class="lable ml-0">{% trans "Hesab" %}</span></a>
                             <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                 {% if user.is_authenticated %}
                                 <ul>
                                     <li>
-                                        <a href='{% url "account" %}'><i class="fi fi-rs-user mr-10"></i>Hesab</a>
+                                        <a href='{% url "account" %}'><i class="fi fi-rs-user mr-10"></i>{% trans "Hesab" %}</a>
                                     </li>
                                     <li>
-                                        <a href='{% url "logout" %}'><i class="fi fi-rs-sign-out mr-10"></i>Çıxış</a>
+                                        <a href='{% url "logout" %}'><i class="fi fi-rs-sign-out mr-10"></i>{% trans "Çıxış" %}</a>
                                     </li>
                                 </ul>
                                 {% else %}
                                 <ul>
                                     <li>
-                                        <a href='{% url "login" %}'>Daxil ol</a>
+                                        <a href='{% url "login" %}'>{% trans "Daxil ol" %}</a>
                                     </li>
                                     <li>
-                                        <a href='{% url "register" %}'>Qeydiyyatdan keç</a>
+                                        <a href='{% url "register" %}'>{% trans "Qeydiyyatdan keç" %}</a>
                                     </li>
                                 </ul>
                                 {% endif %}

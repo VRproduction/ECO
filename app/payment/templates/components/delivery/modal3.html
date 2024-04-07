@@ -1,16 +1,17 @@
 {% load static %}
+{% load i18n %}
 <div class="modal fade" id="modalMap" tabindex="-1" role="dialog" aria-labelledby="modalMapId" aria-hidden="true">
     <div class="h-100 d-flex align-items-center">
         <div class="modal-dialog" role="document" style="width: 650px; max-width: 650px;">
             <div class="modal-content py-3">
                 <div class="modal-header border-0 pb-0">
                     <h5 class="modal-title" id="modalMapId">
-                        Adress seçin
+                        {% trans "Adress seçin" %}
                     </h5>
                     <button onclick="closeMap()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="map2-container" style="display: none;"> <!-- Harita başlangıçta gizli -->
+                    <div id="map2-container" style="display: none;">
                         <div id="map2"></div>
                         <button onclick="centerMapToCurrentLocation()" class="map-button">
                             <img src="{% static "/assets/imgs/location.png" %}" alt="" srcset="">
@@ -19,7 +20,7 @@
                     <span id="selected_map_info"></span>
                 </div>
                 <div class="modal-footer border-0">
-                    <button onclick="addRadio(true)" type="button" class="btn btn-primary w-100">Əlavə edin</button>
+                    <button onclick="addRadio(true)" type="button" class="btn btn-primary w-100">{% trans "Əlavə edin" %}</button>
                 </div>
             </div>
         </div>

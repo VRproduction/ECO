@@ -1,13 +1,14 @@
 {% load urlhelper %}
+{% load i18n %}
 <div class="shop-product-fillter">
     <div class="totall-product">
-        <p>Sizin üçün <strong class="text-brand">{{count}}</strong> məhsul tapdıq!</p>
+        <p>{% trans "Sizin üçün" %} <strong class="text-brand">{{count}}</strong> {% trans "məhsul tapdıq!" %}</p>
     </div>
     <div class="sort-by-product-area">
         <div class="sort-by-cover mr-10">
             <div class="sort-by-product-wrap">
                 <div class="sort-by">
-                    <span><i class="fi-rs-apps"></i><span class="d-none d-md-inline">Göstər:</span></span>
+                    <span><i class="fi-rs-apps"></i><span class="d-none d-md-inline">{% trans "Göstər" %}:</span></span>
                 </div>
                 <div class="sort-by-dropdown-wrap">
                     <span> {% if request.GET.show %}{{request.GET.show}}{% else %}{{ page_obj.paginator.per_page }}{% endif %} <i class="fi-rs-angle-small-down"></i></span>
@@ -25,18 +26,18 @@
         <div class="sort-by-cover" {% if not request.GET.ordering == "-price" and not request.GET.ordering == "price" %}style="width:190px;"{% else %}{% endif %}>
             <div class="sort-by-product-wrap">
                 <div class="sort-by">
-                    <span><i class="fi-rs-apps-sort"></i>{% if not request.GET.ordering == "-is_best_seller" %}<span class="d-none d-md-inline">Sırala:</span>{% endif %}</span>
+                    <span><i class="fi-rs-apps-sort"></i>{% if not request.GET.ordering == "-is_best_seller" %}<span class="d-none d-md-inline">{% trans "Sırala" %}:</span>{% endif %}</span>
                 </div>
                 <div class="sort-by-dropdown-wrap">
-                    <span> {% if request.GET.ordering == "pk" %}Yeni{% elif request.GET.ordering == "-is_best_seller" %}Ən çox satılanlar{% elif request.GET.ordering == "price" %}Qiymət (azdan-çoxa){% elif request.GET.ordering == "-price" %}Qiymət (çoxdan-aza){% else %}Yeni{% endif %} <i class="fi-rs-angle-small-down"></i></span>
+                    <span> {% if request.GET.ordering == "pk" %}{% trans "Yeni" %}{% elif request.GET.ordering == "-is_best_seller" %}{% trans "Ən çox satılanlar" %}{% elif request.GET.ordering == "price" %}{% trans "Qiymət (azdan-çoxa)" %}{% elif request.GET.ordering == "-price" %}{% trans "Qiymət (çoxdan-aza)" %}{% else %}{% trans "Yeni" %}{% endif %} <i class="fi-rs-angle-small-down"></i></span>
                 </div>
             </div>
             <div class="sort-by-dropdown">
                 <ul>
-                    <li><a {% if request.GET.ordering == "pk" or not request.GET.ordering %}class="active"{% endif %} href="{% edit_query request ordering="pk" %}">Yeni</a></li>
+                    <li><a {% if request.GET.ordering == "pk" or not request.GET.ordering %}class="active"{% endif %} href="{% edit_query request ordering="pk" %}">{% trans "Yeni" %}</a></li>
                     {% comment %} <li><a {% if request.GET.ordering == "-is_best_seller" %}class="active"{% endif %} href="{% edit_query request ordering="-is_best_seller" %}">Ən çox satılanlar</a></li> {% endcomment %}
-                    <li><a {% if request.GET.ordering == "price" %}class="active"{% endif %} href="{% edit_query request ordering="price" %}">Qiymət (azdan-çoxa)</a></li>
-                    <li><a {% if request.GET.ordering == "-price" %}class="active"{% endif %} href="{% edit_query request ordering="-price" %}">Qiymət (çoxdan-aza)</a></li>
+                    <li><a {% if request.GET.ordering == "price" %}class="active"{% endif %} href="{% edit_query request ordering="price" %}">{% trans "Qiymət (azdan-çoxa)" %}</a></li>
+                    <li><a {% if request.GET.ordering == "-price" %}class="active"{% endif %} href="{% edit_query request ordering="-price" %}">{% trans "Qiymət (çoxdan-aza)" %}</a></li>
                 </ul>
             </div>
         </div>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <div class="header-bottom header-bottom-bg-color sticky-bar">
     <div class="container">
         <div class="header-wrap header-space-between position-relative">
@@ -8,7 +9,7 @@
             <div class="header-nav d-none d-lg-flex">
                 <div class="main-categori-wrap d-none d-lg-block">
                     <a class="categories-button-active" href="#">
-                        <span class="fi-rs-apps"></span> <span class="et">Kateqoriyalar
+                        <span class="fi-rs-apps"></span> <span class="et">{% trans "Kateqoriyalar" %}
                         <i class="fi-rs-angle-down"></i>
                     </a>
                     <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
@@ -57,7 +58,7 @@
                             </div>
                         </div>
                        
-                        <div class="more_categories"><span class="icon"></span> <span class="heading-sm-1">Show more...</span></div>
+                        <div class="more_categories"><span class="icon"></span> <span class="heading-sm-1">{% trans "Show more" %}...</span></div>
                          {% endif %}
                      </div>
                 </div>
@@ -65,22 +66,22 @@
                     <nav>
                         <ul>
                             <li>
-                                <a {% if request.path == '/' %}class="active"{% endif %} href='{% url "home" %}'>Ana səhifə</a>
+                                <a {% if request.path == '/' or request.path|slice:"3:" == '/' %}class="active"{% endif %} href='{% url "home" %}'>{% trans "Ana səhifə" %}</a>
                             </li>
                             <li>
-                                <a {% if request.path == '/about/' %}class="active"{% endif %} href='{% url "about" %}'>Haqqımızda</a>
+                                <a {% if request.path == '/about/' or request.path|slice:"3:" == '/about/' %}class="active"{% endif %} href='{% url "about" %}'>{% trans "Haqqımızda" %}</a>
                             </li>
                             <li>
-                                <a {% if request.path == '/shop/' %}class="active"{% endif %} href='{% url "shop" %}'>Məhsullar</a>
+                                <a {% if request.path == '/shop/' or request.path|slice:"3:" == '/shop/' %}class="active"{% endif %} href='{% url "shop" %}'>{% trans "Məhsullar" %}</a>
                             </li>
                             <li>
-                                <a {% if request.path|slice:":7" == '/blogs/' %}class="active"{% endif %} href='{% url "blog" %}'>Bloq</a>
+                                <a {% if request.path|slice:":7" == '/blogs/' or request.path|slice:"3:10" == '/blogs/'%}class="active"{% endif %} href='{% url "blog" %}'>{% trans "Bloq" %}</a>
                             </li>
                             <li>
-                                <a {% if request.path == '/companies/' %}class="active"{% endif %} href='{% url "companies" %}'>Kampaniyalar</a>
+                                <a {% if request.path == '/companies/' or request.path|slice:"3:" == '/companies/' %}class="active"{% endif %} href='{% url "companies" %}'>{% trans "Kampaniyalar" %}</a>
                             </li>
                             <li>
-                                <a {% if request.path == '/contact/' %}class="active"{% endif %} href='{% url "contact" %}'>Əlaqə</a>
+                                <a {% if request.path == '/contact/' or request.path|slice:"3:" == '/contact/' %}class="active"{% endif %} href='{% url "contact" %}'>{% trans "Əlaqə" %}</a>
                             </li>
                         </ul>
                     </nav>
@@ -92,7 +93,7 @@
                     {% if number.is_main and forloop.counter < 2 %}
                     <a style="font-size:15px;" href="tel:{{number.number}}">{{number.number}} </a>
                     {% endif %}
-                    {% endfor %}<span>24/7 Dəstək</span></p>
+                    {% endfor %}<span>{% trans "24/7 Dəstək" %}</span></p>
             </div>
             <div class="header-action-icon-2 d-block d-lg-none">
                 <div class="burger-icon burger-icon-white">

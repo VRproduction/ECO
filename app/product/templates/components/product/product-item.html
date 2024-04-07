@@ -1,6 +1,7 @@
 {% load static %}
 {% load custom_filters %}
 {% load producthelper %}
+{% load i18n %}
 <div class="product-cart-wrap mb-30" data-product-id="{{ product.id }}">
     <div class="product-img-action-wrap">
         <div class="product-img product-img-zoom">
@@ -15,14 +16,14 @@
         <div class="product-badges product-badges-position product-badges-mrg">
             {% if product.stock > 0 %}
                 {% if product.badges == 1 %}
-                <span class="hot">Ən çox satılan</span>
+                <span class="hot">{% trans "Ən çox satılan" %}</span>
                 {% elif product.badges == 2 %}
-                <span class="new">Yeni</span>
+                <span class="new">{% trans "Yeni" %}</span>
                 {% elif product.badges == 3 and product.discount%}
                 <span class="best">{{product.discount}}%</span>
                 {% endif %}
             {% else %}
-            <span class="hot">Stokda yoxdur</span>
+            <span class="hot">{% trans "Stokda yoxdur" %}</span>
             {% endif %}
         </div>
     </div>
@@ -56,7 +57,7 @@
             </div>
             <div class="add-cart">
                 {% if product.stock > 0 %}
-                <a class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>Seç</a>
+                <a class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>{% trans "Seç" %}</a>
                 {% endif %}
             </div>
         </div>

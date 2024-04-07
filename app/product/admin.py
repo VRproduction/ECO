@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import *
 from django import forms
 from django.contrib.auth import get_backends
+from modeltranslation.admin import TranslationAdmin
 
 User = get_user_model()
 
@@ -11,28 +12,74 @@ class PhoneNumberInline(admin.TabularInline):
     model = PhoneNumber
 
 @admin.register(GeneralSettings)
-class SettingAdmin(admin.ModelAdmin):
+class SettingAdmin(TranslationAdmin):
     inlines = [PhoneNumberInline, ]
+    list_display = ('site_title',)
     
     def has_add_permission(self, request):
         if self.model.objects.count() >= MAX_OBJECTS:
             return False
         return super().has_add_permission(request)
     
-@admin.register(IndexSlider)
-class HomePageSliderAdmin(admin.ModelAdmin):
-    pass
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
     
-admin.site.register(ProductCategory)
-admin.site.register(Vendor)
+@admin.register(IndexSlider)
+class HomePageSliderAdmin(TranslationAdmin):
+    list_display = ('title',)
+
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+    
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(TranslationAdmin):
+    list_display = ('title',)
+
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+
+@admin.register(Vendor)
+class VendorAdmin(TranslationAdmin):
+    list_display = ('title',)
+
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TranslationAdmin):
     inlines = [ProductImageInline, ]
-    list_display = ('title', 'category','id', 'price', 'stock', 'sale_count', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page')
+    list_display = ('title_az', 'category','id', 'price', 'stock', 'sale_count', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page')
     list_filter = ('category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
     search_fields = ('title', 'description')
     ordering = ('-stock',)
@@ -53,34 +100,86 @@ class ProductAdmin(admin.ModelAdmin):
         }),
     )
 
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+
 
 @admin.register(CategoryBanner)
-class CategoryBannerAdmin(admin.ModelAdmin):
+class CategoryBannerAdmin(TranslationAdmin):
 
     def has_add_permission(self, request):
         if self.model.objects.count() >= 3:
             return False
         return super().has_add_permission(request)
     
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+    
 @admin.register(About)
-class AboutAdmin(admin.ModelAdmin):
+class AboutAdmin(TranslationAdmin):
 
     def has_add_permission(self, request):
         if self.model.objects.count() >= MAX_OBJECTS:
             return False
         return super().has_add_permission(request)
     
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+    
 @admin.register(Feature)
-class FeatureAdmin(admin.ModelAdmin):
+class FeatureAdmin(TranslationAdmin):
 
     def has_add_permission(self, request):
         if self.model.objects.count() >= 5:
             return False
         return super().has_add_permission(request)
     
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+    
 admin.site.register(Company)
-admin.site.register(Partner)
 
+@admin.register(Partner)
+class PartnerAdmin(TranslationAdmin):
+    list_display = ('title',)
+    
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
 @admin.register(Statistic)
 class StatisticAdmin(admin.ModelAdmin):
 
@@ -89,8 +188,33 @@ class StatisticAdmin(admin.ModelAdmin):
             return False
         return super().has_add_permission(request)
     
-admin.site.register(FAQ)
-admin.site.register(Blog)
+@admin.register(FAQ)
+class FAQAdmin(TranslationAdmin):
+    list_display = ('title',)
+    
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+
+@admin.register(Blog)
+class BlogAdmin(TranslationAdmin):
+    list_display = ('title',)
+
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
     
 class OrderItemInline(admin.TabularInline):
     model = OrderItem

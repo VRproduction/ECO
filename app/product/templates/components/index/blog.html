@@ -1,10 +1,11 @@
+{% load i18n %}
 <!--Start Blog Style1 Area-->
 <section class="blog-style1-area">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
                 <div class="sec-title" style="padding:0;">
-                    <a href="{% url "blog" %}"><h2>Bloqlar</h2></a>
+                    <a href="{% url "blog" %}"><h2>{% trans "Bloqlar" %}</h2></a>
                 </div>
             </div>
         </div>
@@ -27,7 +28,7 @@
                         </div>
                         <div class="bottom-box">
                             <div class="left">
-                                <a class="readmore" href="{{blog.get_absolute_url}}">Daha çox</a>
+                                <a class="readmore" href="{{blog.get_absolute_url}}">{% trans "Daha çox" %}</a>
                             </div>
                             <div class="right">
                                 <a class="btn-style3" href="{{blog.get_absolute_url}}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>

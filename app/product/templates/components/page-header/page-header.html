@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="page-header mt-30 mb-50">
     <div class="container">
         <div class="archive-header">
@@ -5,7 +6,7 @@
                 <div class="col-xl-3">
                     <h1 class="mb-15">{{title}}</h1>
                     <div class="breadcrumb">
-                        <a href='{% url "home" %}' rel='nofollow'><i class="fi-rs-home mr-5"></i>Ana səhifə</a>
+                        <a href='{% url "home" %}' rel='nofollow'><i class="fi-rs-home mr-5"></i>{% trans "Ana səhifə" %}</a>
                         <span></span> {{title}} 
                     </div>
                 </div>

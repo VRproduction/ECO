@@ -1,5 +1,6 @@
 {% load static %}
 {% load custom_filters %}
+{% load i18n %}
 <div class="modal fade custom-modal" id="quickViewModal{{product.id}}{% if category_product %}{{product.id}}{% endif %}" tabindex="-1" aria-labelledby="quickViewModalLabel{{product.id}}{% if category_product %}{{product.id}}{% endif %}"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -32,9 +33,9 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="detail-info pr-30 pl-30">
                                 {% if product.stock > 0 %}
-                                    {% if product.discount %}<span class="stock-status out-stock">Endirim</span>{% endif %}
+                                    {% if product.discount %}<span class="stock-status out-stock">{% trans "Endirim" %}</span>{% endif %}
                                 {% else %}
-                                    <span class="stock-status out-stock">Stokda yoxdur</span>
+                                    <span class="stock-status out-stock">{% trans "Stokda yoxdur" %}</span>
                                 {% endif %}
                                 <h3 class="title-detail"><a href="{{product.get_absolute_url}}" class="text-heading">{{product.title}}</a></h3>
                               
@@ -60,11 +61,11 @@
                                     <div class="product-extra-link2">
                                         {% if user.is_authenticated %}
                                         <button onclick="addToBasket({{ product.id }},1)" class="button button-add-to-cart"><i
-                                                class="fi-rs-shopping-cart"></i>Səbətə əlavə et</button>
+                                                class="fi-rs-shopping-cart"></i>{% trans "Səbətə əlavə et" %}</button>
                                         {% else %}
                                             <form action="{% url "login" %}" method="get">
                                                 <button type="submit" class="button button-add-to-cart"><i
-                                                    class="fi-rs-shopping-cart"></i>Səbətə əlavə et</button>
+                                                    class="fi-rs-shopping-cart"></i>{% trans "Səbətə əlavə et" %}</button>
                                             </form>
                                         {% endif %}
                                     </div>
@@ -72,15 +73,15 @@
                                 </div>
                                 <div class="font-xs">
                                     <ul>
-                                        <li class="mb-5">Brend: <span class="text-brand">{{product.vendor}}</span></li>
+                                        <li class="mb-5">{% trans "Brend" %}: <span class="text-brand">{{product.vendor}}</span></li>
                                         {% if product.using_time %}
-                                        <li class="mb-5">İstifadə müddəti:<span class="text-brand"> {{product.using_time}} ay</span></li>
+                                        <li class="mb-5">{% trans "İstifadə müddəti" %}:<span class="text-brand"> {{product.using_time}} {% trans "ay" %}</span></li>
                                         {% endif %}
                                     </ul>
                                 </div>
                                 {% if product.description %}
                                 <div class="product-description mt-20">
-                                    <h4>Açıqlama:</h4>
+                                    <h4>{% trans "Açıqlama" %}:</h4>
                                     <p>{{ product.description|safe }}</p>
                                 </div>
                                 {% endif %}

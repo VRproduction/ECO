@@ -23,6 +23,9 @@
                 <div class="header-action-right">
                     <div class="header-action-2">
                         <div class="header-action-icon-2">
+                           
+                        </div>
+                        <div class="header-action-icon-2">
                             <a href='{% url "wish_list" %}'>
                                 <img class="svgInject" alt="Nest" src="{% static "assets/imgs/theme/icons/icon-heart.svg" %}">
                                 <span class="pro-count blue" id="favorite_count">{% if user.is_authenticated %}{{favorite_count}}{% else %}0{% endif %}</span>

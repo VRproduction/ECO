@@ -42,4 +42,11 @@
             </div>
         </div>
     </div>
+    <div class="shop-categories">
+        {% for category in categories %}
+        <div class="shop-category {% if request.GET.category == category.slug %}active-category{% endif %}"> 
+            <a href="{% edit_query request category=category.slug %}">{{category.title}}</a>
+        </div>
+        {% endfor %}
+    </div>
 </div>

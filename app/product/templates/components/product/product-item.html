@@ -2,7 +2,7 @@
 {% load custom_filters %}
 {% load producthelper %}
 {% load i18n %}
-<div class="product-cart-wrap mb-30" data-product-id="{{ product.id }}">
+<div class="product-cart-wrap h-100" data-product-id="{{ product.id }}">
     <div class="product-img-action-wrap">
         <div class="product-img product-img-zoom">
             <a href="{{product.get_absolute_url}}">
@@ -39,9 +39,9 @@
         <br/>
         {% endif %}
         </div>
-        <div class="product-card-bottom">
+        <div class="product-card-bottom d-flex align-items-center">
             {% if product.stock > 0 %}
-            <div class="product-price">
+            <div class="product-price d-flex flex-column">
                 <span>₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
                 {% if product.discount %}
                 <span class="old-price">₼ {{product.price|format_decimal:2}}</span>
@@ -57,7 +57,7 @@
             </div>
             <div class="add-cart">
                 {% if product.stock > 0 %}
-                <a class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>{% trans "Seç" %}</a>
+                <a class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>{% trans "Əlavə et" %}</a>
                 {% endif %}
             </div>
         </div>

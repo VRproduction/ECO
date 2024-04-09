@@ -96,6 +96,15 @@ function locationInfo(lat, lon){
 // map.on('click', onMapClick);
 
 // Kullanıcının konumunu güncelleyen fonksiyon
+if ("geolocation" in navigator) {
+  // Konum bilgisi mevcut
+  navigator.geolocation.getCurrentPosition(function(position) {
+    console.log("Latitude: " + position.coords.latitude +
+      " Longitude: " + position.coords.longitude);
+  });
+} else {
+  console.log("Tarayıcınız konum bilgisini desteklemiyor.");
+}
 function updateCurrentLocation(onload = false) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -147,6 +156,7 @@ function updateCurrentLocation(onload = false) {
                 .then(address => {
                     currentInput.value = address;
                     document.getElementById("option1Label").innerHTML = `${address} <span class="text-danger">(* Hal hazırda olduğunuz məkan)</span>`
+                    document.getElementById("select_current_location").classList.remove('d-none');
                     updateMapLocationInfo(latitude, longitude, address)
 
                 })

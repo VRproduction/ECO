@@ -202,20 +202,9 @@ function updateBasketTable(data) {
     var couponCode = urlParams.get('coupon_code');
     document.getElementById('basket-item-count').innerText = data.basketItemCount;
     document.getElementById('basket-checkout-form').innerHTML = `
-            <div class="border p-md-4 cart-totals ml-30">
+            <div class="border p-md-4 cart-totals">
+                
                 ${!data.stock_status ? `<p class="text-danger">* Stokda olmayan məhsullar var</p>`: ''}
-                <h4 class="mb-10">Kupon tətbiq et</h4>
-                <form  id="couponForm" class="mb-3">
-                    <div class="d-flex justify-content-between">
-                        <input class="font-medium mr-15 coupon" ${couponCode ? `value="${couponCode}"`: ''} name="coupon_code" placeholder="Kupon">
-                        ${coupon_is_applied ? `
-                        <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="notApplyCoupon()" type="button" style="width:265px;padding:0;" class="btn"><i class="fi-rs-label mr-10"></i>Ləğv et</button>
-                        `:`
-                        <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="applyCoupon()" type="button" style="width:265px;padding:0;" class="btn"><i class="fi-rs-label mr-10"></i>Tətbiq et</button>
-                        `}
-                    </div>
-                    <div id="coupon_error" class="mt-3 text-danger"></div>
-                </form>
                 <div class="table-responsive">
                     <table class="table no-border">
                         <tbody id="basket-item-checkout">
@@ -250,27 +239,33 @@ function updateBasketTable(data) {
                                     <h4 class="text-brand text-end">₼ ${data.discount ? data.discountPrice : data.totalPrice}</h4>
                                 </td>
                             </tr>
-                            <tr>
-                                <td scope="col" colspan="2">
-                                    <div class="divider-2 mt-10 mb-10"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td scope="col"  colspan="2">
-                                    <div class="payment-grid">
-                                        <div class="payment-option w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-danger' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `style="cursor: not-allowed;"`: ''} data-value="credit_card">
-                                            <a class="text-light text-center d-block w-100" ${data.totalPrice == 0  || !data.stock_status ? `style="cursor: not-allowed;"`: `href="/payment/map/"`}>Kuriyer ilə çatdırılma</a>
-                                        </div>
-                                        <button onclick="checkoutButton()" class="payment-option text-center w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-success' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `disabled style="cursor: not-allowed;"`: ''} data-value="cash_on_delivery">
-                                            Yerində ödə
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div class="border mt-3 p-md-4 cart-totals">
+                <div class="table-responsive">
+                    <button data-bs-toggle="modal" data-bs-target="#checkoutBasket" class="payment-option text-center w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-success' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `disabled style="cursor: not-allowed;"`: ''} data-value="cash_on_delivery">
+                        Səbəti tamamla
+                    </button>
+                </div>
+            </div>
+            <div class="border p-md-4 cart-totals mt-3">
+                ${!data.stock_status ? `<p class="text-danger">* Stokda olmayan məhsullar var</p>`: ''}
+                <h4 class="mb-10">Kupon tətbiq et</h4>
+                <form  id="couponForm" class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <input class="font-medium mr-15 coupon" ${couponCode ? `value="${couponCode}"`: ''} name="coupon_code" placeholder="Kupon">
+                        ${coupon_is_applied ? `
+                        <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="notApplyCoupon()" type="button" style="width:265px;padding:0;" class="btn btn-danger"><i class="fi-rs-label mr-10"></i>Ləğv et</button>
+                        `:`
+                        <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="applyCoupon()" type="button" style="width:265px;padding:0;" class="btn btn-success"><i class="fi-rs-label mr-10"></i>Tətbiq et</button>
+                        `}
+                    </div>
+                    <div id="coupon_error" class="mt-3 text-danger"></div>
+                </form>
+            </div>
+            
     `;
     saveDataToLocalStorage(data);
 
@@ -291,7 +286,7 @@ function updateBasketTable(data) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
         <td class="custome-checkbox pl-30">
-            <input class="form-check-input" type="checkbox" name="selected_items[]" id="selected_item${item.id}" value="${item.id}">
+            <input checked class="form-check-input" type="checkbox" name="selected_items[]" id="selected_item${item.id}" value="${item.id}">
             <label class="form-check-label" for="selected_item${item.id}"></label>
         </td>
         <td class="image product-thumbnail"><img src="${item.product.image_url}" alt="#"></td>
@@ -401,3 +396,14 @@ function toggleFavorite(productId) {
     })
     .catch(error => console.error('Error:', error));
 }
+
+function toggleBasketInfo(){
+    var detailInfo = document.querySelector("#payment-info-detail")
+    detailInfo.classList.toggle("d-none")
+}
+window.addEventListener('click', function(e){   
+  if ( !document.getElementById('payment-info').contains(e.target) && !document.getElementById('payment-info-detail').contains(e.target)){
+    var detailInfo = document.querySelector("#payment-info-detail")
+    detailInfo.classList.add("d-none")
+  } 
+});

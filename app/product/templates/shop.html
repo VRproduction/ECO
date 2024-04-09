@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
 {% if seo.title %}
 <title>{{ seo.title }}</title>
@@ -6,6 +7,11 @@
 <title>{{setting.site_title}}</title>
 {% endif %}
 {% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="stylesheet" href="{% static "assets/css/category-swipper.css" %}"> 
+{% endblock css %}
 
 {% block seo %}
     <meta name="description" content="{% if seo.description %}{{ seo.description }}{% endif %}">

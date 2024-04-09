@@ -79,7 +79,7 @@ class ProductImageInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
     inlines = [ProductImageInline, ]
-    list_display = ('title_az', 'category','id', 'price', 'stock', 'sale_count', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page')
+    list_display = ('title', 'category','id', 'price', 'stock', 'sale_count', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page')
     list_filter = ('category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
     search_fields = ('title', 'description')
     ordering = ('-stock',)
@@ -113,7 +113,7 @@ class ProductAdmin(TranslationAdmin):
 
 @admin.register(CategoryBanner)
 class CategoryBannerAdmin(TranslationAdmin):
-
+    list_display = ('title',)
     def has_add_permission(self, request):
         if self.model.objects.count() >= 3:
             return False
@@ -131,6 +131,7 @@ class CategoryBannerAdmin(TranslationAdmin):
     
 @admin.register(About)
 class AboutAdmin(TranslationAdmin):
+    list_display = ('title',)
 
     def has_add_permission(self, request):
         if self.model.objects.count() >= MAX_OBJECTS:
@@ -149,6 +150,7 @@ class AboutAdmin(TranslationAdmin):
     
 @admin.register(Feature)
 class FeatureAdmin(TranslationAdmin):
+    list_display = ('title1',)
 
     def has_add_permission(self, request):
         if self.model.objects.count() >= 5:

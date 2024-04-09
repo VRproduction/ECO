@@ -10,7 +10,8 @@ def extras(request):
         'categories': ProductCategory.objects.all(),
         'setting': GeneralSettings.objects.first(),
         'all_products': Product.objects.all(),
-        'site_url': site_url
+        'site_url': site_url,
+        'header_companies': Company.objects.all()
     }
     if request.user.is_authenticated:
         context['favorite_count'] = Favorite.objects.filter(user = request.user).count()

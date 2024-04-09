@@ -180,6 +180,7 @@ function updateMapLocationInfo(lat, lon, street){
     sendShipmentPromises(lat, lon, street)
     .then(data => {
         document.getElementById("map-location-info").innerText = `${street.length > 70 ? street.slice(0,70)+' . . .': street}`
+        document.getElementById("map-location-info").classList.remove("text-danger");
         var delivery_time = document.getElementById("delivery_time")
         if ('error_code' in data) {
             if (data['error_code'] === 'DROPOFF_OUTSIDE_OF_DELIVERY_AREA') {

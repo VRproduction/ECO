@@ -1105,15 +1105,10 @@ button.submit:hover, button[type='submit']:hover {
   border-radius: 4px;
   color: #fff;
   border: 1px solid transparent;
-  background-color: #039D2E;
   cursor: pointer;
   -webkit-transition: all 300ms linear 0s;
   transition: all 300ms linear 0s;
   letter-spacing: 0.5px;
-}
-
-.btn:hover, .button:hover {
-  background-color: #FDC040;
 }
 
 .btn.btn-sm, .button.btn-sm {
@@ -5564,7 +5559,7 @@ table.no-border td, table.no-border th, table.no-border thead {
   border-radius: 15px;
   -webkit-box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
           box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
-  padding: 30px 40px;
+  padding: 30px 20px;
 }
 
 .order_review {
@@ -6993,7 +6988,7 @@ h6.post-title {
   top: 100%;
   left: 0;
   z-index: 2;
-  min-width: 120px;
+  min-width: 150px;
   background: #fff;
   border-radius: 0 0 4px 4px;
   -webkit-transform: translateY(20px);
@@ -12431,16 +12426,12 @@ footer .hotline img {
   cursor: pointer;
   transition: background-color 0.3s; /* Geçiş efekti */
 }
-.payment-option:nth-child(1){
-  background-color: red; /* Mavi renk kullanabilirsiniz */
-}
-.payment-option:nth-child(2){
+
+.payment-option{
   background-color: #039D2E; /* Mavi renk kullanabilirsiniz */
 }
-.payment-option:nth-child(1):hover {
-  background-color: #d85040; /* Hover durumunda daha koyu bir mavi */
-}
-.payment-option:nth-child(2):hover {
+
+.payment-option:hover {
   background-color: #45ad76; /* Hover durumunda daha koyu bir mavi */
 }
 
@@ -12451,4 +12442,109 @@ footer .hotline img {
 
 .mobile-active{
   color: #039D2E !important;
+}
+.d-grid{
+  display: grid;
+}
+.grid-1{
+  grid-template-columns: repeat(1, 1fr);
+}
+.grid-2{
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-3{
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid-4{
+  grid-template-columns: repeat(4, 1fr);
+}
+@media only screen and (min-width: 992px) {
+  .grid-md-1{
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .grid-md-2{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-md-3{
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-md-4{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.btn-yellow-hover:hover{
+  background-color: #FDC040 o !important;
+}
+
+.payment-info{
+  position: relative;
+}
+#payment-info{
+  color: black !important;
+  border: 1px solid black !important;
+  width: 18px;
+  height: 18px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.payment-info-detail{
+ position: absolute;
+ left: 20px;
+ top: -5px;
+ width: 320px;
+ z-index: 2000;
+ background-color: white !important;
+ border: 1px solid black;
+ padding: 5px;
+ border-radius: 5px;
+}
+@media only screen and (max-width: 992px) {
+  .payment-info-detail{
+    width: 250px;
+    left: -20px;
+  }
+}
+.payment-info-detail *{ 
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  line-height: 12px;
+}
+.shop-categories{
+  display: flex;
+  gap: 5px;
+  margin-top: 15px;
+  box-sizing: border-box;
+  overflow: scroll;
+  scrollbar-width: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.shop-categories::-webkit-scrollbar {
+  display: none; /* WebKit (Chrome ve Safari) için */
+}
+.shop-categories .shop-category{
+  border: 0.5px solid #777;
+  border-radius: 5px;
+  padding: 5px 8px;
+  white-space: nowrap;
+}
+.shop-categories .shop-category a{
+  color: black;
+}
+.active-category{
+  background-color: #039D2E;
+  border-color: #039D2E !important;
+}
+.active-category a{
+  color: white !important;
+}
+@media only screen and (min-width: 560px) {
+  .shop-categories{
+    display: none;
+  }
 }

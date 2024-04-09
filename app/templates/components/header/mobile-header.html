@@ -39,6 +39,14 @@
                         <li class="menu-item-has-children">
                             <a {% if request.path == '/contact/' or request.path|slice:"3:" == '/contact/' %}class="mobile-active"{% endif %} href='{% url "contact" %}'>{% trans "Əlaqə" %}</a>
                         </li>
+                        <li class="menu-item-has-children">
+                            <a href="#">{% trans "Dil" %}</a>
+                            <ul class="dropdown">
+                                <li><a {% if request.LANGUAGE_CODE == 'en' %}class="mobile-active"{% endif %} href="{% if not request.LANGUAGE_CODE == 'en' %}{% url 'set-language' 'en' %}#{% endif %}">English</a></li>
+                                <li><a {% if request.LANGUAGE_CODE == 'az' %}class="mobile-active"{% endif %} href="{% if not request.LANGUAGE_CODE == 'az' %}{% url 'set-language' 'az' %}#{% endif %}">Azərbaycanca</a></li>
+                                <li><a {% if request.LANGUAGE_CODE == 'ru' %}class="mobile-active"{% endif %} href="{% if not request.LANGUAGE_CODE == 'ru' %}{% url 'set-language' 'ru' %}#{% endif %}">Русский</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <!-- mobile menu end -->

@@ -2,7 +2,7 @@
 {% load custom_filters %}
 {% load producthelper %}
 {% load i18n %}
-<div class="product-cart-wrap h-100" data-product-id="{{ product.id }}">
+<div style="position:relative;" class="product-cart-wrap h-100" data-product-id="{{ product.id }}">
     <div class="product-img-action-wrap">
         <div class="product-img product-img-zoom">
             <a href="{{product.get_absolute_url}}">
@@ -27,21 +27,24 @@
             {% endif %}
         </div>
     </div>
-    <div class="product-content-wrap">
-        <div class="product-category">
-            <a href='{% url "shop" %}?category={{product.category.id}}'>{{product.category}}</a>
-        </div>
-        <h2><a href="{{product.get_absolute_url}}">{{product.title}}</a></h2>
+    <div class="product-content-wrap h-custom-50 d-flex flex-column justify-content-between">
         <div>
-        {% if product.vendor %}
-            <span class="font-small text-muted">By <a href='{% url "shop" %}?vendor={{product.vendor.slug}}'>{{product.vendor}}</a></span>
-        {% else %}
-        <br/>
-        {% endif %}
+            <div class="product-category">
+                <a href='{% url "shop" %}?category={{product.category.id}}'>{{product.category}}</a>
+            </div>
+            <h2><a href="{{product.get_absolute_url}}">{{product.title}}</a></h2>
+            <div>
+            {% if product.vendor %}
+                <span class="font-small text-muted">By <a href='{% url "shop" %}?vendor={{product.vendor.slug}}'>{{product.vendor}}</a></span>
+            {% else %}
+            <br/>
+            {% endif %}
+            </div>
         </div>
+
         <div class="product-card-bottom d-flex align-items-center">
             {% if product.stock > 0 %}
-            <div class="product-price d-flex flex-column">
+            <div class="product-price d-md-flex flex-md-column">
                 <span>₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>
                 {% if product.discount %}
                 <span class="old-price">₼ {{product.price|format_decimal:2}}</span>
@@ -52,7 +55,7 @@
                 <span>₼ {{product.price|format_decimal:2}}</span>
             </div>
             {% endif %}
-            <div style="margin-left: 70px;" class="add-cart d-md-none">
+            <div  class="product-favorite-btn d-md-none">
                 <a class='add' id="mobile_product_action_{{ product.id }}" aria-label='Sevimlilərə əlavə et' {% if user.is_authenticated %}onclick="toggleFavorite({{ product.id }})"{% else %}href="{% url "login" %}"{% endif %} class='action-btn'>{% if product|is_wished:request and user.is_authenticated %}<img style="width:14px !important;" src="{% static "assets/imgs/heart.png" %}" alt="">{% else %}<i class="fi-rs-heart"></i>{% endif %}</a>
             </div>
             <div class="add-cart">

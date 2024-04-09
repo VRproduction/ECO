@@ -84,11 +84,11 @@
                                 {% if product.stock > 0%}
                                 <div class="product-extra-link2">
                                     {% if user.is_authenticated %}
-                                        <button onclick="addToBasket({{ product.id }},1)" class="button button-add-to-cart"><i
+                                        <button onclick="addToBasket({{ product.id }},1)" class="button button-add-to-cart bg-custom-green"><i
                                                 class="fi-rs-shopping-cart"></i>{% trans "Səbətə əlavə et" %}</button>
                                         {% else %}
                                             <form action="{% url "login" %}" method="get">
-                                                <button type="submit" class="button button-add-to-cart"><i
+                                                <button type="submit" class="button button-add-to-cart bg-custom-green"><i
                                                     class="fi-rs-shopping-cart"></i>{% trans "Səbətə əlavə et" %}</button>
                                             </form>
                                     {% endif %}               
@@ -122,7 +122,7 @@
                     <div class="col-12">
                         <div class="row related-products">
                             {% for related_product in related_products %}
-                            <div class="col-lg-3 col-md-4 col-12 col-sm-6 {% if forloop.counter > 3 %}d-lg-block d-none{% endif %}">
+                            <div class="col-lg-3 col-md-4 col-12 col-sm-6 {% if forloop.counter > 3 %}d-lg-block d-none{% endif %} mb-30">
                                 {% include "components/product/product-item.html" with product=related_product%}
                             </div>
                             {% endfor %}

@@ -3905,6 +3905,8 @@ table .product-thumbnail img {
 
 /*SHOP*/
 .product-cart-wrap {
+  display: flex;
+  flex-direction: column;
   position: relative;
   background-color: #fff;
   border: 1px solid #ececec;
@@ -11758,7 +11760,7 @@ footer .hotline img {
 
 @media only screen and (min-width: 1200px) {
   .container {
-    max-width: 1610px;
+    max-width: 1280px;
   }
   .col-lg-1-5 {
     width: 20%;
@@ -12549,4 +12551,24 @@ footer .hotline img {
   .shop-categories{
     display: none;
   }
+  .h-custom-50{
+    height: 50%;
+  }
+}
+
+.product-favorite-btn{
+  margin-left: 70px; 
+  position:absolute;
+  top: 20px;
+  right:20px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #039D2E;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-favorite-btn a{
+  display: flex;
 }

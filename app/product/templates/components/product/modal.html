@@ -60,11 +60,11 @@
                                     {% if product.stock > 0%}
                                     <div class="product-extra-link2">
                                         {% if user.is_authenticated %}
-                                        <button onclick="addToBasket({{ product.id }},1)" class="button button-add-to-cart"><i
+                                        <button onclick="addToBasket({{ product.id }},1)" class="button button-add-to-cart bg-custom-green"><i
                                                 class="fi-rs-shopping-cart"></i>{% trans "Səbətə əlavə et" %}</button>
                                         {% else %}
                                             <form action="{% url "login" %}" method="get">
-                                                <button type="submit" class="button button-add-to-cart"><i
+                                                <button type="submit" class="button button-add-to-cart bg-custom-green"><i
                                                     class="fi-rs-shopping-cart"></i>{% trans "Səbətə əlavə et" %}</button>
                                             </form>
                                         {% endif %}

@@ -1095,7 +1095,9 @@ button.submit:hover, button[type='submit']:hover {
   letter-spacing: 0;
   font-size: 14px;
 }
-
+.bg-custom-green{
+  background-color: #039D2E !important;
+}
 .btn, .button {
   display: inline-block;
   border: 1px solid transparent;

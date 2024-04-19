@@ -55,9 +55,7 @@
                 <span>₼ {{product.price|format_decimal:2}}</span>
             </div>
             {% endif %}
-            <div  class="product-favorite-btn d-md-none">
-                <a class='add' id="mobile_product_action_{{ product.id }}" aria-label='Sevimlilərə əlavə et' {% if user.is_authenticated %}onclick="toggleFavorite({{ product.id }})"{% else %}href="{% url "login" %}"{% endif %} class='action-btn'>{% if product|is_wished:request and user.is_authenticated %}<img style="width:14px !important;" src="{% static "assets/imgs/heart.png" %}" alt="">{% else %}<i class="fi-rs-heart"></i>{% endif %}</a>
-            </div>
+            <a class='add product-favorite-btn d-md-none' id="mobile_product_action_{{ product.id }}" aria-label='Sevimlilərə əlavə et' {% if user.is_authenticated %}onclick="toggleFavorite({{ product.id }})"{% else %}href="{% url "login" %}"{% endif %} class='action-btn'>{% if product|is_wished:request and user.is_authenticated %}<img style="width:14px !important;" src="{% static "assets/imgs/heart.png" %}" alt="">{% else %}<i class="fi-rs-heart"></i>{% endif %}</a>
             <div class="add-cart">
                 {% if product.stock > 0 %}
                 <a class='add'  {% if user.is_authenticated %}onclick="addToBasket({{ product.id }},1)"{% else %}href="{% url "login" %}"{% endif %}><i class="fi-rs-shopping-cart mr-5"></i>{% trans "Əlavə et" %}</a>

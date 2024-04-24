@@ -69,7 +69,7 @@ class CustomRegisterView(AuthView,CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.set_unusable_password()  # Set unusable password until email is verified
+        # self.object.set_unusable_password()  # Set unusable password until email is verified
         self.object.is_active = False  
         self.object.save()
         token = default_token_generator.make_token(self.object)

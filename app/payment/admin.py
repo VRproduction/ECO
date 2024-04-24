@@ -15,4 +15,4 @@ class WoltAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ['user', 'value', 'is_wolt', 'order']
+    list_display = ['user', 'value', 'is_wolt', 'order', 'created']

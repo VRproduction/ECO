@@ -247,7 +247,7 @@ class BasketItem(models.Model):
 
     @property
     def total_price(self):
-        return self.quantity * (self.product.discount_price) if self.product.discount else (self.product.price)
+        return self.quantity * (self.product.discount_price) if self.product.discount else (self.quantity * self.product.price)
     
     def __str__(self):
         return f"{self.quantity} x {self.product.title} for {self.user.email}"
@@ -281,7 +281,7 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return f"{self.pk}"
+        return f"{self.user} | {self.pk}"
 
     class Meta:
         verbose_name = 'Sifariş'

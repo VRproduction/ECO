@@ -25,6 +25,7 @@ class Transaction(models.Model):
     is_wolt = models.BooleanField(default = False)
     coupon_code= models.CharField(max_length = 100, null = True, blank = True)
     is_checked_from_eco = models.BooleanField(default = False)
-    
+    created = models.DateTimeField(auto_now_add = True, null = True) 
+
     def __str__(self) -> str:
         return self.value

@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-04 16:09+0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2024-05-15 18:19+0400\n"
+"Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
 
 #: account/models.py:27
 msgid "The Email must be set"
@@ -55,7 +56,8 @@ msgid "Qeydiyyatdan keç"
 msgstr ""
 
 #: account/templates/login.html:22 product/templates/account.html:90
-#: product/templates/contact.html:49 templates/components/footer/footer.html:61
+#: product/templates/contact.html:49
+#: templates/components/footer/footer.html:61
 msgid "Email"
 msgstr ""
 
@@ -111,8 +113,8 @@ msgstr ""
 
 #: account/templates/password_reset_done.html:10
 msgid ""
-"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa "
-"e-poçt qutunuzu yoxlayın."
+"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa"
+" e-poçt qutunuzu yoxlayın."
 msgstr ""
 
 #: account/templates/register.html:13
@@ -555,7 +557,8 @@ msgstr ""
 msgid "Yeni məhsullar"
 msgstr ""
 
-#: product/templates/contact.html:31 templates/components/footer/footer.html:50
+#: product/templates/contact.html:31
+#: templates/components/footer/footer.html:50
 #: templates/components/header/header-bottom.html:84
 #: templates/components/header/mobile-header.html:40
 msgid "Əlaqə"
@@ -652,7 +655,7 @@ msgstr ""
 
 #: templates/components/header/header-bottom.html:61
 msgid "Show more"
-msgstr ""
+msgstr "Daha çox"
 
 #: templates/components/header/header-bottom.html:72
 #: templates/components/header/mobile-header.html:31

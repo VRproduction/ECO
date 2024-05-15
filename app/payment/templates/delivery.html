@@ -147,11 +147,22 @@ crossorigin="localhost"></script>
                                 </tr>
                                 <tr>
                                     <td scope="col" colspan="2">
+                                        {% if is_active_time %}
                                         <button  id="checkout_button" onclick="checkoutButton()" class="btn mb-20 w-100 bg-custom-green">{% trans "Tamamla" %}<i class="fi-rs-sign-out ml-15"></i></button>
                                         <ul>
                                             <li id="checkout_address_error" class="text-danger">* {% trans "Düzgün address seçin!" %}</li>
                                             <li id="checkout_phone_error" class="text-danger">* {% trans "Əlaqə məlumatlarını daxil edin!" %}</li>
                                         </ul>
+                                        {% else %}
+                                        <button id="checkout_button" class="d-none"></button>
+                                        <button  class="btn mb-20 w-100 bg-custom-green" disabled>{% trans "Tamamla" %}<i class="fi-rs-sign-out ml-15"></i></button>
+                                        <ul>
+                                            <li id="checkout_address_error" class="text-danger d-none">* {% trans "Düzgün address seçin!" %}</li>
+                                            <li id="checkout_phone_error" class="text-danger d-none">* {% trans "Əlaqə məlumatlarını daxil edin!" %}</li>
+
+                                            <li class="text-primary">* {% trans "Çatdırılma iş saatlarında mümkündür" %} <div class="ms-2">({{setting.work_start_hour}} - {{setting.work_finish_hour}})</div></li>
+                                        </ul>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             </tbody>

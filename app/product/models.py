@@ -40,6 +40,8 @@ class GeneralSettings(models.Model):
         max_length=200, verbose_name="Youtube", blank=True)
     tiktok = models.CharField(
         max_length=200, verbose_name="TikTok", blank=True)
+    work_start_hour = models.TimeField(verbose_name="İşin başlama saatı", null = True)
+    work_finish_hour = models.TimeField(verbose_name="İşin bitmə saatı", null = True)
     
     def __str__(self):
         return ('%s') % (self.site_title)

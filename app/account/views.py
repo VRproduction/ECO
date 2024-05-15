@@ -65,23 +65,32 @@ class CustomLoginView(AuthView, LoginView):
 class CustomRegisterView(AuthView,CreateView):
     form_class = RegisterForm
     template_name = 'register.html'
-    success_url = reverse_lazy("register_success")
+    success_url = reverse_lazy("home")
 
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        # self.object.set_unusable_password()  # Set unusable password until email is verified
-        self.object.is_active = False  
-        self.object.save()
-        token = default_token_generator.make_token(self.object)
+    # def form_valid(self, form):
+    #     self.object = form.save(commit=False)
+    #     # self.object.set_unusable_password()  # Set unusable password until email is verified
+    #     self.object.is_active = False  
+    #     self.object.save()
+    #     token = default_token_generator.make_token(self.object)
         
-        verification_url = self.request.build_absolute_uri(
-            reverse_lazy("verify_email", kwargs={"uidb64": urlsafe_base64_encode(force_bytes(self.object.pk)), "token": token})
-        )
-        subject = "E-poçt ünvanınızı yoxlayın"
-        message = render_to_string("mail/email_verification.html", {"verification_url": verification_url})
-        send_mail(subject, message, settings.EMAIL_HOST_USER, [self.object.email],html_message=message)
-        return redirect(self.get_success_url())
+    #     verification_url = self.request.build_absolute_uri(
+    #         reverse_lazy("verify_email", kwargs={"uidb64": urlsafe_base64_encode(force_bytes(self.object.pk)), "token": token})
+    #     )
+    #     subject = "E-poçt ünvanınızı yoxlayın"
+    #     message = render_to_string("mail/email_verification.html", {"verification_url": verification_url})
+    #     send_mail(subject, message, settings.EMAIL_HOST_USER, [self.object.email],html_message=message)
+    #     return redirect(self.get_success_url())
+    
+    def form_valid(self, form):
+        # Kullanıcıyı kaydet
+        self.object = form.save()
 
+        # Kullanıcıyı hemen giriş yapmış gibi göster
+        login(self.request, self.object)
+
+        # Başarılı kayıt sonrası yönlendirilecek URL'ye git
+        return redirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
         context = super(CustomRegisterView, self).get_context_data(**kwargs)

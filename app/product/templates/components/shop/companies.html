@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             {% for company in companies %}
-            <div class="col-xl-3 col-lg-4 col-md-6 {% if forloop.counter == 3 %}d-none d-lg-block{% elif forloop.counter == 4 %}d-none d-xl-block{% endif %}">
+            <div class="col-lg-4 col-md-6 {% if forloop.counter == 3 %}d-none d-lg-block{% elif forloop.counter == 4 %}d-none d-xl-block{% endif %}">
                 {% include "components/campany/campany-item.html" with company=company %}
             </div>
             {% include "components/product/modal.html" with product=company.product %}

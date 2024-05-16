@@ -2,7 +2,7 @@ if (isAuthenticated) {
     fetchBasketItems();
 }
 
-if(window.location.pathname == "/basket/"){
+if(window.location.pathname == "/basket/" || window.location.pathname == "/en/basket/" || window.location.pathname == "/ru/basket/"){
     document.getElementById('selectAllCheckbox').addEventListener('change', function () {
         const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
@@ -101,7 +101,7 @@ function updateURLParameter(key, value) {
 
 }
 var coupon_is_applied = false;
-if (window.location.pathname == '/basket/') {
+if (window.location.pathname == '/basket/' || window.location.pathname == "/en/basket/" || window.location.pathname == "/ru/basket/") {
     localStorage.removeItem('coupon_code');
 }
 function applyCoupon() {
@@ -151,7 +151,7 @@ function fetchBasketItems(coupon_code) {
         .then(response => response.json())
         .then(data => {
             updateNavbarBasket(data);
-            if(window.location.pathname == "/basket/"){
+            if(window.location.pathname == "/basket/" || window.location.pathname == "/en/basket/" || window.location.pathname == "/ru/basket/"){
             updateBasketTable(data);
             }
         })

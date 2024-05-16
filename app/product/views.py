@@ -460,7 +460,7 @@ class BlogDetailPageView(DetailView):
     
     
 class CompanyPageView(TemplateView):
-    template_name = 'companies.html'
+    template_name = 'campanies.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

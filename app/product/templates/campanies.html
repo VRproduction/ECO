@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load i18n %}
+{% block title %}
+{% if seo.title %}
+<title>{{ seo.title }}</title>
+{% else %}
+<title>{{setting.site_title}}</title>
+{% endif %}
+{% endblock title %}
+
+{% block seo %}
+    <meta name="description" content="{% if seo.description %}{{ seo.description }}{% endif %}">
+    <meta name="keywords" content="{% if seo.keyword %}{{ seo.keyword }}{% endif %}">
+    <meta property="og:title" content="{% if seo.title %}{{ seo.title }}{% endif %}"/>
+    <meta property="og:description" content="{% if seo.description %}{{ seo.description }}{% endif %}"/>
+    <meta property="og:image" content="{% if about.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ about.image.url }}{% endif %}"/>
+{% endblock seo%}
+
+{% block main %}
+<div class="container mb-80 mt-50">
+    <div class="row">
+        {% for company in companies %}
+        <div class="col-xl-3 col-lg-4 col-md-6 {% if forloop.counter == 3 %}d-none d-lg-block{% elif forloop.counter == 4 %}d-none d-xl-block{% endif %}">
+            {% include "components/campany/campany-item.html" with company=company %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock main %}

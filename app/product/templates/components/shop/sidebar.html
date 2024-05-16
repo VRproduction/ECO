@@ -9,7 +9,7 @@
         <ul>
             {% for category in categories %}
             <li>
-                <a href="{% edit_query request category=category.slug %}"> <img src="{{category.image.url}}" alt="">{{category.title}}</a><span class="count">{{category.products.count}}</span>
+                <a href="{% edit_query request category=category.slug %}"> <img src="{{category.image.url}}" alt=""><div style="width: 50px;">{{category.title}}</div></a><span class="count">{{category.products.count}}</span>
             </li>
             {% endfor %}
         </ul>
@@ -19,11 +19,11 @@
     <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
         <h5 class="section-title style-1 mb-30">{% trans "Yeni məhsullar" %}</h5>
         {% for product in new_products %}
-        <div class="single-post clearfix">
-            <div class="image">
+        <div class="single-post clearfix" style="display: flex; flex-direction: column;">
+            <div class="image d-flex justify-content-center w-100" >
                 <img src="{{product.image.url}}" alt="#">
             </div>
-            <div class="content pt-10">
+            <div class="content ps-0" >
                 <h5><a href="{{product.get_absolute_url}}">{{product.title}}</a></h5>
                 <p class="price mb-0 mt-5">
                     <span style="color:#039D2E;">₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}</span>

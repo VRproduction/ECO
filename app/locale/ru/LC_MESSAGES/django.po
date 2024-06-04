@@ -9,464 +9,467 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-04 16:09+0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2024-06-04 10:41+0400\n"
+"Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
 
 #: account/models.py:27
 msgid "The Email must be set"
-msgstr ""
+msgstr "Электронная почта должна быть установлена"
 
 #: account/models.py:43
 msgid "Superuser must have is_staff=True."
-msgstr ""
+msgstr "Суперпользователь должен иметь is_staff=True."
 
 #: account/models.py:45
 msgid "Superuser must have is_superuser=True."
-msgstr ""
+msgstr "Суперпользователь должен иметь is_superuser=True."
 
 #: account/models.py:50
 msgid "email address"
-msgstr ""
+msgstr "Адрес электронной почты"
 
 #: account/models.py:51
 msgid "email verified"
-msgstr ""
+msgstr "Адрес электронной почты подтвержден"
 
 #: account/templates/login.html:16 account/templates/login.html:45
 #: account/templates/password_reset_complete.html:10
 #: account/templates/register.html:14
 #: templates/components/header/header-middle.html:58
 msgid "Daxil ol"
-msgstr ""
+msgstr "Войти"
 
 #: account/templates/login.html:17
 msgid "Hesabın yoxdur?"
-msgstr ""
+msgstr "У вас нет учетной записи?"
 
 #: account/templates/login.html:17 account/templates/register.html:51
 #: templates/components/header/header-middle.html:61
 msgid "Qeydiyyatdan keç"
-msgstr ""
+msgstr "Зарегистрироваться"
 
 #: account/templates/login.html:22 product/templates/account.html:90
-#: product/templates/contact.html:49 templates/components/footer/footer.html:61
+#: product/templates/contact.html:49
+#: templates/components/footer/footer.html:61
 msgid "Email"
-msgstr ""
+msgstr "Адрес электронной почты"
 
 #: account/templates/login.html:29 account/templates/register.html:39
 msgid "Parol"
-msgstr ""
+msgstr "Пароль"
 
 #: account/templates/login.html:39 product/templates/account.html:94
 #: product/templates/account.html:120
 msgid "Yadda saxla"
-msgstr ""
+msgstr "Сохранить"
 
 #: account/templates/login.html:42
 msgid "Parolu unutmusan?"
-msgstr ""
+msgstr "Забыли Пароль?"
 
 #: account/templates/password_reset.html:14
 msgid "Parolunuzu Sıfırlayın"
-msgstr ""
+msgstr "Сбросить Пароль"
 
 #: account/templates/password_reset.html:19
 msgid "E-mail Adresi"
-msgstr ""
+msgstr "Адрес электронной почты"
 
 #: account/templates/password_reset.html:22
 #: account/templates/password_reset_confirm.html:38
 msgid "Sıfırla"
-msgstr ""
+msgstr "Сбросить"
 
 #: account/templates/password_reset_complete.html:9
 msgid "Parol Sıfırlama Tamamlandı"
-msgstr ""
+msgstr "Сброс пароля завершен"
 
 #: account/templates/password_reset_complete.html:10
 msgid "Parolunuz uğurla sıfırlandı. Yeni parolunuzla daxil ola bilərsiniz."
 msgstr ""
+"Ваш пароль был успешно сброшен. Вы можете войти в систему с новым паролем."
 
 #: account/templates/password_reset_confirm.html:13
 msgid "Parol Sıfırlama"
-msgstr ""
+msgstr "Сброс Пароля"
 
 #: account/templates/password_reset_confirm.html:20
 msgid "Yeni Parol"
-msgstr ""
+msgstr "Новый Пароль"
 
 #: account/templates/password_reset_confirm.html:29
 msgid "Yeni Parol Təkrar Daxil edin"
-msgstr ""
+msgstr "Введите Новый Пароль"
 
 #: account/templates/password_reset_done.html:9
 msgid "Parol Sıfırlama Sorğusu Göndərilib"
-msgstr ""
+msgstr "Запрос на сброс пароля отправлен"
 
 #: account/templates/password_reset_done.html:10
 msgid ""
-"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa "
-"e-poçt qutunuzu yoxlayın."
+"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa"
+" e-poçt qutunuzu yoxlayın."
 msgstr ""
+"Инструкции по сбросу пароля были отправлены на ваш адрес электронной почты. "
+"Пожалуйста, проверьте свой почтовый ящик."
 
 #: account/templates/register.html:13
 msgid "Qeydiyyat"
-msgstr ""
+msgstr "Регистрация"
 
 #: account/templates/register.html:14
 msgid "Hesabın var?"
-msgstr ""
+msgstr "Есть Устная запись?"
 
 #: account/templates/register.html:45
 msgid "Parol təkrar"
-msgstr ""
+msgstr "Повторите Пароль"
 
 #: account/templates/register_success.html:9
 msgid "Qeydiyyat Uğurla Tamamlandı"
-msgstr ""
+msgstr "Регистрация прошла успешно"
 
 #: account/templates/register_success.html:10
 msgid "Hesabınızı aktivləşdirmək üçün e-poçtunuzu yoxlayın."
-msgstr ""
+msgstr "Проверьте свою электронную почту, чтобы активировать учетную запись."
 
 #: payment/templates/components/delivery/modal1.html:16
 msgid "Əlaqə məlumatlarını daxil edin"
-msgstr ""
+msgstr "Введите контактную информацию"
 
 #: payment/templates/components/delivery/modal1.html:30
 msgid "Çatdırılma məlumatları"
-msgstr ""
+msgstr "Информация о доставке"
 
 #: payment/templates/components/delivery/modal1.html:35
 msgid "Hara çatdırılacaq?"
-msgstr ""
+msgstr "Куда будет доставка?"
 
 #: payment/templates/components/delivery/modal1.html:55
 msgid "Yeni address əlavə edin"
-msgstr ""
+msgstr "Добавить новый адрес"
 
 #: payment/templates/components/delivery/modal1.html:59
 #: payment/templates/components/delivery/modal1.html:96
 msgid "Təsdiq edin"
-msgstr ""
+msgstr "Подтверждение"
 
 #: payment/templates/components/delivery/modal1.html:74
 msgid "Əlaqə məlumatları"
-msgstr ""
+msgstr "Контактная информация"
 
 #: payment/templates/components/delivery/modal1.html:79
 msgid "Ad soyad"
-msgstr ""
+msgstr "Имя и фамилия"
 
 #: payment/templates/components/delivery/modal1.html:81
 #: product/templates/contact.html:42
 msgid "Ad Soyad"
-msgstr ""
+msgstr "Имя и фамилия"
 
 #: payment/templates/components/delivery/modal1.html:84
 #: product/templates/contact.html:56
 msgid "Nömrə"
-msgstr ""
+msgstr "Номер Телефона "
 
 #: payment/templates/components/delivery/modal1.html:89
 msgid "Çatdırılma üçün ətraflı məlumat"
-msgstr ""
+msgstr "Подробности о доставке"
 
 #: payment/templates/components/delivery/modal1.html:91
 msgid "Mərtəbə, blok,  mənzil"
-msgstr ""
+msgstr "Этаж, блок, квартира"
 
 #: payment/templates/components/delivery/modal2.html:12
 msgid "Yeni adress əlavə edin"
-msgstr ""
+msgstr "Добавить новый адрес"
 
 #: payment/templates/components/delivery/modal2.html:26
 msgid "Xəritədə seçin"
-msgstr ""
+msgstr "Выбрать на карте"
 
 #: payment/templates/components/delivery/modal2.html:28
 msgid "Küçə adı və nömrəsi"
-msgstr ""
+msgstr "Название и номер улицы"
 
 #: payment/templates/components/delivery/modal2.html:34
 msgid "Davam edin"
-msgstr ""
+msgstr "Продолжить"
 
 #: payment/templates/components/delivery/modal3.html:9
 msgid "Adress seçin"
-msgstr ""
+msgstr "Выберите адрес"
 
 #: payment/templates/components/delivery/modal3.html:23
 msgid "Əlavə edin"
-msgstr ""
+msgstr "Добавить"
 
 #: payment/templates/delivery.html:68
 msgid "Çatdırılma metodu, vaxt və əlaqə məlumatları"
-msgstr ""
+msgstr "Способ доставки, время и контактная информация"
 
 #: payment/templates/delivery.html:71
 msgid "Seçilmiş məhsullar"
-msgstr ""
+msgstr "Выбранные продукты"
 
 #: payment/templates/delivery.html:94 product/templates/basket.html:35
 #: templates/components/header/basket.html:9
 msgid "Ümumi qiymət"
-msgstr ""
+msgstr "Итоговая цена"
 
 #: payment/templates/delivery.html:107
 #: product/templates/components/product/modal.html:36
 #: product/templates/product-detail.html:60
 msgid "Endirim"
-msgstr ""
+msgstr "Скидка"
 
 #: payment/templates/delivery.html:120
 msgid "Çatdırılma"
-msgstr ""
+msgstr "Доставка"
 
 #: payment/templates/delivery.html:136
 msgid "Yekun qiymət"
-msgstr ""
+msgstr "Окончательная цена"
 
 #: payment/templates/delivery.html:152
 #: templates/components/header/basket.html:13
 msgid "Tamamla"
-msgstr ""
+msgstr "Подтвердить"
 
 #: payment/templates/delivery.html:154
 msgid "Düzgün address seçin!"
-msgstr ""
+msgstr "Выбирайте правильный адрес!"
 
 #: payment/templates/delivery.html:155
 msgid "Əlaqə məlumatlarını daxil edin!"
-msgstr ""
+msgstr "Введите контактную информацию!"
 
 #: payment/templates/failed.html:18
 msgid "Ödəniş xətası!"
-msgstr ""
+msgstr "Ошибка оплаты!"
 
 #: payment/templates/failed.html:19
 msgid "Ödəniş zamanı xəta baş verdi."
-msgstr ""
+msgstr "Во время оплаты произошла ошибка."
 
 #: payment/templates/failed.html:21
 msgid "Təkrar yoxlayın"
-msgstr ""
+msgstr "Попробуйте снова"
 
 #: payment/templates/success.html:18
 msgid "Uğurlu ödəniş!"
-msgstr ""
+msgstr "Успешная оплата!"
 
 #: payment/templates/success.html:19
 msgid "Ödəniş uğurla tamamlandı. Təşəkkürlər!"
-msgstr ""
+msgstr "Платеж успешно завершен. Спасибо!"
 
 #: payment/templates/success.html:22
 msgid "Sifarişi buradan izləyə bilərsiniz."
-msgstr ""
+msgstr "Отследить заказ можно здесь."
 
 #: product/templates/account.html:15
 msgid "Sifarişlər"
-msgstr ""
+msgstr "Заказы"
 
 #: product/templates/account.html:18
 msgid "Hesab məlumatları"
-msgstr ""
+msgstr "Информация Об Учетной Записи"
 
 #: product/templates/account.html:21
 msgid "Parolu yenilə"
-msgstr ""
+msgstr "Обновить пароль"
 
 #: product/templates/account.html:24
 #: templates/components/header/header-middle.html:52
 msgid "Çıxış"
-msgstr ""
+msgstr "Выход"
 
 #: product/templates/account.html:41
 msgid "Sifarişləriniz"
-msgstr ""
+msgstr "Ваши заказы"
 
 #: product/templates/account.html:48
 msgid "Sifariş"
-msgstr ""
+msgstr "Заказ"
 
 #: product/templates/account.html:49
 msgid "Tarix"
-msgstr ""
+msgstr "Дата"
 
 #: product/templates/account.html:50
 msgid "Status"
-msgstr ""
+msgstr "Текущий статус"
 
 #: product/templates/account.html:51 product/templates/basket.html:33
 msgid "Qiymət"
-msgstr ""
+msgstr "Цена"
 
 #: product/templates/account.html:52
 msgid "Keçidlər"
-msgstr ""
+msgstr "Переходы"
 
 #: product/templates/account.html:61
 msgid "məhsul"
-msgstr ""
+msgstr "Продукт"
 
 #: product/templates/account.html:64
 msgid "Sifarişi izlə"
-msgstr ""
+msgstr "Отследить заказ "
 
 #: product/templates/account.html:82
 msgid "Ad"
-msgstr ""
+msgstr "Имя"
 
 #: product/templates/account.html:86
 msgid "Soyad"
-msgstr ""
+msgstr "Фамилия"
 
 #: product/templates/account.html:108
 msgid "Hazırki parol"
-msgstr ""
+msgstr "Текущий пароль"
 
 #: product/templates/account.html:112
 msgid "Yeni parol"
-msgstr ""
+msgstr "Новый пароль"
 
 #: product/templates/account.html:116
 msgid "Parolu təkrarla"
-msgstr ""
+msgstr "Повторите пароль"
 
 #: product/templates/basket.html:15
 #: templates/components/header/fixed-mobile-header.html:33
 #: templates/components/header/header-middle.html:37
 msgid "Səbət"
-msgstr ""
+msgstr "Корзина"
 
 #: product/templates/basket.html:17
 msgid "Səbətdə"
-msgstr ""
+msgstr "В корзине"
 
 #: product/templates/basket.html:17
 msgid "məhsul var"
-msgstr ""
+msgstr "есть продукты"
 
 #: product/templates/basket.html:18
 msgid "Səbəti təmizlə"
-msgstr ""
+msgstr "Очистить корзину"
 
 #: product/templates/basket.html:32
 #: product/templates/components/index/partners.html:59
 msgid "Məhsul"
-msgstr ""
+msgstr "Продукт"
 
 #: product/templates/basket.html:34
 msgid "Say"
-msgstr ""
+msgstr "Количество"
 
 #: product/templates/basket.html:36
 msgid "Sil"
-msgstr ""
+msgstr "Убрать"
 
 #: product/templates/basket.html:51 product/templates/basket.html:63
 msgid "AZN"
-msgstr ""
+msgstr "AZN"
 
 #: product/templates/blog-detail.html:50
 msgid "Son bloqlar"
-msgstr ""
+msgstr "Последние статьи"
 
 #: product/templates/blogs.html:41
 #: product/templates/components/index/blog.html:31
 msgid "Daha çox"
-msgstr ""
+msgstr "Еще"
 
 #: product/templates/companies.html:50
 #: product/templates/components/index/companies.html:40
 #: product/templates/components/product/product-item.html:60
 msgid "Seç"
-msgstr ""
+msgstr "Выбрать"
 
 #: product/templates/components/index/about.html:11
 msgid "daha çox"
-msgstr ""
+msgstr "еще"
 
 #: product/templates/components/index/blog.html:8
 msgid "Bloqlar"
-msgstr ""
+msgstr "Статьи"
 
 #: product/templates/components/index/category-banner.html:13
 #: product/templates/components/index/home-slider.html:15
 #: product/templates/components/index/home-slider.html:36
 msgid "Alış-verişə başla"
-msgstr ""
+msgstr "Начать покупки"
 
 #: product/templates/components/index/companies.html:6
 #: templates/components/footer/footer.html:49
 #: templates/components/header/header-bottom.html:81
 #: templates/components/header/mobile-header.html:37
 msgid "Kampaniyalar"
-msgstr ""
+msgstr "Акции"
 
 #: product/templates/components/index/companies.html:8
 #: product/templates/components/index/product-tab.html:8
 msgid "Hamısı"
-msgstr ""
+msgstr "Посмотреть Все "
 
 #: product/templates/components/index/companies.html:30
 msgid "By"
-msgstr ""
+msgstr "От"
 
 #: product/templates/components/index/faq.html:7
 msgid "Tez-tez verilən suallar"
-msgstr ""
+msgstr "Часто задаваемые вопросы"
 
 #: product/templates/components/index/filtering-section.html:6
 #: product/templates/components/shop/filter.html:32
 msgid "Ən çox satılanlar"
-msgstr ""
+msgstr "Бестселлеры"
 
 #: product/templates/components/index/filtering-section.html:14
 msgid "Ən çox axtarılanlar"
-msgstr ""
+msgstr "Самый разыскиваемый"
 
 #: product/templates/components/index/filtering-section.html:22
 msgid "Trenddə olanlar"
-msgstr ""
+msgstr "Что в тренде"
 
 #: product/templates/components/index/partners.html:5
 msgid "Tərəfdaşlarımız"
-msgstr ""
+msgstr "Наши партнеры"
 
 #: product/templates/components/index/partners.html:55
 msgid "İl xidmətinizdə"
-msgstr ""
+msgstr "Лет обслуживает вас"
 
 #: product/templates/components/index/partners.html:63
 msgid "Çeşid"
-msgstr ""
+msgstr "Разновидность"
 
 #: product/templates/components/index/partners.html:67
 #: product/templates/components/product/modal.html:76
 #: product/templates/product-detail.html:100
 msgid "Brend"
-msgstr ""
+msgstr "Бренд"
 
 #: product/templates/components/index/partners.html:71
 msgid "Yeni dad"
-msgstr ""
+msgstr "Новый вкус"
 
 #: product/templates/components/index/popular-categories.html:6
 msgid "Seçilmiş kateqoriyalar"
-msgstr ""
+msgstr "Выбранные категории"
 
 #: product/templates/components/index/popular-categories.html:18
 msgid "items"
-msgstr ""
+msgstr "предметы"
 
 #: product/templates/components/index/product-tab.html:5
 #: templates/components/footer/footer.html:47
@@ -474,210 +477,211 @@ msgstr ""
 #: templates/components/header/header-bottom.html:75
 #: templates/components/header/mobile-header.html:28
 msgid "Məhsullar"
-msgstr ""
+msgstr "Продукты"
 
 #: product/templates/components/page-header/page-header.html:9
 #: product/templates/product-detail.html:25
 #: templates/components/header/fixed-mobile-header.html:9
 #: templates/components/header/header-bottom.html:69
 msgid "Ana səhifə"
-msgstr ""
+msgstr "Домашняя страница"
 
 #: product/templates/components/product/modal.html:38
 #: product/templates/components/product/product-item.html:26
 #: product/templates/product-detail.html:62
 msgid "Stokda yoxdur"
-msgstr ""
+msgstr "Распродано"
 
 #: product/templates/components/product/modal.html:64
 #: product/templates/components/product/modal.html:68
 #: product/templates/product-detail.html:88
 #: product/templates/product-detail.html:92
 msgid "Səbətə əlavə et"
-msgstr ""
+msgstr "Добавить в корзину"
 
 #: product/templates/components/product/modal.html:78
 #: product/templates/product-detail.html:102
 msgid "İstifadə müddəti"
-msgstr ""
+msgstr "Срок Годности"
 
 #: product/templates/components/product/modal.html:78
 #: product/templates/product-detail.html:102
 msgid "ay"
-msgstr ""
+msgstr "месяц"
 
 #: product/templates/components/product/modal.html:84
 #: product/templates/product-detail.html:108
 msgid "Açıqlama"
-msgstr ""
+msgstr "О Продукте"
 
 #: product/templates/components/product/product-item.html:19
 msgid "Ən çox satılan"
-msgstr ""
+msgstr "Бестселлер"
 
 #: product/templates/components/product/product-item.html:21
 #: product/templates/components/shop/filter.html:32
 #: product/templates/components/shop/filter.html:37
 msgid "Yeni"
-msgstr ""
+msgstr "Новый"
 
 #: product/templates/components/shop/filter.html:5
 msgid "Sizin üçün"
-msgstr ""
+msgstr "Для вас"
 
 #: product/templates/components/shop/filter.html:5
 msgid "məhsul tapdıq!"
-msgstr ""
+msgstr "продуктов найдено"
 
 #: product/templates/components/shop/filter.html:11
 msgid "Göstər"
-msgstr ""
+msgstr "Показать"
 
 #: product/templates/components/shop/filter.html:29
 msgid "Sırala"
-msgstr ""
+msgstr "Отфильтровать"
 
 #: product/templates/components/shop/filter.html:32
 #: product/templates/components/shop/filter.html:40
 msgid "Qiymət (azdan-çoxa)"
-msgstr ""
+msgstr "Цена (с высокой к маленькому)"
 
 #: product/templates/components/shop/filter.html:32
 #: product/templates/components/shop/filter.html:41
 msgid "Qiymət (çoxdan-aza)"
-msgstr ""
+msgstr "Цена (с маленькой к высокой)"
 
 #: product/templates/components/shop/sidebar.html:8
 #: templates/components/header/header-bottom.html:12
 #: templates/components/header/header-middle.html:13
 msgid "Kateqoriyalar"
-msgstr ""
+msgstr "Категории"
 
 #: product/templates/components/shop/sidebar.html:20
 msgid "Yeni məhsullar"
-msgstr ""
+msgstr "Новые продукты"
 
-#: product/templates/contact.html:31 templates/components/footer/footer.html:50
+#: product/templates/contact.html:31
+#: templates/components/footer/footer.html:50
 #: templates/components/header/header-bottom.html:84
 #: templates/components/header/mobile-header.html:40
 msgid "Əlaqə"
-msgstr ""
+msgstr "Связаться с нами"
 
 #: product/templates/contact.html:63
 msgid "Mövzu"
-msgstr ""
+msgstr "Тема"
 
 #: product/templates/contact.html:70
 msgid "Mesaj"
-msgstr ""
+msgstr "Сообщение"
 
 #: product/templates/contact.html:74
 msgid "Göndər"
-msgstr ""
+msgstr "Отправить"
 
 #: product/templates/product-detail.html:120
 msgid "Bənzər məhsullar"
-msgstr ""
+msgstr "Похожие продукты"
 
 #: settings/settings.py:159
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Азербайджанский"
 
 #: settings/settings.py:160
 msgid "Russian"
-msgstr ""
+msgstr "Русский"
 
 #: settings/settings.py:161
 msgid "English"
-msgstr ""
+msgstr "Английский"
 
 #: templates/components/footer/footer.html:32
 msgid "SOSİAL ŞƏBƏKƏLƏR"
-msgstr ""
+msgstr "СОЦИАЛЬНЫЕ СЕТИ"
 
 #: templates/components/footer/footer.html:34
 msgid "İnstagram"
-msgstr ""
+msgstr "Instagram"
 
 #: templates/components/footer/footer.html:35
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: templates/components/footer/footer.html:36
 msgid "Youtube"
-msgstr ""
+msgstr "Youtube"
 
 #: templates/components/footer/footer.html:37
 msgid "Tiktok"
-msgstr ""
+msgstr "Tiktok"
 
 #: templates/components/footer/footer.html:43
 msgid "LİNKLƏR"
-msgstr ""
+msgstr "ССЫЛКИ"
 
 #: templates/components/footer/footer.html:45
 msgid "Ana Səhifə"
-msgstr ""
+msgstr "Домашняя страница"
 
 #: templates/components/footer/footer.html:46
 msgid "Haqqında"
-msgstr ""
+msgstr "О"
 
 #: templates/components/footer/footer.html:48
 #: templates/components/header/header-bottom.html:78
 #: templates/components/header/mobile-header.html:34
 msgid "Bloq"
-msgstr ""
+msgstr "Блог"
 
 #: templates/components/footer/footer.html:56
 msgid "BİZİMLƏ ƏLAQƏ"
-msgstr ""
+msgstr "СВЯЗАТЬСЯ С НАМИ"
 
 #: templates/components/footer/footer.html:74
 msgid "Bütün hüquqlar qorunur!"
-msgstr ""
+msgstr "Все права защищены."
 
 #: templates/components/header/basket.html:12
 msgid "Səbətə bax"
-msgstr ""
+msgstr "Открыть корзину"
 
 #: templates/components/header/fixed-mobile-header.html:25
 #: templates/components/header/header-middle.html:30
 msgid "Sevimlilər"
-msgstr ""
+msgstr "Избранное"
 
 #: templates/components/header/fixed-mobile-header.html:42
 #: templates/components/header/header-middle.html:44
 #: templates/components/header/header-middle.html:49
 msgid "Hesab"
-msgstr ""
+msgstr "Учетная Запись"
 
 #: templates/components/header/header-bottom.html:61
 msgid "Show more"
-msgstr ""
+msgstr "Показать больше"
 
 #: templates/components/header/header-bottom.html:72
 #: templates/components/header/mobile-header.html:31
 msgid "Haqqımızda"
-msgstr ""
+msgstr "О нас"
 
 #: templates/components/header/header-bottom.html:96
 msgid "24/7 Dəstək"
-msgstr ""
+msgstr "24/7 поддержка"
 
 #: templates/components/header/header-middle.html:19
 #: templates/components/header/mobile-header.html:19
 msgid "Axtar"
-msgstr ""
+msgstr "Поиск"
 
 #: templates/components/header/mobile-header.html:52
 msgid "Daxil ol / Qeydiyyat keç"
-msgstr ""
+msgstr "Войти / Зарегистрироваться"
 
 #: templates/components/header/mobile-header.html:64
 msgid "Bizi izləyin"
-msgstr ""
+msgstr "Подписаться на нас"
 
 #: templates/components/header/mobile-header.html:70
 msgid "Copyright"
-msgstr ""
+msgstr "Авторские права"

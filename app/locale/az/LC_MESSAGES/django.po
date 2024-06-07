@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-04 16:09+0400\n"
+"POT-Creation-Date: 2024-06-07 17:51+0400\n"
 "PO-Revision-Date: 2024-05-15 18:19+0400\n"
 "Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,10 +39,18 @@ msgstr ""
 msgid "email verified"
 msgstr ""
 
+#: account/models.py:52
+msgid "Yaradılma vaxtı"
+msgstr ""
+
+#: account/models.py:53
+msgid "Güncəllənmə vaxtı"
+msgstr ""
+
 #: account/templates/login.html:16 account/templates/login.html:45
 #: account/templates/password_reset_complete.html:10
 #: account/templates/register.html:14
-#: templates/components/header/header-middle.html:58
+#: templates/components/header/header-middle.html:61
 msgid "Daxil ol"
 msgstr ""
 
@@ -51,13 +59,12 @@ msgid "Hesabın yoxdur?"
 msgstr ""
 
 #: account/templates/login.html:17 account/templates/register.html:51
-#: templates/components/header/header-middle.html:61
+#: templates/components/header/header-middle.html:64
 msgid "Qeydiyyatdan keç"
 msgstr ""
 
 #: account/templates/login.html:22 product/templates/account.html:90
-#: product/templates/contact.html:49
-#: templates/components/footer/footer.html:61
+#: product/templates/contact.html:49 templates/components/footer/footer.html:61
 msgid "Email"
 msgstr ""
 
@@ -113,8 +120,8 @@ msgstr ""
 
 #: account/templates/password_reset_done.html:10
 msgid ""
-"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa"
-" e-poçt qutunuzu yoxlayın."
+"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa "
+"e-poçt qutunuzu yoxlayın."
 msgstr ""
 
 #: account/templates/register.html:13
@@ -135,6 +142,10 @@ msgstr ""
 
 #: account/templates/register_success.html:10
 msgid "Hesabınızı aktivləşdirmək üçün e-poçtunuzu yoxlayın."
+msgstr ""
+
+#: payment/templates/components/delivery/modal1.html:7
+msgid "Çatdırılma nöqtəsini seçin"
 msgstr ""
 
 #: payment/templates/components/delivery/modal1.html:16
@@ -221,7 +232,7 @@ msgstr ""
 msgid "Ümumi qiymət"
 msgstr ""
 
-#: payment/templates/delivery.html:107
+#: payment/templates/delivery.html:107 product/models.py:168
 #: product/templates/components/product/modal.html:36
 #: product/templates/product-detail.html:60
 msgid "Endirim"
@@ -235,17 +246,21 @@ msgstr ""
 msgid "Yekun qiymət"
 msgstr ""
 
-#: payment/templates/delivery.html:152
+#: payment/templates/delivery.html:153 payment/templates/delivery.html:160
 #: templates/components/header/basket.html:13
 msgid "Tamamla"
 msgstr ""
 
-#: payment/templates/delivery.html:154
+#: payment/templates/delivery.html:155 payment/templates/delivery.html:162
 msgid "Düzgün address seçin!"
 msgstr ""
 
-#: payment/templates/delivery.html:155
+#: payment/templates/delivery.html:156 payment/templates/delivery.html:163
 msgid "Əlaqə məlumatlarını daxil edin!"
+msgstr ""
+
+#: payment/templates/delivery.html:165
+msgid "Çatdırılma iş saatlarında mümkündür"
 msgstr ""
 
 #: payment/templates/failed.html:18
@@ -272,6 +287,42 @@ msgstr ""
 msgid "Sifarişi buradan izləyə bilərsiniz."
 msgstr ""
 
+#: product/models.py:166
+#: product/templates/components/product/product-item.html:19
+msgid "Ən çox satılan"
+msgstr ""
+
+#: product/models.py:167
+#: product/templates/components/product/product-item.html:21
+#: product/templates/components/shop/filter.html:33
+#: product/templates/components/shop/filter.html:38
+msgid "Yeni"
+msgstr ""
+
+#: product/models.py:169
+msgid "4-cü"
+msgstr ""
+
+#: product/models.py:305
+msgid "Gözləmədə"
+msgstr ""
+
+#: product/models.py:306
+msgid "Hazırlandı"
+msgstr ""
+
+#: product/models.py:307
+msgid "Göndərilib"
+msgstr ""
+
+#: product/models.py:308
+msgid "Çatdırılıb"
+msgstr ""
+
+#: product/models.py:309
+msgid "Ləğv edilib"
+msgstr ""
+
 #: product/templates/account.html:15
 msgid "Sifarişlər"
 msgstr ""
@@ -285,7 +336,7 @@ msgid "Parolu yenilə"
 msgstr ""
 
 #: product/templates/account.html:24
-#: templates/components/header/header-middle.html:52
+#: templates/components/header/header-middle.html:55
 msgid "Çıxış"
 msgstr ""
 
@@ -343,7 +394,7 @@ msgstr ""
 
 #: product/templates/basket.html:15
 #: templates/components/header/fixed-mobile-header.html:33
-#: templates/components/header/header-middle.html:37
+#: templates/components/header/header-middle.html:40
 msgid "Səbət"
 msgstr ""
 
@@ -376,18 +427,46 @@ msgstr ""
 msgid "AZN"
 msgstr ""
 
+#: product/templates/basket.html:95
+msgid "Ödəniş et"
+msgstr ""
+
+#: product/templates/basket.html:100
+msgid "* Kuryer ilə çatdırılma"
+msgstr ""
+
+#: product/templates/basket.html:101
+msgid ""
+"- Növbəti səhifədə xəritədən sifarişin hara çatdırılacağını seçə bilərsiniz"
+msgstr ""
+
+#: product/templates/basket.html:103
+msgid "* Ofisdən al"
+msgstr ""
+
+#: product/templates/basket.html:104
+msgid "- Birbaşa ödəniş edib sifarişi ofisdən götürə bilərsiniz"
+msgstr ""
+
+#: product/templates/basket.html:117
+msgid "Kuryer ilə çatdırılma"
+msgstr ""
+
+#: product/templates/basket.html:120
+msgid "Ofisdən al"
+msgstr ""
+
 #: product/templates/blog-detail.html:50
 msgid "Son bloqlar"
 msgstr ""
 
 #: product/templates/blogs.html:41
 #: product/templates/components/index/blog.html:31
+#: templates/components/header/header-bottom.html:61
 msgid "Daha çox"
 msgstr ""
 
-#: product/templates/companies.html:50
-#: product/templates/components/index/companies.html:40
-#: product/templates/components/product/product-item.html:60
+#: product/templates/components/campany/campany-item.html:28
 msgid "Seç"
 msgstr ""
 
@@ -406,6 +485,7 @@ msgid "Alış-verişə başla"
 msgstr ""
 
 #: product/templates/components/index/companies.html:6
+#: product/templates/components/shop/companies.html:6
 #: templates/components/footer/footer.html:49
 #: templates/components/header/header-bottom.html:81
 #: templates/components/header/mobile-header.html:37
@@ -413,12 +493,8 @@ msgid "Kampaniyalar"
 msgstr ""
 
 #: product/templates/components/index/companies.html:8
-#: product/templates/components/index/product-tab.html:8
+#: product/templates/components/shop/companies.html:8
 msgid "Hamısı"
-msgstr ""
-
-#: product/templates/components/index/companies.html:30
-msgid "By"
 msgstr ""
 
 #: product/templates/components/index/faq.html:7
@@ -426,7 +502,7 @@ msgid "Tez-tez verilən suallar"
 msgstr ""
 
 #: product/templates/components/index/filtering-section.html:6
-#: product/templates/components/shop/filter.html:32
+#: product/templates/components/shop/filter.html:33
 msgid "Ən çox satılanlar"
 msgstr ""
 
@@ -511,14 +587,8 @@ msgstr ""
 msgid "Açıqlama"
 msgstr ""
 
-#: product/templates/components/product/product-item.html:19
-msgid "Ən çox satılan"
-msgstr ""
-
-#: product/templates/components/product/product-item.html:21
-#: product/templates/components/shop/filter.html:32
-#: product/templates/components/shop/filter.html:37
-msgid "Yeni"
+#: product/templates/components/product/product-item.html:61
+msgid "Əlavə et"
 msgstr ""
 
 #: product/templates/components/shop/filter.html:5
@@ -533,17 +603,17 @@ msgstr ""
 msgid "Göstər"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:29
+#: product/templates/components/shop/filter.html:30
 msgid "Sırala"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:32
-#: product/templates/components/shop/filter.html:40
+#: product/templates/components/shop/filter.html:33
+#: product/templates/components/shop/filter.html:41
 msgid "Qiymət (azdan-çoxa)"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:32
-#: product/templates/components/shop/filter.html:41
+#: product/templates/components/shop/filter.html:33
+#: product/templates/components/shop/filter.html:42
 msgid "Qiymət (çoxdan-aza)"
 msgstr ""
 
@@ -553,12 +623,11 @@ msgstr ""
 msgid "Kateqoriyalar"
 msgstr ""
 
-#: product/templates/components/shop/sidebar.html:20
+#: product/templates/components/shop/sidebar.html:21
 msgid "Yeni məhsullar"
 msgstr ""
 
-#: product/templates/contact.html:31
-#: templates/components/footer/footer.html:50
+#: product/templates/contact.html:31 templates/components/footer/footer.html:50
 #: templates/components/header/header-bottom.html:84
 #: templates/components/header/mobile-header.html:40
 msgid "Əlaqə"
@@ -580,15 +649,15 @@ msgstr ""
 msgid "Bənzər məhsullar"
 msgstr ""
 
-#: settings/settings.py:159
+#: settings/settings.py:160
 msgid "Azerbaijani"
 msgstr ""
 
-#: settings/settings.py:160
+#: settings/settings.py:161
 msgid "Russian"
 msgstr ""
 
-#: settings/settings.py:161
+#: settings/settings.py:162
 msgid "English"
 msgstr ""
 
@@ -643,26 +712,25 @@ msgid "Səbətə bax"
 msgstr ""
 
 #: templates/components/header/fixed-mobile-header.html:25
-#: templates/components/header/header-middle.html:30
+#: templates/components/header/header-middle.html:33
+#: templates/components/header/header-top.html:13
 msgid "Sevimlilər"
 msgstr ""
 
 #: templates/components/header/fixed-mobile-header.html:42
-#: templates/components/header/header-middle.html:44
-#: templates/components/header/header-middle.html:49
+#: templates/components/header/header-middle.html:47
+#: templates/components/header/header-middle.html:52
+#: templates/components/header/header-top.html:12
 msgid "Hesab"
 msgstr ""
 
-#: templates/components/header/header-bottom.html:61
-msgid "Show more"
-msgstr "Daha çox"
-
 #: templates/components/header/header-bottom.html:72
+#: templates/components/header/header-top.html:11
 #: templates/components/header/mobile-header.html:31
 msgid "Haqqımızda"
 msgstr ""
 
-#: templates/components/header/header-bottom.html:96
+#: templates/components/header/header-bottom.html:97
 msgid "24/7 Dəstək"
 msgstr ""
 
@@ -671,14 +739,21 @@ msgstr ""
 msgid "Axtar"
 msgstr ""
 
-#: templates/components/header/mobile-header.html:52
+#: templates/components/header/mobile-header.html:43
+msgid "Dil"
+msgstr ""
+
+#: templates/components/header/mobile-header.html:60
 msgid "Daxil ol / Qeydiyyat keç"
 msgstr ""
 
-#: templates/components/header/mobile-header.html:64
+#: templates/components/header/mobile-header.html:72
 msgid "Bizi izləyin"
 msgstr ""
 
-#: templates/components/header/mobile-header.html:70
+#: templates/components/header/mobile-header.html:78
 msgid "Copyright"
 msgstr ""
+
+#~ msgid "Show more"
+#~ msgstr "Daha çox"

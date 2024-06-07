@@ -23,7 +23,8 @@
                 </ul>
             </div>
         </div>
-        <div class="sort-by-cover" {% if not request.GET.ordering == "-price" and not request.GET.ordering == "price" %}style="width:190px;"{% else %}{% endif %}>
+<!--        <div class="sort-by-cover" {% if not request.GET.ordering == "-price" and not request.GET.ordering == "price" %}style="width:190px;"{% else %}{% endif %}>-->
+        <div class="sort-by-cover" >
             <div class="sort-by-product-wrap">
                 <div class="sort-by">
                     <span><i class="fi-rs-apps-sort"></i>{% if not request.GET.ordering == "-is_best_seller" %}<span class="d-none d-md-inline">{% trans "Sırala" %}:</span>{% endif %}</span>

@@ -4,7 +4,7 @@
 <button data-bs-toggle="modal" data-bs-target="#modelDelivery"
     class="my-4 p-4 w-100 text-start bg-transparent border rounded d-flex align-items-center" type="button">
     <img class="delivery-img" src="{% static "assets/imgs/delivery.png" %}" alt="">
-    <div class="w-100 ps-3"><span id="map-location-info" class="font-weight-bold me-2 text-danger">Çatdırılma nöqtəsini seçin </span><br class="d-md-none"> <span id="delivery_time" style="font-size: 10px;"></span></div>
+    <div class="w-100 ps-3"><span id="map-location-info" class="font-weight-bold me-2 text-danger">{% trans "Çatdırılma nöqtəsini seçin" %} </span><br class="d-md-none"> <span id="delivery_time" style="font-size: 10px;"></span></div>
     <div style="width: 10%;" class="d-flex justify-content-end align-items-center">
         <img class="delivery-img" src="{% static "assets/imgs/right-arrow.png" %}" alt="">
     </div>
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <button 
+                    <button
                         type="button"
                         data-bs-toggle="modal"
                         data-bs-target="#modalAddress"

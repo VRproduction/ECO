@@ -9,7 +9,8 @@
         <ul>
             {% for category in categories %}
             <li>
-                <a href="{% edit_query request category=category.slug %}"> <img src="{{category.image.url}}" alt=""><div style="width: 50px;">{{category.title}}</div></a><span class="count">{{category.products.count}}</span>
+                <a href="{% edit_query request category=category.slug %}"> <img src="{{category.image.url}}" alt=""><div style="width: 50px;">{{category.title}}</div></a>
+<!--                <span class="count">{{category.products.count}}</span>-->
             </li>
             {% endfor %}
         </ul>

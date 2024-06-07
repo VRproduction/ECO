@@ -6914,7 +6914,7 @@ h6.post-title {
 .header-top-ptb-1 #news-flash {
   min-width: 400px;
   font-size: 14px;
-  line-height: 10px;
+  line-height: 20px;
   font-weight: 600;
 }
 
@@ -7522,7 +7522,7 @@ h6.post-title {
   color: #ffffff;
   border-radius: 4px;
   line-height: 1;
-  padding: 10px 20px;
+  padding: 10px 0px;
   background-color: #039D2E;
   font-family: "Quicksand", sans-serif;
   border: 2px solid #039D2E;
@@ -10537,7 +10537,7 @@ footer .hotline img {
 }
 
 /***************************
-    Page section margin 
+    Page section margin
 ****************************/
 .mtb-0 {
   margin: 0;
@@ -11972,7 +11972,7 @@ footer .hotline img {
   .btn-mobile{
     padding: 7px 15px;
   }
-  
+
   .hero-slider-1 .single-hero-slider .display-2 {
     font-size: 24px;
   }
@@ -12385,7 +12385,7 @@ footer .hotline img {
     font-size: 35px;
   }
 
-  
+
 }
 /*# sourceMappingURL=main.css.map */
 @media only screen and (max-width: 667px) {
@@ -12396,7 +12396,7 @@ footer .hotline img {
   .btn-mobile{
     padding: 7px 15px;
   }
-  
+
   .hero-slider-1 .single-hero-slider .display-2 {
     font-size: 24px;
   }
@@ -12513,7 +12513,7 @@ footer .hotline img {
     left: -20px;
   }
 }
-.payment-info-detail *{ 
+.payment-info-detail *{
   font-size: 12px;
   margin: 0;
   padding: 0;
@@ -12558,7 +12558,7 @@ footer .hotline img {
 }
 
 .product-favorite-btn{
-  margin-left: 70px; 
+  margin-left: 70px;
   position:absolute;
   top: 20px;
   right:20px;

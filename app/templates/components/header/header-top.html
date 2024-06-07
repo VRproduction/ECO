@@ -16,10 +16,10 @@
             </div>
             <div class="col-xl-6 col-lg-4">
                 <div class="text-center">
-                    <div id="news-flash" class="d-inline-block">
-                        <ul>
+                    <div id="news-flash" >
+                        <ul class="w-100">
                             {% for company in header_companies %}
-                            <li>{{company.product}} - {{company.discount|format_decimal:2}}% endirim</li>
+                            <li class="w-100">{{company.product}} - {{company.discount|format_decimal:2}}% endirim</li>
                             {% endfor %}
                         </ul>
                     </div>

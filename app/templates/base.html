@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="msapplication-navbutton-color" content="#ffffff">
     <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
-    
+
     {% block title %}
     <title>{{setting.site_title}}</title>
     {% endblock title %}
@@ -36,15 +36,15 @@
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/plugins/animate.min.css' %}">
-    <link rel="stylesheet" href="{% static "assets/css/main.css" %}"> 
+    <link rel="stylesheet" href="{% static "assets/css/main.css" %}">
     {% block css %}
-    <link rel="stylesheet" href="{% static "assets/css/blog.css" %}"> 
+    <link rel="stylesheet" href="{% static "assets/css/blog.css" %}">
     {% endblock css %}
-    <link rel="stylesheet" href="{% static "assets/css/fixed-header.css" %}"> 
-    <link rel="stylesheet" href="{% static "assets/css/custom-modal-body.css" %}"> 
-    <link rel="stylesheet" href="{% static "assets/css/faq.css" %}"> 
-    <link rel="stylesheet" href="{% static "assets/css/notification.css" %}"> 
-    <link rel="stylesheet" href="{% static "assets/css/custom_loader.css" %}"> 
+    <link rel="stylesheet" href="{% static "assets/css/fixed-header.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/custom-modal-body.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/faq.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/notification.css" %}">
+    <link rel="stylesheet" href="{% static "assets/css/custom_loader.css" %}">
     <!-- Meta Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s)
@@ -62,7 +62,7 @@
         src="https://www.facebook.com/tr?id=3602899766643790&ev=PageView&noscript=1"
         /></noscript>
         <!-- End Meta Pixel Code -->
-    
+
         <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4DZDXSCEJF"></script>
     <script>
@@ -150,12 +150,12 @@
         document.onreadystatechange = function () {
             if (document.readyState === "complete") {
                 setTimeout(function () {
-                    document.getElementById("loader").style.display = "none"; 
-                    document.getElementById("overlay").style.display = "none"; 
-                }, 10); 
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("overlay").style.display = "none";
+                }, 10);
             } else {
                 document.getElementById("loader").style.display = "block";
-                document.getElementById("overlay").style.display = "block"; 
+                document.getElementById("overlay").style.display = "block";
             }
         };
     </script>
@@ -168,6 +168,7 @@
             var isAuthenticated = false;
         </script>
     {% endif %}
+    <script src="{% url 'javascript-catalog' %}"></script> <!-- This line -->
     <script src="{% static "assets/js/vendor/modernizr-3.6.0.min.js" %}"></script>
     <script src="{% static "assets/js/vendor/jquery-3.6.0.min.js" %}"></script>
     <script src="{% static "assets/js/vendor/jquery-migrate-3.3.0.min.js" %}"></script>
@@ -189,14 +190,14 @@
     <script src="{% static "assets/js/plugins/jquery.elevatezoom.js" %}"></script>
     <!-- Template  JS -->
     <script src="{% static "assets/js/main.js" %}"></script>
-    <script src="{% static "assets/js/shop.js" %}"></script> 
-    <script src="{% static "assets/js/index.js" %}"></script> 
+    <script src="{% static "assets/js/shop.js" %}"></script>
+    <script src="{% static "assets/js/index.js" %}"></script>
 
     <script src="{% static "assets/js/delivery.js" %}"></script>
     <script src="{% static "assets/js/notification.js" %}"></script>
     {% comment %} <script src="{% static "assets/js/laoder.js" %}"></script> {% endcomment %}
-    
-   
+
+
     {% block js %}{% endblock js %}
 </body>
 

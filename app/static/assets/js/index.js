@@ -192,7 +192,7 @@ function updateNavbarBasket(data){
         document.getElementById('navbar-basket').classList.add("d-none");
     }
 
-    
+
 }
 
 function updateBasketTable(data) {
@@ -203,7 +203,7 @@ function updateBasketTable(data) {
     document.getElementById('basket-item-count').innerText = data.basketItemCount;
     document.getElementById('basket-checkout-form').innerHTML = `
             <div class="border p-md-4 cart-totals">
-                
+
                 ${!data.stock_status ? `<p class="text-danger">* Stokda olmayan məhsullar var</p>`: ''}
                 <div class="table-responsive">
                     <table class="table no-border">
@@ -246,7 +246,7 @@ function updateBasketTable(data) {
             <div class="border mt-3 p-md-4 cart-totals">
                 <div class="table-responsive">
                     <button data-bs-toggle="modal" data-bs-target="#checkoutBasket" class="payment-option text-center w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-success' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `disabled style="cursor: not-allowed;"`: ''} data-value="cash_on_delivery">
-                        Səbəti tamamla
+                        ${`Səbəti tamamla`}
                     </button>
                 </div>
             </div>
@@ -265,7 +265,7 @@ function updateBasketTable(data) {
                     <div id="coupon_error" class="mt-3 text-danger"></div>
                 </form>
             </div>
-            
+
     `;
     saveDataToLocalStorage(data);
 
@@ -280,7 +280,7 @@ function updateBasketTable(data) {
     const basketItemsBody = document.getElementById('basket-items-body');
     basketItemsBody.innerHTML = ''; // Önce mevcut içeriği temizle
 
-    
+
 
     data.basketItems.forEach(item => {
         const tr = document.createElement('tr');
@@ -401,9 +401,9 @@ function toggleBasketInfo(){
     var detailInfo = document.querySelector("#payment-info-detail")
     detailInfo.classList.toggle("d-none")
 }
-window.addEventListener('click', function(e){   
+window.addEventListener('click', function(e){
   if ( !document.getElementById('payment-info').contains(e.target) && !document.getElementById('payment-info-detail').contains(e.target)){
     var detailInfo = document.querySelector("#payment-info-detail")
     detailInfo.classList.add("d-none")
-  } 
+  }
 });

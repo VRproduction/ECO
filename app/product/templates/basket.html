@@ -92,14 +92,15 @@
                     <div class="modal-content">
                         <div class="modal-header border-0">
                             <h5 class="modal-title" id="modalTitleId">
-                                {% trans "Ödəniş et" %}
+                                {% trans "Make a payment" %}
                             </h5>
                             <div class="payment-info ms-2">
                                 <span id="payment-info"  onclick="toggleBasketInfo()">?</span>
                                 <div id="payment-info-detail" class="payment-info-detail ms-2 d-none">
-                                    <span>{% trans "* Kuryer ilə çatdırılma" %}</span>
+                                    {% if is_active_time %}
+                                    <span>{% trans "* Delivery" %}</span>
                                     <p>{% trans "- Növbəti səhifədə xəritədən sifarişin hara çatdırılacağını seçə bilərsiniz" %}</p>
-                                    
+                                    {% endif %}                                    
                                     <span>{% trans "* Ofisdən al" %}</span>
                                     <p>{% trans "- Birbaşa ödəniş edib sifarişi ofisdən götürə bilərsiniz" %}</p>
                                 </div>
@@ -112,10 +113,12 @@
                             ></button>
                         </div>
                         <div class="modal-footer border-0">
-                            <div class="d-grid grid-1 grid-md-2 w-100" style="gap:10px;">
+                            <div class="d-grid grid-1 {% if is_active_time %}grid-md-2{% endif %} w-100" style="gap:10px;">
+                                {% if is_active_time %}
                                 <div class="btn btn-success w-100 "  data-value="credit_card">
-                                    <a href="/payment/map/" class="text-light text-center d-block w-100" >{% trans "Kuryer ilə çatdırılma" %}</a>
+                                    <a href="{% url "map" %}" class="text-light text-center d-block w-100" >{% trans "Delivery" %}</a>
                                 </div>
+                                {% endif %}
                                 <button onclick="checkoutButton()" class="btn btn-primary text-center w-100"  data-value="cash_on_delivery">
                                     {% trans "Ofisdən al" %}
                                 </button>

@@ -82,7 +82,7 @@
                                 {% if product.description %}
                                 <div class="product-description mt-20">
                                     <h4>{% trans "Açıqlama" %}:</h4>
-                                    <p>{{ product.description|safe }}</p>
+                                    <div class="custom-scroll" style="max-height: 250px; overflow-y:auto;">{{ product.description|safe }}</div>
                                 </div>
                                 {% endif %}
                             </div>

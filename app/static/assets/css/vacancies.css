@@ -1,0 +1,94 @@
+.vacancies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.job-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: calc(100% - 40px);
+    max-width: 400px;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.job-category {
+    border-radius: 12px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.design {
+    background-color: #00bfff;
+}
+
+.software {
+    background-color: #ff69b4;
+}
+
+.customer-success {
+    background-color: #32cd32;
+}
+
+.sales {
+    background-color: #1e90ff;
+}
+
+.marketing {
+    background-color: #ffa500;
+}
+
+.job-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.job-description {
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.job-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.job-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.job-link:hover {
+    color: #0056b3;
+}
+
+@media (min-width: 768px) {
+    .vacancies {
+        justify-content: space-between;
+    }
+    .job-card {
+        width: calc(50% - 40px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .job-card {
+        width: calc(33% - 40px);
+    }
+}

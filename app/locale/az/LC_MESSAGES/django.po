@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-07 17:51+0400\n"
-"PO-Revision-Date: 2024-06-13 10:34+0400\n"
+"POT-Creation-Date: 2024-06-25 12:24+0400\n"
+"PO-Revision-Date: 2024-06-25 12:25+0400\n"
 "Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -429,12 +429,12 @@ msgid "AZN"
 msgstr ""
 
 #: product/templates/basket.html:95
-msgid "Ödəniş et"
-msgstr ""
+msgid "Make a payment"
+msgstr "Ödəniş etmək"
 
 #: product/templates/basket.html:100
-msgid "* Kuryer ilə çatdırılma"
-msgstr ""
+msgid "* Delivery"
+msgstr "* Kuryer ilə çatdırılma"
 
 #: product/templates/basket.html:101
 msgid ""
@@ -450,8 +450,8 @@ msgid "- Birbaşa ödəniş edib sifarişi ofisdən götürə bilərsiniz"
 msgstr ""
 
 #: product/templates/basket.html:117
-msgid "Kuryer ilə çatdırılma"
-msgstr ""
+msgid "Delivery"
+msgstr "Kuryer ilə çatdırılma"
 
 #: product/templates/basket.html:120
 msgid "Ofisdən al"
@@ -649,6 +649,14 @@ msgstr ""
 
 #: product/templates/product-detail.html:120
 msgid "Bənzər məhsullar"
+msgstr ""
+
+#: product/views.py:198
+msgid "Kupon mövcud deyil!"
+msgstr ""
+
+#: product/views.py:208
+msgid "Siz artıq bu kuponu istifadə etmisiz!"
 msgstr ""
 
 #: settings/settings.py:160

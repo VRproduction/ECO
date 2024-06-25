@@ -14,6 +14,8 @@ urlpatterns = [
     path('blogs/', views.BlogPageView.as_view(), name = 'blog'),
     path('blogs/<slug:slug>/', views.BlogDetailPageView.as_view(), name='blog-detail'),
 
+    # path('vacancies/', views.VacanciesPageView.as_view(), name = 'vacancies'),
+
     path('basket/', views.BasketPageView.as_view(), name = 'basket'),
     path('add-to-basket/<int:product_id>/', views.add_to_basket, name='add_to_basket'),
     path('remove-from-basket/<int:basket_item_id>/', views.remove_from_basket, name='remove_from_basket'),

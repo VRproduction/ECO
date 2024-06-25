@@ -19,6 +19,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 from seo.models import AboutPageSeo, BlogPageSeo, ShopPageSeo, HomePageSeo, ContactPageSeo, CompaniesPageSeo
+from django.utils.translation import get_language
+from django.utils.translation import gettext as _
 
 class HomePageView(TemplateView):
     template_name = 'index.html'
@@ -155,6 +157,8 @@ def apply_coupon(user, basket_items, coupon):
 
 def get_basket_items(request):
     try:
+        language = get_language()
+        print(language)
         # Kullanıcıya ait sepet öğelerini al
         basket_items = BasketItem.objects.filter(user=request.user).order_by("pk")
         
@@ -165,11 +169,12 @@ def get_basket_items(request):
             'id': item.id,
             'product': {
                 'id': item.product.pk,
-                'title': item.product.title,
+                'title': getattr(item.product, f'title_{language}'),
                 'slug': item.product.slug,
                 'price': round_to_decimal(item.product.discount_price) if item.product.discount and item.product.stock > 0 else round_to_decimal(item.product.price),
                 'image_url': item.product.image.url,
-                'stock': item.product.stock
+                'stock': item.product.stock,
+                'url': item.product.get_absolute_url()
             },
             'quantity': item.quantity,
             'total_price': round_to_decimal(item.total_price),
@@ -191,7 +196,7 @@ def get_basket_items(request):
                 applied_coupon = Coupon.objects.get(coupon=coupon_code)
                 # Kuponun kullanılabilir olup olmadığını kontrol et
             except Coupon.DoesNotExist:
-                response_data['error'] = 'Kupon mövcud deyil!'
+                response_data['error'] = _('Kupon mövcud deyil!')
                 return JsonResponse(response_data)
         if applied_coupon:
             discounted_total = apply_coupon(request.user ,basket_items, applied_coupon)
@@ -201,7 +206,7 @@ def get_basket_items(request):
         return JsonResponse(response_data)
 
     except Exception as e:
-        response_data['error'] = 'Siz artıq bu kuponu istifadə etmisiz!'
+        response_data['error'] = _('Siz artıq bu kuponu istifadə etmisiz!')
         return JsonResponse(response_data)
 
 @api_view(['POST'])
@@ -457,6 +462,17 @@ class BlogDetailPageView(DetailView):
         context = super(BlogDetailPageView, self).get_context_data(**kwargs)
         context["last_blogs"] = Blog.objects.exclude(pk = self.get_object().pk).order_by("-created")[:3]
         return context
+    
+class VacanciesPageView(TemplateView):
+    template_name = 'vacancies.html'
+    # paginate_by = 8
+    # # model = News
+    # context_object_name = 'vacancies'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(NewsPageView, self).get_context_data(**kwargs)
+    #     context["last_news"] = News.objects.all()[:3]
+    #     return context
     
     
 class CompanyPageView(TemplateView):

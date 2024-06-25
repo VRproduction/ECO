@@ -494,6 +494,7 @@ class Blog(models.Model):
     class Meta:
         verbose_name = "Bloglar"
         verbose_name_plural = "Bloglar"
+        ordering = ['-pk']
 
     def get_absolute_url(self):
         return reverse("blog-detail", args=[str(self.slug)])

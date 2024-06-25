@@ -2773,6 +2773,13 @@ input.qty-val {
   text-align: center;
   font-family: "Quicksand", sans-serif;
 }
+@media only screen and (max-width: 992px) {
+  .deals-countdown .countdown-section .countdown-amount {
+    width: 45px;
+    height: 8px;
+    line-height: 10px;
+  }
+}
 
 .deals-countdown .countdown-section .countdown-period {
   position: absolute;
@@ -12572,4 +12579,20 @@ footer .hotline img {
 }
 .product-favorite-btn a{
   display: flex;
+}
+
+.custom-scroll {
+    max-height: 250px;
+    overflow-y: auto;
+    scrollbar-width: thin; /* Scroll çubuğunun kalınlığını ince yapar */
+    scrollbar-color: #ccc transparent; /* Scroll çubuğunun rengini ve arka planı belirler */
+}
+
+.custom-scroll::-webkit-scrollbar {
+    width: 6px; /* Safari ve Chrome gibi WebKit tarayıcıları için scroll çubuğunun genişliği */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Scroll çubuğu başlık rengi */
+    border-radius: 10px; /* Kenar yarıçapı */
 }

@@ -176,59 +176,88 @@ function sendTransactionCreateRequest(transaction, payment_redirect_url, coupon_
   });
 }
 
+function translate(translations, key, params = {}) {
+  const language = getCookie("django_language"); // Dil ayarını almak için uygun bir fonksiyonu kullanmalısınız
+  let translation = translations[language][key] || key; // Dil desteklenmiyorsa anahtar kelimeyi geri döndür
+  // Eğer çeviride parametreler varsa, bunları yerine koy
+  Object.keys(params).forEach(param => {
+      translation = translation.replace(`{{${param}}}`, params[param]);
+  });
+  return translation;
+}
+
 function updateMapLocationInfo(lat, lon, street) {
-  sendShipmentPromises(lat, lon, street)
-    .then(data => {
-      document.getElementById("map-location-info").innerText = `${street.length > 70 ? street.slice(0, 70) + ' . . .' : street}`
-      document.getElementById("map-location-info").classList.remove("text-danger");
-      var delivery_time = document.getElementById("delivery_time")
-      if ('error_code' in data) {
-        if (data['error_code'] === 'DROPOFF_OUTSIDE_OF_DELIVERY_AREA') {
-          console.log(data)
-          delivery_time.innerText = 'Buraya çatdırılma yoxdur!'
-          delivery_time.classList.remove("text-success", "border-success")
-          delivery_time.classList.add("border-1", "border-solid", "border-danger", "rounded", "p-1", "text-danger")
-          document.getElementById("map_total_delivery").innerText = `₼ 0`;
-          document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? localStorageData.discountPrice : localStorageData.totalPrice}`;
-          document.getElementById("checkout_address_error").classList.remove('d-none');
-          localStorage.removeItem('delivery_amount');
-          localStorage.removeItem('shipment_promise_id');
-
-        } else {
-          console.log('Bilinmeyen hata:', data['error_code']);
-        }
-      } else {
-        delivery_time.innerText = `${data["time_estimate_minutes"]} dəqiqəyə çatdırılma`
-        delivery_time.classList.remove("text-danger", "border-danger")
-        delivery_time.classList.add("text-success", "border-success")
-        document.getElementById("checkout_address_error").classList.add('d-none');
-        localStorage.setItem('delivery_amount', Number(data["price"]["amount"]) / 100);
-        localStorage.setItem('shipment_promise_id', data["id"]);
-
-        if (localStorageData.discount != 'undefined') {
-          if (Number(localStorageData.discountPrice) < 30) {
-            document.getElementById("map_total_delivery").innerText = `₼ ${Number(data["price"]["amount"]) / 100}`;
-            document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice) + Number(data["price"]["amount"]) / 100).toFixed(2) : (Number(localStorageData.totalPrice) + Number(data["price"]["amount"]) / 100).toFixed(2)}`;
-          } else {
-            document.getElementById("map_total_delivery").innerText = `₼ 0`;
-            document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice)).toFixed(2) : (Number(localStorageData.totalPrice)).toFixed(2)}`;
-          }
-        } else {
-          if (Number(localStorageData.totalPrice) < 30) {
-            document.getElementById("map_total_delivery").innerText = `₼ ${Number(data["price"]["amount"]) / 100}`;
-            document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice) + Number(data["price"]["amount"]) / 100).toFixed(2) : (Number(localStorageData.totalPrice) + Number(data["price"]["amount"]) / 100).toFixed(2)}`;
-          } else {
-            document.getElementById("map_total_delivery").innerText = `₼ 0`;
-            document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice)).toFixed(2) : (Number(localStorageData.totalPrice)).toFixed(2)}`;
-          }
-        }
-
+  const translations = {
+      'en': {
+          'delivery_not_available': 'Delivery is not available here!',
+          'unknown_error': 'Unknown error occurred.',
+          'delivery_time': 'Delivery in {{time_estimate}} minutes',
+          // Diğer çeviriler
+      },
+      'ru': {
+          'delivery_not_available': 'Доставка здесь недоступна!',
+          'unknown_error': 'Произошла неизвестная ошибка.',
+          'delivery_time': 'Доставка за {{time_estimate}} минут',
+          // Diğer çeviriler
+      },
+      'az': {
+          'delivery_not_available': 'Bu yerə çatdırılma yoxdur!',
+          'unknown_error': 'Bilinməyən bir səhv baş verdi.',
+          'delivery_time': '{{time_estimate}} dəqiqəyə çatdırılma',
+          // Diğer çeviriler
       }
-      checkCheckoutButtonStatus()
-    })
-    .catch(error => {
-      console.error('Hata:', error);
-    });
+      // İhtiyaç duyulursa buraya başka diller eklenebilir
+  };
+  sendShipmentPromises(lat, lon, street)
+      .then(data => {
+          document.getElementById("map-location-info").innerText = `${street.length > 70 ? street.slice(0, 70) + ' . . .' : street}`;
+          document.getElementById("map-location-info").classList.remove("text-danger");
+          var delivery_time = document.getElementById("delivery_time");
+          if ('error_code' in data) {
+              if (data['error_code'] === 'DROPOFF_OUTSIDE_OF_DELIVERY_AREA') {
+                  console.log(data);
+                  delivery_time.innerText = translate(translations,'delivery_not_available');
+                  delivery_time.classList.remove("text-success", "border-success");
+                  delivery_time.classList.add("border-1", "border-solid", "border-danger", "rounded", "p-1", "text-danger");
+                  document.getElementById("map_total_delivery").innerText = `₼ 0`;
+                  document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? localStorageData.discountPrice : localStorageData.totalPrice}`;
+                  document.getElementById("checkout_address_error").classList.remove('d-none');
+                  localStorage.removeItem('delivery_amount');
+                  localStorage.removeItem('shipment_promise_id');
+              } else {
+                  console.log('Bilinmeyen hata:', data['error_code']);
+              }
+          } else {
+              delivery_time.innerText = translate(translations,'delivery_time', { time_estimate: data["time_estimate_minutes"] });
+              delivery_time.classList.remove("text-danger", "border-danger");
+              delivery_time.classList.add("text-success", "border-success");
+              document.getElementById("checkout_address_error").classList.add('d-none');
+              localStorage.setItem('delivery_amount', Number(data["price"]["amount"]) / 100);
+              localStorage.setItem('shipment_promise_id', data["id"]);
+
+              if (localStorageData.discount != 'undefined') {
+                  if (Number(localStorageData.discountPrice) < 30) {
+                      document.getElementById("map_total_delivery").innerText = `₼ ${Number(data["price"]["amount"]) / 100}`;
+                      document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice) + Number(data["price"]["amount"]) / 100).toFixed(2) : (Number(localStorageData.totalPrice) + Number(data["price"]["amount"]) / 100).toFixed(2)}`;
+                  } else {
+                      document.getElementById("map_total_delivery").innerText = `₼ 0`;
+                      document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice)).toFixed(2) : (Number(localStorageData.totalPrice)).toFixed(2)}`;
+                  }
+              } else {
+                  if (Number(localStorageData.totalPrice) < 30) {
+                      document.getElementById("map_total_delivery").innerText = `₼ ${Number(data["price"]["amount"]) / 100}`;
+                      document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice) + Number(data["price"]["amount"]) / 100).toFixed(2) : (Number(localStorageData.totalPrice) + Number(data["price"]["amount"]) / 100).toFixed(2)}`;
+                  } else {
+                      document.getElementById("map_total_delivery").innerText = `₼ 0`;
+                      document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice)).toFixed(2) : (Number(localStorageData.totalPrice)).toFixed(2)}`;
+                  }
+              }
+          }
+          checkCheckoutButtonStatus();
+      })
+      .catch(error => {
+          console.error('Hata:', error);
+      });
 }
 
 function checkoutButton() {

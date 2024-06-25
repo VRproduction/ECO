@@ -35,7 +35,7 @@
             <h2><a href="{{product.get_absolute_url}}">{{product.title}}</a></h2>
             <div>
             {% if product.vendor %}
-                <span class="font-small text-muted">By <a href='{% url "shop" %}?vendor={{product.vendor.slug}}'>{{product.vendor}}</a></span>
+                <span class="font-small text-muted"> <a href='{% url "shop" %}?vendor={{product.vendor.slug}}'>{{product.vendor}}</a></span>
             {% else %}
             <br/>
             {% endif %}

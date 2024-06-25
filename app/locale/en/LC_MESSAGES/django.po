@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-07 17:51+0400\n"
-"PO-Revision-Date: 2024-06-13 10:34+0400\n"
+"POT-Creation-Date: 2024-06-25 12:24+0400\n"
+"PO-Revision-Date: 2024-06-25 12:23+0400\n"
 "Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -64,8 +64,7 @@ msgid "Qeydiyyatdan keç"
 msgstr "Register"
 
 #: account/templates/login.html:22 product/templates/account.html:90
-#: product/templates/contact.html:49
-#: templates/components/footer/footer.html:61
+#: product/templates/contact.html:49 templates/components/footer/footer.html:61
 msgid "Email"
 msgstr "Email"
 
@@ -123,8 +122,8 @@ msgstr "Password reset request sent"
 
 #: account/templates/password_reset_done.html:10
 msgid ""
-"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa"
-" e-poçt qutunuzu yoxlayın."
+"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa "
+"e-poçt qutunuzu yoxlayın."
 msgstr ""
 "Password reset instructions have been sent to your email address. Please "
 "check your email inbox."
@@ -439,16 +438,12 @@ msgid "AZN"
 msgstr "AZN"
 
 #: product/templates/basket.html:95
-#, fuzzy
-#| msgid "Ödəniş xətası!"
-msgid "Ödəniş et"
-msgstr "Payment error!"
+msgid "Make a payment"
+msgstr ""
 
 #: product/templates/basket.html:100
-#, fuzzy
-#| msgid "Çatdırılma"
-msgid "* Kuryer ilə çatdırılma"
-msgstr "Delivery"
+msgid "* Delivery"
+msgstr ""
 
 #: product/templates/basket.html:101
 msgid ""
@@ -466,10 +461,8 @@ msgid "- Birbaşa ödəniş edib sifarişi ofisdən götürə bilərsiniz"
 msgstr "- You can pay directly and pick up the order from the office"
 
 #: product/templates/basket.html:117
-#, fuzzy
-#| msgid "Çatdırılma"
-msgid "Kuryer ilə çatdırılma"
-msgstr "Delivery"
+msgid "Delivery"
+msgstr ""
 
 #: product/templates/basket.html:120
 msgid "Ofisdən al"
@@ -648,8 +641,7 @@ msgstr "Categories"
 msgid "Yeni məhsullar"
 msgstr "New Products"
 
-#: product/templates/contact.html:31
-#: templates/components/footer/footer.html:50
+#: product/templates/contact.html:31 templates/components/footer/footer.html:50
 #: templates/components/header/header-bottom.html:84
 #: templates/components/header/mobile-header.html:40
 msgid "Əlaqə"
@@ -670,6 +662,14 @@ msgstr "Send"
 #: product/templates/product-detail.html:120
 msgid "Bənzər məhsullar"
 msgstr "Similar products"
+
+#: product/views.py:198
+msgid "Kupon mövcud deyil!"
+msgstr "Coupon not available!"
+
+#: product/views.py:208
+msgid "Siz artıq bu kuponu istifadə etmisiz!"
+msgstr "You have already used this coupon!"
 
 #: settings/settings.py:160
 msgid "Azerbaijani"
@@ -776,6 +776,18 @@ msgstr "Follow us"
 #: templates/components/header/mobile-header.html:78
 msgid "Copyright"
 msgstr "Copyright"
+
+#~| msgid "Çatdırılma"
+#~ msgid "* Kuryer ilə çatdırılma"
+#~ msgstr "Delivery"
+
+#~| msgid "Çatdırılma"
+#~ msgid "Kuryer ilə çatdırılma"
+#~ msgstr "Delivery"
+
+#, fuzzy
+#~ msgid "Ödəniş et"
+#~ msgstr "Payment error!"
 
 #~ msgid "By"
 #~ msgstr "By"

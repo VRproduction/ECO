@@ -16,6 +16,7 @@ from product.views import apply_coupon
 from django.http import HttpResponse
 from django.contrib import messages
 from django.db import transaction
+from product.utils.is_active_time import is_active_time
 
 def payment(request):
     # payment_obj = Payment()
@@ -123,6 +124,8 @@ def result(request):
     return render(request, 'result.html')
 
 def map(request):
+    if not is_active_time():
+        return redirect("home")
     # payment_obj = Payment()
     # payment_obj.checkout_request()
     context = {

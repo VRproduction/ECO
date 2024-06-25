@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-07 17:51+0400\n"
-"PO-Revision-Date: 2024-06-13 10:32+0400\n"
+"POT-Creation-Date: 2024-06-25 12:24+0400\n"
+"PO-Revision-Date: 2024-06-25 12:26+0400\n"
 "Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -438,16 +438,12 @@ msgid "AZN"
 msgstr "AZN"
 
 #: product/templates/basket.html:95
-#, fuzzy
-#| msgid "Ödəniş xətası!"
-msgid "Ödəniş et"
-msgstr "Ошибка оплаты!"
+msgid "Make a payment"
+msgstr "Платить"
 
 #: product/templates/basket.html:100
-#, fuzzy
-#| msgid "Çatdırılma"
-msgid "* Kuryer ilə çatdırılma"
-msgstr "Доставка"
+msgid "* Delivery"
+msgstr "* Доставка курьером"
 
 #: product/templates/basket.html:101
 msgid ""
@@ -465,10 +461,8 @@ msgid "- Birbaşa ödəniş edib sifarişi ofisdən götürə bilərsiniz"
 msgstr "- Вы можете оплатить напрямую и забрать заказ из офиса"
 
 #: product/templates/basket.html:117
-#, fuzzy
-#| msgid "Çatdırılma"
-msgid "Kuryer ilə çatdırılma"
-msgstr "Доставка"
+msgid "Delivery"
+msgstr "Доставка курьером"
 
 #: product/templates/basket.html:120
 msgid "Ofisdən al"
@@ -668,6 +662,14 @@ msgstr "Отправить"
 msgid "Bənzər məhsullar"
 msgstr "Похожие продукты"
 
+#: product/views.py:198
+msgid "Kupon mövcud deyil!"
+msgstr "Купон недоступен!"
+
+#: product/views.py:208
+msgid "Siz artıq bu kuponu istifadə etmisiz!"
+msgstr "Вы уже использовали этот купон!"
+
 #: settings/settings.py:160
 msgid "Azerbaijani"
 msgstr "Азербайджанский"
@@ -775,6 +777,18 @@ msgstr "Подписаться на нас"
 #: templates/components/header/mobile-header.html:78
 msgid "Copyright"
 msgstr "Авторские права"
+
+#, fuzzy
+#~ msgid "* Kuryer ilə çatdırılma"
+#~ msgstr "Доставка"
+
+#, fuzzy
+#~ msgid "Kuryer ilə çatdırılma"
+#~ msgstr "Доставка"
+
+#, fuzzy
+#~ msgid "Ödəniş et"
+#~ msgstr "Ошибка оплаты!"
 
 #~ msgid "By"
 #~ msgstr "От"

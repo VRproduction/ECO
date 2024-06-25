@@ -27,7 +27,24 @@ function getCookie(name) {
 }
 
 
+
 function addToBasket(product_id, quantity) {
+    const language = getCookie("django_language");
+
+    const translations = {
+        en: {
+            item_added_message: 'Product added to basket.'
+        },
+        ru: {
+            item_added_message: 'Товар добавлен в корзину.'
+        },
+        az: {
+            item_added_message: 'Məhsul səbətə əlavə edildi.'
+        } 
+        // Buraya başka çevirileri ekleyebilirsiniz
+    };
+    const t = translations[language] || translations.az; // Default to Azerbaijani if language is not found
+
     fetch(`/add-to-basket/${product_id}/`, {
         method: 'POST',
         headers: {
@@ -42,7 +59,7 @@ function addToBasket(product_id, quantity) {
             fetchBasketItems();
             // Sepet ikonunu güncelle
             $('#basket-item-count').text(data.basket_item_count);
-            showNotification("Məshul səbətə əlavə edildi")
+            showNotification(t.item_added_message)
         } else {
            console.log('Bir hata oluştu.');
         }
@@ -147,7 +164,20 @@ function check_stock_status() {
 
 
 function fetchBasketItems(coupon_code) {
-    fetch(`/get-basket-items/${coupon_code?`?coupon_code=${coupon_code}`:''}`)
+    
+        // Get the hostname (e.g., "localhost" or "xxx.com")
+    const hostname = window.location.hostname;
+
+    // Get the protocol (e.g., "http:" or "https:")
+    const protocol = window.location.protocol;
+    
+    const port = window.location.port;
+
+    // Construct the base URL (e.g., "http://localhost" or "https://xxx.com")
+    const baseURL = `${protocol}//${hostname}${protocol === 'http:' && `:${port}`}`;
+    const language = getCookie("django_language");
+    const default_language = 'az';
+    fetch(`${baseURL}/${language == default_language ? "" : `${language}/` }get-basket-items/${coupon_code?`?coupon_code=${coupon_code}`:''}`)
         .then(response => response.json())
         .then(data => {
             updateNavbarBasket(data);
@@ -196,128 +226,176 @@ function updateNavbarBasket(data){
 }
 
 function updateBasketTable(data) {
-    // Sepet tablosunu güncelleme kodları buraya eklenebilir
-    // Örneğin, data içindeki bilgileri kullanarak HTML içeriğini dinamik olarak oluşturabilirsiniz.
+    const language = getCookie("django_language");
+    
+    const translations = {
+        az: {
+            stock_warning: '* Stokda olmayan məhsullar var',
+            total_price: 'Ümumi qiymət',
+            discount: 'Endirim',
+            final_price: 'Yekun qiymət',
+            complete_basket: 'Səbəti tamamla',
+            apply_coupon: 'Kupon tətbiq et',
+            coupon_placeholder: 'Kupon',
+            cancel: 'Ləğv et',
+            apply: 'Tətbiq et',
+            not_enough_stock: 'Stokda kifayət qədər yoxdur',
+            out_of_stock: 'Stokda yoxdur',
+            price: 'Qiymət',
+            total_price_per_item: 'Ümumi qiymət'
+        },
+        en: {
+            stock_warning: '* There are items out of stock',
+            total_price: 'Total Price',
+            discount: 'Discount',
+            final_price: 'Final Price',
+            complete_basket: 'Complete Basket',
+            apply_coupon: 'Apply Coupon',
+            coupon_placeholder: 'Coupon',
+            cancel: 'Cancel',
+            apply: 'Apply',
+            not_enough_stock: 'Not enough stock',
+            out_of_stock: 'Out of stock',
+            price: 'Price',
+            total_price_per_item: 'Total Price per Item'
+        },
+        ru: {
+            stock_warning: '* Есть товары, которых нет в наличии',
+            total_price: 'Итоговая цена',
+            discount: 'Скидка',
+            final_price: 'Итоговая цена',
+            complete_basket: 'Завершить покупку',
+            apply_coupon: 'Применить купон',
+            coupon_placeholder: 'Купон',
+            cancel: 'Отмена',
+            apply: 'Применить',
+            not_enough_stock: 'Недостаточно на складе',
+            out_of_stock: 'Нет в наличии',
+            price: 'Цена',
+            total_price_per_item: 'Итоговая цена за единицу'
+        }
+    };
+
+    const t = translations[language] || translations.az; // Default to Azerbaijani if language is not found
+
     var urlParams = new URLSearchParams(window.location.search);
     var couponCode = urlParams.get('coupon_code');
     document.getElementById('basket-item-count').innerText = data.basketItemCount;
     document.getElementById('basket-checkout-form').innerHTML = `
-            <div class="border p-md-4 cart-totals">
-
-                ${!data.stock_status ? `<p class="text-danger">* Stokda olmayan məhsullar var</p>`: ''}
-                <div class="table-responsive">
-                    <table class="table no-border">
-                        <tbody id="basket-item-checkout">
-                            <tr id="basket-item-total">
-                                <td class="cart_total_label">
-                                    <h6 class="text-muted">Ümumi qiymət</h6>
-                                </td>
-                                <td class="cart_total_amount">
-                                    <h4 class="text-brand text-end">₼ ${data.totalPrice}</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td scope="col" colspan="2">
-                                    <div class="divider-2 mt-10 mb-10"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="cart_total_label">
-                                    <h6 class="text-muted">Endirim</h6>
-                                </td>
-                                <td class="cart_total_amount">
-                                    <h5 class="text-heading text-end">₼ ${data.discount ? data.discount : 0}</h5></td> </tr> <tr>
-                                <td scope="col" colspan="2">
-                                    <div class="divider-2 mt-10 mb-10"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="cart_total_label">
-                                    <h6 class="text-muted">Yekun qiymət</h6>
-                                </td>
-                                <td class="cart_total_amount">
-                                    <h4 class="text-brand text-end">₼ ${data.discount ? data.discountPrice : data.totalPrice}</h4>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="border p-md-4 cart-totals">
+            ${!data.stock_status ? `<p class="text-danger">${t.stock_warning}</p>` : ''}
+            <div class="table-responsive">
+                <table class="table no-border">
+                    <tbody id="basket-item-checkout">
+                        <tr id="basket-item-total">
+                            <td class="cart_total_label">
+                                <h6 class="text-muted">${t.total_price}</h6>
+                            </td>
+                            <td class="cart_total_amount">
+                                <h4 class="text-brand text-end">₼ ${data.totalPrice}</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col" colspan="2">
+                                <div class="divider-2 mt-10 mb-10"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cart_total_label">
+                                <h6 class="text-muted">${t.discount}</h6>
+                            </td>
+                            <td class="cart_total_amount">
+                                <h5 class="text-heading text-end">₼ ${data.discount ? data.discount : 0}</h5></td> </tr> <tr>
+                            <td scope="col" colspan="2">
+                                <div class="divider-2 mt-10 mb-10"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cart_total_label">
+                                <h6 class="text-muted">${t.final_price}</h6>
+                            </td>
+                            <td class="cart_total_amount">
+                                <h4 class="text-brand text-end">₼ ${data.discount ? data.discountPrice : data.totalPrice}</h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="border mt-3 p-md-4 cart-totals">
+            <div class="table-responsive">
+                <button data-bs-toggle="modal" data-bs-target="#checkoutBasket" class="payment-option text-center w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-success' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `disabled style="cursor: not-allowed;"`: ''} data-value="cash_on_delivery">
+                    ${t.complete_basket}
+                </button>
+            </div>
+        </div>
+        <div class="border p-md-4 cart-totals mt-3">
+            ${!data.stock_status ? `<p class="text-danger">${t.stock_warning}</p>`: ''}
+            <h4 class="mb-10">${t.apply_coupon}</h4>
+            <form id="couponForm" class="mb-3">
+                <div class="d-flex justify-content-between">
+                    <input class="font-medium mr-15 coupon" ${couponCode ? `value="${couponCode}"`: ''} name="coupon_code" placeholder="${t.coupon_placeholder}">
+                    ${coupon_is_applied ? `
+                    <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="notApplyCoupon()" type="button" style="width:265px;padding:0;" class="btn btn-danger"><i class="fi-rs-label mr-10"></i>${t.cancel}</button>
+                    `:`
+                    <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="applyCoupon()" type="button" style="width:265px;padding:0;" class="btn btn-success"><i class="fi-rs-label mr-10"></i>${t.apply}</button>
+                    `}
                 </div>
-            </div>
-            <div class="border mt-3 p-md-4 cart-totals">
-                <div class="table-responsive">
-                    <button data-bs-toggle="modal" data-bs-target="#checkoutBasket" class="payment-option text-center w-100 ${data.totalPrice == 0 || !data.stock_status ? 'bg-success' : ''}" ${data.totalPrice == 0 || !data.stock_status ? `disabled style="cursor: not-allowed;"`: ''} data-value="cash_on_delivery">
-                        ${`Səbəti tamamla`}
-                    </button>
-                </div>
-            </div>
-            <div class="border p-md-4 cart-totals mt-3">
-                ${!data.stock_status ? `<p class="text-danger">* Stokda olmayan məhsullar var</p>`: ''}
-                <h4 class="mb-10">Kupon tətbiq et</h4>
-                <form  id="couponForm" class="mb-3">
-                    <div class="d-flex justify-content-between">
-                        <input class="font-medium mr-15 coupon" ${couponCode ? `value="${couponCode}"`: ''} name="coupon_code" placeholder="Kupon">
-                        ${coupon_is_applied ? `
-                        <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="notApplyCoupon()" type="button" style="width:265px;padding:0;" class="btn btn-danger"><i class="fi-rs-label mr-10"></i>Ləğv et</button>
-                        `:`
-                        <button ${data.totalPrice == 0 || !data.stock_status ? 'disabled' : ''} onclick="applyCoupon()" type="button" style="width:265px;padding:0;" class="btn btn-success"><i class="fi-rs-label mr-10"></i>Tətbiq et</button>
-                        `}
-                    </div>
-                    <div id="coupon_error" class="mt-3 text-danger"></div>
-                </form>
-            </div>
-
+                <div id="coupon_error" class="mt-3 text-danger"></div>
+            </form>
+        </div>
     `;
+
     saveDataToLocalStorage(data);
 
-    const coupon_error = document.getElementById('coupon_error')
+    const coupon_error = document.getElementById('coupon_error');
 
     if (data.error) {
         coupon_error.innerText = `* ${data.error}`;
-        localStorage.removeItem('coupon_code')
-    }else{
+        localStorage.removeItem('coupon_code');
+    } else {
         coupon_error.innerText = '';
     }
+
     const basketItemsBody = document.getElementById('basket-items-body');
     basketItemsBody.innerHTML = ''; // Önce mevcut içeriği temizle
-
-
 
     data.basketItems.forEach(item => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-        <td class="custome-checkbox pl-30">
-            <input checked class="form-check-input" type="checkbox" name="selected_items[]" id="selected_item${item.id}" value="${item.id}">
-            <label class="form-check-label" for="selected_item${item.id}"></label>
-        </td>
-        <td class="image product-thumbnail"><img src="${item.product.image_url}" alt="#"></td>
-        <td class="product-des product-name">
-            <h6 class="mb-5"><a class='product-name mb-10 text-heading' data-bs-toggle="modal" data-bs-target="#quickViewModal${item.product.id}">${item.product.title}</a></h6>
-            ${item.product.stock > 0 && item.product.stock < item.quantity ? '<span class="text-danger border-solid border-1 border-danger rounded p-1">Stokda kifayət qədər yoxdur</span>' :''}
-            ${item.product.stock == 0 ? '<span class="text-danger border-solid border-1 border-danger rounded p-1">Stokda yoxdur</span>' :''}
-        </td>
-        <td class="price" data-title="Qiymət">
-            <h4 class="text-body">₼ ${item.product.price}</h4>
-        </td>
-        ${item.product.stock > 0 ? `
-        <td class="text-center detail-info" data-title="Say">
-            <div class="detail-extralink mr-15">
-                <div class="detail-qty border radius">
-                    <a onclick="decrementQuantity(${ item.product.id })" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                    <span class="qty-val">${item.quantity}</span>
-                    ${item.product.stock > item.quantity ? `
-                    <a onclick="incrementQuantity(${ item.product.id })" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                    `: ''}
+            <td class="custome-checkbox pl-30">
+                <input checked class="form-check-input" type="checkbox" name="selected_items[]" id="selected_item${item.id}" value="${item.id}">
+                <label class="form-check-label" for="selected_item${item.id}"></label>
+            </td>
+            <td class="image product-thumbnail"><a href="${item.product.url}"><img src="${item.product.image_url}" alt="#"></a></td>
+            <td class="product-des product-name">
+                <h6 class="mb-5"><a class='product-name mb-10 text-heading' href="${item.product.url}">${item.product.title}</a></h6>
+                ${item.product.stock > 0 && item.product.stock < item.quantity ? `<span class="text-danger border-solid border-1 border-danger rounded p-1">${t.not_enough_stock}</span>` : ''}
+                ${item.product.stock == 0 ? `<span class="text-danger border-solid border-1 border-danger rounded p-1">${t.out_of_stock}</span>` : ''}
+            </td>
+            <td class="price" data-title="${t.price}">
+                <h4 class="text-body">₼ ${item.product.price}</h4>
+            </td>
+            ${item.product.stock > 0 ? `
+            <td class="text-center detail-info" data-title="Say">
+                <div class="detail-extralink mr-15">
+                    <div class="detail-qty border radius">
+                        <a onclick="decrementQuantity(${item.product.id})" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                        <span class="qty-val">${item.quantity}</span>
+                        ${item.product.stock > item.quantity ? `
+                        <a onclick="incrementQuantity(${item.product.id})" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                        ` : ''}
+                    </div>
                 </div>
-            </div>
-        </td>
-        <td class="price" data-title="Ümumi qiymət">
-            <h4 class="text-brand">₼ ${item.total_price}</h4>
-        </td>
-        ` : '<td></td><td></td>'}
-        <td class="action text-center" data-title="Remove">
-            <a href="#" class="text-body" onclick="removeFromBasket(${item.id})"><i class="fi-rs-trash"></i></a>
-        </td>
-    `;
+            </td>
+            <td class="price" data-title="${t.total_price_per_item}">
+                <h4 class="text-brand">₼ ${item.total_price}</h4>
+            </td>
+            ` : '<td></td><td></td>'}
+            <td class="action text-center" data-title="Remove">
+                <a href="#" class="text-body" onclick="removeFromBasket(${item.id})"><i class="fi-rs-trash"></i></a>
+            </td>
+        `;
         basketItemsBody.appendChild(tr);
         document.getElementById(`selected_item${item.id}`).addEventListener('change', function () {
             const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');

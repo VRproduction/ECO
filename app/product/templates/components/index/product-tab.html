@@ -30,7 +30,7 @@
                 <!--End product-grid-4-->
             </div>
             <!--En tab one-->
-            {% for category in categories %}
+            {% comment %} {% for category in categories %}
             {% if category.is_main_page %}
             <div class="tab-pane fade" id="tab-{{forloop.counter}}" role="tabpanel" aria-labelledby="tab-{{forloop.counter}}">
                 <div class="row product-grid-4">
@@ -45,7 +45,7 @@
                 <!--End product-grid-4-->
             </div>
             {% endif %}
-            {% endfor %}
+            {% endfor %} {% endcomment %}
           
         </div>
         <!--End tab-content-->

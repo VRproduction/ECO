@@ -9,16 +9,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-07 17:51+0400\n"
-"PO-Revision-Date: 2024-06-07 15:51+0400\n"
+"PO-Revision-Date: 2024-06-13 10:32+0400\n"
 "Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.10.0\n"
 
 #: account/models.py:27
@@ -43,11 +41,11 @@ msgstr "Адрес электронной почты подтвержден"
 
 #: account/models.py:52
 msgid "Yaradılma vaxtı"
-msgstr ""
+msgstr "Время создания"
 
 #: account/models.py:53
 msgid "Güncəllənmə vaxtı"
-msgstr ""
+msgstr "Время обновления"
 
 #: account/templates/login.html:16 account/templates/login.html:45
 #: account/templates/password_reset_complete.html:10
@@ -66,7 +64,8 @@ msgid "Qeydiyyatdan keç"
 msgstr "Зарегистрироваться"
 
 #: account/templates/login.html:22 product/templates/account.html:90
-#: product/templates/contact.html:49 templates/components/footer/footer.html:61
+#: product/templates/contact.html:49
+#: templates/components/footer/footer.html:61
 msgid "Email"
 msgstr "Адрес электронной почты"
 
@@ -123,8 +122,8 @@ msgstr "Запрос на сброс пароля отправлен"
 
 #: account/templates/password_reset_done.html:10
 msgid ""
-"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa "
-"e-poçt qutunuzu yoxlayın."
+"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa"
+" e-poçt qutunuzu yoxlayın."
 msgstr ""
 "Инструкции по сбросу пароля были отправлены на ваш адрес электронной почты. "
 "Пожалуйста, проверьте свой почтовый ящик."
@@ -151,7 +150,7 @@ msgstr "Проверьте свою электронную почту, чтоб�
 
 #: payment/templates/components/delivery/modal1.html:7
 msgid "Çatdırılma nöqtəsini seçin"
-msgstr ""
+msgstr "Выберите пункт доставки"
 
 #: payment/templates/components/delivery/modal1.html:16
 msgid "Əlaqə məlumatlarını daxil edin"
@@ -308,15 +307,15 @@ msgstr "Новый"
 
 #: product/models.py:169
 msgid "4-cü"
-msgstr ""
+msgstr "4-й"
 
 #: product/models.py:305
 msgid "Gözləmədə"
-msgstr ""
+msgstr "В Ожидании "
 
 #: product/models.py:306
 msgid "Hazırlandı"
-msgstr ""
+msgstr "Готово"
 
 #: product/models.py:307
 #, fuzzy
@@ -332,7 +331,7 @@ msgstr "Доставка"
 
 #: product/models.py:309
 msgid "Ləğv edilib"
-msgstr ""
+msgstr "Отменено"
 
 #: product/templates/account.html:15
 msgid "Sifarişlər"
@@ -454,14 +453,16 @@ msgstr "Доставка"
 msgid ""
 "- Növbəti səhifədə xəritədən sifarişin hara çatdırılacağını seçə bilərsiniz"
 msgstr ""
+"- На следующей странице вы можете выбрать, куда будет доставлен заказ с "
+"карты."
 
 #: product/templates/basket.html:103
 msgid "* Ofisdən al"
-msgstr ""
+msgstr "*Купить с офиса"
 
 #: product/templates/basket.html:104
 msgid "- Birbaşa ödəniş edib sifarişi ofisdən götürə bilərsiniz"
-msgstr ""
+msgstr "- Вы можете оплатить напрямую и забрать заказ из офиса"
 
 #: product/templates/basket.html:117
 #, fuzzy
@@ -471,7 +472,7 @@ msgstr "Доставка"
 
 #: product/templates/basket.html:120
 msgid "Ofisdən al"
-msgstr ""
+msgstr "Купить с офиса"
 
 #: product/templates/blog-detail.html:50
 msgid "Son bloqlar"
@@ -644,7 +645,8 @@ msgstr "Категории"
 msgid "Yeni məhsullar"
 msgstr "Новые продукты"
 
-#: product/templates/contact.html:31 templates/components/footer/footer.html:50
+#: product/templates/contact.html:31
+#: templates/components/footer/footer.html:50
 #: templates/components/header/header-bottom.html:84
 #: templates/components/header/mobile-header.html:40
 msgid "Əlaqə"
@@ -692,11 +694,11 @@ msgstr "Facebook"
 
 #: templates/components/footer/footer.html:36
 msgid "Youtube"
-msgstr "Youtube"
+msgstr "YouTube"
 
 #: templates/components/footer/footer.html:37
 msgid "Tiktok"
-msgstr "Tiktok"
+msgstr "TikTok"
 
 #: templates/components/footer/footer.html:43
 msgid "LİNKLƏR"

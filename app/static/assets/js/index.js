@@ -175,10 +175,9 @@ function fetchBasketItems(coupon_code) {
 
     // Construct the base URL (e.g., "http://localhost" or "https://xxx.com")
     const baseURL = `${protocol}//${hostname}${protocol === 'http:' ? `:${port}`: ''}`;
-    console.log(baseURL)
     const language = getCookie("django_language");
     const default_language = 'az';
-    fetch(`${baseURL}/${language == default_language ? "" : `${language}/` }get-basket-items/${coupon_code?`?coupon_code=${coupon_code}`:''}`)
+    fetch(`${baseURL}/${language == default_language || language == null ? "" : `${language}/` }get-basket-items/${coupon_code?`?coupon_code=${coupon_code}`:''}`)
         .then(response => response.json())
         .then(data => {
             updateNavbarBasket(data);

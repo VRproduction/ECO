@@ -23,7 +23,7 @@
     <div class="container">
         <div class="breadcrumb">
             <a href={% url "home" %} rel='nofollow'><i class="fi-rs-home mr-5"></i>{% trans "Ana səhifə" %}</a>
-            <span></span> <a href='{% url "shop" %}?category={{product.category.id}}'>{{product.category.title}}</a> <span></span> {{product.title}}
+            <span></span> <a href='{% url "shop" %}?category={{product.category.slug}}'>{{product.category.title}}</a> <span></span> {{product.title}}
         </div>
     </div>
 </div>

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+{% if seo.title %}
+<title>{{ seo.title }}</title>
+{% else %}
+<title>{{setting.site_title}}</title>
+{% endif %}
+{% endblock title %}
+
+{% block seo %}
+<meta name="description" content="{% if seo.description %}{{ seo.description }}{% endif %}">
+<meta name="keywords" content="{% if seo.keyword %}{{ seo.keyword }}{% endif %}">
+<meta property="og:title" content="{% if seo.title %}{{ seo.title }}{% endif %}" />
+<meta property="og:description" content="{% if seo.description %}{{ seo.description }}{% endif %}" />
+<meta property="og:image"
+    content="{% if about.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ about.image.url }}{% endif %}" />
+{% endblock seo%}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/vacancies.css' %}">
+{% endblock css %}
+
+{% block main %}
+<div class="container mb-80 mt-50 custom-blog-page vacancy-con">
+    <div class="vacancy-filters">
+        <div class="vac-filter">
+            <h5 class="vacancy-filter-head">Elanlar</h5>
+            {% for type in vacancy_types %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    {{type.vacancy_type}}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="vac-filter">
+            <h5 class="vacancy-filter-head" >Şöbələr</h5>
+            {% for department in departments %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    {{department.department_name}}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="vac-filter">
+            <h5 class="vacancy-filter-head">Məşğuliyyət növləri</h5>
+            {% for type in job_types %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    {{type.job_type}}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="vac-filter">
+            <h5 class="vacancy-filter-head">İş qrafiki</h5>
+            {% for hour in working_hours %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    {{hour}}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="vacancies">
+        {% for vacancy in vacancies %}
+        <div class="job-card">
+            <div class="vacancy-type-head">
+                <h2 class="vacancy-type">{{vacancy.vacancy_type}}</h2>
+            </div>
+            <div class="job-header">
+                <span class="job-type">{{vacancy.job_type}}</span>
+                <span class="job-type-department">{{vacancy.department}}</span>
+            </div>
+            <h5 class="vacancy-title">{{vacancy.vacancy_title}}</h5>
+            <p class="job-salary">{{vacancy.salary}} AZN</p>
+            <div class="job-info">
+                <span class="job-hour">{{vacancy.work_hour}}</span>
+                <div class="job-date-view">
+                    <span>{{vacancy.published_date}}</span>
+                    <span class="job-view-count">
+                        <i class="bi bi-eye"></i>
+                        {{vacancy.view_count}}
+                    </span>
+                </div>
+            </div>
+            <a href={{vacancy.get_absolute_url}} class="job-detail">Daha çox</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock main %}

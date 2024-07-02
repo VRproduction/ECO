@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+{% if seo.title %}
+<title>{{ seo.title }}</title>
+{% else %}
+<title>{{setting.site_title}}</title>
+{% endif %}
+{% endblock title %}
+
+{% block seo %}
+<meta name="description" content="{% if seo.description %}{{ seo.description }}{% endif %}">
+<meta name="keywords" content="{% if seo.keyword %}{{ seo.keyword }}{% endif %}">
+<meta property="og:title" content="{% if seo.title %}{{ seo.title }}{% endif %}" />
+<meta property="og:description" content="{% if seo.description %}{{ seo.description }}{% endif %}" />
+<meta property="og:image"
+    content="{% if about.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ about.image.url }}{% endif %}" />
+{% endblock seo%}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/vacancies.css' %}">
+{% endblock css %}
+
+{% block main %}
+<div class="container mb-80 mt-50">
+    <div class="vacancy">
+        <div class="vacancy-detail-header">
+            <h3>{{vacancy.vacancy_title}}</h3>
+            <div class="vacancy-deadline-date">Son müraciət tarixi: {{vacancy.deadline_date}}</div>
+        </div>
+        <div class="vacancy-content-area" >
+            <div class="vacancy-content">
+                {{vacancy.vacancy_content|safe}}
+            </div>
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action active">
+                  Ən son elanlar
+                </button>
+                <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
+                <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
+                <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
+                <button type="button" class="list-group-item list-group-item-action" disabled>Vestibulum at eros</button>
+              </div>
+        </div>
+
+    </div>
+</div>
+{% endblock main %}

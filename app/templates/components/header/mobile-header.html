@@ -37,6 +37,9 @@
                             <a {% if request.path == '/companies/' or request.path|slice:"3:" == '/companies/' %}class="mobile-active"{% endif %} href='{% url "companies" %}'>{% trans "Kampaniyalar" %}</a>
                         </li>
                         <li class="menu-item-has-children">
+                            <a {% if request.path == '/vacancies/' or request.path|slice:"3:" == '/vacancies/' %}class="mobile-active"{% endif %} href='{% url "vacancies" %}'>{% trans "Vakansiyalar" %}</a>
+                        </li>
+                        <li class="menu-item-has-children">
                             <a {% if request.path == '/contact/' or request.path|slice:"3:" == '/contact/' %}class="mobile-active"{% endif %} href='{% url "contact" %}'>{% trans "Əlaqə" %}</a>
                         </li>
                         <li class="menu-item-has-children">

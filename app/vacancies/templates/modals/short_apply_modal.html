@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load static %}
+
+<div class="modal fade" id="exampleModal-{{ vacancy.id }}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans 'CV yükləyin' %}</h5>
+                    <span style="color: green;">({% trans 'Ancaq pdf və docx' %})</span>
+                </div>
+                <button type="button" class="close" name="vacancy" value="{{ vacancy.id }}" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="vacancy-form-{{ vacancy.id }}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div id="alert-{{ vacancy.id }}">
+
+                    </div>
+                    <input type="file" name="CV">
+                    <input type="hidden" name="vacancy" value="{{ vacancy.id }}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">{% trans 'Ləğv et' %}</button>
+                    <button type="submit" class="btn btn-primary short-apply-send">{% trans 'Göndər' %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

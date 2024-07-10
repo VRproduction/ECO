@@ -1,0 +1,35 @@
+{% load i18n %}
+
+<div class="bg-light summary rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s">
+    <h4 class="mb-4">{% trans 'Xülasə' %}</h4>
+    <p><i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Əlavə edildi' %}: {{vacancy.created_date}}
+    </p>
+    {% if vacancy.vacancy_type %}
+    <p>
+        <i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Elanın növü' %}: {{vacancy.vacancy_type}}
+    </p>
+    {% endif %}
+    {% if vacancy.department %}
+    <p>
+        <i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Şöbə' %}: {{vacancy.department}}
+    </p>
+    {% endif %}
+    {% if vacancy.job_type %}
+    <p>
+        <i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Məşğuliyyət növü' %}: {{vacancy.job_type}}
+    </p>
+    {% endif %}
+    <p>
+        <i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Müraciətlərin sayı' %}:
+        {{vacancy.applications.count}}
+    </p>
+    {% if vacancy.work_hour %}
+    <p>
+        <i class="fa fa-angle-right text-primary me-2"></i>{% trans 'İş qrafiki' %}: {{vacancy.work_hour}}
+    </p>
+    {% endif %}
+    <p><i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Əmək haqqı' %}: {{vacancy.salary}} AZN</p>
+    <p><i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Baxış sayı' %}: {{vacancy.view_count}}</p>
+    <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Son müraciət' %}:
+        {{vacancy.published_date}}</p>
+</div>

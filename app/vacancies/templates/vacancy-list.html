@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+{% if seo.title %}
+<title>{{ seo.title }}</title>
+{% else %}
+<title>{{setting.site_title}}</title>
+{% endif %}
+{% endblock title %}
+
+{% block seo %}
+<meta name="description" content="{% if seo.description %}{{ seo.description }}{% endif %}">
+<meta name="keywords" content="{% if seo.keyword %}{{ seo.keyword }}{% endif %}">
+<meta property="og:title" content="{% if seo.title %}{{ seo.title }}{% endif %}" />
+<meta property="og:description" content="{% if seo.description %}{{ seo.description }}{% endif %}" />
+<meta property="og:image"
+    content="{% if about.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ about.image.url }}{% endif %}" />
+{% endblock seo %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/jobs.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock css %}
+
+{% block main %}
+<!-- Jobs Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
+            {% include 'partials/vacancy-filters.html' %}
+            <div class="tab-content custom-blog-page">
+                <div id="tab-1" class="tab-pane fade show p-0 active">
+                    <h6 class="mb-50"><span style="color: green;">{{vacancy_count}}</span> {% trans "elan göstərilir" %}
+                    </h6>
+                    {% for vacancy in vacancies %}
+                        {% include 'partials/vacancy-item.html' with vacancy=vacancy %}
+                    {% endfor %}
+                    {% include "partials/pagination.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Jobs End -->
+{% endblock main %}
+
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{% static 'assets/js/api/vacancies.js' %}" ></script>
+{% endblock %}

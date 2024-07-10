@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-09 12:54+0400\n"
+"PO-Revision-Date: 2024-07-09 12:22+0400\n"
+"Last-Translator:   <sebnemadil1999@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\static\assets\js\api\vacancies.js:25 .\static\assets\js\api\vacancy.js:24
+msgid "Müraciətiniz göndərildi"
+msgstr "Your application was sent"
+
+#: .\static\assets\js\api\vacancies.js:42 .\static\assets\js\api\vacancy.js:41
+msgid "Müraciət zamanı CV göndərmək mütləqdir!!!"
+msgstr "CV is mandatory!!!"
+
+#: .\static\assets\js\api\vacancies.js:49 .\static\assets\js\api\vacancy.js:48
+msgid "CV yalnız pdf və docx formatında göndərilə bilər!!!"
+msgstr "Only pdf and docx!!!"
+
+#: .\static\assets\js\api\vacancies.js:57 .\static\assets\js\api\vacancy.js:56
+msgid "Keçərli url daxil edin!!!"
+msgstr "Please, enter a valid url!!!"
+
+#: .\static\assets\js\api\vacancies.js:64 .\static\assets\js\api\vacancy.js:63
+msgid "Müraciətin göndərilməsində xəta oldu"
+msgstr "An error occured"
+
+#: .\static\assets\js\api\vacancies.js:86
+#: .\static\assets\js\api\vacancies.js:108
+msgid "Ləğv et"
+msgstr "Cancel"
+
+#: .\static\assets\js\api\vacancies.js:88
+#: .\static\assets\js\api\vacancies.js:109
+msgid "Göndər"
+msgstr "Send"

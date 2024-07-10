@@ -12,6 +12,7 @@ class HomePageSeo(models.Model):
         verbose_name = 'Home Page SEO'
         verbose_name_plural = 'Home Page SEO'
 
+
 class AboutPageSeo(models.Model):
     title = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField(null=True, blank=True)
@@ -23,6 +24,7 @@ class AboutPageSeo(models.Model):
     class Meta:
         verbose_name = 'About Page SEO'
         verbose_name_plural = 'About Page SEO'
+
 
 class ShopPageSeo(models.Model):
     title = models.CharField(null=True, blank=True, max_length=255)
@@ -36,6 +38,7 @@ class ShopPageSeo(models.Model):
         verbose_name = 'Shop Page SEO'
         verbose_name_plural = 'Shop Page SEO'
 
+
 class CompaniesPageSeo(models.Model):
     title = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField(null=True, blank=True)
@@ -47,6 +50,7 @@ class CompaniesPageSeo(models.Model):
     class Meta:
         verbose_name = 'Companies Page SEO'
         verbose_name_plural = 'Companies Page SEO'
+
 
 class ContactPageSeo(models.Model):
     title = models.CharField(null=True, blank=True, max_length=255)
@@ -71,3 +75,16 @@ class BlogPageSeo(models.Model):
     class Meta:
         verbose_name = 'Blog Page SEO'
         verbose_name_plural = 'Blog Page SEO'
+
+
+class VacancyPageSeo(models.Model):
+    title = models.CharField(null=True, blank=True, max_length=255)
+    description = models.TextField(null=True, blank=True)
+    keyword = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Vacancy Page SEO'
+        verbose_name_plural = 'Vacancy Page SEO'

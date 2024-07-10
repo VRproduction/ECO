@@ -1,0 +1,10 @@
+{% load i18n %}
+<div class="container-xxl bg-white p-0 px-lg-5">
+    <div class="container-xxl py-5 bg-dark page-header mb-5">
+        <div class="container my-5 pt-8 pb-8">
+            <h1 class="display-3 text-white mb-8 animated slideInDown vac-title capitalize">{{vacancy.vacancy_title}}</h1>
+            <p class="vacancy-deadline-date animated_date slideInUp w-70">{% trans 'Son müraciət tarixi' %}: {{vacancy.deadline_date}}
+            </p>
+        </div>
+    </div>
+</div>

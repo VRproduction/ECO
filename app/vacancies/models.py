@@ -1,10 +1,16 @@
+from typing import Collection, Iterable
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
-from django.core.validators import validate_email
 from django.utils.text import slugify
+from django.core.exceptions import ValidationError
+from django.core.validators import (
+    validate_email, 
+    FileExtensionValidator
+)
 
 from ckeditor_uploader.fields import RichTextUploadingField
+
 from vacancies.utils.manager import (
     PublishedVacancyManager
 )
@@ -25,7 +31,7 @@ class Base(models.Model):
     )
     published_at = models.DateTimeField(
         'Yayımlanma tarixi', 
-        default=timezone.now()
+        auto_now_add=True
     )
     status = models.CharField(
         max_length=2,
@@ -39,12 +45,12 @@ class Base(models.Model):
     @property
     def created_date(self):
         local_created_time = timezone.localtime(self.created_at)
-        return local_created_time.strftime('%d/%m/%Y, %H:%M')
+        return local_created_time.strftime('%d %b %Y')
     
     @property
     def published_date(self):
         local_published_time = timezone.localtime(self.published_at)
-        return local_published_time.strftime('%d.%m.%Y')
+        return local_published_time.strftime('%d %b %Y')
     
 
 class IPs(models.Model):
@@ -59,7 +65,13 @@ class IPs(models.Model):
     
 
 class CompanyDepartment(models.Model):
-    department_name = models.CharField('Şöbənin adı', max_length=200)
+    department_name = models.CharField('Şöbənin adı', max_length=200, unique=True)
+    slug=models.SlugField(
+        'Link adı',
+        null=True, blank=True,
+        help_text="Bu qismi boş buraxın. Avtomatik doldurulacaq.",
+        max_length=500    
+    )
 
     class Meta:
         verbose_name = 'Şöbə'
@@ -70,7 +82,13 @@ class CompanyDepartment(models.Model):
     
 
 class JobType(models.Model):
-    job_type = models.CharField('Məşğulluğun növü', max_length=200)
+    job_type = models.CharField('Məşğulluğun növü', max_length=200, unique=True)
+    slug=models.SlugField(
+        'Link adı',
+        null=True, blank=True,
+        help_text="Bu qismi boş buraxın. Avtomatik doldurulacaq.",
+        max_length=500    
+    )
 
     class Meta:
         verbose_name = 'Məşğulluq növü'
@@ -81,13 +99,12 @@ class JobType(models.Model):
 
 
 class WorkingHour(models.Model):
-    start_date = models.TimeField(
-        'İşin başlama saatı', 
-        default=timezone.now()
-    )
-    end_date = models.TimeField(
-        'İşin bitmə saatı', 
-        default=timezone.now()
+    work_hour = models.CharField('İş qrafiki', max_length=200, unique=True)
+    slug=models.SlugField(
+        'Link adı',
+        null=True, blank=True,
+        help_text="Bu qismi boş buraxın. Avtomatik doldurulacaq.",
+        max_length=500    
     )
 
     class Meta:
@@ -95,19 +112,17 @@ class WorkingHour(models.Model):
         verbose_name_plural = 'İş qrafikləri'
 
     def __str__(self) -> str:
-        return f'{self.start} - {self.end}'
-    
-    @property
-    def start(self):
-        return self.start_date.strftime('%H:%M')
-    
-    @property
-    def end(self):
-        return self.end_date.strftime('%H:%M')
+        return self.work_hour
     
 
 class VacancyType(models.Model):
-    vacancy_type = models.CharField('Elanın növü', max_length=200)
+    vacancy_type = models.CharField('Elanın növü', max_length=200, unique=True)
+    slug=models.SlugField(
+        'Link adı',
+        null=True, blank=True,
+        help_text="Bu qismi boş buraxın. Avtomatik doldurulacaq.",
+        max_length=500    
+    )
 
     class Meta:
         verbose_name = 'Elanın növü'
@@ -120,17 +135,16 @@ class VacancyType(models.Model):
 class Vacancy(Base):
     vacancy_title = models.CharField('Vakant yerin adı', max_length=200)
     vacancy_content = RichTextUploadingField(
-        'Vakansiyanın təsviri',
-        null=True,
-        blank=True
+        'Vakansiyanın təsviri'
     )
     salary = models.IntegerField(
         'Əmək haqqı', 
-        default=345
+        help_text='Məbləği manatla daxil edin.',
+        default='345',
     )
     deadline = models.DateTimeField(
         'Son müraciət tarixi', 
-        default=timezone.now()
+        default=timezone.now
     )
     vacancy_type = models.ForeignKey(
         VacancyType,
@@ -195,40 +209,81 @@ class Vacancy(Base):
         return self.viewed_ips.count() if self.viewed_ips else 0
     
     @property
+    def application_count(self):
+        return self.applications.count() if self.applications else 0
+    
+    @property
     def deadline_date(self):
         local_deadline = timezone.localtime(self.deadline)
-        return local_deadline.strftime('%d %b %Y')
+        return local_deadline.strftime('%d %b %Y, %H:%M')
     
     def get_absolute_url(self):
         return reverse('vacancy-detail', args=[self.slug])
     
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug=slugify(self.vacancy_title)
+        status = self.status
+        if status != self.Status.PUBLİSHED:
+            self.published_at = timezone.now()
         super().save(*args, **kwargs)
     
 
-# class VacancyApplication(Base):
-#     created_at = models.DateTimeField(
-#         'Müraciətin edilmə tarixi', 
-#         auto_now_add=True
-#     )
-#     vacancy = models.ForeignKey(
-#         Vacancy,
-#         on_delete=models.CASCADE,
-#         related_name='applications',
-#         verbose_name='Elan'
-#     )
-#     full_name = models.CharField(max_length=100)
-#     email = models.EmailField(validators=[validate_email])
-#     CV = models.FileField(
-#         upload_to='vacancy-applications'
-#     )
+class VacancyApplication(models.Model):
+    created_at = models.DateTimeField(
+        'Müraciətin edilmə tarixi', 
+        auto_now_add=True
+    )
+    vacancy = models.ForeignKey(
+        Vacancy,
+        on_delete=models.CASCADE,
+        related_name='applications',
+        verbose_name='Elan'
+    )
+    full_name = models.CharField(
+        'Ad, soyad',
+        max_length=100,
+        null=True, blank=True
+    )
+    email = models.EmailField(
+        'Email ünvanı',
+        validators=[validate_email],
+        null=True, blank=True
+        )
+    CV = models.FileField(
+        upload_to='vacancy-applications',
+        validators=[FileExtensionValidator(['pdf', 'docx'])]
+    )
+    coverletter = models.TextField(
+        'Motivasiya məktubu',
+        null=True, blank=True
+    )
+    prtfolio_website = models.URLField(
+        'Portfolio',
+        null=True, blank=True
+    )
 
-#     class Meta:
-#         verbose_name = 'Müraciət'
-#         verbose_name_plural = 'Mwraciətlər'
+    class Meta:
+        verbose_name = 'Müraciət'
+        verbose_name_plural = 'Müraciətlər'
 
-#     def __str__(self) -> str:
-#         return f'Müraciət => {self.vacancy} '
-
+    def __str__(self) -> str:
+        return f'NO - {self.pk}{self.vacancy.pk}{self.created_date} müraciət'
+    
+    @property
+    def apply_date(self):
+        local_created_date = timezone.localtime(self.created_at)
+        return local_created_date.strftime('%d %b %Y, %H:%M')
+    
+    @property
+    def created_date(self):
+        local_created_time = timezone.localtime(self.created_at)
+        return local_created_time.strftime('%d%m%Y')
+    
+    def clean(self):
+        super().clean()
+        current_time = timezone.now()
+        if hasattr(self, 'vacancy'):
+            if self.vacancy.deadline < current_time:
+                raise ValidationError('Müraciətin vaxtı bitib')
+        else:
+            raise ValidationError('Bu sahə tələb edilir')
+        return super().clean()

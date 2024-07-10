@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load static %}
+
+<form method="post" id="VacancyForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row g-3">
+        <div id="alert" class="mt-40">
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="text" name="full_name" class="form-control" placeholder="{% trans 'Ad, Soyad' %}">
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="email" name="email" class="form-control" placeholder="Email">
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="text" name="prtfolio_website" class="form-control" placeholder="{% trans 'Portfolio linki' %}">
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="file" name="CV" class="form-control bg-white">
+            <input type="hidden" name="vacancy" value="{{ vacancy.id }}">
+        </div>
+        <div class="col-12">
+            <textarea class="form-control coverletter" name="coverletter" rows="5" cols="20"
+                placeholder="{% trans 'Motivasiya məktubu' %}"></textarea>
+        </div>
+        <div class="col-12 mt-50">
+            <button class="btn btn-primary w-60 vacancy-send-btn" type="submit">{% trans 'Göndər' %}</button>
+        </div>
+    </div>
+</form>
+
+{% block js %}
+<script src="{% static 'assets/js/api/vacancy.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load tz %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+{% if seo.title %}
+<title>{{ seo.title }}</title>
+{% else %}
+<title>{{setting.site_title}}</title>
+{% endif %}
+{% endblock title %}
+
+{% block seo %}
+<meta name="description" content="{% if seo.description %}{{ seo.description }}{% endif %}">
+<meta name="keywords" content="{% if seo.keyword %}{{ seo.keyword }}{% endif %}">
+<meta property="og:title" content="{% if seo.title %}{{ seo.title }}{% endif %}" />
+<meta property="og:description" content="{% if seo.description %}{{ seo.description }}{% endif %}" />
+<meta property="og:image"
+    content="{% if about.image %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ about.image.url }}{% endif %}" />
+{% endblock seo%}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/jobs.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+{% endblock css %}
+
+{% block main %}
+
+<!-- Header Start -->
+ {% include 'partials/vacancy-item-header.html' with vacancy=vacancy %}
+<!-- Header End -->
+
+<!-- Job detail start -->
+<div class="container-xxl py-5 px-lg-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row gy-5 gx-4">
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center mb-5">
+                    <div class="text-start mb-15">
+                        <h3 class="mb-3">{% trans 'Ümumi məlumat' %}</h3>
+                        {% if vacancy.department %}
+                        <span class="text-truncate me-3">
+                            <i class="fa-solid fa-puzzle-piece text-primary me-2"></i>
+                            {{vacancy.department}}
+                        </span>
+                        {% endif %}
+                        {% if vacancy.work_hour %}
+                        <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>
+                            {{vacancy.work_hour}}
+                        </span>
+                        {% endif %}
+                        <span class="text-truncate me-0"><i
+                                class="far fa-money-bill-alt text-primary me-2"></i>{{vacancy.salary}} AZN
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="vacancy-content">
+                        {{vacancy.vacancy_content|safe}}
+                    </div>
+                </div>
+                {% if vacancy.deadline > timezone_now %}
+                <div class="">
+                    <h4 class="mt-50">{% trans 'Müraciət et' %}</h4>
+                    {% include 'partials/vacancy-form.html' with vacancy=vacancy %}
+                </div>
+                {% else %}
+                <h5 class="mt-50 deadline_end">{% trans 'Müraciətin vaxtı bitib!!!' %}</h5>
+                {% endif %}
+            </div>
+            <div class="col-lg-4">
+                {% include 'partials/vacancy-summary.html' with vacancy=vacancy  %}
+                {% include 'partials/last-vacancies.html' with vacancy=vacancy %}
+            </div>
+        </div>
+    </div>
+    <!-- job detail end -->
+
+    {% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{% static 'assets/js/api/vacancy.js' %}"></script>
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            effect: "cube",
+            grabCursor: true,
+            cubeEffect: {
+                shadow: true,
+                slideShadows: true,
+                shadowOffset: 20,
+                shadowScale: 0.94,
+            },
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            }
+        });
+    </script>
+    {% endblock %}
+
+    {% endblock %}

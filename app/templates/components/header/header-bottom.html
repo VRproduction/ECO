@@ -81,6 +81,9 @@
                                 <a {% if request.path == '/companies/' or request.path|slice:"3:" == '/companies/' %}class="active"{% endif %} href='{% url "companies" %}'>{% trans "Kampaniyalar" %}</a>
                             </li>
                             <li>
+                                <a {% if request.path == '/vacancies/' or request.path|slice:"3:" == '/vacancies/' %}class="active"{% endif %} href='{% url "vacancies" %}'>{% trans 'Vakansiyalar' %}</a>
+                            </li>
+                            <li>
                                 <a {% if request.path == '/contact/' or request.path|slice:"3:" == '/contact/' %}class="active"{% endif %} href='{% url "contact" %}'>{% trans "Əlaqə" %}</a>
                             </li>
                         </ul>

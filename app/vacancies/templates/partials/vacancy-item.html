@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load static %}
+<div class="job-item p-4 mb-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-md-8 d-flex align-items-center"
+            onclick="window.location.href='{{ vacancy.get_absolute_url }}'">
+            <div class="text-start ps-4">
+                <h5 class="mb-3 capitalize">{{vacancy.vacancy_title}}</h5>
+                {% if vacancy.department %}
+                <span class="text-truncate me-3">
+                    <i class="fa-solid fa-puzzle-piece text-primary me-2"></i>{{vacancy.department}}
+                </span>
+                {% endif %}
+                {% if vacancy.work_hour %}
+                <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>
+                    {{vacancy.work_hour}}
+                </span>
+                {% endif %}
+                <span class="text-truncate me-0"><i
+                        class="far fa-money-bill-alt text-primary me-2"></i>{{vacancy.salary}} AZN
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-end align-items-md-end justify-content-center">
+            <div class="d-flex mb-3">
+                <a class="btn btn-square me-3">
+                    <i class="fa-regular fa-eye text-primary">
+                        <span>
+                            {{vacancy.view_count}}
+                        </span>
+                    </i>
+                </a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal-{{vacancy.id}}">
+                    {% trans "Qısa müraciət" %}
+                </button>
+                {% include 'modals/short_apply_modal.html' with vacancy=vacancy %}
+            </div>
+            <small class="text-truncate">
+                {% trans 'Son müraciət' %}: {{vacancy.deadline_date}}
+            </small>
+        </div>
+    </div>
+</div>
+{% block js %}
+<script src="{% static 'assets/js/api/vacancies.js' %}"></script>
+{% endblock %}

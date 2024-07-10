@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load i18n %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans 'Yeni vakansiya müraciəti' %}</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #777;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    {% autoescape off %}
+
+    <div class="container">
+        <h2>{% trans 'Yeni vakansiya müraciəti' %}</h2>
+
+        <div class="info">
+            <p><strong>{% trans 'Ümumi məlumat' %}</strong></p>
+            <p><strong>{% trans 'Vakansiya' %}:</strong> {{ vacancy_application.vacancy }}</p>
+
+            {% if vacancy_application.full_name %}
+            <p><strong>{% trans 'Ad, soyad' %}:</strong> {{ vacancy_application.full_name }}</p>
+            {% endif %}
+
+            {% if vacancy_application.email %}
+            <p><strong>Email:</strong> {{ vacancy_application.email }}</p>
+            {% endif %}
+
+            {% if vacancy_application.CV %}
+            <p><strong>CV:</strong> {{ vacancy_application.CV }}</p>
+            {% endif %}
+
+            {% if vacancy_application.portfolio_website %}
+            <p><strong>Portfolio:</strong> {{ vacancy_application.portfolio_website }}</p>
+            {% endif %}
+        </div>
+
+        <p>{% trans 'Admin panelə keçid' %}:</p>
+        <p><a style="color: #fff;" href="http://{{ domain }}{% url 'admin:index' %}" class="btn btn-primary">{% trans 'Admin Panel' %}</a></p>
+
+        <div class="footer">
+            <p>{% trans 'This email was sent automatically. Please do not reply.' %}</p>
+        </div>
+    </div>
+
+    {% endautoescape %}
+</body>
+
+</html>

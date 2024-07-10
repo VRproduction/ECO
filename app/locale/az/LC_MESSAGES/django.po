@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-25 12:24+0400\n"
+"POT-Creation-Date: 2024-07-09 11:47+0400\n"
 "PO-Revision-Date: 2024-06-25 12:25+0400\n"
 "Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,750 +19,897 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.10.0\n"
 
-#: account/models.py:27
+#: .\account\models.py:27
 msgid "The Email must be set"
 msgstr ""
 
-#: account/models.py:43
+#: .\account\models.py:43
 msgid "Superuser must have is_staff=True."
 msgstr ""
 
-#: account/models.py:45
+#: .\account\models.py:45
 msgid "Superuser must have is_superuser=True."
 msgstr ""
 
-#: account/models.py:50
+#: .\account\models.py:50
 msgid "email address"
 msgstr ""
 
-#: account/models.py:51
+#: .\account\models.py:51
 msgid "email verified"
 msgstr ""
 
-#: account/models.py:52
+#: .\account\models.py:52
 msgid "Yaradılma vaxtı"
 msgstr ""
 
-#: account/models.py:53
+#: .\account\models.py:53
 msgid "Güncəllənmə vaxtı"
 msgstr ""
 
-#: account/templates/login.html:16 account/templates/login.html:45
-#: account/templates/password_reset_complete.html:10
-#: account/templates/register.html:14
-#: templates/components/header/header-middle.html:61
+#: .\account\templates\login.html:16 .\account\templates\login.html:45
+#: .\account\templates\password_reset_complete.html:10
+#: .\account\templates\register.html:14
+#: .\templates\components\header\header-middle.html:61
 msgid "Daxil ol"
 msgstr ""
 
-#: account/templates/login.html:17
+#: .\account\templates\login.html:17
 msgid "Hesabın yoxdur?"
 msgstr ""
 
-#: account/templates/login.html:17 account/templates/register.html:51
-#: templates/components/header/header-middle.html:64
+#: .\account\templates\login.html:17 .\account\templates\register.html:51
+#: .\templates\components\header\header-middle.html:64
 msgid "Qeydiyyatdan keç"
 msgstr ""
 
-#: account/templates/login.html:22 product/templates/account.html:90
-#: product/templates/contact.html:49
-#: templates/components/footer/footer.html:61
+#: .\account\templates\login.html:22 .\product\templates\account.html:90
+#: .\product\templates\contact.html:49
+#: .\templates\components\footer\footer.html:61
 msgid "Email"
 msgstr ""
 
-#: account/templates/login.html:29 account/templates/register.html:39
+#: .\account\templates\login.html:29 .\account\templates\register.html:39
 msgid "Parol"
 msgstr ""
 
-#: account/templates/login.html:39 product/templates/account.html:94
-#: product/templates/account.html:120
+#: .\account\templates\login.html:39 .\product\templates\account.html:94
+#: .\product\templates\account.html:120
 msgid "Yadda saxla"
 msgstr ""
 
-#: account/templates/login.html:42
+#: .\account\templates\login.html:42
 msgid "Parolu unutmusan?"
 msgstr ""
 
-#: account/templates/password_reset.html:14
+#: .\account\templates\password_reset.html:14
 msgid "Parolunuzu Sıfırlayın"
 msgstr ""
 
-#: account/templates/password_reset.html:19
+#: .\account\templates\password_reset.html:19
 msgid "E-mail Adresi"
 msgstr ""
 
-#: account/templates/password_reset.html:22
-#: account/templates/password_reset_confirm.html:38
+#: .\account\templates\password_reset.html:22
+#: .\account\templates\password_reset_confirm.html:38
 msgid "Sıfırla"
 msgstr ""
 
-#: account/templates/password_reset_complete.html:9
+#: .\account\templates\password_reset_complete.html:9
 msgid "Parol Sıfırlama Tamamlandı"
 msgstr ""
 
-#: account/templates/password_reset_complete.html:10
+#: .\account\templates\password_reset_complete.html:10
 msgid "Parolunuz uğurla sıfırlandı. Yeni parolunuzla daxil ola bilərsiniz."
 msgstr ""
 
-#: account/templates/password_reset_confirm.html:13
+#: .\account\templates\password_reset_confirm.html:13
 msgid "Parol Sıfırlama"
 msgstr ""
 
-#: account/templates/password_reset_confirm.html:20
+#: .\account\templates\password_reset_confirm.html:20
 msgid "Yeni Parol"
 msgstr ""
 
-#: account/templates/password_reset_confirm.html:29
+#: .\account\templates\password_reset_confirm.html:29
 msgid "Yeni Parol Təkrar Daxil edin"
 msgstr ""
 
-#: account/templates/password_reset_done.html:9
+#: .\account\templates\password_reset_done.html:9
 msgid "Parol Sıfırlama Sorğusu Göndərilib"
 msgstr ""
 
-#: account/templates/password_reset_done.html:10
+#: .\account\templates\password_reset_done.html:10
 msgid ""
-"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa"
-" e-poçt qutunuzu yoxlayın."
+"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa "
+"e-poçt qutunuzu yoxlayın."
 msgstr ""
 
-#: account/templates/register.html:13
+#: .\account\templates\register.html:13
 msgid "Qeydiyyat"
 msgstr ""
 
-#: account/templates/register.html:14
+#: .\account\templates\register.html:14
 msgid "Hesabın var?"
 msgstr ""
 
-#: account/templates/register.html:45
+#: .\account\templates\register.html:45
 msgid "Parol təkrar"
 msgstr ""
 
-#: account/templates/register_success.html:9
+#: .\account\templates\register_success.html:9
 msgid "Qeydiyyat Uğurla Tamamlandı"
 msgstr ""
 
-#: account/templates/register_success.html:10
+#: .\account\templates\register_success.html:10
 msgid "Hesabınızı aktivləşdirmək üçün e-poçtunuzu yoxlayın."
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:7
+#: .\payment\templates\components\delivery\modal1.html:7
 msgid "Çatdırılma nöqtəsini seçin"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:16
+#: .\payment\templates\components\delivery\modal1.html:16
 msgid "Əlaqə məlumatlarını daxil edin"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:30
+#: .\payment\templates\components\delivery\modal1.html:30
 msgid "Çatdırılma məlumatları"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:35
+#: .\payment\templates\components\delivery\modal1.html:35
 msgid "Hara çatdırılacaq?"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:55
+#: .\payment\templates\components\delivery\modal1.html:55
 msgid "Yeni address əlavə edin"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:59
-#: payment/templates/components/delivery/modal1.html:96
+#: .\payment\templates\components\delivery\modal1.html:59
+#: .\payment\templates\components\delivery\modal1.html:96
 msgid "Təsdiq edin"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:74
+#: .\payment\templates\components\delivery\modal1.html:74
 msgid "Əlaqə məlumatları"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:79
+#: .\payment\templates\components\delivery\modal1.html:79
 msgid "Ad soyad"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:81
-#: product/templates/contact.html:42
+#: .\payment\templates\components\delivery\modal1.html:81
+#: .\product\templates\contact.html:42
 msgid "Ad Soyad"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:84
-#: product/templates/contact.html:56
+#: .\payment\templates\components\delivery\modal1.html:84
+#: .\product\templates\contact.html:56
 msgid "Nömrə"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:89
+#: .\payment\templates\components\delivery\modal1.html:89
 msgid "Çatdırılma üçün ətraflı məlumat"
 msgstr ""
 
-#: payment/templates/components/delivery/modal1.html:91
+#: .\payment\templates\components\delivery\modal1.html:91
 msgid "Mərtəbə, blok,  mənzil"
 msgstr ""
 
-#: payment/templates/components/delivery/modal2.html:12
+#: .\payment\templates\components\delivery\modal2.html:12
 msgid "Yeni adress əlavə edin"
 msgstr ""
 
-#: payment/templates/components/delivery/modal2.html:26
+#: .\payment\templates\components\delivery\modal2.html:26
 msgid "Xəritədə seçin"
 msgstr ""
 
-#: payment/templates/components/delivery/modal2.html:28
+#: .\payment\templates\components\delivery\modal2.html:28
 msgid "Küçə adı və nömrəsi"
 msgstr ""
 
-#: payment/templates/components/delivery/modal2.html:34
+#: .\payment\templates\components\delivery\modal2.html:34
 msgid "Davam edin"
 msgstr ""
 
-#: payment/templates/components/delivery/modal3.html:9
+#: .\payment\templates\components\delivery\modal3.html:9
 msgid "Adress seçin"
 msgstr ""
 
-#: payment/templates/components/delivery/modal3.html:23
+#: .\payment\templates\components\delivery\modal3.html:23
 msgid "Əlavə edin"
 msgstr ""
 
-#: payment/templates/delivery.html:68
+#: .\payment\templates\delivery.html:68
 msgid "Çatdırılma metodu, vaxt və əlaqə məlumatları"
 msgstr ""
 
-#: payment/templates/delivery.html:71
+#: .\payment\templates\delivery.html:71
 msgid "Seçilmiş məhsullar"
 msgstr ""
 
-#: payment/templates/delivery.html:94 product/templates/basket.html:35
-#: templates/components/header/basket.html:9
+#: .\payment\templates\delivery.html:94 .\product\templates\basket.html:35
+#: .\templates\components\header\basket.html:9
 msgid "Ümumi qiymət"
 msgstr ""
 
-#: payment/templates/delivery.html:107 product/models.py:168
-#: product/templates/components/product/modal.html:36
-#: product/templates/product-detail.html:60
+#: .\payment\templates\delivery.html:107 .\product\models.py:168
+#: .\product\templates\components\product\modal.html:36
+#: .\product\templates\product-detail.html:60
 msgid "Endirim"
 msgstr ""
 
-#: payment/templates/delivery.html:120
+#: .\payment\templates\delivery.html:120
 msgid "Çatdırılma"
 msgstr ""
 
-#: payment/templates/delivery.html:136
+#: .\payment\templates\delivery.html:136
 msgid "Yekun qiymət"
 msgstr ""
 
-#: payment/templates/delivery.html:153 payment/templates/delivery.html:160
-#: templates/components/header/basket.html:13
+#: .\payment\templates\delivery.html:153 .\payment\templates\delivery.html:160
+#: .\templates\components\header\basket.html:13
 msgid "Tamamla"
 msgstr ""
 
-#: payment/templates/delivery.html:155 payment/templates/delivery.html:162
+#: .\payment\templates\delivery.html:155 .\payment\templates\delivery.html:162
 msgid "Düzgün address seçin!"
 msgstr ""
 
-#: payment/templates/delivery.html:156 payment/templates/delivery.html:163
+#: .\payment\templates\delivery.html:156 .\payment\templates\delivery.html:163
 msgid "Əlaqə məlumatlarını daxil edin!"
 msgstr ""
 
-#: payment/templates/delivery.html:165
+#: .\payment\templates\delivery.html:165
 msgid "Çatdırılma iş saatlarında mümkündür"
 msgstr ""
 
-#: payment/templates/failed.html:18
+#: .\payment\templates\failed.html:18
 msgid "Ödəniş xətası!"
 msgstr ""
 
-#: payment/templates/failed.html:19
+#: .\payment\templates\failed.html:19
 msgid "Ödəniş zamanı xəta baş verdi."
 msgstr ""
 
-#: payment/templates/failed.html:21
+#: .\payment\templates\failed.html:21
 msgid "Təkrar yoxlayın"
 msgstr ""
 
-#: payment/templates/success.html:18
+#: .\payment\templates\success.html:18
 msgid "Uğurlu ödəniş!"
 msgstr ""
 
-#: payment/templates/success.html:19
+#: .\payment\templates\success.html:19
 msgid "Ödəniş uğurla tamamlandı. Təşəkkürlər!"
 msgstr ""
 
-#: payment/templates/success.html:22
+#: .\payment\templates\success.html:22
 msgid "Sifarişi buradan izləyə bilərsiniz."
 msgstr ""
 
-#: product/models.py:166
-#: product/templates/components/product/product-item.html:19
+#: .\product\models.py:166
+#: .\product\templates\components\product\product-item.html:19
 msgid "Ən çox satılan"
 msgstr ""
 
-#: product/models.py:167
-#: product/templates/components/product/product-item.html:21
-#: product/templates/components/shop/filter.html:33
-#: product/templates/components/shop/filter.html:38
+#: .\product\models.py:167
+#: .\product\templates\components\product\product-item.html:21
+#: .\product\templates\components\shop\filter.html:33
+#: .\product\templates\components\shop\filter.html:38
 msgid "Yeni"
 msgstr ""
 
-#: product/models.py:169
+#: .\product\models.py:169
 msgid "4-cü"
 msgstr ""
 
-#: product/models.py:305
+#: .\product\models.py:305
 msgid "Gözləmədə"
 msgstr ""
 
-#: product/models.py:306
+#: .\product\models.py:306
 msgid "Hazırlandı"
 msgstr ""
 
-#: product/models.py:307
+#: .\product\models.py:307
 msgid "Göndərilib"
 msgstr ""
 
-#: product/models.py:308
+#: .\product\models.py:308
 msgid "Çatdırılıb"
 msgstr ""
 
-#: product/models.py:309
+#: .\product\models.py:309
 msgid "Ləğv edilib"
 msgstr ""
 
-#: product/templates/account.html:15
+#: .\product\templates\account.html:15
 msgid "Sifarişlər"
 msgstr ""
 
-#: product/templates/account.html:18
+#: .\product\templates\account.html:18
 msgid "Hesab məlumatları"
 msgstr ""
 
-#: product/templates/account.html:21
+#: .\product\templates\account.html:21
 msgid "Parolu yenilə"
 msgstr ""
 
-#: product/templates/account.html:24
-#: templates/components/header/header-middle.html:55
+#: .\product\templates\account.html:24
+#: .\templates\components\header\header-middle.html:55
 msgid "Çıxış"
 msgstr ""
 
-#: product/templates/account.html:41
+#: .\product\templates\account.html:41
 msgid "Sifarişləriniz"
 msgstr ""
 
-#: product/templates/account.html:48
+#: .\product\templates\account.html:48
 msgid "Sifariş"
 msgstr ""
 
-#: product/templates/account.html:49
+#: .\product\templates\account.html:49
 msgid "Tarix"
 msgstr ""
 
-#: product/templates/account.html:50
+#: .\product\templates\account.html:50
 msgid "Status"
 msgstr ""
 
-#: product/templates/account.html:51 product/templates/basket.html:33
+#: .\product\templates\account.html:51 .\product\templates\basket.html:33
 msgid "Qiymət"
 msgstr ""
 
-#: product/templates/account.html:52
+#: .\product\templates\account.html:52
 msgid "Keçidlər"
 msgstr ""
 
-#: product/templates/account.html:61
+#: .\product\templates\account.html:61
 msgid "məhsul"
 msgstr ""
 
-#: product/templates/account.html:64
+#: .\product\templates\account.html:64
 msgid "Sifarişi izlə"
 msgstr ""
 
-#: product/templates/account.html:82
+#: .\product\templates\account.html:82
 msgid "Ad"
 msgstr ""
 
-#: product/templates/account.html:86
+#: .\product\templates\account.html:86
 msgid "Soyad"
 msgstr ""
 
-#: product/templates/account.html:108
+#: .\product\templates\account.html:108
 msgid "Hazırki parol"
 msgstr ""
 
-#: product/templates/account.html:112
+#: .\product\templates\account.html:112
 msgid "Yeni parol"
 msgstr ""
 
-#: product/templates/account.html:116
+#: .\product\templates\account.html:116
 msgid "Parolu təkrarla"
 msgstr ""
 
-#: product/templates/basket.html:15
-#: templates/components/header/fixed-mobile-header.html:33
-#: templates/components/header/header-middle.html:40
+#: .\product\templates\basket.html:15
+#: .\templates\components\header\fixed-mobile-header.html:33
+#: .\templates\components\header\header-middle.html:40
 msgid "Səbət"
 msgstr ""
 
-#: product/templates/basket.html:17
+#: .\product\templates\basket.html:17
 msgid "Səbətdə"
 msgstr ""
 
-#: product/templates/basket.html:17
+#: .\product\templates\basket.html:17
 msgid "məhsul var"
 msgstr ""
 
-#: product/templates/basket.html:18
+#: .\product\templates\basket.html:18
 msgid "Səbəti təmizlə"
 msgstr ""
 
-#: product/templates/basket.html:32
-#: product/templates/components/index/partners.html:59
+#: .\product\templates\basket.html:32
+#: .\product\templates\components\index\partners.html:59
 msgid "Məhsul"
 msgstr ""
 
-#: product/templates/basket.html:34
+#: .\product\templates\basket.html:34
 msgid "Say"
 msgstr ""
 
-#: product/templates/basket.html:36
+#: .\product\templates\basket.html:36
 msgid "Sil"
 msgstr ""
 
-#: product/templates/basket.html:51 product/templates/basket.html:63
+#: .\product\templates\basket.html:51 .\product\templates\basket.html:63
 msgid "AZN"
 msgstr ""
 
-#: product/templates/basket.html:95
+#: .\product\templates\basket.html:95
 msgid "Make a payment"
 msgstr "Ödəniş etmək"
 
-#: product/templates/basket.html:100
+#: .\product\templates\basket.html:101
 msgid "* Delivery"
 msgstr "* Kuryer ilə çatdırılma"
 
-#: product/templates/basket.html:101
+#: .\product\templates\basket.html:102
 msgid ""
 "- Növbəti səhifədə xəritədən sifarişin hara çatdırılacağını seçə bilərsiniz"
 msgstr ""
 
-#: product/templates/basket.html:103
+#: .\product\templates\basket.html:104
 msgid "* Ofisdən al"
 msgstr ""
 
-#: product/templates/basket.html:104
+#: .\product\templates\basket.html:105
 msgid "- Birbaşa ödəniş edib sifarişi ofisdən götürə bilərsiniz"
 msgstr ""
 
-#: product/templates/basket.html:117
+#: .\product\templates\basket.html:119
 msgid "Delivery"
 msgstr "Kuryer ilə çatdırılma"
 
-#: product/templates/basket.html:120
+#: .\product\templates\basket.html:123
 msgid "Ofisdən al"
 msgstr ""
 
-#: product/templates/blog-detail.html:50
+#: .\product\templates\blog-detail.html:50
 msgid "Son bloqlar"
 msgstr ""
 
-#: product/templates/blogs.html:41
-#: product/templates/components/index/blog.html:31
-#: templates/components/header/header-bottom.html:61
+#: .\product\templates\blogs.html:41
+#: .\product\templates\components\index\blog.html:31
+#: .\templates\components\header\header-bottom.html:61
 msgid "Daha çox"
 msgstr ""
 
-#: product/templates/components/campany/campany-item.html:28
+#: .\product\templates\components\campany\campany-item.html:28
 msgid "Seç"
 msgstr ""
 
-#: product/templates/components/index/about.html:11
+#: .\product\templates\components\index\about.html:11
 msgid "daha çox"
 msgstr ""
 
-#: product/templates/components/index/blog.html:8
+#: .\product\templates\components\index\blog.html:8
 msgid "Bloqlar"
 msgstr ""
 
-#: product/templates/components/index/category-banner.html:13
-#: product/templates/components/index/home-slider.html:15
-#: product/templates/components/index/home-slider.html:36
+#: .\product\templates\components\index\category-banner.html:13
+#: .\product\templates\components\index\home-slider.html:15
+#: .\product\templates\components\index\home-slider.html:36
 msgid "Alış-verişə başla"
 msgstr ""
 
-#: product/templates/components/index/companies.html:6
-#: product/templates/components/shop/companies.html:6
-#: templates/components/footer/footer.html:49
-#: templates/components/header/header-bottom.html:81
-#: templates/components/header/mobile-header.html:37
+#: .\product\templates\components\index\companies.html:6
+#: .\product\templates\components\shop\companies.html:6
+#: .\templates\components\footer\footer.html:49
+#: .\templates\components\header\header-bottom.html:81
+#: .\templates\components\header\mobile-header.html:37
 msgid "Kampaniyalar"
 msgstr ""
 
-#: product/templates/components/index/companies.html:8
-#: product/templates/components/shop/companies.html:8
+#: .\product\templates\components\index\companies.html:8
+#: .\product\templates\components\shop\companies.html:8
 msgid "Hamısı"
 msgstr ""
 
-#: product/templates/components/index/faq.html:7
+#: .\product\templates\components\index\faq.html:7
 msgid "Tez-tez verilən suallar"
 msgstr ""
 
-#: product/templates/components/index/filtering-section.html:6
-#: product/templates/components/shop/filter.html:33
+#: .\product\templates\components\index\filtering-section.html:6
+#: .\product\templates\components\shop\filter.html:33
 msgid "Ən çox satılanlar"
 msgstr ""
 
-#: product/templates/components/index/filtering-section.html:14
+#: .\product\templates\components\index\filtering-section.html:14
 msgid "Ən çox axtarılanlar"
 msgstr ""
 
-#: product/templates/components/index/filtering-section.html:22
+#: .\product\templates\components\index\filtering-section.html:22
 msgid "Trenddə olanlar"
 msgstr ""
 
-#: product/templates/components/index/partners.html:5
+#: .\product\templates\components\index\partners.html:5
 msgid "Tərəfdaşlarımız"
 msgstr ""
 
-#: product/templates/components/index/partners.html:55
+#: .\product\templates\components\index\partners.html:55
 msgid "İl xidmətinizdə"
 msgstr ""
 
-#: product/templates/components/index/partners.html:63
+#: .\product\templates\components\index\partners.html:63
 msgid "Çeşid"
 msgstr ""
 
-#: product/templates/components/index/partners.html:67
-#: product/templates/components/product/modal.html:76
-#: product/templates/product-detail.html:100
+#: .\product\templates\components\index\partners.html:67
+#: .\product\templates\components\product\modal.html:76
+#: .\product\templates\product-detail.html:100
 msgid "Brend"
 msgstr ""
 
-#: product/templates/components/index/partners.html:71
+#: .\product\templates\components\index\partners.html:71
 msgid "Yeni dad"
 msgstr ""
 
-#: product/templates/components/index/popular-categories.html:6
+#: .\product\templates\components\index\popular-categories.html:6
 msgid "Seçilmiş kateqoriyalar"
 msgstr ""
 
-#: product/templates/components/index/popular-categories.html:18
+#: .\product\templates\components\index\popular-categories.html:18
 msgid "items"
 msgstr ""
 
-#: product/templates/components/index/product-tab.html:5
-#: templates/components/footer/footer.html:47
-#: templates/components/header/fixed-mobile-header.html:17
-#: templates/components/header/header-bottom.html:75
-#: templates/components/header/mobile-header.html:28
+#: .\product\templates\components\index\product-tab.html:5
+#: .\templates\components\footer\footer.html:47
+#: .\templates\components\header\fixed-mobile-header.html:17
+#: .\templates\components\header\header-bottom.html:75
+#: .\templates\components\header\mobile-header.html:28
 msgid "Məhsullar"
 msgstr ""
 
-#: product/templates/components/page-header/page-header.html:9
-#: product/templates/product-detail.html:25
-#: templates/components/header/fixed-mobile-header.html:9
-#: templates/components/header/header-bottom.html:69
+#: .\product\templates\components\page-header\page-header.html:9
+#: .\product\templates\product-detail.html:25
+#: .\templates\components\header\fixed-mobile-header.html:9
+#: .\templates\components\header\header-bottom.html:69
 msgid "Ana səhifə"
 msgstr ""
 
-#: product/templates/components/product/modal.html:38
-#: product/templates/components/product/product-item.html:26
-#: product/templates/product-detail.html:62
+#: .\product\templates\components\product\modal.html:38
+#: .\product\templates\components\product\product-item.html:26
+#: .\product\templates\product-detail.html:62
 msgid "Stokda yoxdur"
 msgstr ""
 
-#: product/templates/components/product/modal.html:64
-#: product/templates/components/product/modal.html:68
-#: product/templates/product-detail.html:88
-#: product/templates/product-detail.html:92
+#: .\product\templates\components\product\modal.html:64
+#: .\product\templates\components\product\modal.html:68
+#: .\product\templates\product-detail.html:88
+#: .\product\templates\product-detail.html:92
 msgid "Səbətə əlavə et"
 msgstr ""
 
-#: product/templates/components/product/modal.html:78
-#: product/templates/product-detail.html:102
+#: .\product\templates\components\product\modal.html:78
+#: .\product\templates\product-detail.html:102
 msgid "İstifadə müddəti"
 msgstr ""
 
-#: product/templates/components/product/modal.html:78
-#: product/templates/product-detail.html:102
+#: .\product\templates\components\product\modal.html:78
+#: .\product\templates\product-detail.html:102
 msgid "ay"
 msgstr ""
 
-#: product/templates/components/product/modal.html:84
-#: product/templates/product-detail.html:108
+#: .\product\templates\components\product\modal.html:84
+#: .\product\templates\product-detail.html:108
 msgid "Açıqlama"
 msgstr ""
 
-#: product/templates/components/product/product-item.html:61
+#: .\product\templates\components\product\product-item.html:61
 msgid "Əlavə et"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:5
+#: .\product\templates\components\shop\filter.html:5
 msgid "Sizin üçün"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:5
+#: .\product\templates\components\shop\filter.html:5
 msgid "məhsul tapdıq!"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:11
+#: .\product\templates\components\shop\filter.html:11
 msgid "Göstər"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:30
+#: .\product\templates\components\shop\filter.html:30
 msgid "Sırala"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:33
-#: product/templates/components/shop/filter.html:41
+#: .\product\templates\components\shop\filter.html:33
+#: .\product\templates\components\shop\filter.html:41
 msgid "Qiymət (azdan-çoxa)"
 msgstr ""
 
-#: product/templates/components/shop/filter.html:33
-#: product/templates/components/shop/filter.html:42
+#: .\product\templates\components\shop\filter.html:33
+#: .\product\templates\components\shop\filter.html:42
 msgid "Qiymət (çoxdan-aza)"
 msgstr ""
 
-#: product/templates/components/shop/sidebar.html:8
-#: templates/components/header/header-bottom.html:12
-#: templates/components/header/header-middle.html:13
+#: .\product\templates\components\shop\sidebar.html:8
+#: .\templates\components\header\header-bottom.html:12
+#: .\templates\components\header\header-middle.html:13
 msgid "Kateqoriyalar"
 msgstr ""
 
-#: product/templates/components/shop/sidebar.html:21
+#: .\product\templates\components\shop\sidebar.html:21
 msgid "Yeni məhsullar"
 msgstr ""
 
-#: product/templates/contact.html:31
-#: templates/components/footer/footer.html:50
-#: templates/components/header/header-bottom.html:84
-#: templates/components/header/mobile-header.html:40
+#: .\product\templates\contact.html:31
+#: .\templates\components\footer\footer.html:50
+#: .\templates\components\header\header-bottom.html:87
+#: .\templates\components\header\mobile-header.html:40
 msgid "Əlaqə"
 msgstr ""
 
-#: product/templates/contact.html:63
+#: .\product\templates\contact.html:63
 msgid "Mövzu"
 msgstr ""
 
-#: product/templates/contact.html:70
+#: .\product\templates\contact.html:70
 msgid "Mesaj"
 msgstr ""
 
-#: product/templates/contact.html:74
+#: .\product\templates\contact.html:74
+#: .\vacancies\templates\modals\short_apply_modal.html:25
+#: .\vacancies\templates\partials\vacancy-form.html:26
 msgid "Göndər"
 msgstr ""
 
-#: product/templates/product-detail.html:120
+#: .\product\templates\product-detail.html:120
 msgid "Bənzər məhsullar"
 msgstr ""
 
-#: product/views.py:198
+#: .\product\views.py:199
 msgid "Kupon mövcud deyil!"
 msgstr ""
 
-#: product/views.py:208
+#: .\product\views.py:209
 msgid "Siz artıq bu kuponu istifadə etmisiz!"
 msgstr ""
 
-#: settings/settings.py:160
+#: .\settings\settings.py:161
 msgid "Azerbaijani"
 msgstr ""
 
-#: settings/settings.py:161
+#: .\settings\settings.py:162
 msgid "Russian"
 msgstr ""
 
-#: settings/settings.py:162
+#: .\settings\settings.py:163
 msgid "English"
 msgstr ""
 
-#: templates/components/footer/footer.html:32
+#: .\templates\components\footer\footer.html:32
 msgid "SOSİAL ŞƏBƏKƏLƏR"
 msgstr ""
 
-#: templates/components/footer/footer.html:34
+#: .\templates\components\footer\footer.html:34
 msgid "İnstagram"
 msgstr ""
 
-#: templates/components/footer/footer.html:35
+#: .\templates\components\footer\footer.html:35
 msgid "Facebook"
 msgstr ""
 
-#: templates/components/footer/footer.html:36
+#: .\templates\components\footer\footer.html:36
 msgid "Youtube"
 msgstr "YouTube"
 
-#: templates/components/footer/footer.html:37
+#: .\templates\components\footer\footer.html:37
 msgid "Tiktok"
 msgstr "TikTok"
 
-#: templates/components/footer/footer.html:43
+#: .\templates\components\footer\footer.html:43
 msgid "LİNKLƏR"
 msgstr ""
 
-#: templates/components/footer/footer.html:45
+#: .\templates\components\footer\footer.html:45
 msgid "Ana Səhifə"
 msgstr ""
 
-#: templates/components/footer/footer.html:46
+#: .\templates\components\footer\footer.html:46
 msgid "Haqqında"
 msgstr ""
 
-#: templates/components/footer/footer.html:48
-#: templates/components/header/header-bottom.html:78
-#: templates/components/header/mobile-header.html:34
+#: .\templates\components\footer\footer.html:48
+#: .\templates\components\header\header-bottom.html:78
+#: .\templates\components\header\mobile-header.html:34
 msgid "Bloq"
 msgstr ""
 
-#: templates/components/footer/footer.html:56
+#: .\templates\components\footer\footer.html:56
 msgid "BİZİMLƏ ƏLAQƏ"
 msgstr ""
 
-#: templates/components/footer/footer.html:74
+#: .\templates\components\footer\footer.html:74
 msgid "Bütün hüquqlar qorunur!"
 msgstr ""
 
-#: templates/components/header/basket.html:12
+#: .\templates\components\header\basket.html:12
 msgid "Səbətə bax"
 msgstr ""
 
-#: templates/components/header/fixed-mobile-header.html:25
-#: templates/components/header/header-middle.html:33
-#: templates/components/header/header-top.html:13
+#: .\templates\components\header\fixed-mobile-header.html:25
+#: .\templates\components\header\header-middle.html:33
+#: .\templates\components\header\header-top.html:13
 msgid "Sevimlilər"
 msgstr ""
 
-#: templates/components/header/fixed-mobile-header.html:42
-#: templates/components/header/header-middle.html:47
-#: templates/components/header/header-middle.html:52
-#: templates/components/header/header-top.html:12
+#: .\templates\components\header\fixed-mobile-header.html:42
+#: .\templates\components\header\header-middle.html:47
+#: .\templates\components\header\header-middle.html:52
+#: .\templates\components\header\header-top.html:12
 msgid "Hesab"
 msgstr ""
 
-#: templates/components/header/header-bottom.html:72
-#: templates/components/header/header-top.html:11
-#: templates/components/header/mobile-header.html:31
+#: .\templates\components\header\header-bottom.html:72
+#: .\templates\components\header\header-top.html:11
+#: .\templates\components\header\mobile-header.html:31
 msgid "Haqqımızda"
 msgstr ""
 
-#: templates/components/header/header-bottom.html:97
+#: .\templates\components\header\header-bottom.html:84
+msgid "Vakansiyalar"
+msgstr ""
+
+#: .\templates\components\header\header-bottom.html:100
 msgid "24/7 Dəstək"
 msgstr ""
 
-#: templates/components/header/header-middle.html:19
-#: templates/components/header/mobile-header.html:19
+#: .\templates\components\header\header-middle.html:19
+#: .\templates\components\header\mobile-header.html:19
 msgid "Axtar"
 msgstr ""
 
-#: templates/components/header/mobile-header.html:43
+#: .\templates\components\header\mobile-header.html:43
 msgid "Dil"
 msgstr ""
 
-#: templates/components/header/mobile-header.html:60
+#: .\templates\components\header\mobile-header.html:60
 msgid "Daxil ol / Qeydiyyat keç"
 msgstr ""
 
-#: templates/components/header/mobile-header.html:72
+#: .\templates\components\header\mobile-header.html:72
 msgid "Bizi izləyin"
 msgstr ""
 
-#: templates/components/header/mobile-header.html:78
+#: .\templates\components\header\mobile-header.html:78
 msgid "Copyright"
+msgstr ""
+
+#: .\vacancies\signals.py:25
+msgid "Ecoproduct.az, yeni vakansiya müraciəti var!"
+msgstr ""
+
+#: .\vacancies\templates\mail\new_vacancy_application_email.html:7
+#: .\vacancies\templates\mail\new_vacancy_application_email.html:78
+msgid "Yeni vakansiya müraciəti"
+msgstr ""
+
+#: .\vacancies\templates\mail\new_vacancy_application_email.html:81
+#: .\vacancies\templates\vacancy-single.html:44
+msgid "Ümumi məlumat"
+msgstr ""
+
+#: .\vacancies\templates\mail\new_vacancy_application_email.html:82
+msgid "Vakansiya"
+msgstr ""
+
+#: .\vacancies\templates\mail\new_vacancy_application_email.html:85
+msgid "Ad, soyad"
+msgstr ""
+
+#: .\vacancies\templates\mail\new_vacancy_application_email.html:101
+msgid "Admin panelə keçid"
+msgstr ""
+
+#: .\vacancies\templates\mail\new_vacancy_application_email.html:102
+msgid "Admin Panel"
+msgstr ""
+
+#: .\vacancies\templates\mail\new_vacancy_application_email.html:105
+msgid "This email was sent automatically. Please do not reply."
+msgstr ""
+
+#: .\vacancies\templates\modals\short_apply_modal.html:8
+msgid "CV yükləyin"
+msgstr ""
+
+#: .\vacancies\templates\modals\short_apply_modal.html:24
+msgid "Ləğv et"
+msgstr ""
+
+#: .\vacancies\templates\partials\last-vacancies.html:4
+msgid "Ən son elanlar"
+msgstr ""
+
+#: .\vacancies\templates\partials\last-vacancies.html:13
+#: .\vacancies\templates\partials\vacancy-summary.html:33
+msgid "Son müraciət"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-filters.html:6
+msgid "Filters"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-filters.html:14
+msgid "Elanlar"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-filters.html:22
+msgid "Şöbələr"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-filters.html:30
+msgid "Məşğuliyyət növləri"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-filters.html:38
+#: .\vacancies\templates\partials\vacancy-summary.html:28
+msgid "İş qrafiki"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-filters.html:46
+#: .\vacancies\templates\partials\vacancy-summary.html:31
+msgid "Əmək haqqı"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-filters.html:54
+msgid "Filterləri təmizlə"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-form.html:9
+msgid "Ad, Soyad"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-form.html:15
+msgid "Portfolio linki"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-form.html:23
+msgid "Motivasiya məktubu"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-item-header.html:6
+msgid "Son müraciət tarixi"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-item.html:35
+msgid "Qısa müraciət"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-summary.html:4
+msgid "Xülasə"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-summary.html:5
+msgid "Əlavə edildi"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-summary.html:9
+msgid "Elanın növü"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-summary.html:14
+msgid "Şöbə"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-summary.html:19
+msgid "Məşğuliyyət növü"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-summary.html:23
+msgid "Müraciətlərin sayı"
+msgstr ""
+
+#: .\vacancies\templates\partials\vacancy-summary.html:32
+msgid "Baxış sayı"
+msgstr ""
+
+#: .\vacancies\templates\vacancy-list.html:36
+msgid "elan göstərilir"
+msgstr ""
+
+#: .\vacancies\templates\vacancy-single.html:68
+msgid "Müraciət et"
+msgstr ""
+
+#: .\vacancies\templates\vacancy-single.html:72
+msgid "Müraciətin vaxtı bitib!!!"
 msgstr ""
 
 #~ msgid "Show more"

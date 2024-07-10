@@ -2,8 +2,7 @@
 *.log
 *.pot
 *.pyc
-app/__pycache__/
-*.py[cod]
+__pycache__
 # db.sqlite3
 # media
 
@@ -137,4 +136,4 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
-app/staticfiles/
+staticfiles

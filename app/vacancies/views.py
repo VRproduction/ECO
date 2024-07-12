@@ -26,7 +26,7 @@ class VacancyListView(ListView):
     paginate_by = 10
     template_name = 'vacancy-list.html'
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['vacancy_types'] = VacancyType.objects.all()
         context['job_types'] = JobType.objects.all()
@@ -87,7 +87,7 @@ class VacancyDetailView(DetailView):
             ip = request.META.get('REMOTE_ADDR')
         return ip
     
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         cx = super().get_context_data(**kwargs)
         cx['vacancies'] = Vacancy.published.all()[:5]
         cx["seo"] = VacancyPageSeo.objects.first()

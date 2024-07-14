@@ -79,24 +79,6 @@ class CompanyDepartment(models.Model):
 
     def __str__(self) -> str:
         return self.department_name
-    
-
-class JobType(models.Model):
-    job_type = models.CharField('Məşğulluğun növü', max_length=200, unique=True)
-    slug=models.SlugField(
-        'Link adı',
-        null=True, blank=True,
-        help_text="Bu qismi boş buraxın. Avtomatik doldurulacaq.",
-        max_length=500    
-    )
-
-    class Meta:
-        verbose_name = 'Məşğulluq növü'
-        verbose_name_plural = 'Məşğulluq növləri'
-
-    def __str__(self) -> str:
-        return self.job_type
-
 
 class WorkingHour(models.Model):
     work_hour = models.CharField('İş qrafiki', max_length=200, unique=True)
@@ -161,14 +143,6 @@ class Vacancy(Base):
         blank=True,
         verbose_name='Şöbə',
         related_name='vacancies'
-    )
-    job_type = models.ForeignKey(
-        JobType,
-        on_delete=models.CASCADE,
-        related_name='vacancies',
-        verbose_name='Məşğulluq növü',
-        null=True,
-        blank=True
     )
     work_hour = models.ForeignKey(
         WorkingHour,

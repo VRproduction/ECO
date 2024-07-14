@@ -14,11 +14,6 @@
         <i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Şöbə' %}: {{vacancy.department}}
     </p>
     {% endif %}
-    {% if vacancy.job_type %}
-    <p>
-        <i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Məşğuliyyət növü' %}: {{vacancy.job_type}}
-    </p>
-    {% endif %}
     <p>
         <i class="fa fa-angle-right text-primary me-2"></i>{% trans 'Müraciətlərin sayı' %}:
         {{vacancy.applications.count}}

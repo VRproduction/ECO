@@ -11,9 +11,8 @@ from product.utils.custom_slugify import custom_az_slugify
 from vacancies.models import (
     VacancyApplication,
     Vacancy, VacancyType,
-    WorkingHour, JobType,
+    WorkingHour,
     CompanyDepartment
-
 )
 
 
@@ -46,20 +45,10 @@ def make_slug(sender, instance, **kwargs):
     if not instance.slug:
         instance.slug = custom_az_slugify(instance.vacancy_type)
 
-@receiver(pre_save, sender=Vacancy)
-def make_slug(sender, instance, **kwargs):
-    if not instance.slug:
-        instance.slug = custom_az_slugify(instance.vacancy_type)
-
 @receiver(pre_save, sender=WorkingHour)
 def make_slug(sender, instance, **kwargs):
     if not instance.slug:
         instance.slug = custom_az_slugify(instance.work_hour)
-
-@receiver(pre_save, sender=JobType)
-def make_slug(sender, instance, **kwargs):
-    if not instance.slug:
-        instance.slug = custom_az_slugify(instance.job_type)
 
 @receiver(pre_save, sender=CompanyDepartment)
 def make_slug(sender, instance, **kwargs):

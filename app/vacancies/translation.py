@@ -5,7 +5,6 @@ from modeltranslation.translator import (
 
 from .models import (
     CompanyDepartment,
-    JobType,
     VacancyType,
     WorkingHour,
     Vacancy
@@ -14,11 +13,6 @@ from .models import (
 @register(CompanyDepartment)
 class CompanyDepartmentTranslationOptions(TranslationOptions):
     fields = ('department_name', )
-
-
-@register(JobType)
-class JobTypeTranslationOptions(TranslationOptions):
-    fields = ('job_type', )
 
 
 @register(VacancyType)

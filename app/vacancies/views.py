@@ -13,7 +13,6 @@ from .models import (
     Vacancy,
     VacancyType,
     CompanyDepartment,
-    JobType,
     WorkingHour,
     IPs)
 from seo.models import VacancyPageSeo
@@ -29,7 +28,6 @@ class VacancyListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['vacancy_types'] = VacancyType.objects.all()
-        context['job_types'] = JobType.objects.all()
         context['departments'] = CompanyDepartment.objects.all()
         context['working_hours'] = WorkingHour.objects.all()
         context["seo"] = VacancyPageSeo.objects.first()
@@ -39,16 +37,12 @@ class VacancyListView(ListView):
     def get_queryset(self):
         queryset = Vacancy.published.order_by('-published_at')
         department = self.request.GET.get('department')
-        job_type = self.request.GET.get('jobtype')
         vacancy_type = self.request.GET.get('vactype')
         hour = self.request.GET.get('hour')
         salary = self.request.GET.get('salary')
 
         if department:
             queryset = queryset.filter(department__slug=department)
-
-        if job_type:
-            queryset = queryset.filter(job_type__slug=job_type)
 
         if vacancy_type:
             queryset = queryset.filter(vacancy_type__slug=vacancy_type)

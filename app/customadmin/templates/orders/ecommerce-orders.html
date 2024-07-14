@@ -1,0 +1,87 @@
+{% extends 'base-admin.html' %}
+{% load static %}
+
+{% block main-content %}
+
+
+
+<!--start page wrapper -->
+<div class="page-wrapper">
+	<div class="page-content">
+		<!--breadcrumb-->
+		{% include 'orders/order-header.html' %}
+		<!--end breadcrumb-->
+
+		<div class="card">
+			<div class="card-body">
+				<div class="d-lg-flex align-items-center mb-4 gap-3">
+					<div class="position-relative">
+						<input type="text" class="form-control ps-5 radius-30" placeholder="Search Order"> <span
+							class="position-absolute top-50 product-show translate-middle-y"><i
+								class="bx bx-search"></i></span>
+					</div>
+					<div class="ms-auto"><a href="javascript:;" class="btn btn-light radius-30 mt-2 mt-lg-0"><i
+								class="bx bxs-plus-square"></i>Add New Order</a></div>
+				</div>
+				<div class="table-responsive">
+					<table class="table mb-0">
+						<thead class="table-light">
+							<tr>
+								<th>Sifariş ID</th>
+								<th>Sifariş etdi</th>
+								<th>Status</th>
+								<th>Ödəniş</th>
+								<th>Sifariş edildi</th>
+								<th>Sifarişə bax</th>
+								<th>Əməliyyatlar</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for order in orders %}
+							<tr>
+								<td>
+									<div class="d-flex align-items-center">
+										<div>
+											<input class="form-check-input me-3" type="checkbox" value=""
+												aria-label="...">
+										</div>
+										<div class="ms-2">
+											<h6 class="mb-0 font-14">{{order.id}}</h6>
+										</div>
+									</div>
+								</td>
+								<td>{{order.user}}</td>
+								<td>
+									<div class="badge rounded-pill bg-light p-2 text-uppercase px-3"><i
+											class='bx bxs-circle me-1'></i>{{order.confirmed_status}}</div>
+								</td>
+								<td>{{order.total_amount}} AZN</td>
+								<td>{{order.created_at}}</td>
+								<td>
+									<button type="button" class="btn btn-light btn-sm radius-30 px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal">
+										Sifarişə bax
+									</button>
+									{% include 'modal/view-order.html' %}
+								</td>
+								<td>
+									<div class="d-flex order-actions">
+										<a href="javascript:;" class=""><i class='bx bxs-edit'></i></a>
+										<a href="javascript:;" class="ms-3"><i class='bx bxs-trash'></i></a>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+<!--end page wrapper -->
+
+
+
+{% endblock %}

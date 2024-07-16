@@ -184,6 +184,8 @@ class Product(models.Model):
     is_best_seller = models.BooleanField(default = False, verbose_name = "Ən çox satılan")
     is_most_wonted = models.BooleanField(default = False, verbose_name = "Ən çox axtarılan")
     is_trending = models.BooleanField(default = False, verbose_name = "Trenddə olan")
+    barcode_code = models.BigIntegerField('Məhsulun barkodu', default=0)
+    product_code = models.IntegerField('Məhsulun kodu', null=True, blank=True)
 
     keywords = models.TextField(null=True, blank=True)
     meta_description = models.TextField(null=True, blank=True)
@@ -224,6 +226,9 @@ class Product(models.Model):
             
     def save(self, *args, **kwargs):
         self.slug = custom_az_slugify(self.title)
+        if self.barcode_code:
+            barcode_str = str(self.barcode_code)
+            self.product_code = int(barcode_str[-4:])
         super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -269,6 +274,15 @@ class BasketItem(models.Model):
         verbose_name_plural = 'Səbətdəki məhsullar'
 
 class Order(models.Model):
+
+    TYPE_CHOICES = (
+        ('Yeni', 'Yeni'),
+        ('Paketlənən', 'Paketlənən'),
+        ('Təhvilə hazır', 'Təhvilə hazır'),
+        ('Tamamlanmış', 'Tamamlanmış'),
+        ('Ləğv edilib', 'Ləğv edilib')
+    )
+        
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'orders', null = True, blank = True)
     total_amount = models.FloatField()
     discount = models.FloatField(null = True, blank = True)
@@ -280,7 +294,7 @@ class Order(models.Model):
     wolt_order_reference_id = models.CharField(max_length = 100, null = True, blank = True)
     is_wolt = models.BooleanField(default = False)
     transaction = models.OneToOneField(Transaction, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'order')
-
+    order_type =  models.CharField('Sifariş növü', max_length=20, choices=TYPE_CHOICES, default='Yeni')
 
     def __str__(self):
         return f"{self.user} | {self.pk}"

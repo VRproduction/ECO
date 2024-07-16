@@ -1,0 +1,37 @@
+{% load static %}
+<tr>
+    <td>
+        <div class="d-flex align-items-center">
+            <div>
+                <input class="form-check-input me-3" type="checkbox" value="" aria-label="...">
+            </div>
+            <div class="ms-2">
+                <h6 class="mb-0 font-14">{{order.id}}</h6>
+            </div>
+        </div>
+    </td>
+    <td>{{order.user}}</td>
+    <td>
+        <div class="badge rounded-pill bg-light p-2 text-uppercase px-3"><i
+                class='bx bxs-circle me-1'></i>{{order.order_type}}</div>
+    </td>
+    <td>{{order.total_amount}} AZN</td>
+    <td>{{order.created_at}}</td>
+    <td>
+        <button type="button" class="btn btn-light btn-sm radius-30 px-4" data-bs-toggle="modal"
+            data-bs-target="#exampleScrollableModal-{{order.id}}">
+            Sifarişə bax
+        </button>
+        {% include 'modal/view-order.html' with order=order %}
+    </td>
+    <td>
+        <div class="d-flex order-actions">
+            <a href="javascript:;" class=""><i class='bx bxs-edit'></i></a>
+            <a href="javascript:;" class="ms-3"><i class='bx bxs-trash'></i></a>
+        </div>
+    </td>
+</tr>
+
+{% block js %}
+<script src="{% static 'assets/admin-assets/js/api/orders.js' %}"></script>
+{% endblock %}

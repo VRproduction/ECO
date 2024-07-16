@@ -83,14 +83,14 @@ class ProductAdmin(TranslationAdmin):
     list_filter = ('category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
     search_fields = ('title', 'description')
     ordering = ('-stock',)
-    readonly_fields = ('sale_count',)
+    readonly_fields = ('sale_count', 'product_code')
 
     fieldsets = (
         (None, {
             'fields': ('title', 'description', 'category', 'slug')
         }),
         ('Product Information', {
-            'fields': ('using_time', 'badges', 'image', 'vendor', 'price', 'discount', 'stock', 'sale_count')
+            'fields': ('using_time', 'badges', 'image', 'vendor', 'price', 'discount', 'stock', 'sale_count', 'barcode_code', 'product_code')
         }),
         ('Special Markers', {
             'fields': ('is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
@@ -244,7 +244,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['user', 'confirmed_status', 'id','total_amount', 'is_wolt', 'created_at']
     list_filter = ['is_wolt',]
     search_fields = ['id','user__email']
-    readonly_fields = ['id', 'user', 'total_amount', 'created_at', 'coupon', 'discount', 'discount_amount', 'tracking_url', 'tracking_id', 'wolt_order_reference_id', 'is_wolt', 'transaction']
+    readonly_fields = ['id', 'user', 'total_amount', 'created_at', 'coupon', 'discount', 'discount_amount', 'tracking_url', 'tracking_id', 'wolt_order_reference_id', 'is_wolt', 'transaction', 'order_type']
     inlines = [StatusInline, OrderItemInline, ]
 
 

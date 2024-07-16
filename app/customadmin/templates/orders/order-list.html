@@ -29,7 +29,7 @@
 							<tr>
 								<th>Sifariş ID</th>
 								<th>Sifariş etdi</th>
-								<th>Status</th>
+								<th>Sifariş növü</th>
 								<th>Ödəniş</th>
 								<th>Sifariş edildi</th>
 								<th>Sifarişə bax</th>
@@ -38,38 +38,7 @@
 						</thead>
 						<tbody>
 							{% for order in orders %}
-							<tr>
-								<td>
-									<div class="d-flex align-items-center">
-										<div>
-											<input class="form-check-input me-3" type="checkbox" value=""
-												aria-label="...">
-										</div>
-										<div class="ms-2">
-											<h6 class="mb-0 font-14">{{order.id}}</h6>
-										</div>
-									</div>
-								</td>
-								<td>{{order.user}}</td>
-								<td>
-									<div class="badge rounded-pill bg-light p-2 text-uppercase px-3"><i
-											class='bx bxs-circle me-1'></i>{{order.confirmed_status}}</div>
-								</td>
-								<td>{{order.total_amount}} AZN</td>
-								<td>{{order.created_at}}</td>
-								<td>
-									<button type="button" class="btn btn-light btn-sm radius-30 px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal">
-										Sifarişə bax
-									</button>
-									{% include 'modal/view-order.html' %}
-								</td>
-								<td>
-									<div class="d-flex order-actions">
-										<a href="javascript:;" class=""><i class='bx bxs-edit'></i></a>
-										<a href="javascript:;" class="ms-3"><i class='bx bxs-trash'></i></a>
-									</div>
-								</td>
-							</tr>
+							{% include 'orders/order-item.html' with order=order %}
 							{% endfor %}
 						</tbody>
 					</table>

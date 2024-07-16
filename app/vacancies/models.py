@@ -11,6 +11,7 @@ from django.core.validators import (
 
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from product.utils.custom_slugify import custom_az_slugify
 from vacancies.utils.manager import (
     PublishedVacancyManager
 )
@@ -79,6 +80,12 @@ class CompanyDepartment(models.Model):
 
     def __str__(self) -> str:
         return self.department_name
+    
+    def save(self) -> None:
+        if not self.slug:
+            self.slug = custom_az_slugify(self.department_name)
+        return super().save()
+    
 
 class WorkingHour(models.Model):
     work_hour = models.CharField('İş qrafiki', max_length=200, unique=True)
@@ -96,6 +103,11 @@ class WorkingHour(models.Model):
     def __str__(self) -> str:
         return self.work_hour
     
+    def save(self) -> None:
+        if not self.slug:
+            self.slug = custom_az_slugify(self.work_hour)
+        return super().save()
+    
 
 class VacancyType(models.Model):
     vacancy_type = models.CharField('Elanın növü', max_length=200, unique=True)
@@ -112,6 +124,11 @@ class VacancyType(models.Model):
 
     def __str__(self) -> str:
         return self.vacancy_type
+    
+    def save(self) -> None:
+        if not self.slug:
+            self.slug = custom_az_slugify(self.vacancy_type)
+        return super().save()
     
 
 class Vacancy(Base):
@@ -198,6 +215,8 @@ class Vacancy(Base):
         status = self.status
         if status != self.Status.PUBLİSHED:
             self.published_at = timezone.now()
+        if not self.slug:
+            self.slug = custom_az_slugify(self.vacancy_title)
         super().save(*args, **kwargs)
     
 

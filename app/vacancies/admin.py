@@ -6,7 +6,6 @@ from modeltranslation.admin import TranslationAdmin
 
 from .models import (
     CompanyDepartment,
-    JobType,
     Vacancy,
     VacancyType,
     WorkingHour,
@@ -29,21 +28,6 @@ def make_draft(self, request, queryset):
 
 @admin.register(CompanyDepartment)
 class CompanyDepartmentAdmin(TranslationAdmin):
-    readonly_fields = ('slug',)
-
-    class Media:
-        js = (
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
-
-
-@admin.register(JobType)
-class JobTypeAdmin(TranslationAdmin):
     readonly_fields = ('slug',)
 
     class Media:
@@ -101,15 +85,14 @@ class VacancyAdmin(TranslationAdmin):
         }
 
     list_display = (
-        'vacancy_title', 'salary', 
-        'job_type', 'work_hour',
+        'vacancy_title', 'salary', 'work_hour',
         'display_deadline_date', 'display_view_count', 
         'display_application_count',
         'status'
     )
     list_filter = (
         'created_at', 'department',
-        'vacancy_type', 'job_type',
+        'vacancy_type',
         'work_hour', 'status', 
         ViewCountListFilter
     )
@@ -117,8 +100,7 @@ class VacancyAdmin(TranslationAdmin):
         'vacancy_title', 'vacancy_content',
         'salary', 'vacancy_type__vacancy_type',
         'department__department_name',
-        'department',
-        'job_type__job_type'
+        'department'
     )
     date_hierarchy = 'published_at'
     list_per_page = 20

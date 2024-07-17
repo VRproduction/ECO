@@ -244,7 +244,12 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['user', 'confirmed_status', 'id','total_amount', 'is_wolt', 'created_at']
     list_filter = ['is_wolt',]
     search_fields = ['id','user__email']
-    readonly_fields = ['id', 'user', 'total_amount', 'created_at', 'coupon', 'discount', 'discount_amount', 'tracking_url', 'tracking_id', 'wolt_order_reference_id', 'is_wolt', 'transaction', 'order_type']
+    readonly_fields = [
+        'id', 'user', 'total_amount', 'created_at', 
+        'coupon', 'discount', 'discount_amount', 
+        'tracking_url', 'tracking_id', 
+        'wolt_order_reference_id', 'is_wolt', 
+        'transaction', 'order_type', 'box_choice']
     inlines = [StatusInline, OrderItemInline, ]
 
 

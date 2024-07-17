@@ -282,6 +282,12 @@ class Order(models.Model):
         ('Tamamlanmış', 'Tamamlanmış'),
         ('Ləğv edilib', 'Ləğv edilib')
     )
+
+    BOX_CHOICES = [
+        ('Kiçik', 'Kiçik'),
+        ('Orta', 'Orta'),
+        ('Böyük', 'Böyük')
+    ]
         
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'orders', null = True, blank = True)
     total_amount = models.FloatField()
@@ -295,6 +301,7 @@ class Order(models.Model):
     is_wolt = models.BooleanField(default = False)
     transaction = models.OneToOneField(Transaction, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'order')
     order_type =  models.CharField('Sifariş növü', max_length=20, choices=TYPE_CHOICES, default='Yeni')
+    box_choice = models.CharField('Qutu seçimi', choices=BOX_CHOICES, max_length=20, null=True, blank=True)
 
     def __str__(self):
         return f"{self.user} | {self.pk}"

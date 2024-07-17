@@ -1,15 +1,16 @@
 from rest_framework.generics import (
     ListAPIView,
+    RetrieveUpdateAPIView,
     RetrieveUpdateDestroyAPIView
 )
 
 from .serializers import (
     OrderListSerializer,
-    OrderUpdateDestroySerializer
+    OrderRetrieveUpdateDestroySerializer
 )
 
 from.repositories import OrderRepository
-from product.models import Order
+from product.models import Order, OrderItem
 
 
 class OrderListAPIView(ListAPIView):
@@ -34,5 +35,5 @@ class OrderListAPIView(ListAPIView):
     
 
 class OrderRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = OrderUpdateDestroySerializer
+    serializer_class = OrderRetrieveUpdateDestroySerializer
     queryset = Order.objects.all().order_by('-created_at')

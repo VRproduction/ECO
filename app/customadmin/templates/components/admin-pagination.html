@@ -1,0 +1,41 @@
+{% load urlhelper %}
+
+{% if page_obj.paginator.num_pages > 1 %}
+<div class="mt-5 d-flex align-items-center justify-content-center">
+    <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="{% edit_query_pagination request page=1 %}" aria-label="Previous"> <span
+                    aria-hidden="true">«</span>
+            </a>
+        </li>
+        {% endif %}
+
+        {% for page in page_obj.paginator.page_range %}
+        {% if page_obj.number == page %}
+
+        <li class="page-item active"><a class="page-link" href="javascript:;">{{page}}</a>
+        </li>
+
+        {% elif page_obj.number > page|add:"-3" and page_obj.number < page|add:"3" %} 
+
+        <li class="page-item">
+            <a class="page-link" href="{% edit_query_pagination request page=page %}">
+                {{page}}
+            </a>
+        </li>
+
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{% edit_query_pagination request page=page_obj.paginator.num_pages %}"
+                aria-label="Next"> <span aria-hidden="true">»</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}

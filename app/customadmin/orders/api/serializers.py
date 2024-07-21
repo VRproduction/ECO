@@ -58,6 +58,7 @@ class OrderListSerializer(serializers.ModelSerializer):
     order_items = OrderItemListSerializer(many=True)
     user = OrderUserListSerializer()
     transaction = TransactionListSerializer()
+    created_at = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
@@ -66,10 +67,15 @@ class OrderListSerializer(serializers.ModelSerializer):
             'user',
             'order_type',
             'box_choice',
+            'total_amount',
+            'created_at',
             'is_wolt',
             'transaction',
             'order_items'
         )
+
+    def get_created_at(self, obj):
+        return obj.created_at.strftime('%d %b %Y')
 
 
 class OrderRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
@@ -93,14 +99,14 @@ class OrderRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
     def get_is_wolt(self, obj):
         return obj.is_wolt
 
-    # def validate(self, attrs):
-    #     order_type = attrs.get('order_type')
-    #     box_choice = attrs.get('box_choice')
-    #     order_items = self.instance.order_items.all()
-    #     for item in order_items:
-    #         if item.product.stock <= 0:
-    #             if order_type != 'Ləğv edilib':
-    #                 raise serializers.ValidationError("Only you can change it to cancel if there are out-of-stock items.")
-    #             if box_choice != None:
-    #                 raise serializers.ValidationError("Only you can choose box if there are not out-of-stock items.")
-    #     return super().validate(attrs)
+    def validate(self, attrs):
+        order_type = attrs.get('order_type')
+        box_choice = attrs.get('box_choice')
+        order_items = self.instance.order_items.all()
+        for item in order_items:
+            if item.product.stock <= 0:
+                if order_type != 'Ləğv edilib':
+                    raise serializers.ValidationError("Only you can change it to cancel if there are out-of-stock items.")
+                if box_choice != None:
+                    raise serializers.ValidationError("Only you can choose box if there are not out-of-stock items.")
+        return super().validate(attrs)

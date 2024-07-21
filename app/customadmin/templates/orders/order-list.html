@@ -3,8 +3,6 @@
 
 {% block main-content %}
 
-
-
 <!--start page wrapper -->
 <div class="page-wrapper">
 	<div class="page-content">
@@ -16,27 +14,36 @@
 			<div class="card-body">
 				<div class="d-lg-flex align-items-center mb-4 gap-3">
 					<div class="position-relative">
-						<input type="text" class="form-control ps-5 radius-30" placeholder="Search Order"> <span
-							class="position-absolute top-50 product-show translate-middle-y"><i
-								class="bx bx-search"></i></span>
+						<form action="{% url 'order-list' %}" method="get">
+							<input type="text" name="query" class="form-control ps-4 radius-30"
+								value="{{ request.GET.query }}" placeholder="Axtar...">
+							<span class="position-absolute top-50 search-show translate-middle-y">
+								<button  type="submit" style="background: none; border: none;">
+									<a href="{% url 'order-list' %}?query={{ request.GET.query }}">
+										<i class="bx bx-search" value="{{req.GET.query}}"></i>
+									</a>
+								</button>
+
+							</span>
+						</form>
 					</div>
-					<div class="ms-auto"><a href="javascript:;" class="btn btn-light radius-30 mt-2 mt-lg-0"><i
-								class="bx bxs-plus-square"></i>Add New Order</a></div>
+
+					{% include 'components/dropdown-filter.html' with order_types=order_types %}
+
 				</div>
 				<div class="table-responsive">
 					<table class="table mb-0">
 						<thead class="table-light">
 							<tr>
-								<th>Sifariş ID</th>
+								<th>Sifariş ID#</th>
 								<th>Sifariş etdi</th>
 								<th>Sifariş növü</th>
 								<th>Ödəniş</th>
 								<th>Sifariş edildi</th>
-								<th>Sifarişə bax</th>
 								<th>Əməliyyatlar</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="order-list-body">
 							{% for order in orders %}
 							{% include 'orders/order-item.html' with order=order %}
 							{% endfor %}
@@ -45,12 +52,10 @@
 				</div>
 			</div>
 		</div>
-
-
+		<h6 class="d-flex justify-content-start align-items-center">Sifariş sayı: {{orders_count}}</h6>
 	</div>
+	{% include 'components/admin-pagination.html' %}
 </div>
 <!--end page wrapper -->
-
-
 
 {% endblock %}

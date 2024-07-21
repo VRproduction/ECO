@@ -1,22 +1,25 @@
 from rest_framework.generics import (
     ListAPIView,
-    RetrieveUpdateAPIView,
     RetrieveUpdateDestroyAPIView
 )
+from rest_framework.permissions import (
+    IsAuthenticated, 
+    IsAdminUser
+)
 
+from product.models import Order
+from.repositories import OrderRepository
 from .serializers import (
     OrderListSerializer,
     OrderRetrieveUpdateDestroySerializer
 )
-
-from.repositories import OrderRepository
-from product.models import Order, OrderItem
 
 
 class OrderListAPIView(ListAPIView):
     serializer_class = OrderListSerializer
     queryset = Order.objects.all().order_by('-created_at')
     repo = OrderRepository
+    permission_classes = (IsAuthenticated, IsAdminUser)
 
     def get_filter_methods(self):
         repo = self.repo()
@@ -37,3 +40,4 @@ class OrderListAPIView(ListAPIView):
 class OrderRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = OrderRetrieveUpdateDestroySerializer
     queryset = Order.objects.all().order_by('-created_at')
+    permission_classes = (IsAuthenticated, IsAdminUser)

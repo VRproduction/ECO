@@ -9,16 +9,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-10 16:20+0400\n"
-"PO-Revision-Date: 2024-07-10 13:26+0400\n"
-"Last-Translator:   <sebnemadil1999@gmail.com>\n"
+"PO-Revision-Date: 2024-07-13 00:25+0400\n"
+"Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.10.0\n"
 
 #: account/models.py:27
@@ -66,7 +64,8 @@ msgid "Qeydiyyatdan keç"
 msgstr "Зарегистрироваться"
 
 #: account/templates/login.html:22 product/templates/account.html:90
-#: product/templates/contact.html:49 templates/components/footer/footer.html:61
+#: product/templates/contact.html:49
+#: templates/components/footer/footer.html:61
 msgid "Email"
 msgstr "Адрес электронной почты"
 
@@ -123,8 +122,8 @@ msgstr "Запрос на сброс пароля отправлен"
 
 #: account/templates/password_reset_done.html:10
 msgid ""
-"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa "
-"e-poçt qutunuzu yoxlayın."
+"Parolun sıfırlanması təlimatları e-poçt ünvanınıza göndərildi. Zəhmət olmasa"
+" e-poçt qutunuzu yoxlayın."
 msgstr ""
 "Инструкции по сбросу пароля были отправлены на ваш адрес электронной почты. "
 "Пожалуйста, проверьте свой почтовый ящик."
@@ -297,14 +296,14 @@ msgstr "Отследить заказ можно здесь."
 #: product/models.py:166
 #: product/templates/components/product/product-item.html:19
 msgid "Ən çox satılan"
-msgstr "Бестселлер"
+msgstr "Бестселлеры"
 
 #: product/models.py:167
 #: product/templates/components/product/product-item.html:21
 #: product/templates/components/shop/filter.html:33
 #: product/templates/components/shop/filter.html:38
 msgid "Yeni"
-msgstr "Новый"
+msgstr "Новинка"
 
 #: product/models.py:169
 msgid "4-cü"
@@ -415,7 +414,7 @@ msgstr "В корзине"
 
 #: product/templates/basket.html:17
 msgid "məhsul var"
-msgstr "есть продукты"
+msgstr "Продуктов"
 
 #: product/templates/basket.html:18
 msgid "Səbəti təmizlə"
@@ -424,7 +423,7 @@ msgstr "Очистить корзину"
 #: product/templates/basket.html:32
 #: product/templates/components/index/partners.html:59
 msgid "Məhsul"
-msgstr "Продукт"
+msgstr "Продуктов"
 
 #: product/templates/basket.html:34
 msgid "Say"
@@ -440,7 +439,7 @@ msgstr "AZN"
 
 #: product/templates/basket.html:95
 msgid "Make a payment"
-msgstr "Платить"
+msgstr "Оплата"
 
 #: product/templates/basket.html:101
 msgid "* Delivery"
@@ -521,11 +520,11 @@ msgstr "Бестселлеры"
 
 #: product/templates/components/index/filtering-section.html:14
 msgid "Ən çox axtarılanlar"
-msgstr "Самый разыскиваемый"
+msgstr "Самое разыскиваемое"
 
 #: product/templates/components/index/filtering-section.html:22
 msgid "Trenddə olanlar"
-msgstr "Что в тренде"
+msgstr "В тренде"
 
 #: product/templates/components/index/partners.html:5
 msgid "Tərəfdaşlarımız"
@@ -537,17 +536,17 @@ msgstr "Лет обслуживает вас"
 
 #: product/templates/components/index/partners.html:63
 msgid "Çeşid"
-msgstr "Разновидность"
+msgstr "Разновидностей"
 
 #: product/templates/components/index/partners.html:67
 #: product/templates/components/product/modal.html:76
 #: product/templates/product-detail.html:100
 msgid "Brend"
-msgstr "Бренд"
+msgstr "Брендов"
 
 #: product/templates/components/index/partners.html:71
 msgid "Yeni dad"
-msgstr "Новый вкус"
+msgstr "Новых вкусов"
 
 #: product/templates/components/index/popular-categories.html:6
 msgid "Seçilmiş kateqoriyalar"
@@ -593,7 +592,7 @@ msgstr "Срок Годности"
 #: product/templates/components/product/modal.html:78
 #: product/templates/product-detail.html:102
 msgid "ay"
-msgstr "месяц"
+msgstr "месяца"
 
 #: product/templates/components/product/modal.html:84
 #: product/templates/product-detail.html:108
@@ -640,7 +639,8 @@ msgstr "Категории"
 msgid "Yeni məhsullar"
 msgstr "Новые продукты"
 
-#: product/templates/contact.html:31 templates/components/footer/footer.html:50
+#: product/templates/contact.html:31
+#: templates/components/footer/footer.html:50
 #: templates/components/header/header-bottom.html:87
 #: templates/components/header/mobile-header.html:43
 msgid "Əlaqə"
@@ -931,7 +931,7 @@ msgstr "Kоличество просмотров"
 
 #: vacancies/templates/vacancy-list.html:36
 msgid "elan göstərilir"
-msgstr "вакансии найдено"
+msgstr "вакансий найдено"
 
 #: vacancies/templates/vacancy-single.html:68
 msgid "Müraciət et"

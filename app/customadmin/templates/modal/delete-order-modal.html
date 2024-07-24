@@ -1,0 +1,19 @@
+{% load static %}
+
+<div class="modal fade" id="exampleDangerModal-{{order.id}}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-white">Bu sifarişi silmək istəyirsiz?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'order-delete' pk=order.pk %}">
+                {% csrf_token %}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Bağla</button>
+                    <button type="submit" class="btn btn-danger" id="delete-modal-{{order.id}}">Sil</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

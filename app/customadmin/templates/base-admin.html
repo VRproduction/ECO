@@ -1,0 +1,85 @@
+{% load static %}
+
+{% if request.user.is_authenticated and request.user.is_superuser %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--favicon-->
+	<link rel="icon"
+		href="{% if setting.favicon %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ setting.favicon.url }}{% endif %}"
+		type="image/png" />
+	<link rel="apple-touch-icon"
+		href="{% if setting.favicon %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ setting.favicon.url }}{% endif %}" />
+	<!--plugins-->
+	<link href="{% static 'assets/admin-assets/plugins/simplebar/css/simplebar.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/admin-assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css' %}"
+		rel="stylesheet" />
+	<link href="{% static 'assets/admin-assets/plugins/metismenu/css/metisMenu.min.css' %}" rel="stylesheet" />
+	<!-- loader-->
+	<link href="{% static 'assets/admin-assets/css/pace.min.css' %}" rel="stylesheet" />
+	<!-- Bootstrap CSS -->
+	<link href="{% static 'assets/admin-assets/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/admin-assets/css/bootstrap-extended.css' %}" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
+	<link href="{% static 'assets/admin-assets/css/app.css' %}" rel="stylesheet">
+	<link href="{% static 'assets/admin-assets/css/icons.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'assets/admin-assets/css/bootstrap-icons.min.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/admin-assets/css/bootstrap-icons.css' %}">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+		integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<title>Eco Product-Admin</title>
+</head>
+
+<body class="bg-theme bg-theme1">
+	<!--wrapper-->
+	<div class="wrapper">
+
+		<!--sidebar wrapper -->
+		{% include 'admin-sidebar.html' %}
+		<!--end sidebar wrapper -->
+		<!--start header -->
+		<header>
+			{% include 'admin-header.html' %}
+		</header>
+		<!--end header -->
+
+		{% block main-content %}
+
+		{% endblock %}
+
+		<!--start overlay-->
+		<div class="overlay toggle-icon"></div>
+		<!--end overlay-->
+		<!--Start Back To Top Button-->
+		<a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+		<!--End Back To Top Button-->
+	</div>
+	<!--end wrapper-->
+
+	<!--start switcher-->
+	{% include 'components/switcher.html' %}
+	<!--end switcher-->
+
+	<!-- Bootstrap JS -->
+	<script src="{% static 'assets/admin-assets/js/bootstrap.bundle.min.js' %}"></script>
+	<!--plugins-->
+	<script src="{% static 'assets/admin-assets/js/jquery.min.js' %}"></script>
+	<script src="{% static 'assets/admin-assets/plugins/simplebar/js/simplebar.min.js' %}"></script>
+	<script src="{% static 'assets/admin-assets/plugins/metismenu/js/metisMenu.min.js' %}"></script>
+	<script src="{% static 'assets/admin-assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js' %}"></script>
+	<script src="{% static 'assets/admin-assets/js/pace.min.js' %}"></script>
+	<!--app JS-->
+	<script src="{% static 'assets/admin-assets/js/app.js' %}"></script>
+	<script src="{% static 'assets/admin-assets/plugins/html2pdf/html2pdf.bundle.js' %}"></script>
+</body>
+
+</html>
+
+{% endif %}

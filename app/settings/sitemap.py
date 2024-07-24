@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from product.models import Product, Blog
+from vacancies.models import Vacancy
 
 class StaticSitemap(Sitemap):
     changefreq = "weekly"
@@ -40,3 +41,17 @@ class BlogSitemap(Sitemap):
     
     def location(self, obj):
         return f'/blogs/{obj.slug}/'
+    
+class VacancySitemap(Sitemap):
+    changefreq = 'daily'
+    priority = 0.8
+    protocol = 'https'
+
+    def items(self):
+        return Vacancy.published.all()
+    
+    def lastmod(self, obj):
+        return obj.updated_at
+    
+    def location(self, obj):
+        return f'/vacancies/{obj.slug}/'

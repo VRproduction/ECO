@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'wolt.apps.WoltConfig',
     'seo.apps.SeoConfig',
     'vacancies.apps.VacanciesConfig',
+    'customadmin',
 
     'ckeditor',
     'rest_framework',

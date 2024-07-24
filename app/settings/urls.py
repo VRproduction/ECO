@@ -48,6 +48,7 @@ urlpatterns = [
     path('', include('product.urls')),
     path('', include('vacancies.urls')),
     path('api/', include('vacancies.api.urls')),
+    path('custom-admin/', include('customadmin.urls')),
     path('account/', include('account.urls')),
     path('payment/', include('payment.urls')),
     path('wolt/', include('wolt.urls')),

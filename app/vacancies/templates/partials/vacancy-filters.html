@@ -11,7 +11,7 @@
         <div class="form-row">
             <div class="form-group">
                 <select id="vactype" name="vactype" class="form-control" onchange="this.form.submit()">
-                    <option value="">{% trans 'Elanlar' %}...</option>
+                    <option selected value="">{% trans 'Elanlar' %}...</option>
                     {% for type in vacancy_types %}
                     <option {% if  type.slug == request.GET.vactype %}selected{% endif %} value="{{ type.slug }}">{{ type.vacancy_type }}</option>
                     {% endfor %}
@@ -19,23 +19,15 @@
             </div>
             <div class="form-group">
                 <select id="department" name="department" class="form-control" onchange="this.form.submit()">
-                    <option value="">{% trans 'Şöbələr' %}...</option>
+                    <option selected value="">{% trans 'Şöbələr' %}...</option>
                     {% for department in departments %}
                     <option {% if department.slug == request.GET.department %}selected{% endif %} value="{{ department.slug }}">{{ department.department_name }}</option>
                     {% endfor %}
                 </select>                
             </div>
             <div class="form-group">
-                <select id="jobtype" name="jobtype" class="form-control" onchange="this.form.submit()">
-                    <option value="">{% trans 'Məşğuliyyət növləri' %}...</option>
-                    {% for type in job_types %}
-                    <option {% if type.slug == request.GET.jobtype %}selected{% endif %} value="{{ type.slug }}">{{ type.job_type }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
                 <select id="workHour" name="hour" class="form-control" onchange="this.form.submit()">
-                    <option value="">{% trans 'İş qrafiki' %}...</option>
+                    <option selected value="">{% trans 'İş qrafiki' %}...</option>
                     {% for hour in working_hours %}
                     <option {% if hour.slug == request.GET.hour %}selected{% endif %} value="{{ hour.slug }}">{{ hour.work_hour }}</option>
                     {% endfor %}
@@ -43,14 +35,14 @@
             </div>
             <div class="form-group">
                 <select id="salary" name="salary" class="form-control" onchange="this.form.submit()">
-                    <option value="">{% trans 'Əmək haqqı' %}...</option>
+                    <option selected value="">{% trans 'Əmək haqqı' %}...</option>
                     <option value="0-500" {% if '0-500' == request.GET.salary %}selected{% endif %} value="{{ type.slug }}" >0-500 AZN</option>
                     <option value="500-1000" {% if '500-1000' == request.GET.salary %}selected{% endif %} value="{{ type.slug }}" >500-1000 AZN</option>
                     <option value="1000-2000" {% if '1000-2000' == request.GET.salary %}selected{% endif %} value="{{ type.slug }}" >1000-2000 AZN</option>
                     <option value="2000" {% if '2000' == request.GET.salary %}selected{% endif %} value="{{ type.slug }}" >{% trans '2000 AZN-dən çox' %}</option>
                 </select>
             </div>
-            {% if request.GET.department or request.GET.jobtype or request.GET.vactype or request.GET.hour or request.GET.salary %}
+            {% if request.GET.department or request.GET.vactype or request.GET.hour or request.GET.salary %}
             <a href="{% url 'vacancies' %}"><span aria-hidden="true">{% trans 'Filterləri təmizlə' %}</span></a>
             {% endif %}
         </div>

@@ -8,11 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const orderModalBody = document.getElementById(`order-body-${orderId}`);
         const orderTitle = document.getElementById(`order-title-${orderId}`);
         const orderFooter = document.getElementById(`order-footer-${orderId}`);
+        const orderType = document.getElementById(`order-type-${orderId}`)
 
         const order = await fetchOrders(orderId);
 
         if (order) {
-            renderOrderDetails(order, orderModalBody, orderTitle);
+            renderOrderDetails(order, orderModalBody, orderTitle, orderType);
             renderOrderFooter(order, orderFooter);
             setupButtonHandlers(orderId);
         } else {
@@ -35,9 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function renderOrderDetails(order, orderModalBody, orderTitle) {
+    function renderOrderDetails(order, orderModalBody, orderTitle, orderType) {
         orderModalBody.innerHTML = '';
         orderTitle.innerHTML = `Sifariş No: ${order.id}`;
+        orderType.innerHTML = ''
+        orderType.innerHTML = `<i class='bx bxs-circle me-1'></i>${order.order_type}`
 
         // User Contact Information
         let userContactInfo = `
@@ -354,8 +357,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const orderFooter = document.getElementById(`order-footer-${orderId}`);
         const orderModalBody = document.getElementById(`order-body-${orderId}`);
         const orderTitle = document.getElementById(`order-title-${orderId}`);
+        const orderType = document.getElementById(`order-type-${orderId}`)
         renderOrderFooter(updatedOrder, orderFooter);
-        renderOrderDetails(updatedOrder, orderModalBody, orderTitle)
+        renderOrderDetails(updatedOrder, orderModalBody, orderTitle, orderType)
     }
 
     async function generatePDF(orderId) {

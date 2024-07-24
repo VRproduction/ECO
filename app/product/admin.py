@@ -250,7 +250,7 @@ class OrderAdmin(admin.ModelAdmin):
         'tracking_url', 'tracking_id', 
         'wolt_order_reference_id', 'is_wolt', 
         'transaction', 'order_type', 'box_choice']
-    inlines = [StatusInline, OrderItemInline, ]
+    inlines = [OrderItemInline, ]
 
 
 admin.site.register(Favorite)

@@ -9,8 +9,10 @@
     </td>
     <td>{{order.user}}</td>
     <td>
-        <div class="badge rounded-pill bg-light p-2 text-uppercase px-3"><i
-                class='bx bxs-circle me-1'></i>{{order.order_type}}</div>
+        <div class="badge rounded-pill bg-light p-2 text-uppercase px-3" id="order-type-{{order.id}}">
+            <i class='bx bxs-circle me-1'></i>
+            {{order.order_type}}
+        </div>
     </td>
     <td>{{order.total_amount}} AZN</td>
     <td>{{order.created_at}}</td>

@@ -21,6 +21,8 @@ from django.template.loader import render_to_string
 from seo.models import AboutPageSeo, BlogPageSeo, ShopPageSeo, HomePageSeo, ContactPageSeo, CompaniesPageSeo
 from django.utils.translation import get_language
 from django.utils.translation import gettext as _
+from django.db.models import Case, When, IntegerField
+
 
 class HomePageView(TemplateView):
     template_name = 'index.html'
@@ -52,8 +54,7 @@ class AboutPageView(TemplateView):
         context["about"] = About.objects.first()
         context["partners"] = Partner.objects.all()
         context["seo"] = AboutPageSeo.objects.first()
-        return context
-    
+        return context 
 
 class ShopPageView(ListView):
     template_name = 'shop.html'
@@ -76,7 +77,14 @@ class ShopPageView(ListView):
             queryset = queryset.filter(title__icontains=search_query)
 
         if ordering:
-            queryset = queryset.order_by('-stock', ordering)
+            queryset = queryset.order_by(
+                Case(
+                    When(stock__gt=0, then=0),
+                    default=1,      
+                    output_field=IntegerField()
+                ),
+                ordering
+            )
 
         if vendor_slug:
             queryset = queryset.filter(vendor__slug=vendor_slug)
@@ -462,18 +470,6 @@ class BlogDetailPageView(DetailView):
         context = super(BlogDetailPageView, self).get_context_data(**kwargs)
         context["last_blogs"] = Blog.objects.exclude(pk = self.get_object().pk).order_by("-created")[:3]
         return context
-    
-class VacanciesPageView(TemplateView):
-    template_name = 'vacancies.html'
-    # paginate_by = 8
-    # # model = News
-    # context_object_name = 'vacancies'
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(NewsPageView, self).get_context_data(**kwargs)
-    #     context["last_news"] = News.objects.all()[:3]
-    #     return context
-    
     
 class CompanyPageView(TemplateView):
     template_name = 'campanies.html'

@@ -19,7 +19,7 @@
                     <div id="news-flash" >
                         <ul class="w-100">
                             {% for company in header_companies %}
-                            <li class="w-100">{{company.product}} - {{company.discount|format_decimal:2}}% endirim</li>
+                            <li class="w-100">{{company.product}} - {{company.discount|format_decimal:2}}% {% trans 'endirim' %}</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -28,7 +28,7 @@
             <div class="col-xl-3 col-lg-4">
                 <div class="header-info header-info-right">
                     <ul>
-                        <li>Zəng et: <strong class="text-brand"> {% for number in setting.numbers.all %}
+                        <li>{% trans 'Zəng et' %}: <strong class="text-brand"> {% for number in setting.numbers.all %}
                             {% if number.is_main and forloop.counter < 2 %}
                             {{number.number}}
                             {% endif %}

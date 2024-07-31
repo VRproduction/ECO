@@ -37,8 +37,8 @@
                 <ul>
                     <li><a {% if request.GET.ordering == "pk" or not request.GET.ordering %}class="active"{% endif %} href="{% edit_query request ordering="pk" %}">{% trans "Yeni" %}</a></li>
                     {% comment %} <li><a {% if request.GET.ordering == "-is_best_seller" %}class="active"{% endif %} href="{% edit_query request ordering="-is_best_seller" %}">Ən çox satılanlar</a></li> {% endcomment %}
-                    <li><a {% if request.GET.ordering == "price" %}class="active"{% endif %} href="{% edit_query request ordering="price" %}">{% trans "Qiymət (azdan-çoxa)" %}</a></li>
-                    <li><a {% if request.GET.ordering == "-price" %}class="active"{% endif %} href="{% edit_query request ordering="-price" %}">{% trans "Qiymət (çoxdan-aza)" %}</a></li>
+                    <li><a {% if request.GET.ordering == "price" %}class="active"{% endif %} href="{% edit_query request ordering='price' %}">{% trans "Qiymət (azdan-çoxa)" %}</a></li>
+                    <li><a {% if request.GET.ordering == "-price" %}class="active"{% endif %} href="{% edit_query request ordering='-price' %}">{% trans "Qiymət (çoxdan-aza)" %}</a></li>
                 </ul>
             </div>
         </div>

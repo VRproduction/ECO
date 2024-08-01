@@ -448,7 +448,6 @@ class Company(models.Model):
         if self.finish_time and self.finish_time <= timezone.now():
             raise ValidationError({'finish_time': 'Finish time must be in the future.'})
 
-
     def __str__(self) -> str:
         return f'{self.product}'
     

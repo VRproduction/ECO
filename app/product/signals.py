@@ -20,6 +20,7 @@ User = get_user_model()
 def update_product_discount(sender, instance, **kwargs):
     if instance.product:
         instance.product.discount = instance.discount
+        instance.product.badges = 3
         instance.product.save()
 
 # @receiver(post_save, sender=Order)
@@ -226,4 +227,28 @@ Ofisimizə yaxınlaşaraq sifarişinizi təhvil ala bilərsiniz.
 #             settings.EMAIL_HOST_USER,
 #             [order.user.email],
 #             fail_silently=False
+#         )
+
+# from django_celery_beat.models import PeriodicTask, CrontabSchedule
+# import json
+# @receiver(post_save, sender=Company)
+# def schedule_or_company_finish_time(sender, instance, created, **kwargs):
+#     if instance.finish_time:
+#         schedule, created = CrontabSchedule.objects.get_or_create(
+#             minute=instance.finish_time.minute,
+#             hour=instance.finish_time.hour,
+#             day_of_month=instance.finish_time.day,
+#             month_of_year=instance.finish_time.month,
+#             day_of_week='*'
+#         )
+        
+#         PeriodicTask.objects.update_or_create(
+#             name=f'company_{instance.id}',
+#             defaults={
+#                 'crontab': schedule,
+#                 'task': 'product.tasks.remove_expired_discounts',
+#                 'args': json.dumps([instance.id]),
+#                 'one_off': True,
+#                 'enabled': True
+#             }
 #         )

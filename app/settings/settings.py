@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'rest_framework',
     'rosetta',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -215,3 +217,16 @@ EMAIL_HOST_PASSWORD = 'nkepqjrjsjwjnosz'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+#for storing result
+CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+
+#SETTINGS FOR CELERY
+
+CELERY_BROKER_URL='redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT=['application/json']
+CELERY_RESULT_SERIALIZER='json'
+CELERY_TASK_SERIALIZER='json'
+
+CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'

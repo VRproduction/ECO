@@ -56,6 +56,8 @@ class AboutPageView(TemplateView):
         context["seo"] = AboutPageSeo.objects.first()
         return context 
 
+from django.utils import timezone
+from .tasks import remove_expired_discounts
 class ShopPageView(ListView):
     template_name = 'shop.html'
     model = Product
@@ -560,4 +562,7 @@ class AccountPageView(TemplateView, IsNotAuthView):
             context['tab'] = 3
             return self.render_to_response(context)
 
-
+from django.http import HttpResponse
+def test_view(request):
+    remove_expired_discounts.delay()
+    return HttpResponse('salam')

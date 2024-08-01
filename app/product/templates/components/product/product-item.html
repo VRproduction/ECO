@@ -21,6 +21,8 @@
                 <span class="new">{% trans "Yeni" %}</span>
                 {% elif product.badges == 3 and product.discount%}
                 <span class="best">{{product.discount}}%</span>
+                {% elif product.discount%}
+                <span class="best">{{product.discount}}%</span>
                 {% endif %}
             {% else %}
             <span class="hot">{% trans "Stokda yoxdur" %}</span>

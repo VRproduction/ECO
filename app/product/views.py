@@ -564,4 +564,9 @@ class AccountPageView(TemplateView, IsNotAuthView):
             context['tab'] = 3
             return self.render_to_response(context)
 
+from django.http import HttpResponse
+from .tasks import remove_expired_discounts
 
+def start_task(request):
+    task = remove_expired_discounts.delay(11)  # 10 saniyelik bir task başlatır
+    return JsonResponse({'task_id': task.id})

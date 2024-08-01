@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hm=coo@80qd)7+26!u17+5+l17dpul-1imfs%p&19wc77uzgc*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -60,6 +60,10 @@ INSTALLED_APPS = [
     'ckeditor',
     'rest_framework',
     'rosetta',
+
+    "django_celery_results",
+    "django_celery_beat",
+
 ]
 
 MIDDLEWARE = [
@@ -215,3 +219,16 @@ EMAIL_HOST_PASSWORD = 'nkepqjrjsjwjnosz'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+#for storing result
+CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+
+#SETTINGS FOR CELERY
+
+CELERY_BROKER_URL='redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT=['application/json']
+CELERY_RESULT_SERIALIZER='json'
+CELERY_TASK_SERIALIZER='json'
+
+CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'

@@ -29,5 +29,6 @@ urlpatterns = [
     path('wish-list/', views.WishListPageView.as_view(), name='wish_list'),
     path('favorite_toggle/<int:product_id>/', views.toggle_favorite, name='toggle_favorite_api'),
 
+    path('start-task/', views.start_task, name='start_task'),
 
 ]

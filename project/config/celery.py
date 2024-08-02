@@ -4,7 +4,12 @@ import os
 from celery import Celery
 from django.conf import settings
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.settings')
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 app = Celery('settings')
 app.conf.enable_utc = False

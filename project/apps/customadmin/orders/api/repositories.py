@@ -1,4 +1,4 @@
-from product.models import Order
+from apps.product.models import Order
 
 class OrderRepository:
     DEFAULT_QS = Order.objects.all().order_by('-created_at')

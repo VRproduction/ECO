@@ -5,7 +5,7 @@ from django.views.generic import (
     DeleteView
 )
 
-from product.models import Order
+from apps.product.models import Order
 from .utils import SuperuserRequiredMixin
 
 

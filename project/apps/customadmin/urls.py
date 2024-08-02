@@ -2,6 +2,6 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('customadmin.orders.urls')),
-    path('api/', include('customadmin.orders.api.urls'))
+    path('', include('apps.customadmin.orders.urls')),
+    path('api/', include('apps.customadmin.orders.api.urls'))
 ]

@@ -7,8 +7,8 @@ from rest_framework.permissions import (
     IsAdminUser
 )
 
-from product.models import Order
-from.repositories import OrderRepository
+from apps.product.models import Order
+from .repositories import OrderRepository
 from .serializers import (
     OrderListSerializer,
     OrderRetrieveUpdateDestroySerializer

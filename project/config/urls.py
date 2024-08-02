@@ -49,7 +49,7 @@ urlpatterns = [
     path('', include('apps.product.urls')),
     path('', include('apps.vacancies.urls')),
     path('api/', include('apps.vacancies.api.urls')),
-    # path('custom-admin/', include('apps.customadmin.urls')),
+    path('custom-admin/', include('apps.customadmin.urls')),
     path('account/', include('apps.account.urls')),
     path('payment/', include('apps.payment.urls')),
     path('wolt/', include('apps.wolt.urls')),
@@ -65,7 +65,7 @@ urlpatterns = [
     re_path('^rosetta', include("rosetta.urls"))
 ]
 
-urlpatterns += [
+urlpatterns = [
     *i18n_patterns(*urlpatterns, prefix_default_language=False),
     path("set_language/<str:language>", set_language, name="set-language"),
 

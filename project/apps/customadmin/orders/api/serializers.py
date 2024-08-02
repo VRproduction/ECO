@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from product.models import (
+from apps.product.models import (
     Order,
     OrderItem,
     Product,

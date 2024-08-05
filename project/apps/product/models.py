@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from apps.config.models.api_key import APIKey
+from apps.core.models import Supporter
 
 from utils.slugify.custom_slugify import custom_az_slugify
 
@@ -129,7 +130,7 @@ class Product(models.Model):
     barcode_code = models.BigIntegerField('Məhsulun barkodu', default=0)
     product_code = models.IntegerField('Məhsulun kodu', null=True, blank=True)
 
-    created_by_supporter = models.ForeignKey(APIKey, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'products', verbose_name = 'Dəstəkçi')
+    created_by_supporter = models.ForeignKey(Supporter, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'products', verbose_name = 'Dəstəkçi')
 
     keywords = models.TextField(null=True, blank=True)
     meta_description = models.TextField(null=True, blank=True)

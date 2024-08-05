@@ -32,14 +32,14 @@ class ProductSerializer(ModelSerializer):
         
         product = Product.objects.create(
             category=category, 
-            created_by_supporter=api_key,  # Associate the product with the API key
+            created_by_supporter=api_key.supporter,  # Associate the product with the API key
             is_active = False,
             is_test = api_key.is_test,
             **validated_data
         )
 
         if not api_key.is_test:
-            self.send_email_to_admin(product, api_key.supporter_name)
+            self.send_email_to_admin(product, api_key.supporter)
         return product
     
     def send_email_to_admin(self, product: Product, supporter):

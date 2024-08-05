@@ -34,7 +34,7 @@ from .models import APIKey
 
 @admin.register(APIKey)
 class APIKeyAdmin(admin.ModelAdmin):
-    list_display = ('key', 'supporter_name', 'is_external', 'is_active', 'is_test')
-    search_fields = ('key', 'supporter_name')
-    list_filter = ('supporter_name', "is_test")
+    list_display = ('key', 'supporter', 'is_external', 'is_active', 'is_test')
+    search_fields = ('key', 'supporter')
+    list_filter = ('supporter', "is_test")
     

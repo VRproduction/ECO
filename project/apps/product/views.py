@@ -48,7 +48,7 @@ class ShopPageView(ListView):
         ordering = self.request.GET.get('ordering')
         search_query = self.request.GET.get('search')
 
-        queryset = Product.objects.all().order_by('-stock', "pk")
+        queryset = Product.objects.filter(is_active = True).order_by('-stock', "pk")
 
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)

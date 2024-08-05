@@ -8,6 +8,8 @@ from apps.payment.models import Transaction
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from apps.config.models.api_key import APIKey
+
 from utils.slugify.custom_slugify import custom_az_slugify
 
 User = get_user_model()
@@ -109,21 +111,31 @@ class Product(models.Model):
     using_time = models.PositiveIntegerField(null = True, blank = True, verbose_name = "İstifadə müddəti")
     category = models.ForeignKey(ProductCategory, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'products')
     badges = models.IntegerField(choices = NUMBERS, blank = True, null = True)
-    image = models.ImageField(upload_to = 'product')
+    image = models.ImageField(upload_to = 'product', blank = True, null = True)
     vendor = models.ForeignKey(Vendor, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'products')
     price = models.FloatField()
     discount = models.PositiveIntegerField(null = True, blank = True)
-    is_main_page = models.BooleanField(default = False, verbose_name = "Ana səhifədə görünən")
-    stock = models.PositiveIntegerField(default=0, null = True)
+    stock = models.PositiveIntegerField(default=0)
     sale_count = models.PositiveIntegerField(default=0, null = True, verbose_name = "Satış sayı")
+    
+    is_active = models.BooleanField(default = True, verbose_name = "Saytda görünən və ya aktiv olan", help_text="Supporter (Məsələn: logix) tərəfindan yaradıldığı zaman təsdiqlənmədən aktiv olmasına icazə verilmir.")    
+    is_test = models.BooleanField(default = False, verbose_name = "Test üçün (Saytda görünmür)")    
+    
+    is_main_page = models.BooleanField(default = False, verbose_name = "Ana səhifədə görünən")
     is_best_seller = models.BooleanField(default = False, verbose_name = "Ən çox satılan")
     is_most_wonted = models.BooleanField(default = False, verbose_name = "Ən çox axtarılan")
     is_trending = models.BooleanField(default = False, verbose_name = "Trenddə olan")
+    
     barcode_code = models.BigIntegerField('Məhsulun barkodu', default=0)
     product_code = models.IntegerField('Məhsulun kodu', null=True, blank=True)
 
+    created_by_supporter = models.ForeignKey(APIKey, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'products', verbose_name = 'Dəstəkçi')
+
     keywords = models.TextField(null=True, blank=True)
     meta_description = models.TextField(null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add = True, null = True)
+    updated = models.DateTimeField(auto_now = True, null = True)
 
     def __str__(self):
         return self.title
@@ -159,6 +171,13 @@ class Product(models.Model):
             if trending_count >= 3 and not Product.objects.filter(is_trending=True, pk = self.pk).exists():
                 raise ValidationError("Ən çox 3 'Trenddə olan' ola bilər.")
             
+        if self.is_active and not self.image:
+            raise ValidationError("Məhsulun aktiv olması üçün şəkil yükləmək tələb olunur.")
+        
+        if self.is_active and self.is_test:
+            raise ValidationError("Test və saytda görünən eyni zamanda aktiv ola bilməz. ")
+        
+        
     def save(self, *args, **kwargs):
         self.slug = custom_az_slugify(self.title)
         if self.barcode_code:
@@ -168,6 +187,17 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse("product-detail", args=[str(self.slug)])
+    
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete = models.CASCADE, null = True, blank = True, related_name = 'images')
+    image = models.ImageField(upload_to = 'product')
+
+    def __str__(self):
+        return f'{self.product} | {self.pk}'
+    
+    class Meta:
+        verbose_name = 'Şəkil'
+        verbose_name_plural = 'Şəkillər'
 
 class Favorite(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE, related_name = 'favorites')
@@ -319,17 +349,6 @@ class OrderItem(models.Model):
     class Meta:
         verbose_name = 'Məhsul'
         verbose_name_plural = 'Məhsullar'
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete = models.CASCADE, null = True, blank = True, related_name = 'images')
-    image = models.ImageField(upload_to = 'product')
-
-    def __str__(self):
-        return f'{self.product} | {self.pk}'
-    
-    class Meta:
-        verbose_name = 'Şəkil'
-        verbose_name_plural = 'Şəkillər'
 
 
 class Feature(models.Model):

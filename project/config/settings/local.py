@@ -18,4 +18,4 @@ EMAIL_HOST_USER = 'sales@ecoproduct.az'
 EMAIL_HOST_PASSWORD = 'nkepqjrjsjwjnosz'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = 'turalabbaszade2022@gmail.com' #test

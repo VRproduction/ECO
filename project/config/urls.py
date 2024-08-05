@@ -17,6 +17,10 @@ from django.urls.exceptions import Resolver404
 from django.utils import translation
 from django.views.i18n import  JavaScriptCatalog
 
+
+
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 sitemaps = {
     # 'static': StaticSitemap,
     'blog': BlogSitemap,
@@ -49,6 +53,7 @@ urlpatterns = [
     path('', include('apps.product.urls')),
     path('', include('apps.vacancies.urls')),
     path('api/', include('apps.vacancies.api.urls')),
+    path('api/v1/', include('api.urls')),
     path('custom-admin/', include('apps.customadmin.urls')),
     path('account/', include('apps.account.urls')),
     path('payment/', include('apps.payment.urls')),
@@ -58,6 +63,11 @@ urlpatterns = [
       'template_name': 'custom-sitemap.html'
     }, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt/', TemplateView.as_view(template_name='robots.txt', content_type="text/plain")),
+
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/docs/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+
 
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),

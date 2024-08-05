@@ -1,8 +1,7 @@
 from django.contrib import admin
 from .models import *
-from django import forms
-from django.contrib.auth import get_backends
 from modeltranslation.admin import TranslationAdmin
+from django.contrib import messages  # Import messages
 
 User = get_user_model()
 
@@ -44,24 +43,27 @@ class ProductImageInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
     inlines = [ProductImageInline, ]
-    list_display = ('title', 'category','id', 'price', 'stock', 'sale_count', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page')
-    list_filter = ('category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
+    list_display = ('title', 'category','id', 'price', 'stock', 'sale_count', 'is_active', 'is_test', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page', "created")
+    list_filter = ('is_active', 'is_test', 'created_by_supporter', 'category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending',)
     search_fields = ('title', 'description')
     ordering = ('-stock',)
-    readonly_fields = ('sale_count', 'product_code')
+    readonly_fields = ('sale_count', 'product_code', 'created', 'updated')
 
     fieldsets = (
         (None, {
-            'fields': ('title', 'description', 'category', 'slug')
+            'fields': ('title', 'description', 'category', 'slug', 'created_by_supporter')
         }),
         ('Product Information', {
             'fields': ('using_time', 'badges', 'image', 'vendor', 'price', 'discount', 'stock', 'sale_count', 'barcode_code', 'product_code')
         }),
         ('Special Markers', {
-            'fields': ('is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
+            'fields': ('is_active', 'is_test', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
         }),
         ('SEO', {
             'fields': ('keywords', 'meta_description')
+        }),
+        ('Times', {
+            'fields': ('created', 'updated')
         }),
     )
 
@@ -74,6 +76,7 @@ class ProductAdmin(TranslationAdmin):
         css = {
             'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
         }
+
     
 @admin.register(Feature)
 class FeatureAdmin(TranslationAdmin):

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load i18n %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans 'Yeni vakansiya müraciəti' %}</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #777;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    {% autoescape off %}
+
+    <div class="container">
+        <h2>{{title}}</h2>
+
+        <div class="info">
+            <p><strong>ID:</strong> {{ product.id }}</p>
+            <p><strong>Məhsulun adı:</strong> {{ product.title }}</p>
+            <p><strong>Kategoriya:</strong> {{ product.category }}</p>
+            <p><strong>Qiymət:</strong> {{ product.price }}</p>
+            <p><strong>Stok:</strong> {{ product.stock }}</p> 
+            
+            <p>{% trans 'Admin panelə keçid' %}:</p>
+            <p><a style="color: #fff;" href="http://{{ site_url }}/product/product/{{product.id}}/change/" class="btn btn-primary">{% trans 'Məhsulun linki' %}</a></p>
+        </div>
+    </div>
+
+    {% endautoescape %}
+</body>
+
+</html>

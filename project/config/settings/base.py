@@ -13,6 +13,17 @@ SECRET_KEY = os.getenv(
 )
 # Application definition
 
+INTERNAL_API_KEYS = [
+    '52b4e6a4-f4c4-4b56-91a6-0fc198c6a680',
+    'eecb82af-983d-4a12-9acd-a17dda60f42c',
+]
+
+EXTERNAL_API_KEYS = [
+    '8996d602-8c6c-4f4a-ae4e-fb2fe32ea090',
+    '5df8a8f5-0595-47c8-a87f-011c17f94cf1',
+]
+
+
 SITE_ID = 1
 
 DJANGO_APPS = [
@@ -50,6 +61,11 @@ THIRD_PARTY_APPS = [
 
     "django_celery_results",
     "django_celery_beat",
+
+    'drf_yasg',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',  # optional - provides swagger-ui and redoc
+
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
@@ -69,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -113,6 +130,8 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'account.CustomUser'
 
 LOGIN_URL = '/account/login/'
+LOGOUT_REDIRECT_URL = '/'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -195,3 +214,26 @@ CELERY_RESULT_SERIALIZER='json'
 CELERY_TASK_SERIALIZER='json'
 
 CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+
+    'DEFAULT_SCHEMA_CLASS': 'utils.api.swagger.schemas.CustomAutoSchema',
+    # 'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Ecoproduct API docs',
+    'DESCRIPTION': 'My API description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    # 'SERVE_PERMISSIONS': ['rest_framework.permissions.IsAuthenticated'],
+    'PREPROCESSING_HOOKS': [
+        'utils.api.swagger.hooks.filter_endpoints',  # Hook function for filtering endpoints
+        # 'utils.api.swagger.hooks.add_accept_language_header',  # Hook function for filtering endpoints
+    ],
+    'POSTPROCESSING_HOOKS': [],
+}

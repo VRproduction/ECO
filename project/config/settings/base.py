@@ -58,6 +58,7 @@ THIRD_PARTY_APPS = [
     'ckeditor',
     'rest_framework',
     'rosetta',
+    "corsheaders",
 
     "django_celery_results",
     "django_celery_beat",
@@ -80,6 +81,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware", #new
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware', #new
+    "corsheaders.middleware.CorsMiddleware", #new
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,6 +89,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'config.urls'
 

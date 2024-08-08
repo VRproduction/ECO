@@ -83,7 +83,11 @@
     {% include "components/basket-notification/notification.html" %}
      <!-- Loader -->
      <div class="loader-container">
-        <div class="loader"></div>
+        <div class="loader">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -174,8 +178,7 @@
         </script>
     {% endif %}
     <script src="{% static "assets/js/vendor/modernizr-3.6.0.min.js" %}"></script>
-    {% comment %} <script src="{% static "assets/js/vendor/jquery-3.6.0.min.js" %}"></script> {% endcomment %}
-    {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {% endcomment %}
+    <script src="{% static "assets/js/vendor/jquery-3.6.0.min.js" %}"></script>
 
     <script src="{% static "assets/js/vendor/jquery-migrate-3.3.0.min.js" %}"></script>
     <script src="{% static "assets/js/vendor/bootstrap.bundle.min.js" %}"></script>

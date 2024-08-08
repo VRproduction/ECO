@@ -35,6 +35,8 @@
     <!-- End Meta Pixel Code Facebook -->
 
     <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static "assets/css/custom_loader.css" %}">
+
     <link rel="stylesheet" href="{% static 'assets/css/plugins/animate.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
     {% block css %}
@@ -44,7 +46,6 @@
     <link rel="stylesheet" href="{% static "assets/css/custom-modal-body.css" %}">
     <link rel="stylesheet" href="{% static "assets/css/faq.css" %}">
     <link rel="stylesheet" href="{% static "assets/css/notification.css" %}">
-    <link rel="stylesheet" href="{% static "assets/css/custom_loader.css" %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     
     <!-- Meta Pixel Code -->
@@ -80,8 +81,9 @@
 
 <body>
     {% include "components/basket-notification/notification.html" %}
-    {% comment %} <div id="overlay" class="overlay"></div>
-    <div id="loader" class="loader"></div> {% endcomment %}
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
 
     <!-- Modal -->
     {% comment %} <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
@@ -171,7 +173,8 @@
         </script>
     {% endif %}
     <script src="{% static "assets/js/vendor/modernizr-3.6.0.min.js" %}"></script>
-    <script src="{% static "assets/js/vendor/jquery-3.6.0.min.js" %}"></script>
+    {% comment %} <script src="{% static "assets/js/vendor/jquery-3.6.0.min.js" %}"></script> {% endcomment %}
+    {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {% endcomment %}
 
     <script src="{% static "assets/js/vendor/jquery-migrate-3.3.0.min.js" %}"></script>
     <script src="{% static "assets/js/vendor/bootstrap.bundle.min.js" %}"></script>
@@ -199,8 +202,8 @@
     <script src="{% static "assets/js/notification.js" %}"></script>
     {% comment %} <script src="{% static "assets/js/laoder.js" %}"></script> {% endcomment %}
 
-
     {% block js %}{% endblock js %}
+    
 </body>
 
 </html>

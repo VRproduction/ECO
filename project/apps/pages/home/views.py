@@ -5,6 +5,8 @@ from apps.seo.models import  HomePageSeo
 from apps.product.models import FAQ, Blog, ProductCategory, Product, Feature, Company, Partner, Statistic
 from apps.pages.about.models import About
 from apps.pages.home.models import IndexSlider, CategoryBanner
+
+
 class HomePageView(TemplateView):
     template_name = 'index.html'
 

@@ -81,8 +81,9 @@
 
 <body>
     {% include "components/basket-notification/notification.html" %}
-    <div id="loader">
-        <div class="spinner"></div>
+     <!-- Loader -->
+     <div class="loader-container">
+        <div class="loader"></div>
     </div>
 
     <!-- Modal -->
@@ -201,7 +202,15 @@
     <script src="{% static "assets/js/delivery.js" %}"></script>
     <script src="{% static "assets/js/notification.js" %}"></script>
     {% comment %} <script src="{% static "assets/js/laoder.js" %}"></script> {% endcomment %}
-
+    
+    <script>
+        window.addEventListener("load", function() {
+            // Yükleme tamamlandığında loader'ı gizle
+            document.querySelector('.loader-container').style.display = 'none';
+        });
+        
+    </script>
+    
     {% block js %}{% endblock js %}
     
 </body>

@@ -11,30 +11,33 @@ from apps.config.models import APIKey
 
 
 
-class ProductSerializer(ModelSerializer):
-    category = serializers.CharField()   
+class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.CharField()
+
     class Meta:
         model = Product
         fields = ('id', 'title', 'slug', 'category', 'price', 'stock')
         read_only_fields = ('slug',)
 
-    def create(self, validated_data):
-        category_name = validated_data.pop('category')
-        
+    def validate_category(self, value):
+        """
+        Validate that the category exists and return the category instance.
+        """
         try:
-            category = ProductCategory.objects.get(title=category_name)
+            category = ProductCategory.objects.get(title=value)
         except ProductCategory.DoesNotExist:
-            # Handle the case where the category does not exist
-            raise serializers.ValidationError(f"Category '{category_name}' does not exist.")
-        
+            raise serializers.ValidationError(f"Category '{value}' does not exist.")
+        return category
 
-        api_key: APIKey = self.context['request'].api_key
-        
+    def create(self, validated_data):
+        category = validated_data.pop('category')
+        api_key = self.context['request'].api_key
+
         product = Product.objects.create(
-            category=category, 
-            created_by_supporter=api_key.supporter,  # Associate the product with the API key
-            is_active = False,
-            is_test = api_key.is_test,
+            category=category,
+            created_by_supporter=api_key.supporter,
+            is_active=False,
+            is_test=api_key.is_test,
             **validated_data
         )
 

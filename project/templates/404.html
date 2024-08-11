@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+<div class="page-content pt-50 pb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-10 col-md-12 m-auto text-center">
+                <p class="mb-20"><img src="{% static "assets/imgs/page/page-404.png" %}" alt="" class="hover-up"></p>
+                <h1 class="display-2 mb-30">{% trans "Səhifə tapılmadı" %}</h1>
+                <p class="font-lg text-grey-700 mb-30">
+                    {% trans "Kliklədiyiniz link pozulmuş və ya səhifə silinmiş ola bilər." %}<br>
+                </p>
+                <a class='btn btn-default submit-auto-width font-xs hover-up mt-30' href='{% url "home" %}'><i class="fi-rs-home mr-5"></i> {% trans "Ana səhifəyə qayıt" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

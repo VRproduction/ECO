@@ -43,60 +43,38 @@ class ShopPageView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        category_slug = self.request.GET.get('category')
-        vendor_slug = self.request.GET.get('vendor')
-        ordering = self.request.GET.get('ordering')
-        search_query = self.request.GET.get('search')
-
-        queryset = Product.objects.filter(is_active = True).order_by('-stock', "pk")
-
-        if category_slug:
-            queryset = queryset.filter(category__slug=category_slug)
-
-        if search_query:
-            queryset = queryset.filter(title__icontains=search_query)
-
-        if ordering:
-            queryset = queryset.order_by('-stock', ordering)
-
-        if vendor_slug:
-            queryset = queryset.filter(vendor__slug=vendor_slug)
-
-        return queryset
-    
-    def get_paginate_by(self, queryset):
-        return self.request.GET.get('show', self.paginate_by)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        queryset = Product.objects.filter(is_active=True).order_by('-stock', 'pk')
         
         category_slug = self.request.GET.get('category')
         vendor_slug = self.request.GET.get('vendor')
         ordering = self.request.GET.get('ordering')
         search_query = self.request.GET.get('search')
 
-        queryset = Product.objects.all()
-
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
-
-        if search_query:
-            queryset = queryset.filter(title__icontains=search_query)
-
-        if ordering:
-            queryset = queryset.order_by(ordering)
-
         if vendor_slug:
             queryset = queryset.filter(vendor__slug=vendor_slug)
+        if search_query:
+            queryset = queryset.filter(title__icontains=search_query)
+        if ordering:
+            queryset = queryset.order_by('-stock', ordering)
 
-        context["count"] = queryset.count()
-        context["categories"] = ProductCategory.objects.all()
-        context["new_products"] = Product.objects.all().order_by("-id")[:3]
-        context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
-        context["seo"] = ShopPageSeo.objects.first()
-        context["about"] = About.objects.first()
+        return queryset
+
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('show', self.paginate_by)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['count'] = self.get_queryset().count()
+        context['categories'] = ProductCategory.objects.all()
+        context['new_products'] = Product.objects.filter(is_active=True).order_by('-id')[:3]
+        context['companies'] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
+        context['seo'] = ShopPageSeo.objects.first()
+        context['about'] = About.objects.first()
 
         return context
+
 
 class ProductDetailPageView(DetailView):
     template_name = 'product-detail.html'

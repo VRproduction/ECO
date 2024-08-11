@@ -28,7 +28,7 @@
             <div class="col-xl-3 col-lg-4">
                 <div class="header-info header-info-right">
                     <ul>
-                        <li>Zəng et: <strong class="text-brand"> {% for number in setting.numbers.all %}
+                        <li>{% trans "Zəng et" %}: <strong class="text-brand"> {% for number in setting.numbers.all %}
                             {% if number.is_main and forloop.counter < 2 %}
                             {{number.number}}
                             {% endif %}

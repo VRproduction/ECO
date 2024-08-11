@@ -19,9 +19,9 @@ class HomePageView(TemplateView):
         context["about"] = About.objects.first()
         context["features"] = Feature.objects.all()
         context["companies"] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
-        context["most_selling_products"] = Product.objects.filter(is_best_seller = True).order_by("?")[:3]
-        context["most_search_products"] = Product.objects.filter(is_most_wonted = True).order_by("?")[:3]
-        context["trending_products"] = Product.objects.filter(is_trending = True).order_by("?")[:3]
+        context["most_selling_products"] = Product.objects.filter(is_best_seller = True,is_active = True).order_by("?")[:3]
+        context["most_search_products"] = Product.objects.filter(is_most_wonted = True,is_active = True).order_by("?")[:3]
+        context["trending_products"] = Product.objects.filter(is_trending = True,is_active = True).order_by("?")[:3]
         context["partners"] = Partner.objects.all()
         context["statistic"] = Statistic.objects.first()
         context["faqs"] = FAQ.objects.all()

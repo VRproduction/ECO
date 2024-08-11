@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import *
 from modeltranslation.admin import TranslationAdmin
 from django.contrib import messages  # Import messages
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -40,11 +41,28 @@ class VendorAdmin(TranslationAdmin):
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
 
+class ImageNullFilter(admin.SimpleListFilter):
+    title = _('Şəkil olanlar')
+    parameter_name = 'has_image'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', _('Yes')),
+            ('no', _('No')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            return queryset.exclude(image__isnull=True).exclude(image__exact='')
+        if self.value() == 'no':
+            return queryset.filter(image__isnull=True) | queryset.filter(image__exact='')
+
+    
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
     inlines = [ProductImageInline, ]
     list_display = ('title', 'category','id', 'price', 'stock', 'sale_count', 'is_active', 'is_test', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page', "created")
-    list_filter = ('is_active', 'is_test', 'created_by_supporter', 'category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending',)
+    list_filter = (ImageNullFilter, 'is_active', 'is_test', 'created_by_supporter', 'category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending',)
     search_fields = ('title', 'description')
     ordering = ('-stock',)
     readonly_fields = ('sale_count', 'product_code', 'created', 'updated')

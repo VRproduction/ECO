@@ -138,7 +138,7 @@ db.sqlite3
 venv
 .idea
 
-media/
+#media/
 staticfiles/
 
 celerybeat-schedule.db

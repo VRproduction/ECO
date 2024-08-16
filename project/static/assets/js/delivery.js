@@ -177,7 +177,7 @@ function sendTransactionCreateRequest(transaction, payment_redirect_url, coupon_
 }
 
 function translate(translations, key, params = {}) {
-  const language = getCookie("django_language"); // Dil ayarını almak için uygun bir fonksiyonu kullanmalısınız
+  const language = getCookie("django_language") || "az"; // Dil ayarı yoksa "az" dilini kullan
   let translation = translations[language][key] || key; // Dil desteklenmiyorsa anahtar kelimeyi geri döndür
   // Eğer çeviride parametreler varsa, bunları yerine koy
   Object.keys(params).forEach(param => {

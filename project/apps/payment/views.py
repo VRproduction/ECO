@@ -150,10 +150,13 @@ def shipment_promises(request):
 @permission_classes([IsAuthenticated])
 def checkout_request_api_view(request):
     amount = request.data.get('amount')
+    language = request.data.get('language')
     if not amount:
         return Response('Amount is missing')
+    if not language:
+        return Response('Language is missing')
     payment_obj = Payment()
-    response = payment_obj.checkout_request(amount = amount)
+    response = payment_obj.checkout_request(amount = amount, language = language)
     return Response(response)
 
 @api_view(['POST'])

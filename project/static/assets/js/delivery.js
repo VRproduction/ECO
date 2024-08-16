@@ -100,6 +100,7 @@ function sendPaymentRequest(amount) {
   return new Promise((resolve, reject) => {
     const requestData = {
       amount: amount,
+      language: getCookie("django_language") || "az",
     };
 
     fetch(`/payment/checkout-request-api-view/`, {

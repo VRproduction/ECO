@@ -13,6 +13,7 @@ from apps.product.models import Product, ProductCategory
 
 from utils.api.mixins.api_key import APIKeyMixin
 from utils.api.decorators.api_key import require_api_key
+from utils.api.pagination.limit_of_set_pagination import CustomLimitOffsetPagination
 
 class ProductViewSet(APIKeyMixin, viewsets.ModelViewSet):
     
@@ -20,6 +21,7 @@ class ProductViewSet(APIKeyMixin, viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     lookup_field = 'slug' 
+    pagination_class = CustomLimitOffsetPagination
     
     def get_serializer_context(self):
         """Add request object to the serializer context."""

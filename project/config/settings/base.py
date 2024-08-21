@@ -220,9 +220,6 @@ CELERY_TASK_SERIALIZER='json'
 CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
-
     'DEFAULT_SCHEMA_CLASS': 'utils.api.swagger.schemas.CustomAutoSchema',
     # 'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 

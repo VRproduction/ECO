@@ -50,7 +50,7 @@ class Payment():
     def get_payment_status(self, transaction):
         json_string = {
             "public_key": f'{self.public_key}',
-            "transaction": f"{transaction}",
+            "transaction": f"{transaction.value}",
         }
         response = requests.post(self.base_url+'get-status', json = self.get_data_and_signature(json_string), headers = self.getHeaders())
         response_data = response.json()

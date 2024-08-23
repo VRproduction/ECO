@@ -36,8 +36,8 @@ class Payment():
     def checkout_request(self, amount, language):
         json_string = {
             "public_key": f'{self.public_key}',
-            "amount": f"0.01",
-            # "amount": f"{amount}",
+            # "amount": f"0.01",
+            "amount": f"{amount}",
             "currency": "AZN",
             "language": language,
             "description": "test payment",

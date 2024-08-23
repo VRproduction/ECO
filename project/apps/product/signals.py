@@ -103,21 +103,22 @@ def send_order_ready_email(sender, instance, **kwargs):
             user_order_items = OrderItem.objects.filter(order=order).order_by("pk")
             parcel_list = [item.to_dict_for_wolt_delivery() for item in user_order_items]
             delivery = Delivery(lat=order.transaction.lat, lon=order.transaction.lon)
-            delivery_response = delivery.deliveries(amount=order.transaction.amount,
+            delivery_response = delivery.deliveries(amount=order.transaction.delivery_amount,
                                                     recipient_name=order.transaction.recipient_name,
                                                     recipient_phone=order.transaction.recipient_phone,
                                                     dropoff_comment=order.transaction.dropoff_comment,
                                                     parcel_list=parcel_list,
                                                     shipment_promise_id=order.transaction.shipment_promise_id)
+            print(delivery_response)
+            
             if "error_code" in delivery_response:
-                print(delivery_response["error_code"])
-                # pul qaytarilmali olan funksiya
-                return redirect('failed')
+                # Handle error scenario
+                pass
             elif 'tracking' in delivery_response:
                 tracking_url = delivery_response["tracking"]["url"]
                 tracking_id = delivery_response["tracking"]["id"]
                 wolt_order_reference_id = delivery_response["wolt_order_reference_id"]
-                    
+                
                 errors = []
 
                 if not tracking_url:
@@ -133,12 +134,13 @@ def send_order_ready_email(sender, instance, **kwargs):
                 parsed_url = urlparse(tracking_url)
                 if not all([parsed_url.scheme, parsed_url.netloc]):
                     return redirect('basket')  
-                instance.order.tracking_url = tracking_url
-                instance.order.tracking_id = tracking_id
-                instance.order.wolt_order_reference_id = wolt_order_reference_id
-                instance.order.save()
                 
+                # Save the extracted data to the Order instance
+                order.tracking_url = tracking_url
+                order.tracking_id = tracking_id
+                order.wolt_order_reference_id = wolt_order_reference_id
                 
+
         if order.transaction.is_wolt:
             message = f'''Salam, ecoproduct.az-dan sifarişiniz artıq hazırdır. 
 Qısa zaman ərzində kuryer vasitəsilə çatdırılacaq.
@@ -154,6 +156,7 @@ Ofisimizə yaxınlaşaraq sifarişinizi təhvil ala bilərsiniz.
 Əlaqə: 
 📍{adress}
 📞{number}'''
+
         send_mail(
             "ecoproduct.az-dan sifarişiniz təsdiqləndi.",
             message,

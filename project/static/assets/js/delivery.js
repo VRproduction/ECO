@@ -127,17 +127,17 @@ function sendPaymentRequest(amount) {
   });
 }
 
-function sendTransactionCreateRequest(transaction, payment_redirect_url, coupon_code, lat, lon, amount, recipient_name, recipient_phone, dropoff_comment, shipment_promise_id, is_wolt = false) {
+function sendTransactionCreateRequest(value, payment_redirect_url, coupon_code, lat, lon, delivery_amount, recipient_name, recipient_phone, dropoff_comment, shipment_promise_id, is_wolt = false) {
   return new Promise((resolve, reject) => {
     let requestData;
 
     if (is_wolt) {
       requestData = {
-        value: transaction,
+        value: value,
         payment_redirect_url: payment_redirect_url,
         lat: lat,
         lon: lon,
-        amount: amount,
+        delivery_amount: delivery_amount,
         recipient_name: recipient_name,
         recipient_phone: recipient_phone,
         dropoff_comment: dropoff_comment,
@@ -146,7 +146,7 @@ function sendTransactionCreateRequest(transaction, payment_redirect_url, coupon_
       }
     } else {
       requestData = {
-        value: transaction,
+        value: value,
         payment_redirect_url: payment_redirect_url,
       }
     }
@@ -252,6 +252,7 @@ function updateMapLocationInfo(lat, lon, street) {
                   } else {
                       document.getElementById("map_total_delivery").innerText = `₼ 0`;
                       document.getElementById("map_discount_price").innerText = `₼ ${localStorageData.discount != 'undefined' ? (Number(localStorageData.discountPrice)).toFixed(2) : (Number(localStorageData.totalPrice)).toFixed(2)}`;
+                  
                   }
               }
           }
@@ -289,7 +290,7 @@ function checkoutButton() {
         console.log(responseData)
         if (window.location.pathname === '/payment/map/') {
           delivery_data = getDeliveryData()
-          sendTransactionCreateRequest(transaction = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], amount = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], dropoff_comment = delivery_data["dropoff_comment"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
+          sendTransactionCreateRequest(value = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], delivery_amount = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], dropoff_comment = delivery_data["dropoff_comment"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
             .then(transactionData => {
               // console.log(transactionData)
               window.location.href = responseData["redirect_url"];
@@ -298,7 +299,7 @@ function checkoutButton() {
               console.error('HTTP isteği sırasında bir hata oluştu:', error);
             });
         } else {
-          sendTransactionCreateRequest(transaction = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code)
+          sendTransactionCreateRequest(value = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code)
             .then(transactionData => {
               // console.log(transactionData)
               window.location.href = responseData["redirect_url"];
@@ -313,3 +314,46 @@ function checkoutButton() {
       console.error('HTTP isteği sırasında bir hata oluştu:', error);
     });
 }
+// function checkoutButton() {
+//   var delivery_amount = localStorage.getItem('delivery_amount');
+//   var total_price_with_delivery;
+//   var coupon_code = localStorage.getItem('coupon_code');
+//   if (delivery_amount) {
+//     if (localStorageData.discount != 'undefined') {
+//       if (Number(localStorageData.discountPrice) < 30) {
+//         total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined' ? Number(localStorage.getItem('discountPrice')) + Number(delivery_amount) : Number(localStorage.getItem('totalPrice')) + Number(delivery_amount)}`);
+//       } else {
+//         total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined'? Number(localStorage.getItem('discountPrice')) : Number(localStorage.getItem('totalPrice'))}`);
+//       }
+//     } else {
+//       if (Number(localStorageData.totalPrice) < 30) {
+//         total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined'? Number(localStorage.getItem('discountPrice'))+Number(delivery_amount) : Number(localStorage.getItem('totalPrice'))+Number(delivery_amount)}`);
+//       } else {
+//         total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined'? Number(localStorage.getItem('discountPrice')) : Number(localStorage.getItem('totalPrice'))}`);
+//       }
+//     }
+//   } else {
+//     total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined' ? Number(localStorage.getItem('discountPrice')) : Number(localStorage.getItem('totalPrice'))}`);
+//   }
+//   if (window.location.pathname === '/payment/map/') {
+//     delivery_data = getDeliveryData()
+//     console.log(delivery_data)
+//     sendTransactionCreateRequest(value = NaN, payment_redirect_url = NaN, coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], delivery_amount = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], dropoff_comment = delivery_data["dropoff_comment"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
+//       .then(transactionData => {
+//         // console.log(transactionData)
+//         window.location.href = "http://localhost:8000/payment/success"
+//       })
+//       .catch(error => {
+//         console.error('HTTP isteği sırasında bir hata oluştu:', error);
+//       });
+//   } else {
+//     sendTransactionCreateRequest(value = NaN, payment_redirect_url = NaN, coupon_code = coupon_code)
+//       .then(transactionData => {
+//         // console.log(transactionData)
+//         window.location.href = "http://localhost:8000/payment/success"
+//       })
+//       .catch(error => {
+//         console.error('HTTP isteği sırasında bir hata oluştu:', error);
+//       });
+//   }
+// }

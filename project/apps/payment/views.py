@@ -70,13 +70,14 @@ def success(request):
                 if transaction_obj.is_wolt:
                     order = Order.objects.create(
                         user=request.user,
-                        total_amount=total_amount,  # İndirimli toplam tutarı kullan
+                        total_amount=total_amount + (transaction_obj.delivery_amount if total_amount < 30 else 0),  # İndirimli toplam tutarı kullan
                         discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-                        discount_amount = apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-                        coupon=applied_coupon,
+                        discount_amount = apply_coupon(request.user ,basket_items, applied_coupon)+(transaction_obj.delivery_amount if apply_coupon(request.user ,basket_items, applied_coupon) < 30 else 0) if applied_coupon else None ,
+                        delivery_amount = transaction_obj.delivery_amount,
+                        is_delivery_free = (applied_coupon and (request.user ,basket_items, applied_coupon) > 30 and apply_coupon(request.user ,basket_items, applied_coupon)) or (total_amount > 30 and total_amount is not None), 
+                        coupon=applied_coupon ,
                         is_wolt = True,
                         transaction = transaction_obj
-
                     )
                 else:
                     order = Order.objects.create(
@@ -115,6 +116,96 @@ def success(request):
         context["payment_redirect_url"] = transaction_obj.payment_redirect_url
         return render(request, 'failed.html', context = context)
     return redirect('failed')
+
+
+# @transaction.atomic
+# @login_required
+# def success(request):
+#         context = {
+
+#     }
+#         transaction_obj = Transaction.objects.filter(user = request.user).last()
+#     # try:
+#         basket_items = BasketItem.objects.filter(user=request.user)
+
+#         if basket_items.count() == 0:
+#             return redirect('basket')
+                
+#             # Stok kontrolü
+#         for item in basket_items:
+#             product = Product.objects.get(id=item.product.id)
+#             if item.quantity > product.stock:
+#                 messages.error(request, f"Stokda '{product.title}' yoxdur.")
+#                 return redirect('basket')
+
+#             # Toplam ücret hesapla
+#         total_amount = sum(item.total_price for item in basket_items)
+
+#             # Kupon işlemleri
+#         coupon_code = transaction_obj.coupon_code
+#         applied_coupon = None
+
+#         if coupon_code:
+#             try:
+#                 applied_coupon = Coupon.objects.get(coupon=coupon_code)
+#                 # Kuponun kullanılabilir olup olmadığını kontrol et
+#                 if not applied_coupon.can_user_use_coupon(request.user):
+#                     return redirect('basket')
+                    
+#             except Coupon.DoesNotExist:
+#                 return redirect('basket')
+
+#                 # İndirimli toplam tutarı hesapla
+
+#             # Sipariş oluştur
+#         with transaction.atomic():
+#             if transaction_obj.is_wolt:
+#                 order = Order.objects.create(
+#                     user=request.user,
+#                     total_amount=total_amount + (transaction_obj.delivery_amount if total_amount < 30 else 0),  # İndirimli toplam tutarı kullan
+#                     discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+#                     discount_amount = apply_coupon(request.user ,basket_items, applied_coupon)+(transaction_obj.delivery_amount if apply_coupon(request.user ,basket_items, applied_coupon) < 30 else 0) if applied_coupon else None ,
+#                     delivery_amount = transaction_obj.delivery_amount,
+#                     is_delivery_free = (applied_coupon and (request.user ,basket_items, applied_coupon) > 30 and apply_coupon(request.user ,basket_items, applied_coupon)) or (total_amount > 30 and total_amount is not None), 
+#                     coupon=applied_coupon ,
+#                     is_wolt = True,
+#                     transaction = transaction_obj
+#                 )
+#             else:
+#                 order = Order.objects.create(
+#                     user=request.user,
+#                     total_amount=total_amount,  # İndirimli toplam tutarı kullan
+#                     discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+#                     discount_amount = apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+#                     coupon=applied_coupon,
+#                     transaction = transaction_obj
+#                 )
+
+#             # Siparişe ürünleri ekle ve stok güncelle
+#             for item in basket_items:
+#                 product = Product.objects.get(id=item.product.id)
+#                 OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
+
+#                 # Stok düşürme
+#                 product.stock -= item.quantity
+#                 product.sale_count += item.quantity
+#                 product.save()
+
+#                 # Sepeti temizle (veya kendi sepet yönetimine göre uyarla)
+#         basket_items.delete()
+#         if coupon_code:
+#             coupon_usage = CouponUsage.objects.get(user=request.user, coupon = applied_coupon)
+#             coupon_usage.max_coupon_usage_count -= 1
+#             coupon_usage.save()
+#     # except Exception as e:
+#     #     print(e)
+#     #     messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
+#     #     return redirect('basket')
+#         transaction_obj.is_checked_from_eco = True
+#         transaction_obj.save()
+#         return render(request, 'success.html', context = context)            
+    
+
 
 def failed(request):
     # transaction_obj = Transaction.objects.filter(user = request.user, ).last()

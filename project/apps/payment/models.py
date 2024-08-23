@@ -12,12 +12,12 @@ class Wolt(models.Model):
         return 'WOLT'
     
 class Transaction(models.Model):
-    value = models.CharField(max_length = 50, unique = True)
+    value = models.CharField(max_length = 50, unique = True, null = True, blank = True)
     payment_redirect_url = models.URLField(null = True, blank = True)
     user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
     lat = models.CharField(max_length = 100, null = True, blank = True)
     lon = models.CharField(max_length = 100, null = True, blank = True)
-    amount = models.CharField(max_length = 100, null = True, blank = True)
+    delivery_amount = models.FloatField(max_length = 100, null = True, blank = True)
     recipient_name = models.CharField(max_length = 100, null = True, blank = True)
     recipient_phone = models.CharField(max_length = 100, null = True, blank = True)
     dropoff_comment = models.CharField(max_length = 100, null = True, blank = True)
@@ -27,5 +27,5 @@ class Transaction(models.Model):
     is_checked_from_eco = models.BooleanField(default = False)
     created = models.DateTimeField(auto_now_add = True, null = True) 
 
-    def __str__(self) -> str:
-        return self.value
+    # def __str__(self) -> str:
+    #     return self.value

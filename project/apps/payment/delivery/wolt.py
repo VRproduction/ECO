@@ -72,12 +72,8 @@ class Delivery():
             if customer_support.customer_phone_number:
                 data["customer_support"]["phone_number"] = customer_support.customer_phone_number
 
-        response = requests.post(self.base_url+'deliveries', json = data, headers = self.getHeaders())
+        response = requests.post(self.test_url+'deliveries', json = data, headers = self.getHeaders())
         response_data = response.json()
-        print(amount)
-
-        print(data)
-        print(response_data)
         return response_data
 
 

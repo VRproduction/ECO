@@ -259,6 +259,8 @@ class Order(models.Model):
     total_amount = models.FloatField()
     discount = models.FloatField(null = True, blank = True)
     discount_amount = models.FloatField(null = True, blank = True)
+    delivery_amount = models.FloatField(null = True, blank = True)
+    is_delivery_free = models.BooleanField(null = True, blank = True)
     created_at = models.DateTimeField(auto_now_add=True)
     coupon = models.ForeignKey(Coupon, on_delete = models.CASCADE, related_name = 'orders', null = True, blank = True)
     tracking_url = models.URLField(null = True, blank = True)

@@ -33,7 +33,7 @@ def success(request):
     payment_obj = Payment()
     response_data = payment_obj.get_payment_status(transaction_obj)  
     if response_data["status"] == 'success' and not transaction_obj.is_checked_from_eco:
-        # try:
+        try:
             basket_items = BasketItem.objects.filter(user=request.user)
 
             if basket_items.count() == 0:
@@ -69,16 +69,16 @@ def success(request):
             with transaction.atomic():
                 if transaction_obj.is_wolt:
                     order = Order.objects.create(
-                        user=request.user,
-                        total_amount=total_amount + (transaction_obj.delivery_amount if total_amount < 30 else 0),  # İndirimli toplam tutarı kullan
-                        discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-                        discount_amount = apply_coupon(request.user ,basket_items, applied_coupon)+(transaction_obj.delivery_amount if apply_coupon(request.user ,basket_items, applied_coupon) < 30 else 0) if applied_coupon else None ,
-                        delivery_amount = transaction_obj.delivery_amount,
-                        is_delivery_free = (applied_coupon and (request.user ,basket_items, applied_coupon) > 30 and apply_coupon(request.user ,basket_items, applied_coupon)) or (total_amount > 30 and total_amount is not None), 
-                        coupon=applied_coupon ,
-                        is_wolt = True,
-                        transaction = transaction_obj
-                    )
+                    user=request.user,
+                    total_amount=total_amount + (transaction_obj.delivery_amount if total_amount < 30 else 0),  # İndirimli toplam tutarı kullan
+                    discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
+                    discount_amount = apply_coupon(request.user ,basket_items, applied_coupon)+(transaction_obj.delivery_amount if apply_coupon(request.user ,basket_items, applied_coupon) < 30 else 0) if applied_coupon else None ,
+                    delivery_amount = transaction_obj.delivery_amount,
+                    is_delivery_free = (applied_coupon and (request.user ,basket_items, applied_coupon) > 30 and apply_coupon(request.user ,basket_items, applied_coupon)) or (total_amount > 30 and total_amount is not None), 
+                    coupon=applied_coupon ,
+                    is_wolt = True,
+                    transaction = transaction_obj
+                )
                 else:
                     order = Order.objects.create(
                         user=request.user,
@@ -105,13 +105,13 @@ def success(request):
                 coupon_usage = CouponUsage.objects.get(user=request.user, coupon = applied_coupon)
                 coupon_usage.max_coupon_usage_count -= 1
                 coupon_usage.save()
-        # except Exception as e:
-        #     print(e)
-        #     messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
-        #     return redirect('basket')
-            transaction_obj.is_checked_from_eco = True
-            transaction_obj.save()
-            return render(request, 'success.html', context = context)            
+        except Exception as e:
+            print(e)
+            messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
+            return redirect('basket')
+        transaction_obj.is_checked_from_eco = True
+        transaction_obj.save()
+        return render(request, 'success.html', context = context)            
     elif response_data["status"] == 'new':
         context["payment_redirect_url"] = transaction_obj.payment_redirect_url
         return render(request, 'failed.html', context = context)

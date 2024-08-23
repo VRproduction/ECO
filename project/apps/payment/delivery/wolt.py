@@ -14,7 +14,7 @@ class Delivery():
 
     def getHeaders(self):
         headers = {
-            'Authorization': f'Bearer {settings.WOLT_API_KEY}',
+            'Authorization': f'Bearer {settings.WOLT_API_KEY_TEST}',
             'Content-Type': 'application/json'
         }
         return headers
@@ -29,7 +29,7 @@ class Delivery():
             "min_preparation_time_minutes": 20,
         }
 
-        response = requests.post(self.base_url+'shipment-promises', json = data, headers = self.getHeaders())
+        response = requests.post(self.test_url+'shipment-promises', json = data, headers = self.getHeaders())
         response_data = response.json()
         return JsonResponse(response_data)
     

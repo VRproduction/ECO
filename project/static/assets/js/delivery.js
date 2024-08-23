@@ -146,7 +146,7 @@ function sendTransactionCreateRequest(value, payment_redirect_url, coupon_code, 
       }
     } else {
       requestData = {
-        value: transaction,
+        value: value,
         payment_redirect_url: payment_redirect_url,
       }
     }

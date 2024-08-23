@@ -33,7 +33,7 @@ def success(request):
     payment_obj = Payment()
     response_data = payment_obj.get_payment_status(transaction_obj)  
     if response_data["status"] == 'success' and not transaction_obj.is_checked_from_eco:
-        try:
+        # try:
             basket_items = BasketItem.objects.filter(user=request.user)
 
             if basket_items.count() == 0:
@@ -105,13 +105,13 @@ def success(request):
                 coupon_usage = CouponUsage.objects.get(user=request.user, coupon = applied_coupon)
                 coupon_usage.max_coupon_usage_count -= 1
                 coupon_usage.save()
-        except Exception as e:
-            print(e)
-            messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
-            return redirect('basket')
-        transaction_obj.is_checked_from_eco = True
-        transaction_obj.save()
-        return render(request, 'success.html', context = context)            
+        # except Exception as e:
+        #     print(e)
+        #     messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
+        #     return redirect('basket')
+            transaction_obj.is_checked_from_eco = True
+            transaction_obj.save()
+            return render(request, 'success.html', context = context)            
     elif response_data["status"] == 'new':
         context["payment_redirect_url"] = transaction_obj.payment_redirect_url
         return render(request, 'failed.html', context = context)

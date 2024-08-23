@@ -153,7 +153,6 @@ function sendTransactionCreateRequest(value, payment_redirect_url, coupon_code, 
     if (coupon_code) {
       requestData["coupon_code"] = coupon_code
     }
-    console.log(coupon_code)
 
     fetch(`/payment/transactions/`, {
       method: 'POST',
@@ -289,7 +288,7 @@ function checkoutButton() {
         console.log(responseData)
         if (window.location.pathname === '/payment/map/') {
           delivery_data = getDeliveryData()
-          sendTransactionCreateRequest(value = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], delivery_data = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], dropoff_comment = delivery_data["dropoff_comment"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
+          sendTransactionCreateRequest(value = responseData["transaction"], payment_redirect_url = responseData["redirect_url"], coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], delivery_amount = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], dropoff_comment = delivery_data["dropoff_comment"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
             .then(transactionData => {
               // console.log(transactionData)
               window.location.href = responseData["redirect_url"];
@@ -313,47 +312,3 @@ function checkoutButton() {
       console.error('HTTP isteği sırasında bir hata oluştu:', error);
     });
 }
-
-// function checkoutButton() {
-//   var delivery_amount = localStorage.getItem('delivery_amount');
-//   var total_price_with_delivery;
-//   var coupon_code = localStorage.getItem('coupon_code');
-//   if (delivery_amount) {
-//     if (localStorageData.discount != 'undefined') {
-//       if (Number(localStorageData.discountPrice) < 30) {
-//         total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined' ? Number(localStorage.getItem('discountPrice')) + Number(delivery_amount) : Number(localStorage.getItem('totalPrice')) + Number(delivery_amount)}`);
-//       } else {
-//         total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined'? Number(localStorage.getItem('discountPrice')) : Number(localStorage.getItem('totalPrice'))}`);
-//       }
-//     } else {
-//       if (Number(localStorageData.totalPrice) < 30) {
-//         total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined'? Number(localStorage.getItem('discountPrice'))+Number(delivery_amount) : Number(localStorage.getItem('totalPrice'))+Number(delivery_amount)}`);
-//       } else {
-//         total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined'? Number(localStorage.getItem('discountPrice')) : Number(localStorage.getItem('totalPrice'))}`);
-//       }
-//     }
-//   } else {
-//     total_price_with_delivery = Number(`${localStorage.getItem('discount') != 'undefined' ? Number(localStorage.getItem('discountPrice')) : Number(localStorage.getItem('totalPrice'))}`);
-//   }
-//   if (window.location.pathname === '/payment/map/') {
-//     delivery_data = getDeliveryData()
-//     console.log(delivery_data)
-//     sendTransactionCreateRequest(value = NaN, payment_redirect_url = NaN, coupon_code = coupon_code, lat = delivery_data["lat"], lon = delivery_data["lon"], delivery_amount = delivery_data["amount"], recipient_name = delivery_data["recipient_name"], recipient_phone = delivery_data["recipient_phone"], dropoff_comment = delivery_data["dropoff_comment"], shipment_promise_id = delivery_data["shipment_promise_id"], is_wolt = true)
-//       .then(transactionData => {
-//         // console.log(transactionData)
-//         window.location.href = "http://localhost:8000/payment/success"
-//       })
-//       .catch(error => {
-//         console.error('HTTP isteği sırasında bir hata oluştu:', error);
-//       });
-//   } else {
-//     sendTransactionCreateRequest(value = NaN, payment_redirect_url = NaN, coupon_code = coupon_code)
-//       .then(transactionData => {
-//         // console.log(transactionData)
-//         window.location.href = "http://localhost:8000/payment/success"
-//       })
-//       .catch(error => {
-//         console.error('HTTP isteği sırasında bir hata oluştu:', error);
-//       });
-//   }
-// }

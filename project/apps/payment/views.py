@@ -272,4 +272,11 @@ class TransactionCreateAPIView(CreateAPIView):
     permission_classes = [IsAuthenticated, ]
 
     def perform_create(self, serializer):
+        # POST isteği ile gelen verileri al
+        incoming_data = serializer.validated_data
+
+        # Gelen verileri logla veya başka bir işlem yap
+        print(incoming_data)
+
+        # Veriyi kaydet
         serializer.save(user=self.request.user)

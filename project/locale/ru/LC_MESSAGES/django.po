@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-11 12:41+0400\n"
-"PO-Revision-Date: 2024-08-11 12:42+0400\n"
+"PO-Revision-Date: 2024-08-16 16:42+0400\n"
 "Last-Translator:   <admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -944,7 +944,7 @@ msgstr "Вызов"
 
 #: templates/components/header/mobile-header.html:46
 msgid "Dil"
-msgstr "Убрать"
+msgstr "Язык"
 
 #: templates/components/header/mobile-header.html:63
 msgid "Daxil ol / Qeydiyyat keç"

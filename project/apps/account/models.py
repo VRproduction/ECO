@@ -59,3 +59,11 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+    @property
+    def order_count(self):
+        return self.orders.count()
+    
+    @property
+    def basket_items_count(self):
+        return self.basket_items.count()

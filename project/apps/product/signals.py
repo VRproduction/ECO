@@ -17,16 +17,28 @@ from apps.config.models.general_settings import (
     GeneralSettings
 )
 from .models import Company, Order, OrderItem
+from .models import Coupon, CouponUsage
 
 
 
 User = get_user_model()
+
+@receiver(post_save, sender=User)
+def create_coupon_usage_for_new_user(sender, instance, created, **kwargs):
+    if created:
+        coupons = Coupon.objects.all()
+        for coupon in coupons:
+            CouponUsage.objects.get_or_create(user=instance, coupon=coupon, defaults={'max_coupon_usage_count': 1})
 
 @receiver(post_save, sender = Company)
 def update_product_discount(sender, instance, **kwargs):
     if instance.product:
         instance.product.discount = instance.discount
         instance.product.save()
+
+@receiver(post_save, sender=Company)
+def handle_company_save(sender, instance, **kwargs):
+    instance.schedule_discount_removal()
 
 # @receiver(post_save, sender=Order)
 # def send_order_email(sender, instance, created, **kwargs):

@@ -179,6 +179,7 @@ class StatusInline(admin.TabularInline):
     extra = 0
     readonly_fields = ['status',]
     fields = ['status', 'is_confirmed',]
+    
 
     def has_add_permission(self, request, obj=None):
         return False

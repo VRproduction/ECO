@@ -288,7 +288,7 @@ class Order(models.Model):
         if confirmed_status_obj:
             return confirmed_status_obj.status
         return None
-
+    
 class Status(models.Model):
     status = models.CharField(max_length=20, choices=[
         ('Gözləmədə', _('Gözləmədə')),
@@ -386,6 +386,15 @@ class Company(models.Model):
     class Meta:
         verbose_name = 'Kompaniya'
         verbose_name_plural = 'Kompaniyalar'
+
+    def schedule_discount_removal(self):
+        from .tasks import remove_expired_discounts
+        eta = self.finish_time - timezone.now()
+        if eta.total_seconds() > 0:
+            remove_expired_discounts.apply_async(
+                (self.id,),
+                eta=self.finish_time
+            )
 
 class Partner(models.Model):
     title = models.CharField(max_length=100)

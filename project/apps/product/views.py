@@ -83,7 +83,7 @@ class ProductDetailPageView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super(ProductDetailPageView, self).get_context_data(**kwargs)
-        context["related_products"] = Product.objects.exclude(pk = self.get_object().pk).filter(category = self.get_object().category).order_by("-pk")[:4]
+        context["related_products"] = Product.objects.exclude(pk = self.get_object().pk).filter(category = self.get_object().category, is_active = True).order_by("-pk")[:4]
         return context
     
 

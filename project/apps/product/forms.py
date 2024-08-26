@@ -4,12 +4,17 @@ from .models import Contact
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import get_user_model
 
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
+
 User = get_user_model()
 
 class ContactForm(ModelForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+
     class Meta:
         model = Contact
-        fields = '__all__'
+        fields = ['name', 'email', 'number', 'subject', 'text', 'captcha']
 
 
 class AccountUpdateForm(UserChangeForm):

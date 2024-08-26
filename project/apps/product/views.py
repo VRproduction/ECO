@@ -463,9 +463,8 @@ class ContactPageView(FormView):
             'email': email,
             'subject': subject,
             'text': text,
-
         }
-       
+        
         message = render_to_string('mail/contact.html', data)
 
         send_mail(
@@ -477,6 +476,7 @@ class ContactPageView(FormView):
         )   
         messages.success(self.request, 'Mesajınız göndərildi!')
         return super().form_valid(form)
+
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

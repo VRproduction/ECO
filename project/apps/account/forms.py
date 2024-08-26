@@ -2,6 +2,10 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
+
+
 User = get_user_model()
 
 class CustomUserCreationForm(UserCreationForm):
@@ -37,7 +41,8 @@ class RememberMeAuthenticationForm(EmailAuthenticationForm):
 class RegisterForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={'placeholder': 'Ad'}))
     last_name = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={'placeholder': 'Soyad'}))
-
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)  
+    
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'password1', 'password2']

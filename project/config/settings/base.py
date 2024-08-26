@@ -59,6 +59,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'rosetta',
     "corsheaders",
+    'django_recaptcha',
 
     "django_celery_results",
     "django_celery_beat",
@@ -238,3 +239,6 @@ SPECTACULAR_SETTINGS = {
     ],
     'POSTPROCESSING_HOOKS': [],
 }
+
+RECAPTCHA_PUBLIC_KEY = '6LcPfS8qAAAAADI-PPNC7JYh9VhU63s-LgFh-xsF'
+RECAPTCHA_PRIVATE_KEY = '6LcPfS8qAAAAABwshWj0sHqJaLDC8uQ83QA7GJf_'

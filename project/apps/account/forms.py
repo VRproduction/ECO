@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV2Checkbox
+from django.utils.translation import gettext_lazy as _
 
 
 User = get_user_model()
@@ -39,14 +40,20 @@ class RememberMeAuthenticationForm(EmailAuthenticationForm):
     )
 
 class RegisterForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={'placeholder': 'Ad'}))
-    last_name = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={'placeholder': 'Soyad'}))
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)  
-    
+    first_name = forms.CharField(
+        max_length=30, 
+        required=False, 
+        widget=forms.TextInput(attrs={'placeholder': _('Ad')})
+    )
+    last_name = forms.CharField(
+        max_length=30, 
+        required=False, 
+        widget=forms.TextInput(attrs={'placeholder': _('Soyad')})
+    )
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
-
         widgets = {
             'email': forms.EmailInput(attrs={'placeholder': 'Email *'}),
             'password1': forms.PasswordInput(attrs={'placeholder': 'Parol *'}),

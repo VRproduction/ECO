@@ -9,10 +9,27 @@ User = get_user_model()
 MAX_OBJECTS = 1
 
     
+class ImageNullFilter(admin.SimpleListFilter):
+    title = _('Şəkil olanlar')
+    parameter_name = 'has_image'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', _('Yes')),
+            ('no', _('No')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            return queryset.exclude(image__isnull=True).exclude(image__exact='')
+        if self.value() == 'no':
+            return queryset.filter(image__isnull=True) | queryset.filter(image__exact='')
+
     
 @admin.register(ProductCategory)
 class ProductCategoryAdmin(TranslationAdmin):
-    list_display = ('title',)
+    list_display = ('title',  'is_active', 'is_test', 'is_main_page', "created")
+    list_filter = (ImageNullFilter, 'is_active', 'is_test', 'created_by_supporter', 'is_main_page')
 
     class Media:
         js = (
@@ -41,23 +58,6 @@ class VendorAdmin(TranslationAdmin):
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
 
-class ImageNullFilter(admin.SimpleListFilter):
-    title = _('Şəkil olanlar')
-    parameter_name = 'has_image'
-
-    def lookups(self, request, model_admin):
-        return (
-            ('yes', _('Yes')),
-            ('no', _('No')),
-        )
-
-    def queryset(self, request, queryset):
-        if self.value() == 'yes':
-            return queryset.exclude(image__isnull=True).exclude(image__exact='')
-        if self.value() == 'no':
-            return queryset.filter(image__isnull=True) | queryset.filter(image__exact='')
-
-    
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
     inlines = [ProductImageInline, ]

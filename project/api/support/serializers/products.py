@@ -52,7 +52,7 @@ class ProductSerializer(serializers.ModelSerializer):
         title = f"Ecoproduct.az, {supporter} tərəfindən məhsul əlavə edildi"
         
         data = {
-            'ttle': title,
+            'title': title,
             'product': product,
             'site_url': site_url,
         }
@@ -73,3 +73,38 @@ class ProductCategorySerializer(ModelSerializer):
         fields = ('id', 'title', 'slug')
         read_only_fields = ('slug',)
     
+    def create(self, validated_data):
+        api_key = self.context['request'].api_key
+
+        product_category = ProductCategory.objects.create(
+            created_by_supporter=api_key.supporter,
+            is_active=False,
+            is_test=api_key.is_test,
+            **validated_data
+        )
+
+        if not api_key.is_test:
+            self.send_email_to_admin(product_category, api_key.supporter)
+        return product_category
+    
+    def send_email_to_admin(self, product_category: ProductCategory, supporter):
+        site = Site.objects.get_current()
+        site_url = site.domain
+        
+        title = f"Ecoproduct.az, {supporter} tərəfindən kateqoriya əlavə edildi"
+        
+        data = {
+            'title': title,
+            'product_category': product_category,
+            'site_url': site_url,
+        }
+
+        message = render_to_string('mails/supporter_product_category_mail.html', data)
+
+        send_mail(
+            title, 
+            message,
+            settings.EMAIL_HOST_USER,
+            [settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False, html_message=message
+        ) 

@@ -21,12 +21,29 @@ class ProductCategory(models.Model):
     image = models.ImageField(upload_to = 'category')
     is_main_page = models.BooleanField(default = True)
 
+    created_by_supporter = models.ForeignKey(Supporter, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'product_categories', verbose_name = 'Dəstəkçi')
+    is_active = models.BooleanField(default = True, verbose_name = "Saytda görünən və ya aktiv olan", help_text="Supporter (Məsələn: logix) tərəfindan yaradıldığı zaman təsdiqlənmədən aktiv olmasına icazə verilmir.")    
+    is_test = models.BooleanField(default = False, verbose_name = "Test üçün (Saytda görünmür)")  
+
+    created = models.DateTimeField(auto_now_add = True, null = True)
+    updated = models.DateTimeField(auto_now = True, null = True)
+
     def __str__(self):
         return self.title
     
     class Meta:
         verbose_name = 'Kateqoriya'
         verbose_name_plural = 'Kateqoriyalar'
+
+    def clean(self):
+        super().clean()
+
+        if self.is_active and not self.image:
+            raise ValidationError("Kateqoriyanın aktiv olması üçün şəkil yükləmək tələb olunur.")
+        
+        if self.is_active and self.is_test:
+            raise ValidationError("Test və saytda görünən eyni zamanda aktiv ola bilməz. ")
+        
 
     def save(self, *args, **kwargs):
         self.slug = custom_az_slugify(self.title)
@@ -74,6 +91,7 @@ class Coupon(models.Model):
     class Meta:
         verbose_name = 'Kupon'
         verbose_name_plural = 'Kuponlar'
+
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

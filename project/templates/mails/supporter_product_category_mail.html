@@ -78,14 +78,10 @@
         <h2>{{title}}</h2>
 
         <div class="info">
-            <p><strong>ID:</strong> {{ product.id }}</p>
-            <p><strong>Məhsulun adı:</strong> {{ product.title }}</p>
-            <p><strong>Kategoriya:</strong> {{ product.category }}</p>
-            <p><strong>Qiymət:</strong> {{ product.price }}</p>
-            <p><strong>Stok:</strong> {{ product.stock }}</p> 
-            
+            <p><strong>ID:</strong> {{ product_category.id }}</p>
+            <p><strong>Kategoriyanın adı:</strong> {{ product_category.title }}</p>
             <p>{% trans 'Admin panelə keçid' %}:</p>
-            <p><a style="color: #fff;" href="http://{{ site_url }}/product/product/{{product.id}}/change/" class="btn btn-primary">{% trans 'Məhsulun linki' %}</a></p>
+            <p><a style="color: #fff;" href="http://{{ site_url }}/product/productcategory/{{product_category.id}}/change/" class="btn btn-primary">{% trans 'Məhsulun linki' %}</a></p>
         </div>
     </div>
 

@@ -40,6 +40,12 @@ class ProductCategoryAdmin(TranslationAdmin):
         css = {
             'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
         }
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # Varsayılan olarak sadece 'active=True' olanları göster
+        if not request.GET.get('is_active__exact'):
+            qs = qs.filter(is_active=True)
+        return qs
 
 @admin.register(Vendor)
 class VendorAdmin(TranslationAdmin):
@@ -61,11 +67,11 @@ class ProductImageInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
     inlines = [ProductImageInline, ]
-    list_display = ('title', 'category','id', 'price', 'stock', 'sale_count', 'is_active', 'is_test', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page', "created")
-    list_filter = (ImageNullFilter, 'is_active', 'is_test', 'created_by_supporter', 'category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending',)
+    list_display = ('title', 'category','id', 'price', 'stock', 'sale_count', 'click_count', 'is_active', 'is_test', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page', "created")
+    list_filter = (ImageNullFilter, 'is_active', 'is_test', 'created_by_supporter', 'category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending', )
     search_fields = ('title', 'description')
     ordering = ('-stock',)
-    readonly_fields = ('sale_count', 'product_code', 'created', 'updated')
+    readonly_fields = ('sale_count', 'product_code', 'created', 'updated', 'click_count')
 
     fieldsets = (
         (None, {
@@ -75,7 +81,7 @@ class ProductAdmin(TranslationAdmin):
             'fields': ('using_time', 'badges', 'image', 'vendor', 'price', 'discount', 'stock', 'sale_count', 'barcode_code', 'product_code')
         }),
         ('Special Markers', {
-            'fields': ('is_active', 'is_test', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending')
+            'fields': ('is_active', 'is_test', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending', 'click_count')
         }),
         ('SEO', {
             'fields': ('keywords', 'meta_description')
@@ -84,6 +90,16 @@ class ProductAdmin(TranslationAdmin):
             'fields': ('created', 'updated')
         }),
     )
+    # def get_click_count(self, obj):
+    #     return obj.get_click_count()
+    # get_click_count.short_description = 'Click Count'
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # Varsayılan olarak sadece 'active=True' olanları göster
+        if not request.GET.get('is_active__exact'):
+            qs = qs.filter(is_active=True)
+        return qs
 
     class Media:
         js = (

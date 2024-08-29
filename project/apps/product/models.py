@@ -12,6 +12,7 @@ from apps.config.models.api_key import APIKey
 from apps.core.models import Supporter
 
 from utils.slugify.custom_slugify import custom_az_slugify
+from utils.models.clickable_model import ClickableModel
 
 User = get_user_model()
 
@@ -117,7 +118,7 @@ class CouponUsage(models.Model):
     def __str__(self):
         return f"{self.coupon}"
     
-class Product(models.Model):
+class Product(ClickableModel):
     NUMBERS = [
         (1, _("Ən çox satılan")),
         (2, _("Yeni")),

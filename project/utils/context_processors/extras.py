@@ -17,7 +17,7 @@ def extras(request):
         'current_year': datetime.datetime.now().year,
         'current_time': datetime.datetime.now(),
         'is_active_time': is_active_time_value,
-        'categories': ProductCategory.objects.all(),
+        'categories': ProductCategory.objects.filter(is_active = True),
         'setting': general_setting,
         'all_products': Product.objects.all(),
         'site_url': site_url,

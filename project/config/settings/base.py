@@ -48,6 +48,7 @@ CUSTOM_APPS = [
     'apps.seo.apps.SeoConfig',
     'apps.vacancies.apps.VacanciesConfig',
     'apps.customadmin.apps.CustomadminConfig',
+    'apps.tracking.apps.TrackingConfig',
 
     #pages
     'apps.pages.home.apps.HomeConfig',

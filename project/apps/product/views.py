@@ -67,7 +67,7 @@ class ShopPageView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['count'] = self.get_queryset().count()
-        context['categories'] = ProductCategory.objects.all()
+        context['categories'] = ProductCategory.objects.filter(is_active = True)
         context['new_products'] = Product.objects.filter(is_active=True).order_by('-id')[:3]
         context['companies'] = Company.objects.filter(finish_time__gte=datetime.datetime.now())[:4]
         context['seo'] = ShopPageSeo.objects.first()
@@ -85,6 +85,19 @@ class ProductDetailPageView(DetailView):
         context = super(ProductDetailPageView, self).get_context_data(**kwargs)
         context["related_products"] = Product.objects.exclude(pk = self.get_object().pk).filter(category = self.get_object().category, is_active = True).order_by("-pk")[:4]
         return context
+    
+    def get(self, request, *args, **kwargs):
+        # Call the super method to handle the usual get request
+        response = super(ProductDetailPageView, self).get(request, *args, **kwargs)
+        
+        # Get the product object
+        product = self.get_object()
+
+        # Record the click
+        ip_address = request.META.get('REMOTE_ADDR')
+        product.record_click(ip_address)
+
+        return response
     
 
 class BasketPageView(TemplateView, IsNotAuthView):

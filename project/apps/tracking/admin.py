@@ -31,4 +31,16 @@ class ClickTrackingAdmin(admin.ModelAdmin):
         return False
     
 admin.site.register(ClickTracking, ClickTrackingAdmin)
-admin.site.register(IPAddress)
+
+class IPAddressAdmin(admin.ModelAdmin):
+
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request):
+        return False
+    
+    def has_delete_permission(self, request):
+        return False
+    
+admin.site.register(IPAddress, IPAddressAdmin)

@@ -38,3 +38,14 @@ class APIKeyAdmin(admin.ModelAdmin):
     search_fields = ('key', 'supporter')
     list_filter = ('supporter', "is_test")
     
+@admin.register(PageView)
+class PageViewAdmin(admin.ModelAdmin):
+    list_display = ('url', 'ip_address', 'timestamp', 'user')
+    list_filter = ('timestamp', 'url')
+    search_fields = ('url', 'ip_address', 'user')
+
+@admin.register(MonitoredURL)
+class MonitoredURLAdmin(admin.ModelAdmin):
+    list_display = ('url_pattern', 'is_monitored')
+    list_filter = ('is_monitored',)
+    search_fields = ('url_pattern',)

@@ -3,3 +3,4 @@ from .general_settings import (
     PhoneNumber
 )
 from .api_key import APIKey
+from .page_view import PageView, MonitoredURL

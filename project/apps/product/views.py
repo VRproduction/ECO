@@ -94,10 +94,18 @@ class ProductDetailPageView(DetailView):
         product = self.get_object()
 
         # Record the click
-        ip_address = request.META.get('REMOTE_ADDR')
+        ip_address = self.get_client_ip(request)
         product.record_click(ip_address)
 
         return response
+    
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
     
 
 class BasketPageView(TemplateView, IsNotAuthView):

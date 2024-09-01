@@ -1,0 +1,157 @@
+{% load static %} 
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="msapplication-navbutton-color" content="#ffffff" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />
+
+    {% block title %}
+    <title>{{setting.site_title}}</title>
+    {% endblock title %} {% block seo %} {% endblock seo%}
+
+    <meta
+      name="robots"
+      content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+    />
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+    <meta property="og:locale" content="az_AZ" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:site_name" content="{{site_url}}" />
+    <link
+      rel="shortcut icon"
+      href="{% if setting.favicon %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ setting.favicon.url }}{% endif %}"
+      type="image/x-icon"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="{% if setting.favicon %}{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ setting.favicon.url }}{% endif %}"
+    />
+
+    <!-- Meta Pixel Code Google -->
+    <meta
+      name="google-site-verification"
+      content="EjJslNGIBTSS7Tmwhd-1B8nvpBZ_QCgoODNiEjljEBc"
+    />
+    <!-- End Meta Pixel Code Google -->
+
+    <!-- Meta Pixel Code Facebook -->
+    <meta
+      name="facebook-domain-verification"
+      content="zvwk2agigwho58o0gkdounc8eoxivs"
+    />
+    <!-- End Meta Pixel Code Facebook -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+ 
+    <!-- choose one -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    {% tailwind_css %} 
+    
+    <link href="{% static 'assets/custom/css/root.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/custom/css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/custom/css/swipper.css' %}" rel="stylesheet">
+
+
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
+      fbq("init", "3602899766643790");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=3602899766643790&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-HMZTCG4XRR"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-HMZTCG4XRR");
+    </script>
+  </head>
+
+  <body style="font-family: 'Lato', sans-serif;">
+    <!--  Header Top  -->
+      {% include "component/layout/header/HeaderTop.html" %}
+    <!--  Header Top End -->
+
+    <!--  Header Middle  -->
+      {% include "component/layout/header/HeaderMiddle.html" %}
+    <!--  Header Middle End -->
+
+    <!--  Header Bottom  -->
+    {% include "component/layout/header/HeaderBottom.html" %}
+    <!--  Header Bottom End -->
+
+    <!--  Header Bottom  -->
+    {% include "component/layout/header/HeaderMobile.html" %}
+    <!--  Header Bottom End -->
+
+    <!--  Footer Navbar  -->
+    {% include "component/layout/footer/FooterNavbar.html" %}
+    <!--  Footer Navbar End -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    {% block main %}{% endblock main %}
+  
+    {% include "component/layout/footer/Footer.html" %}
+
+    {% if user.is_authenticated %}
+        <script>
+            var isAuthenticated = true;
+        </script>
+    {% else %}
+        <script>
+            var isAuthenticated = false;
+        </script>
+    {% endif %}
+    <script src="{% static "assets/js/index.js" %}"></script>
+    <script src="{% static "assets/js/delivery.js" %}"></script>
+    <script src="{% static "assets/js/notification.js" %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/icons@1.74.0/icons-react/dist/index.umd.min.js"></script> 
+
+  </body>
+</html>

@@ -1,0 +1,60 @@
+{% load static %}
+{% load i18n %}
+<footer class="mb-[50px] lg:mb-0">
+    <section class="lg:max-w-screen-xl container mx-auto px-[12px]">
+
+        <div class="py-[25px]">
+                <div class="">
+                    <a href="#"><img style="height:120px;" src="{{setting.footer_logo.url}}" alt="logo"></a>
+                    <p class="mt-[15px] text-[17px] font-[400] text-textColor">{{setting.footer_slogan|safe}}</p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 sm:grid-cols-2 lg:place-items-center lg:items-start gap-y-[30px] mt-[25px]">
+                    <div class="h-[200px] w-[324px]">
+                        <iframe class="mapp-my" 
+                                src="{{setting.g_adress_iframe}}"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="grid grid-cols-2 lg:place-items-center lg:items-start">
+                        <div>
+                            <h4 class="text-[24px] font-[700]">{% trans "SOSİAL ŞƏBƏKƏLƏR" %} </h4>
+                            <ul class="flex flex-col gap-[13px] mt-[15px] text-[15px]">
+                                <li><a target="_blank" href="{% if setting.instagram %}{{setting.instagram}}{% else %}#{% endif %}">{% trans "İnstagram" %}</a></li>
+                                <li><a target="_blank" href="{% if setting.facebook %}{{setting.facebook}}{% else %}#{% endif %}">{% trans "Facebook" %}</a></li>
+                                <li><a target="_blank" href="{% if setting.youtube %}{{setting.youtube}}{% else %}#{% endif %}">{% trans "Youtube" %}</a></li>
+                                <li><a target="_blank" href="{% if setting.tiktok %}{{setting.tiktok}}{% else %}#{% endif %}">{% trans "Tiktok" %}</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-link-widget col wow animate__animated animate__fadeInUp " data-wow-delay=".3s">
+                            <h4 class="text-[24px] font-[700]">{% trans "LİNKLƏR" %}</h4>
+                            <ul class="flex flex-col gap-[13px] mt-[15px] text-[15px]">
+                                <li><a href="{% url "home" %}">{% trans "Ana Səhifə" %}</a></li>
+                                <li><a href="{% url "about" %}">{% trans "Haqqında" %}</a></li>
+                                <li><a href="{% url "shop" %}">{% trans "Məhsullar" %}</a></li>
+                                <li><a href="{% url "blog" %}">{% trans "Bloq" %}</a></li>
+                                <li><a href="{% url "companies" %}">{% trans "Kampaniyalar" %}</a></li>
+                                <li><a href="{% url "contact" %}">{% trans "Əlaqə" %}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-link-widget col wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
+                        <h4 class="text-[24px] font-[700]">{% trans "BİZİMLƏ ƏLAQƏ" %}</h4>
+                        <ul class="flex flex-col gap-[13px] mt-[15px] text-[15px]">
+                            {% for number in setting.numbers.all %}
+                            <li><a href="tel:{{number.number}}"><i class="ti ti-headphones"></i> {{number.number}} </a></li>
+                            {% endfor %}
+                            <li class="d-flex">{% trans "Email" %}: <a href="mailto:{{setting.email}}"> {{setting.email}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+    </section>
+    <div class="lg:max-w-screen-xl container mx-auto px-[12px]">
+        <div class="border-t border-first  py-[30px] text-[14px]">
+            ©<a class="text-first hover:text-first-hover" href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}"> {{setting.copyright_title}} </a>
+            <span class="text-[#7e7e7e]">{{current_year}} {% trans "Bütün hüquqlar qorunur!" %}</span>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,137 @@
+{% load i18n %}
+{% load static %}
+<header id="navbar" class="sticky top-0 z-50 hidden lg:block py-[10px] border-b border-gray-200 text-[#7E7E7E] bg-white transition-all duration-300">
+    <div class="max-w-screen-xl mx-auto flex justify-between items-center px-[12px]">
+        <div class="flex items-center gap-[24px]">
+            <div class="relative">
+                <button id="categories-btn" class="flex items-center text-[16px] bg-first py-2 px-[20px] text-white rounded-[5px] gap-[5px]"> 
+                    <img class="w-[20px] h-[20px] fill-white" src="{% static "assets/imgs/category.svg" %}" alt="">
+                    <span class="font-[600]">Kategoriyalar</span>
+                    <i class="fa-solid fa-angle-down" style="color: #ffffff;"></i>
+                </button>
+                <div id="categories-menu" class="hidden opacity-0 transition-opacity absolute w-[474px]">
+                    <div class="p-4 bg-white border rounded-lg my-5 flex flex-col gap-[15px]">
+                        <ul class="gap-[15px] grid grid-cols-2">
+                            {% for category in categories %}
+                            {% if forloop.counter < 11 %}
+                            <li class="border rounded-[5px]">
+                                <a class="flex w-full items-center h-[50px] text-textColor hover:bg-gray-100 text-[14px] font-[600]" href='{% url "shop" %}?category={{category.slug}}'>
+                                    <div class="w-[30%] flex items-center justify-center">
+                                        <img class="max-h-[30px]" src="{{category.image.url}}" alt="">
+                                    </div>
+                                    <span class="w-[70%]">{{category.title}}</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% if categories.count > 10  %}
+                        <ul id="many-categories" class="gap-[15px] grid-cols-2 hidden">
+                            {% for category in categories %}
+                            {% if forloop.counter < 11 %}
+                            <li class="border rounded-[5px]">
+                                <a class="flex w-full items-center h-[50px] text-textColor hover:bg-gray-100 text-[14px] font-[600]" href='{% url "shop" %}?category={{category.slug}}'>
+                                    <div class="w-[30%] flex items-center justify-center">
+                                        <img class="max-h-[30px]" src="{{category.image.url}}" alt="">
+                                    </div>
+                                    <span class="w-[70%]">{{category.title}}</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <button id="many-category-btn" class="flex justify-center items-center text-first gap-1">
+                            <div class="icon rounded-full border-2 flex justify-center items-center  border-first w-[25px] h-[25px]">
+                                <i class="fa-solid fa-plus"></i>
+                            </div> 
+                            <span>{% trans "Daha çox" %}...</span>
+                        </button>
+                        <button id="little-category-btn" class="hidden justify-center items-center text-first gap-1">
+                            <div class="icon rounded-full border-2 flex justify-center items-center  border-first w-[25px] h-[25px]">
+                                <i class="fa-solid fa-minus"></i>
+                            </div> 
+                            <span>{% trans "Daha az" %}...</span>
+                        </button>
+                         {% endif %}
+                    </div> 
+                </div>
+            </div>
+            <div>
+                <ul class="flex text-[16px] font-[700] text-textColor gap-[28px]">
+                    <li>
+                        <a {% if request.path == '/' or request.path|slice:"3:" == '/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "home" %}'>{% trans "Ana səhifə" %}</a>
+                    </li>
+                    <li>
+                        <a {% if request.path == '/about/' or request.path|slice:"3:" == '/about/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "about" %}'>{% trans "Haqqımızda" %}</a>
+                    </li>
+                    <li>
+                        <a {% if request.path == '/shop/' or request.path|slice:"3:" == '/shop/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "shop" %}'>{% trans "Məhsullar" %}</a>
+                    </li>
+                    <li>
+                        <a {% if request.path|slice:":7" == '/blogs/' or request.path|slice:"3:10" == '/blogs/'%}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "blog" %}'>{% trans "Bloq" %}</a>
+                    </li>
+                    <li>
+                        <a {% if request.path == '/companies/' or request.path|slice:"3:" == '/companies/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "companies" %}'>{% trans "Kampaniyalar" %}</a>
+                    </li>
+                    <li>
+                        <a {% if request.path == '/vacancies/' or request.path|slice:"3:" == '/vacancies/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "vacancies" %}'>{% trans 'Vakansiyalar' %}</a>
+                    </li>
+                    <li>
+                        <a {% if request.path == '/contact/' or request.path|slice:"3:" == '/contact/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "contact" %}'>{% trans "Əlaqə" %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex gap-[12px]">
+            <img src="{% static "assets/imgs/theme/icons/icon-headphone.svg" %}" alt="hotline">
+            <div class="flex flex-col justify-end tracking-tighter">{% for number in setting.numbers.all %}
+                {% if number.is_main and forloop.counter < 2 %}
+                <a class="text-[15px] text-first font-[700] leading-none" href="tel:{{number.number}}">{{number.number}} </a>
+                {% endif %}
+                {% endfor %}
+                <span class="text-[13px]">{% trans "24/7 Dəstək" %}</span
+            ></div>
+        </div>
+    </div>
+</header>
+
+<script>
+    const categoriesBtn = document.getElementById('categories-btn');
+    const categoriesMenu = document.getElementById('categories-menu');
+    const littleCategoryBtn = document.getElementById('little-category-btn');
+    const manyCategoryBtn = document.getElementById('many-category-btn');
+    const manyCategories = document.getElementById('many-categories');
+
+    categoriesBtn.addEventListener('click', () => {
+        categoriesMenu.classList.toggle('opacity-0'); 
+        categoriesMenu.classList.toggle('opacity-100'); 
+        categoriesMenu.classList.toggle('hidden'); 
+    });
+
+    littleCategoryBtn.addEventListener('click', () => {
+        manyCategories.classList.toggle('hidden'); 
+        manyCategories.classList.toggle('grid'); 
+        littleCategoryBtn.classList.toggle('hidden'); 
+        littleCategoryBtn.classList.toggle('flex'); 
+        manyCategoryBtn.classList.toggle('hidden'); 
+    });
+    
+    manyCategoryBtn.addEventListener('click', () => {
+        manyCategories.classList.toggle('hidden'); 
+        manyCategories.classList.toggle('grid'); 
+        littleCategoryBtn.classList.toggle('hidden'); 
+        littleCategoryBtn.classList.toggle('flex'); 
+        manyCategoryBtn.classList.toggle('hidden'); 
+    });
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('py-[5px]', 'shadow-md');
+            navbar.classList.remove('py-[10px]');
+        } else {
+            navbar.classList.remove('py-[5px]', 'shadow-md');
+            navbar.classList.add('py-[10px]');
+        }
+    });
+</script>

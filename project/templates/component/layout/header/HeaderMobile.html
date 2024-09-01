@@ -1,0 +1,183 @@
+{% load static %}
+{% load i18n %}
+<!-- Mobil Header -->
+    <header class="bg-white shadow-lg lg:hidden">
+        <div class="container px-[12px] mx-auto flex justify-between items-center">
+            <!-- Menü Butonu -->
+            <button id="menuButton" class="text-gray-700 focus:outline-none">
+                <!-- Hamburger Menü İkonu -->
+                <svg class="w-[24px] h-[24px]" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                    <path d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 Z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 Z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 Z"></path>
+                </svg>
+            </button>
+             <!-- Logo -->
+             <div class="text-lg font-bold">                
+                <a href='{% url "home" %}'>
+                    <img class="w-[60px] h-[60px]" src="{{setting.mobile_logo.url}}" alt="logo">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-70 z-40 hidden"></div>
+
+    <!-- Slide-out Menü -->
+    <div id="mobileMenu" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-300 ease-in-out min-w-[380px] bg-white shadow-lg z-50 lg:hidden overflow-y-auto">
+        <div class="p-4 px-[30px] flex justify-between items-center border-b">
+            <!-- Menü Kapatma Butonu -->
+            <div class="text-lg font-bold">
+                <a href='{% url "home" %}'>
+                    <img class="w-[65px] h-[65px]" src="{{setting.mobile_logo.url}}" alt="logo">
+                </a>
+            </div>
+            <button id="closeButton" class="text-gray-700 grid place-items-center focus:outline-none bg-[#DEF9EC] rounded-full w-[26px] h-[26px]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-[14px] w-[14px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-[30px]">
+            <div class="relative flex items-center bg-[#F2F3F4] border focus-within:border-[#BCE3C9] rounded py-1 max-w-2xl w-full mx-auto">
+                <input type="text" placeholder="Axtar ..." class="w-full flex-grow py-1 bg-transparent border-none focus:ring-0 focus:outline-none" />
+                <button class="px-4 py-2 text-gray-500 hover:text-gray-700 focus:outline-none">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+            </div>
+            <ul class="mt-[20px] text-[14px] font-[700] text-textColor">
+                <li class="border-b py-[10px]">
+                    <a {% if request.path == '/shop/' or request.path|slice:"3:" == '/shop/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "shop" %}'>{% trans "Məhsullar" %}</a>
+                </li>
+                <li class="border-b py-[10px]">
+                    <a {% if request.path == '/about/' or request.path|slice:"3:" == '/about/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "about" %}'>{% trans "Haqqımızda" %}</a>
+                </li>
+                <li class="border-b py-[10px]">
+                    <a {% if request.path|slice:":7" == '/blogs/' or request.path|slice:"3:10" == '/blogs/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "blog" %}'>{% trans "Bloq" %}</a>
+                </li>
+                <li class="border-b py-[10px]">
+                    <a {% if request.path == '/companies/' or request.path|slice:"3:" == '/companies/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "companies" %}'>{% trans "Kampaniyalar" %}</a>
+                </li>
+                <li class="border-b py-[10px]">
+                    <a {% if request.path == '/vacancies/' or request.path|slice:"3:" == '/vacancies/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "vacancies" %}'>{% trans "Vakansiyalar" %}</a>
+                </li>
+                <li class="border-b py-[10px]">
+                    <a {% if request.path == '/contact/' or request.path|slice:"3:" == '/contact/' %}class="text-first"{% else %}class="hover:text-first-hover"{% endif %} href='{% url "contact" %}'>{% trans "Əlaqə" %}</a>
+                </li>
+            </ul>
+            <div class="w-full py-4">
+                <!-- Accordion Item 1 -->
+                <div class="accordion-item">
+                  <button class="accordion-button w-full text-left flex justify-between items-center focus:outline-none">
+                    <span class="text-[14px] font-[700]">{% trans "Dil" %}</span>
+                    <svg class="w-3 h-3 transform transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500">
+                    <ul class="text-[14px] pt-[10px] pl-[10px]">
+                        <li><a class="py-[10px] {% if request.LANGUAGE_CODE == 'en' %}text-first{% endif %}" href="{% if not request.LANGUAGE_CODE == 'en' %}{% url 'set-language' 'en' %}#{% endif %}">English</a></li>
+                        <li><a class="py-[10px] {% if request.LANGUAGE_CODE == 'az' %}text-first{% endif %}" href="{% if not request.LANGUAGE_CODE == 'az' %}{% url 'set-language' 'az' %}#{% endif %}">Azərbaycanca</a></li>
+                        <li><a class="py-[10px] {% if request.LANGUAGE_CODE == 'ru' %}text-first{% endif %}" href="{% if not request.LANGUAGE_CODE == 'ru' %}{% url 'set-language' 'ru' %}#{% endif %}">Русский</a></li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+     
+            <div class="border border-[#ececec] mt-[17px] mb-[30px] p-[20px] rounded-[5px] flex flex-col gap-[13px] text-[14px] font-[500]">
+                <div>
+                    <a class="flex gap-[8px] items-center"  href="{{setting.g_adress}}"><i class="ti ti-map-pin text-first text-[17px]"></i> {{setting.adress}} </a>
+                </div>
+                {% if not user.is_authenticated %}
+                <div>
+                    <a class="flex gap-[8px] items-center"  href="{% url "login" %}"><i class="ti ti-user text-first text-[17px]"></i>{% trans "Daxil ol / Qeydiyyat keç" %} </a>
+                </div>
+                {% endif %}
+                <div>
+                    {% for number in setting.numbers.all %}
+                    {% if number.is_main and forloop.counter < 2 %}
+                    <a class="flex gap-[8px] items-center" href="tel:{{number.number}}"><i class="ti ti-headphones text-first text-[17px]"></i>{{number.number}} </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mt-[30px]">
+                <h6 class="text-[16px] font-[700]">{% trans "Bizi izləyin" %}</h6>
+                <div class="flex gap-[10px] mt-[15px]">
+                    <div class="w-[30px] h-[30px] bg-first grid place-items-center rounded-full">
+                        <a  href="{% if setting.facebook %}{{setting.facebook}}{% else %}#{% endif %}"><img class="w-[16px]" src="{% static "assets/imgs/theme/icons/icon-facebook-white.svg" %}" alt=""></a>
+                    </div>
+                    <div class="w-[30px] h-[30px] bg-first grid place-items-center rounded-full">
+                        <a  href="{% if setting.instagram %}{{setting.instagram}}{% else %}#{% endif %}"><img class="w-[16px]" src="{% static "assets/imgs/theme/icons/icon-instagram-white.svg" %}" alt=""></a>
+                    </div>
+                    <div class="w-[30px] h-[30px] bg-first grid place-items-center rounded-full">
+                        <a  href="{% if setting.youtube %}{{setting.youtube}}{% else %}#{% endif %}"><img class="w-[16px]" src="{% static "assets/imgs/theme/icons/icon-youtube-white.svg" %}" alt=""></a>
+                    </div>
+                    <div class="w-[30px] h-[30px] bg-first grid place-items-center rounded-full">
+                        <a  href="{% if setting.tiktok %}{{setting.tiktok}}{% else %}#{% endif %}"><img class="w-[16px]" src="{% static "assets/imgs/theme/icons/icons8-tiktok.svg" %}" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-[50px] text-[13px]"><span class="text-[#B6B6B6]">{% trans "Copyright" %} {{current_year}} © </span><a class="text-first" href="{% if setting.copyright_link %}{{setting.copyright_link}}{% else %}#{% endif %}">{{setting.copyright_title}}</a></div>
+        </nav>
+    </div>
+
+<script>
+    document.getElementById('menuButton').addEventListener('click', function() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        menu.classList.remove('-translate-x-full');
+        menu.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+    });
+
+    document.getElementById('closeButton').addEventListener('click', function() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        menu.classList.remove('translate-x-0');
+        menu.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    });
+
+    document.getElementById('overlay').addEventListener('click', function() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        menu.classList.remove('translate-x-0');
+        menu.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    });
+</script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const accordionItems = document.querySelectorAll(".accordion-item");
+        
+          accordionItems.forEach(item => {
+            const button = item.querySelector(".accordion-button");
+            const content = item.querySelector(".accordion-content");
+            const icon = button.querySelector("svg");
+        
+            button.addEventListener("click", () => {
+              // Diğer tüm içerikleri kapat
+              accordionItems.forEach(i => {
+                const otherContent = i.querySelector(".accordion-content");
+                const otherIcon = i.querySelector("svg");
+                if (otherContent !== content) {
+                  otherContent.style.maxHeight = "0px";
+                  otherIcon.classList.remove("rotate-180");
+                }
+              });
+        
+              // Tıklanan içeriği aç veya kapat
+              if (content.style.maxHeight === "0px" || !content.style.maxHeight) {
+                content.style.maxHeight = `${content.scrollHeight}px`;
+                icon.classList.add("rotate-180");
+              } else {
+                content.style.maxHeight = "0px";
+                icon.classList.remove("rotate-180");
+              }
+            });
+          });
+        });
+</script>    

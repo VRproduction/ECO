@@ -1,0 +1,81 @@
+{% load i18n %}
+{% load static %}
+{% load custom_filters %}
+{% load producthelper %}
+
+<!-- Product Card -->
+<div class="flex flex-col bg-white border hover:border-first-hover border-gray-200 rounded-lg shadow-sm p-4 relative">
+    <!-- Discount Badge -->
+    <div class="absolute top-0 left-0 text-white text-xs font-bold rounded-tl-lg rounded-br-lg overflow-hidden">
+        {% if product.stock > 0 %}
+                {% if product.badges == 1 %}
+                <div class="bg-[#f74b81] w-full h-full py-1 px-2">{% trans "Ən çox satılan" %}</div>
+                {% elif product.badges == 2 %}
+                <div class="bg-green-500 w-full h-full py-1 px-2">{% trans "Yeni" %}</div>
+                {% elif product.badges == 3 and product.discount%}
+                <div class="bg-orange-500 w-full h-full py-1 px-2">{{product.discount}}%</div>
+                {% endif %}
+        {% else %}
+        <div class="bg-orange-500 w-full h-full py-1 px-2">{% trans "Stokda yoxdur" %}</div>
+        {% endif %}
+    </div>
+    <div>
+        <button>
+
+        </button>
+    </div>
+    <!-- Product Image -->
+    <a href="{{product.get_absolute_url}}">
+        <img class="w-full h-32 object-contain mt-4" src="{{product.image.url}}" alt="">
+    </a>
+    <!-- Product Category -->
+    <div class="text-[#7e7e7e] text-sm font-[400] mt-4">
+        <a href="{% url "shop" %}?category={{product.category.id}}">{{product.category}}</a>
+    </div>
+    <!-- Product Title -->
+    <h2 class="text-gray-800 text-sm font-semibold mt-2">
+        <a href="{{product.get_absolute_url}}">{{product.title}}</a>
+    </h2>
+    <!-- Product Brand -->
+    <p class="text-first text-sm mt-2">
+        <a href="{% url "shop" %}?vendor={{product.vendor.slug}}">{{product.vendor}}</a>
+    </p>
+    <!-- Price and Button -->
+    <div class="flex flex-1 items-end justify-between mt-4">
+        <div class="flex flex-col justify-center items-center">
+            {% if product.stock > 0 %}
+                <span class="text-first font-bold text-lg">
+                    ₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}
+                </span>
+                {% if product.discount %}
+                    <span class="text-gray-400 line-through ml-2 text-sm">
+                        ₼ {{product.price|format_decimal:2}}
+                    </span>
+                {% endif %}
+            {% else %}
+                <span class="text-first font-bold text-lg">
+                    ₼ {{product.price|format_decimal:2}}
+                </span>
+            {% endif %}
+        </div>
+        <div>
+            {% if product.stock > 0 %}
+                {% if user.is_authenticated %}
+                <button onclick="addToBasket({{ product.id }},1)" class="bg-first hover:bg-first-hover text-white text-sm px-3 py-2 rounded-lg">{% trans "Əlavə et" %}</button>
+                {% else %}
+                <a href="{% url "login" %}" class="bg-first hover:bg-first-hover text-white text-sm px-3 py-2 rounded-lg">{% trans "Əlavə et" %}</button>
+                {% endif %}
+            {% endif %}
+
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+    <button onclick="toggleFavorite({{ product.id }})" class="absolute top-[10px] right-[10px] w-[25px] h-[25px] rounded-full border-2 border-first grid place-items-center">
+        <i id="product_heart_{{ product.id }}" class="ti {% if product|is_wished:request and user.is_authenticated %} ti-heart-filled  text-red-500 {% else %} ti-heart  text-first {% endif %} text-[15px] "></i>
+    </button>
+    {% else %}
+    <a href="{% url "login" %}" class="absolute top-[10px] right-[10px] w-[25px] h-[25px] rounded-full border-2 border-first grid place-items-center">
+        <i class="ti ti-heart text-[15px] text-first"></i>
+    </a>
+    {% endif %}
+</div>

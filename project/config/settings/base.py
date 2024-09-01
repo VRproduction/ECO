@@ -53,9 +53,12 @@ CUSTOM_APPS = [
     #pages
     'apps.pages.home.apps.HomeConfig',
     'apps.pages.about.apps.AboutConfig',
+    
+    'theme'
 ]
 
 THIRD_PARTY_APPS = [
+    'tailwind',
     'ckeditor',
     'rest_framework',
     'rosetta',
@@ -73,6 +76,11 @@ THIRD_PARTY_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
 
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',

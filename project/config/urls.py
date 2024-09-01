@@ -15,9 +15,6 @@ from django.http import HttpResponseRedirect
 from django.urls.base import resolve, reverse
 from django.urls.exceptions import Resolver404
 from django.utils import translation
-from django.views.i18n import  JavaScriptCatalog
-
-
 
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
@@ -46,9 +43,9 @@ def set_language(request, language):
     return response
 
 urlpatterns = [
-    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('', include('web.urls')),
     path('', include('apps.pages.home.urls')),
     path('', include('apps.product.urls')),
     path('', include('apps.vacancies.urls')),
@@ -72,7 +69,8 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 
-    re_path('^rosetta', include("rosetta.urls"))
+    re_path('^rosetta', include("rosetta.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 urlpatterns = [

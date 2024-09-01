@@ -195,31 +195,65 @@ function updateNavbarBasket(data){
         document.getElementById('navbar-basket-total').innerText = `${data.totalPrice} AZN`;
         basketItemsBody.innerHTML = '';
         data.basketItems.forEach((item, count)=>{
-            if (count<3) {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <div class="shopping-cart-img">
-                        <a href="/products/${item.product.slug}/"><img alt="Nest" src="${item.product.image_url}"></a>
-                    </div>
-                    <div class="shopping-cart-title">
-                        <h4><a href="/products/${item.product.slug}/">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>
-                        <h4><span>${item.quantity} × </span>₼ ${item.product.price}</h4>
-                    </div>
-                    <div class="shopping-cart-delete">
-                        <a onclick="removeFromBasket(${item.id})"><i class="fi-rs-cross-small"></i></a>
-                    </div>
-             `;
-            basketItemsBody.appendChild(li);
+            if (window.location.pathname =='/dev/' || window.location.pathname =='/en/dev/' || window.location.pathname =='/ru/dev/'){
+                if (count<3) {
+                    const div = document.createElement('div');
+                    div.classList.add('flex', 'items-center', 'mb-4', 'gap-3')
+                    div.innerHTML = `
+                        <a href="/products/${item.product.slug}/">
+                            <img class="w-[100px]" alt="Product Image" src="${item.product.image_url}">
+                        </a>
+                        <div class="flex flex-1 justify-between items-center">
+                            <div class="">
+                                <h4 class="text-red-200"><a href="/products/${item.product.slug}/">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>
+                                <h4><span>${item.quantity} × </span>₼ ${item.product.price}</h4>
+                            </div>
+                            <div>
+                                <button onclick="removeFromBasket(${item.id})">
+                                    <i class="fa-solid fa-trash"></i>            
+                                </button>
+                            </div>
+                        </div>
+                 `;
+                basketItemsBody.appendChild(div);
+                }
+            }else{
+                if (count<3) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div class="shopping-cart-img">
+                            <a href="/products/${item.product.slug}/"><img alt="Nest" src="${item.product.image_url}"></a>
+                        </div>
+                        <div class="shopping-cart-title">
+                            <h4><a href="/products/${item.product.slug}/">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>
+                            <h4><span>${item.quantity} × </span>₼ ${item.product.price}</h4>
+                        </div>
+                        <div class="shopping-cart-delete">
+                            <a onclick="removeFromBasket(${item.id})"><i class="fi-rs-cross-small"></i></a>
+                        </div>
+                 `;
+                basketItemsBody.appendChild(li);
+                }
             }
+            
+            
         })
         if (data.totalPrice == 0 || !data.stock_status) {
             document.getElementById("navbar-basket-checkout").disabled = true;
         }else{
             document.getElementById("navbar-basket-checkout").disabled = false;
         }
-        document.getElementById('navbar-basket').classList.remove("d-none");
+        if (window.location.pathname =='/dev/' || window.location.pathname =='/en/dev/' || window.location.pathname =='/ru/dev/'){
+            document.getElementById('navbar-basket').classList.remove("invisible");
+        }else{
+            document.getElementById('navbar-basket').classList.remove("d-none");
+        }
     }else{
-        document.getElementById('navbar-basket').classList.add("d-none");
+        if (window.location.pathname =='/dev/' || window.location.pathname =='/en/dev/' || window.location.pathname =='/ru/dev/'){
+            document.getElementById('navbar-basket').classList.add("invisible");
+        }else{
+            document.getElementById('navbar-basket').classList.add("d-none");
+        }
     }
 
 
@@ -458,18 +492,36 @@ function toggleFavorite(productId) {
     .then(data => {
         // Favori durumuna göre UI güncelleme işlemleri
         const productCart = document.getElementById(`product_action_${productId}`)
+        const productHeart = document.getElementById(`product_heart_${productId}`)
         const mobileproductCart = document.getElementById(`mobile_product_action_${productId}`)
         const favorite_count =  document.getElementById("favorite_count")
         if (data.action == 'added') {
-            productCart.innerHTML = `<img style="width:14px;" src="${window.location.origin}/static/assets/imgs/heart.png" alt="">
-            `;
-            mobileproductCart.innerHTML = `<img style="width:14px;" src="${window.location.origin}/static/assets/imgs/heart.png" alt="">
-            `;
-            favorite_count.innerText = `${Number(favorite_count.innerText)+1}`
+            if (productCart) {
+                productCart.innerHTML = `<img style="width:14px;" src="${window.location.origin}/static/assets/imgs/heart.png" alt="">
+                `;
+            }
+            if (mobileproductCart){
+                mobileproductCart.innerHTML = `<img style="width:14px;" src="${window.location.origin}/static/assets/imgs/heart.png" alt="">
+                `;
+            }
+            
+            // favorite_count.innerText = `${Number(favorite_count.innerText)+1}`
+            if (productHeart) {
+                productHeart.classList.remove("text-first", "ti-heart")
+                productHeart.classList.add("text-red-500", "ti-heart-filled")
+            }
         } else {
-            productCart.innerHTML = '<i class="fi-rs-heart"></i>';
-            mobileproductCart.innerHTML = '<i class="fi-rs-heart"></i>';
-            favorite_count.innerText = `${Number(favorite_count.innerText)-1}`
+            if (productCart) {
+                productCart.innerHTML = '<i class="fi-rs-heart"></i>';
+            }
+            if (mobileproductCart){
+                mobileproductCart.innerHTML = '<i class="fi-rs-heart"></i>';
+            }
+            if (productHeart) {
+                productHeart.classList.add("text-first", "ti-heart")
+                productHeart.classList.remove("text-red-500", "ti-heart-filled")
+            }
+            // favorite_count.innerText = `${Number(favorite_count.innerText)-1}`
         }
     })
     .catch(error => console.error('Error:', error));

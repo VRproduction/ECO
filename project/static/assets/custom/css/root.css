@@ -1,0 +1,10 @@
+:root {
+    --first: #039D2E; /* Ana renk */
+    --first-hover: #028C1F; /* Ana renk hover */
+    --second: #ffed4a; /* İkincil renk */
+    --second-hover: #fcd34d; /* İkincil renk hover */
+    --accent: #e3342f; /* Vurgu rengi */
+    --accent-hover: #c53030; /* Vurgu rengi hover */
+    --background: #f8fafc; /* Arka plan rengi */
+    --text-color: #253D4E; /* Metin rengi */
+  }

@@ -4,6 +4,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+# Append the BrowserReloadMiddleware only in local environment
+MIDDLEWARE += [
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
+]
+
+INSTALLED_APPS += [
+    'django_browser_reload'
+]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

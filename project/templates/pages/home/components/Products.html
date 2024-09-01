@@ -1,0 +1,9 @@
+{% load i18n %}
+<div class="lg:max-w-screen-xl container mx-auto px-[12px] my-[25px]">
+    <h1 class="text-[28px] font-bold mb-8">{% trans "Məhsullar" %}</h1>
+    <div class="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-[6px] sm:gap-6">
+        {% for product in products %}
+            {% include "component/common/product/ProductItem.html" with product=product%}
+        {% endfor %}
+    </div>
+</div>

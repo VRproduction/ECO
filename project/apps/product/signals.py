@@ -88,7 +88,7 @@ def send_order_email(sender, instance, created, **kwargs):
             'site_url': site_url,
         }
         if instance.transaction.is_wolt:
-            user_order_items = OrderItem.objects.filter(order=order).order_by("pk")
+            user_order_items = OrderItem.objects.filter(order=instance).order_by("pk")
             parcel_list = [item.to_dict_for_wolt_delivery() for item in user_order_items]
             delivery = Delivery(lat=instance.transaction.lat, lon=instance.transaction.lon)
             delivery_response = delivery.deliveries(amount=instance.transaction.delivery_amount,

@@ -26,190 +26,197 @@ def payment(request):
     # payment_obj.checkout_request()
     return render(request, 'payment.html')
 
-@transaction.atomic
-@login_required
-def success(request):
-    context = {
 
-    }
-    user = request.user
-    transaction_obj = Transaction.objects.filter(user = user).last()
-    payment_obj = Payment()
-    response_data = payment_obj.get_payment_status(transaction_obj)  
-    if response_data["status"] == 'success' and not transaction_obj.is_checked_from_eco:
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.urls import reverse
+from django.db import transaction
+from urllib.parse import urlparse
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
+class SuccessView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        user = request.user
+        transaction_obj = self.get_last_transaction(user)
+
+        if not transaction_obj:
+            messages.error(request, "No transaction found.")
+            return redirect('basket')
+
+        payment_obj = Payment()
+        response_data = payment_obj.get_payment_status(transaction_obj)
+
+        if response_data["status"] == 'success' and not transaction_obj.is_checked_from_eco:
+            return self.handle_successful_payment(request, user, transaction_obj)
+        elif response_data["status"] == 'new':
+            return self.handle_new_payment(transaction_obj)
+
+        return redirect('failed')
+
+    def get_last_transaction(self, user):
+        """Fetch the last transaction for the user."""
+        return Transaction.objects.filter(user=user).last()
+
+    @transaction.atomic
+    def handle_successful_payment(self, request, user, transaction_obj):
         try:
             basket_items = BasketItem.objects.filter(user=user)
 
-            if basket_items.count() == 0:
+            if not basket_items.exists():
                 return redirect('basket')
-                
-            # Stok kontrolü
-            for item in basket_items:
-                product = Product.objects.get(id=item.product.id)
-                if item.quantity > product.stock:
-                    messages.error(request, f"Stokda '{product.title}' yoxdur.")
-                    return redirect('basket')
 
-            # Toplam ücret hesapla
+            # Stock check
+            if not self.check_stock(request, basket_items):
+                return redirect('basket')
+
+            # Calculate total amount
             total_amount = sum(item.total_price for item in basket_items)
 
-            # Kupon işlemleri
-            coupon_code = transaction_obj.coupon_code
-            applied_coupon = None
+            # Handle coupon
+            applied_coupon = self.get_valid_coupon(transaction_obj.coupon_code, user)
+            if transaction_obj.coupon_code and not applied_coupon:
+                return redirect('basket')
 
-            if coupon_code:
-                try:
-                    applied_coupon = Coupon.objects.get(coupon=coupon_code)
-                    # Kuponun kullanılabilir olup olmadığını kontrol et
-                    if not applied_coupon.can_user_use_coupon(user):
-                        return redirect('basket')
-                    
-                except Coupon.DoesNotExist:
-                    return redirect('basket')
+            # Create order
+            order = self.create_order(user, transaction_obj, total_amount, applied_coupon, basket_items)
 
-                # İndirimli toplam tutarı hesapla
+            # Update stock and order items
+            self.update_stock_and_order_items(order, basket_items)
 
-            # Sipariş oluştur
-            with transaction.atomic():
-                if transaction_obj.is_wolt:
-                    order = Order.objects.create(
-                    user=user,
-                    total_amount=total_amount + (transaction_obj.delivery_amount if total_amount < 30 else 0),  # İndirimli toplam tutarı kullan
-                    discount=total_amount - apply_coupon(user ,basket_items, applied_coupon) if applied_coupon else None,
-                    discount_amount = apply_coupon(user ,basket_items, applied_coupon)+(transaction_obj.delivery_amount if apply_coupon(user ,basket_items, applied_coupon) < 30 else 0) if applied_coupon else None ,
-                    delivery_amount = transaction_obj.delivery_amount,
-                    is_delivery_free = (applied_coupon and apply_coupon(user ,basket_items, applied_coupon) > 30 and apply_coupon(user ,basket_items, applied_coupon)) or (total_amount > 30 and total_amount is not None), 
-                    coupon=applied_coupon ,
-                    is_wolt = True,
-                    transaction = transaction_obj
-                )
-                else:
-                    order = Order.objects.create(
-                        user=user,
-                        total_amount=total_amount,  # İndirimli toplam tutarı kullan
-                        discount=total_amount - apply_coupon(user ,basket_items, applied_coupon) if applied_coupon else None,
-                        discount_amount = apply_coupon(user ,basket_items, applied_coupon) if applied_coupon else None,
-                        coupon=applied_coupon,
-                        transaction = transaction_obj
-                    )
-
-                # Siparişe ürünleri ekle ve stok güncelle
-                for item in basket_items:
-                    product = Product.objects.get(id=item.product.id)
-                    OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
-
-                    # Stok düşürme
-                    product.stock -= item.quantity
-                    product.sale_count += item.quantity
-                    product.save()
-
-                # Sepeti temizle (veya kendi sepet yönetimine göre uyarla)
+            # Clear the basket
             basket_items.delete()
-            if coupon_code:
-                coupon_usage = CouponUsage.objects.get(user=user, coupon = applied_coupon)
-                coupon_usage.max_coupon_usage_count -= 1
-                coupon_usage.save()
+
+            # Update coupon usage if applied
+            if applied_coupon:
+                self.update_coupon_usage(applied_coupon, user)
+
+            # Handle Wolt delivery if applicable
+            if transaction_obj.is_wolt:
+                self.handle_wolt_delivery(order)
+
+            transaction_obj.is_checked_from_eco = True
+            transaction_obj.save()
+
+            return render(request, 'success.html')
+
         except Exception as e:
             print(e)
-            messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
+            messages.error(request, 'An error occurred while creating the order.')
             return redirect('basket')
-        transaction_obj.is_checked_from_eco = True
-        transaction_obj.save()
-        return render(request, 'success.html', context = context)            
-    elif response_data["status"] == 'new':
-        context["payment_redirect_url"] = transaction_obj.payment_redirect_url
-        return render(request, 'failed.html', context = context)
-    return redirect('failed')
 
+    def handle_new_payment(self, transaction_obj):
+        """Handle a payment with a 'new' status."""
+        return render(self.request, 'failed.html', context={"payment_redirect_url": transaction_obj.payment_redirect_url})
 
-# @transaction.atomic
-# @login_required
-# def success(request):
-#         context = {
+    def check_stock(self, request, basket_items):
+        """Check if all items are in stock."""
+        for item in basket_items:
+            product = Product.objects.get(id=item.product.id)
+            if item.quantity > product.stock:
+                messages.error(request, f"'{product.title}' is out of stock.")
+                return False
+        return True
 
-#     }
-#         transaction_obj = Transaction.objects.filter(user = request.user).last()
-#     # try:
-#         basket_items = BasketItem.objects.filter(user=request.user)
+    def get_valid_coupon(self, coupon_code, user):
+        """Validate the coupon code."""
+        if coupon_code:
+            try:
+                coupon = Coupon.objects.get(coupon=coupon_code)
+                if coupon.can_user_use_coupon(user):
+                    return coupon
+            except Coupon.DoesNotExist:
+                return None
+        return None
 
-#         if basket_items.count() == 0:
-#             return redirect('basket')
-                
-#             # Stok kontrolü
-#         for item in basket_items:
-#             product = Product.objects.get(id=item.product.id)
-#             if item.quantity > product.stock:
-#                 messages.error(request, f"Stokda '{product.title}' yoxdur.")
-#                 return redirect('basket')
+    def create_order(self, user, transaction_obj, total_amount, applied_coupon, basket_items):
+        """Create the order based on the transaction and basket items."""
+        discount_amount = apply_coupon(user, basket_items, applied_coupon) if applied_coupon else 0
+        is_delivery_free = (applied_coupon and discount_amount > 30) or (total_amount > 30)
 
-#             # Toplam ücret hesapla
-#         total_amount = sum(item.total_price for item in basket_items)
+        total_amount += transaction_obj.delivery_amount if not is_delivery_free else 0
 
-#             # Kupon işlemleri
-#         coupon_code = transaction_obj.coupon_code
-#         applied_coupon = None
+        return Order.objects.create(
+            user=user,
+            total_amount=total_amount,
+            discount=discount_amount if applied_coupon else None,
+            discount_amount=discount_amount,
+            delivery_amount=transaction_obj.delivery_amount,
+            is_delivery_free=is_delivery_free,
+            coupon=applied_coupon,
+            is_wolt=transaction_obj.is_wolt,
+            transaction=transaction_obj
+        )
 
-#         if coupon_code:
-#             try:
-#                 applied_coupon = Coupon.objects.get(coupon=coupon_code)
-#                 # Kuponun kullanılabilir olup olmadığını kontrol et
-#                 if not applied_coupon.can_user_use_coupon(request.user):
-#                     return redirect('basket')
-                    
-#             except Coupon.DoesNotExist:
-#                 return redirect('basket')
+    def update_stock_and_order_items(self, order, basket_items):
+        """Update the stock and add items to the order."""
+        for item in basket_items:
+            product = Product.objects.get(id=item.product.id)
+            OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
 
-#                 # İndirimli toplam tutarı hesapla
+            # Decrease stock
+            product.stock -= item.quantity
+            product.sale_count += item.quantity
+            product.save()
 
-#             # Sipariş oluştur
-#         with transaction.atomic():
-#             if transaction_obj.is_wolt:
-#                 order = Order.objects.create(
-#                     user=request.user,
-#                     total_amount=total_amount + (transaction_obj.delivery_amount if total_amount < 30 else 0),  # İndirimli toplam tutarı kullan
-#                     discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-#                     discount_amount = apply_coupon(request.user ,basket_items, applied_coupon)+(transaction_obj.delivery_amount if apply_coupon(request.user ,basket_items, applied_coupon) < 30 else 0) if applied_coupon else None ,
-#                     delivery_amount = transaction_obj.delivery_amount,
-#                     is_delivery_free = (applied_coupon and (request.user ,basket_items, applied_coupon) > 30 and apply_coupon(request.user ,basket_items, applied_coupon)) or (total_amount > 30 and total_amount is not None), 
-#                     coupon=applied_coupon ,
-#                     is_wolt = True,
-#                     transaction = transaction_obj
-#                 )
-#             else:
-#                 order = Order.objects.create(
-#                     user=request.user,
-#                     total_amount=total_amount,  # İndirimli toplam tutarı kullan
-#                     discount=total_amount - apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-#                     discount_amount = apply_coupon(request.user ,basket_items, applied_coupon) if applied_coupon else None,
-#                     coupon=applied_coupon,
-#                     transaction = transaction_obj
-#                 )
+    def update_coupon_usage(self, coupon, user):
+        """Update the usage count for the coupon."""
+        coupon_usage = CouponUsage.objects.get(user=user, coupon=coupon)
+        coupon_usage.max_coupon_usage_count -= 1
+        coupon_usage.save()
 
-#             # Siparişe ürünleri ekle ve stok güncelle
-#             for item in basket_items:
-#                 product = Product.objects.get(id=item.product.id)
-#                 OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
+    def handle_wolt_delivery(self, order):
+        """Handle the Wolt delivery process."""
+        user_order_items = OrderItem.objects.filter(order=order).order_by("pk")
+        parcel_list = [item.to_dict_for_wolt_delivery() for item in user_order_items]
+        
+        delivery = Delivery(lat=order.transaction.lat, lon=order.transaction.lon)
+        delivery_response = delivery.deliveries(
+            amount=order.transaction.delivery_amount,
+            recipient_name=order.transaction.recipient_name,
+            recipient_phone=order.transaction.recipient_phone,
+            dropoff_comment=order.transaction.dropoff_comment,
+            parcel_list=parcel_list,
+            shipment_promise_id=order.transaction.shipment_promise_id
+        )
+        print(delivery_response)
 
-#                 # Stok düşürme
-#                 product.stock -= item.quantity
-#                 product.sale_count += item.quantity
-#                 product.save()
+        if "error_code" in delivery_response:
+            # Handle error scenario
+            messages.error(self.request, 'An error occurred with the delivery service.')
+            return redirect('basket')
 
-#                 # Sepeti temizle (veya kendi sepet yönetimine göre uyarla)
-#         basket_items.delete()
-#         if coupon_code:
-#             coupon_usage = CouponUsage.objects.get(user=request.user, coupon = applied_coupon)
-#             coupon_usage.max_coupon_usage_count -= 1
-#             coupon_usage.save()
-#     # except Exception as e:
-#     #     print(e)
-#     #     messages.error(request, 'Sifariş oluşturulurken bir hata oluştu.')
-#     #     return redirect('basket')
-#         transaction_obj.is_checked_from_eco = True
-#         transaction_obj.save()
-#         return render(request, 'success.html', context = context)            
-    
+        if 'tracking' in delivery_response:
+            tracking_url = delivery_response["tracking"]["url"]
+            tracking_id = delivery_response["tracking"]["id"]
+            wolt_order_reference_id = delivery_response["wolt_order_reference_id"]
+            
+            errors = []
 
+            if not tracking_url:
+                errors.append("Tracking URL is missing.")
+            if not tracking_id:
+                errors.append("Tracking ID is missing.")
+            if not wolt_order_reference_id:
+                errors.append("Wolt order reference ID is missing.")
+
+            if errors:
+                messages.error(self.request, ' '.join(errors))
+                return redirect('basket')
+
+            parsed_url = urlparse(tracking_url)
+            if not all([parsed_url.scheme, parsed_url.netloc]):
+                return redirect('basket')  
+
+            # Save the extracted data to the Order instance
+            order.tracking_url = tracking_url
+            order.tracking_id = tracking_id
+            order.wolt_order_reference_id = wolt_order_reference_id
+            order.save()
 
 def failed(request):
     # transaction_obj = Transaction.objects.filter(user = request.user, ).last()

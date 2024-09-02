@@ -184,10 +184,10 @@ class BlogAdmin(TranslationAdmin):
     
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
-    readonly_fields = ['order', 'quantity']
+    # readonly_fields = ['order', 'quantity']
 
-    def has_add_permission(self, request, obj=None):
-        return False
+    # def has_add_permission(self, request, obj=None):
+    #     return False
 
 
 class StatusInline(admin.TabularInline):

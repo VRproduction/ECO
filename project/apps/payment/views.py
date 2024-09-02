@@ -237,7 +237,7 @@ def shipment_promises(request):
     street = request.GET.get('street')
     if lat and lon:
         delivery = Delivery(lat = lat, lon = lon, street = street)
-        return delivery.shipment_promises()
+        return JsonResponse(delivery.shipment_promises())
     return JsonResponse({"message": "Please send lat and lon value"})
 
 

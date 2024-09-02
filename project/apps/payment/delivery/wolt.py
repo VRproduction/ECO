@@ -14,7 +14,7 @@ class Delivery():
 
     def getHeaders(self):
         headers = {
-            'Authorization': f'Bearer {settings.WOLT_API_KEY}',
+            'Authorization': f'Bearer {settings.WOLT_API_KEY_TEST}',
             'Content-Type': 'application/json'
         }
         return headers
@@ -29,9 +29,10 @@ class Delivery():
             "min_preparation_time_minutes": 20,
         }
 
-        response = requests.post(self.base_url+'shipment-promises', json = data, headers = self.getHeaders())
+        response = requests.post(self.test_url+'shipment-promises', json = data, headers = self.getHeaders())
         response_data = response.json()
-        return JsonResponse(response_data)
+        
+        return response_data
     
     def deliveries(self, amount, recipient_name, recipient_phone, dropoff_comment, parcel_list, shipment_promise_id):
         customer_support = Wolt.objects.first()
@@ -72,8 +73,9 @@ class Delivery():
             if customer_support.customer_phone_number:
                 data["customer_support"]["phone_number"] = customer_support.customer_phone_number
 
-        response = requests.post(self.base_url+'deliveries', json = data, headers = self.getHeaders())
+        response = requests.post(self.test_url+'deliveries', json = data, headers = self.getHeaders())
         response_data = response.json()
+        print(response)
         return response_data
 
 

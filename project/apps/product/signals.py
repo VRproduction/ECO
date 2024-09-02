@@ -103,7 +103,7 @@ def send_order_email(sender, instance, created, **kwargs):
         ) 
 
 
-@receiver(pre_save, sender=Order)
+@receiver(post_save, sender=Order)
 def send_order_ready_email(sender, instance, **kwargs):
     if instance.order_type == 'Yeni':
         order = instance

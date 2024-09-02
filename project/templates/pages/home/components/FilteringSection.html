@@ -1,0 +1,47 @@
+{% load i18n %}
+<section class="lg:max-w-screen-xl container mx-auto px-[12px] my-[50px]">
+    <div class="grid  md:grid-cols-3 gap-[20px]">
+        <div class="">
+            <div class="">
+                <p class="text-textColor font-[700] text-[24px]">{% trans "Ən çox satılanlar" %}</p>
+                <div class="flex w-full">
+                    <div class="mt-1 border-b-[3px] border-[#BCE3C9] w-1/4"></div>
+                    <div class="mt-1 border-b border-[#BCE3C9] w-2/4"></div>
+                </div>
+            </div>
+            <div class="mt-[20px] flex flex-col gap-[20px]">
+                {% for product in most_selling_products %}
+                {% include "component/common/product/ProductFilteringItem.html" with product=product %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="">
+            <div class="">
+                <p class="text-textColor font-[700] text-[24px]">{% trans "Ən çox axtarılanlar" %}</p>
+                <div class="flex w-full">
+                    <div class="mt-1 border-b-[3px] border-[#BCE3C9] w-1/4"></div>
+                    <div class="mt-1 border-b border-[#BCE3C9] w-2/4"></div>
+                </div>
+            </div>
+            <div class="mt-[20px] flex flex-col gap-[20px]">
+                {% for product in most_search_products %}
+                {% include "component/common/product/ProductFilteringItem.html" with product=product %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="">
+            <div class="">
+                <p class="text-textColor font-[700] text-[24px]">{% trans "Trenddə olanlar" %}</p>
+                <div class="flex w-full">
+                    <div class="mt-1 border-b-[3px] border-[#BCE3C9] w-1/4"></div>
+                    <div class="mt-1 border-b border-[#BCE3C9] w-2/4"></div>
+                </div>
+            </div>
+            <div class="mt-[20px] flex flex-col gap-[20px]">
+                {% for product in trending_products %}
+                {% include "component/common/product/ProductFilteringItem.html" with product=product %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

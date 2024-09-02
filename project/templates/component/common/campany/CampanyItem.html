@@ -1,0 +1,76 @@
+{% load custom_filters %}
+{% load i18n %}
+<div class="relative h-[500px]">
+    <div class="absolute w-full h-full p-[15px] px:[50px] sm:px-[15px]">
+        <div class="h-[60%]">
+            <a  href="{{product.get_absolute_url}}">
+                <img class="h-full" src="{{company.image.url}}" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="absolute w-full h-full p-[15px] px:[50px] sm:px-[15px] flex items-end z-50">
+        <div class="h-[50%] w-full bg-white shadow-lg rounded-[10px] p-[25px] flex flex-col">
+            <div class="grid grid-cols-4 gap-[8px]" data-end-time="{{ company.finish_time|date:"Y-m-d H:i:s" }}">
+                <div class="bg-[#DEF9EC] text-first rounded-sm flex justify-center items-center flex-col h-[50px]">
+                    <div class="days text-[18px] leading-none">--</div>
+                    <div class="text-[13px] leading-none">{% trans "Gün" %}</div>
+                </div>
+                <div class="bg-[#DEF9EC] text-first rounded-sm flex justify-center items-center flex-col h-[50px]">
+                    <div class="hours text-[18px] leading-none">--</div>
+                    <div class="text-[13px] leading-none">{% trans "Saat" %}</div>
+                </div>
+                <div class="bg-[#DEF9EC] text-first rounded-sm flex justify-center items-center flex-col h-[50px]">
+                    <div class="minutes text-[18px] leading-none">--</div>
+                    <div class="text-[13px] leading-none">{% trans "Dəqiqə" %}</div>
+                </div>
+                <div class="bg-[#DEF9EC] text-first rounded-sm flex justify-center items-center flex-col h-[50px]">
+                    <div class="seconds text-[18px] leading-none">--</div>
+                    <div class="text-[13px] leading-none">{% trans "Saniyə" %}</div>
+                </div>
+            </div>
+            <!-- Product Title -->
+            <h2 class="text-gray-800 text-sm font-semibold mt-2">
+                <a href="{{product.get_absolute_url}}">{{product.title}}</a>
+            </h2>
+            <!-- Product Brand -->
+            <p class="text-first text-sm mt-2">
+                <a href="{% url "shop" %}?vendor={{product.vendor.slug}}">{{product.vendor}}</a>
+            </p>
+            <!-- Price and Button -->
+            <div class="flex flex-1 items-end justify-between mt-4">
+                <div class="flex flex-col justify-center items-center">
+                    {% if product.stock > 0 %}
+                        <span class="text-first font-bold text-[16px] sm:text-lg">
+                            ₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}
+                        </span>
+                        {% if product.discount %}
+                            <span class="text-gray-400 line-through ml-2 text-xs sm:text-sm">
+                                ₼ {{product.price|format_decimal:2}}
+                            </span>
+                        {% endif %}
+                    {% else %}
+                        <span class="text-first font-bold text-[16px] sm:text-lg">
+                            ₼ {{product.price|format_decimal:2}}
+                        </span>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if product.stock > 0 %}
+                        {% if user.is_authenticated %}
+                        <button onclick="addToBasket({{ product.id }},1)" class="bg-[#DEF9EC] active:bg-first-hover active:text-white md:hover:bg-first-hover md:hover:text-white md:hover:mb-1 md:transition-all duration-300 text-first font-[600] px-2 py-[2px] sm:py-1 rounded-[5px]">
+                            <i class="ti ti-shopping-cart text-[15px]"></i>
+                            <span class="text-xs sm:text-sm">{% trans "Əlavə et" %}</span>
+                        </button>
+                        {% else %}
+                        <a href="{% url "login" %}" class="bg-[#DEF9EC] hover:bg-first-hover hover:text-white hover:mb-1 transition-all duration-300 text-first font-[600] px-2 py-[2px] sm:py-1 rounded-[5px]">
+                            <i class="ti ti-shopping-cart text-[15px]"></i>
+                            <span class="text-xs sm:text-sm">{% trans "Əlavə et" %}</span>
+                        </button>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

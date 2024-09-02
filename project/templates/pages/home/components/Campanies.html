@@ -1,0 +1,15 @@
+{% load i18n %}
+<div class="lg:max-w-screen-xl container mx-auto px-[12px] my-[25px]">
+    <div class="w-full flex justify-between items-center">
+        <h3 class="text-[28px] font-bold">{% trans "Kampaniyalar" %}</h3>
+        <a href='{% url "companies" %}'>
+            {% trans "Hamısı" %}
+            <i class="ti ti-chevron-right"></i>
+        </a>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-[6px] sm:gap-6">
+        {% for company in companies %}
+        {% include "component/common/campany/CampanyItem.html" with company=company product=company.product %}
+        {% endfor %}
+    </div>
+</div>

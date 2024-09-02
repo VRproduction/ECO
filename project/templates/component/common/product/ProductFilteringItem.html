@@ -1,0 +1,27 @@
+{% load custom_filters %}
+<article class="flex items-center shadow-sm hover:shadow-lg transition-shadow gap-[24px] p-[5px]">
+    <figure class="">
+        <a href="{{product.get_absolute_url}}"><img class="w-[82px] h-[82px] rounded-lg" src="{{product.image.url}}" alt=""></a>
+    </figure>
+    <div class="">
+        <h6>
+            <a class="text-[16px] font-[600]" href="{{product.get_absolute_url}}">{{product.title}}</a>
+        </h6>
+        <div class="product-price">
+            {% if product.stock > 0 %}
+                <span class="text-first font-bold text-[16px] sm:text-lg">
+                    ₼ {% if product.discount %}{{product.discount_price|format_decimal:2}}{% else %}{{product.price|format_decimal:2}}{% endif %}
+                </span>
+                {% if product.discount %}
+                    <span class="text-gray-400 line-through ml-2 text-xs sm:text-sm">
+                        ₼ {{product.price|format_decimal:2}}
+                    </span>
+                {% endif %}
+            {% else %}
+                <span class="text-first font-bold text-[16px] sm:text-lg">
+                    ₼ {{product.price|format_decimal:2}}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</article>

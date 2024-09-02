@@ -87,40 +87,16 @@ def send_order_email(sender, instance, created, **kwargs):
             'order': instance,
             'site_url': site_url,
         }
-        if instance.is_wolt:
-            title = "Ecoproduct.az, sizə sifariş var! (kuryerlə çatdırılma)"
-        else:
-            title = "Ecoproduct.az, sizə sifariş var! (yerində ödəmə)"
-
-        message = render_to_string('mail/index.html', data)
-
-        send_mail(
-            title, 
-            message,
-            settings.EMAIL_HOST_USER,
-            [settings.DEFAULT_FROM_EMAIL],
-            fail_silently=False, html_message=message
-        ) 
-
-
-@receiver(post_save, sender=Order)
-def send_order_ready_email(sender, instance, **kwargs):
-    if instance.order_type == 'Yeni':
-        order = instance
-        setting = GeneralSettings.objects.first()
-        adress = setting.adress
-        number = PhoneNumber.objects.filter(setting=setting, is_main=True).first().number
-
-        if order.transaction.is_wolt:
+        if instance.transaction.is_wolt:
             user_order_items = OrderItem.objects.filter(order=order).order_by("pk")
             parcel_list = [item.to_dict_for_wolt_delivery() for item in user_order_items]
-            delivery = Delivery(lat=order.transaction.lat, lon=order.transaction.lon)
-            delivery_response = delivery.deliveries(amount=order.transaction.delivery_amount,
-                                                    recipient_name=order.transaction.recipient_name,
-                                                    recipient_phone=order.transaction.recipient_phone,
-                                                    dropoff_comment=order.transaction.dropoff_comment,
+            delivery = Delivery(lat=instance.transaction.lat, lon=instance.transaction.lon)
+            delivery_response = delivery.deliveries(amount=instance.transaction.delivery_amount,
+                                                    recipient_name=instance.transaction.recipient_name,
+                                                    recipient_phone=instance.transaction.recipient_phone,
+                                                    dropoff_comment=instance.transaction.dropoff_comment,
                                                     parcel_list=parcel_list,
-                                                    shipment_promise_id=order.transaction.shipment_promise_id)
+                                                    shipment_promise_id=instance.transaction.shipment_promise_id)
             print(delivery_response)
             
             if "error_code" in delivery_response:
@@ -148,9 +124,36 @@ def send_order_ready_email(sender, instance, **kwargs):
                     return redirect('basket')  
                 
                 # Save the extracted data to the Order instance
-                order.tracking_url = tracking_url
-                order.tracking_id = tracking_id
-                order.wolt_order_reference_id = wolt_order_reference_id
+                instance.tracking_url = tracking_url
+                instance.tracking_id = tracking_id
+                instance.wolt_order_reference_id = wolt_order_reference_id
+
+                instance.save()
+        
+        if instance.is_wolt:
+            title = "Ecoproduct.az, sizə sifariş var! (kuryerlə çatdırılma)"
+        else:
+            title = "Ecoproduct.az, sizə sifariş var! (yerində ödəmə)"
+
+        message = render_to_string('mail/index.html', data)
+
+        send_mail(
+            title, 
+            message,
+            settings.EMAIL_HOST_USER,
+            [settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False, html_message=message
+        )         
+
+@receiver(pre_save, sender=Order)
+def send_order_ready_email(sender, instance, **kwargs):
+    if instance.order_type == 'Təhvilə hazır':
+        order = instance
+        setting = GeneralSettings.objects.first()
+        adress = setting.adress
+        number = PhoneNumber.objects.filter(setting=setting, is_main=True).first().number
+
+        
                 
 
         if order.transaction.is_wolt:

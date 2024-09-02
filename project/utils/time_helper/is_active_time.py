@@ -1,14 +1,20 @@
 import datetime
-from django.contrib.sites.models import Site
-
-from apps.config.models.general_settings import *
+from django.utils import timezone
+from apps.config.models import WeekDay  
 
 def is_active_time():
-    general_setting = GeneralSettings.objects.first()
-    current_time = datetime.datetime.now()
+    current_time = timezone.now()
+    current_weekday = current_time.weekday()
 
-    if general_setting:
+    try:
+        weekday = WeekDay.objects.get(day_of_week=current_weekday)
+    except WeekDay.DoesNotExist:
+        return False
+
+    if weekday.is_workday:
         if current_time.minute == 0:
-            return general_setting.work_start_hour.hour <= current_time.hour <= general_setting.work_finish_hour.hour
+            return weekday.work_start_hour.hour <= current_time.hour <= weekday.work_finish_hour.hour
         else:
-            return general_setting.work_start_hour.hour < current_time.hour < general_setting.work_finish_hour.hour
+            return weekday.work_start_hour.hour < current_time.hour < weekday.work_finish_hour.hour
+
+    return False

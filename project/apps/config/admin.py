@@ -28,6 +28,18 @@ class SettingAdmin(TranslationAdmin):
             'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
         }
     
+class WeekDayAdmin(admin.ModelAdmin):
+    list_display = ('get_day_of_week_display', 'is_workday', 'work_start_hour', 'work_finish_hour')
+    list_filter = ('is_workday',)
+    ordering = ('day_of_week',)
+    search_fields = ('get_day_of_week_display',)
+    
+    def get_day_of_week_display(self, obj):
+        return obj.get_day_of_week_display()
+    get_day_of_week_display.short_description = 'Day of the Week'
+
+admin.site.register(WeekDay, WeekDayAdmin)
+
 # admin.py
 from django.contrib import admin
 from .models import APIKey

@@ -37,7 +37,6 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-
 class SuccessView(LoginRequiredMixin, View):
 
     def get(self, request):
@@ -82,8 +81,18 @@ class SuccessView(LoginRequiredMixin, View):
             if transaction_obj.coupon_code and not applied_coupon:
                 return redirect('basket')
 
+            # Calculate the discount and final total amount
+            discount_amount = self.apply_coupon(user, basket_items, applied_coupon) if applied_coupon else 0
+            is_delivery_free = (applied_coupon and discount_amount > 30) or (total_amount > 30)
+
+            # Ensure delivery_amount is not None
+            delivery_amount = transaction_obj.delivery_amount or 0
+
+            discount = total_amount - discount_amount
+            total_amount += delivery_amount if not is_delivery_free else 0
+
             # Create order
-            order = self.create_order(user, transaction_obj, total_amount, applied_coupon, basket_items)
+            order = self.create_order(user, transaction_obj, total_amount, discount_amount, discount,  applied_coupon, is_delivery_free)
 
             # Update stock and order items
             self.update_stock_and_order_items(order, basket_items)
@@ -97,7 +106,8 @@ class SuccessView(LoginRequiredMixin, View):
 
             # Handle Wolt delivery if applicable
             if transaction_obj.is_wolt:
-                self.handle_wolt_delivery(order)
+                if not self.handle_wolt_delivery(order):
+                    return redirect('basket')
 
             transaction_obj.is_checked_from_eco = True
             transaction_obj.save()
@@ -109,6 +119,7 @@ class SuccessView(LoginRequiredMixin, View):
             messages.error(request, 'An error occurred while creating the order.')
             return redirect('basket')
 
+    
     def handle_new_payment(self, transaction_obj):
         """Handle a payment with a 'new' status."""
         return render(self.request, 'failed.html', context={"payment_redirect_url": transaction_obj.payment_redirect_url})
@@ -133,17 +144,19 @@ class SuccessView(LoginRequiredMixin, View):
                 return None
         return None
 
-    def create_order(self, user, transaction_obj, total_amount, applied_coupon, basket_items):
+    def apply_coupon(self, user, basket_items, applied_coupon):
+        """Calculate the discount based on the coupon."""
+        if applied_coupon:
+            # Assuming apply_coupon is a utility function that calculates the discount
+            return apply_coupon(user, basket_items, applied_coupon)
+        return 0
+
+    def create_order(self, user, transaction_obj, total_amount, discount_amount, discount,  applied_coupon, is_delivery_free):
         """Create the order based on the transaction and basket items."""
-        discount_amount = apply_coupon(user, basket_items, applied_coupon) if applied_coupon else 0
-        is_delivery_free = (applied_coupon and discount_amount > 30) or (total_amount > 30)
-
-        total_amount += transaction_obj.delivery_amount if not is_delivery_free else 0
-
         return Order.objects.create(
             user=user,
             total_amount=total_amount,
-            discount=discount_amount if applied_coupon else None,
+            discount=discount if applied_coupon else None,
             discount_amount=discount_amount,
             delivery_amount=transaction_obj.delivery_amount,
             is_delivery_free=is_delivery_free,
@@ -183,40 +196,34 @@ class SuccessView(LoginRequiredMixin, View):
             parcel_list=parcel_list,
             shipment_promise_id=order.transaction.shipment_promise_id
         )
-        print(delivery_response)
 
         if "error_code" in delivery_response:
             # Handle error scenario
             messages.error(self.request, 'An error occurred with the delivery service.')
-            return redirect('basket')
+            return False
 
         if 'tracking' in delivery_response:
             tracking_url = delivery_response["tracking"]["url"]
             tracking_id = delivery_response["tracking"]["id"]
             wolt_order_reference_id = delivery_response["wolt_order_reference_id"]
             
-            errors = []
-
-            if not tracking_url:
-                errors.append("Tracking URL is missing.")
-            if not tracking_id:
-                errors.append("Tracking ID is missing.")
-            if not wolt_order_reference_id:
-                errors.append("Wolt order reference ID is missing.")
-
-            if errors:
-                messages.error(self.request, ' '.join(errors))
-                return redirect('basket')
+            if not all([tracking_url, tracking_id, wolt_order_reference_id]):
+                messages.error(self.request, 'Invalid delivery response.')
+                return False
 
             parsed_url = urlparse(tracking_url)
             if not all([parsed_url.scheme, parsed_url.netloc]):
-                return redirect('basket')  
+                messages.error(self.request, 'Invalid tracking URL.')
+                return False
 
             # Save the extracted data to the Order instance
             order.tracking_url = tracking_url
             order.tracking_id = tracking_id
             order.wolt_order_reference_id = wolt_order_reference_id
             order.save()
+
+        return True
+
 
 def failed(request):
     # transaction_obj = Transaction.objects.filter(user = request.user, ).last()

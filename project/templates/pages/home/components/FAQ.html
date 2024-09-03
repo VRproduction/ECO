@@ -1,0 +1,61 @@
+{% load i18n %}
+<div class="lg:max-w-screen-xl container mx-auto px-[12px] my-[50px]">
+    <!-- Title -->
+    <h2 class="text-2xl md:text-3xl font-semibold text-center mb-6">
+        {% trans "Tez-tez verilən suallar" %}
+    </h2>
+
+    <!-- FAQ Container -->
+    <div class="bg-white rounded-lg shadow-md" id="faq-container">
+        {% for faq in faqs %}
+            <div class="border-b border-gray-200">
+                <button class="w-full text-left px-6 py-4 flex justify-between items-center focus:outline-none faq-button">
+                    <span class="text-lg font-medium text-gray-800 flex items-center">
+                        <span class="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3">{{ forloop.counter }}</span>
+                        {{ faq.title }}
+                    </span>
+                    <svg class="w-6 h-6 text-gray-500 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="px-6 py-4 hidden text-gray-700 faq-answer">
+                    {{ faq.description }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const faqButtons = document.querySelectorAll('.faq-button');
+        let lastOpenButton = null;
+        let lastOpenAnswer = null;
+
+        faqButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('.faq-icon');
+                
+                // Close the previously opened FAQ if it exists and is different from the current one
+                if (lastOpenAnswer && lastOpenAnswer !== answer) {
+                    lastOpenAnswer.classList.add('hidden');
+                    lastOpenButton.querySelector('.faq-icon').classList.remove('rotate-180');
+                }
+
+                // Toggle the current FAQ
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.classList.add('rotate-180');
+                    lastOpenButton = button;
+                    lastOpenAnswer = answer;
+                } else {
+                    answer.classList.add('hidden');
+                    icon.classList.remove('rotate-180');
+                    lastOpenButton = null;
+                    lastOpenAnswer = null;
+                }
+            });
+        });
+    });
+</script>

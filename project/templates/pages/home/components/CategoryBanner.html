@@ -3,11 +3,11 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-[24px]">
         {% for banner in category_banners %}
             <div class="relative h-[224px] shadow-md hover:shadow-xl transition-shadow duration-300">
-                <img class="absolute w-full h-full object-cover" src="{{banner.image.url}}" alt="">
+                <img class="absolute w-full h-full object-contain" src="{{banner.image.url}}" alt="">
                 <div class="absolute w-full h-full flex items-center">
-                    <div class="h-[146px] w-full flex flex-col justify-between pl-[15px]">
+                    <div class="h-[146px] w-[60%] flex flex-col justify-between pl-[15px]">
                         <h4 class="text-[24px] font-[700] leading-[1.2]">{{banner.title|safe}}</h4>
-                        <a class="py-[6px] w-[150px] md:w-[170px] hover:w-[180px] transition-all px-[10px] rounded-[5px] flex justify-between items-center bg-first text-white" href="{% url 'shop' %}?category={{banner.category.id}}">
+                        <a class="py-[6px] w-[150px] md:w-[170px] hover:w-[180px] hover:bg-first-hover transition-all px-[10px] rounded-[5px] flex justify-between items-center bg-first text-white" href="{% url 'shop' %}?category={{banner.category.id}}">
                             <span class="text-[14px] md:text-[16px] font-[600]">{% trans "Alış-verişə başla" %}</span>
                             <i class="ti ti-arrow-narrow-right"></i>
                         </a>

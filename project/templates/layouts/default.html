@@ -55,6 +55,7 @@
 
     {% tailwind_css %} 
     
+    <link rel="stylesheet" href="{% static "assets/css/custom_loader.css" %}">
     <link href="{% static 'assets/custom/css/root.css' %}" rel="stylesheet">
     <link href="{% static 'assets/custom/css/main.css' %}" rel="stylesheet">
     <link href="{% static 'assets/custom/css/swipper.css' %}" rel="stylesheet">
@@ -113,6 +114,10 @@
   </head>
 
   <body style="font-family: 'Lato', sans-serif;">
+    {% include "component/common/notification/Notification.html" %}
+
+    {% include "component/layout/loader/Loading.html" %}
+
     <!--  Header Top  -->
       {% include "component/layout/header/HeaderTop.html" %}
     <!--  Header Top End -->
@@ -147,13 +152,21 @@
             var isAuthenticated = false;
         </script>
     {% endif %}
+    <script src="{% static "assets/custom/js/notification.js" %}"></script>
+
     <script src="{% static "assets/js/index.js" %}"></script>
     <script src="{% static "assets/js/delivery.js" %}"></script>
-    <script src="{% static "assets/js/notification.js" %}"></script>
 
     <script src="{% static "assets/custom/js/data_countdown.js" %}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@tabler/icons@1.74.0/icons-react/dist/index.umd.min.js"></script> 
 
+    <script>
+      window.addEventListener("load", function() {
+          // Yükleme tamamlandığında loader'ı gizle
+          document.querySelector('.loader-container').style.display = 'none';
+      });
+      
+  </script>
   </body>
 </html>

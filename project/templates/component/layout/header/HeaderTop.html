@@ -1,36 +1,56 @@
+{% load static %}
+{% load i18n %}
+{% load custom_filters %}
+
 <header class="hidden lg:block py-[10px] border-b border-gray-200 text-[#7E7E7E]">
     <div class="max-w-screen-xl mx-auto flex justify-between items-center px-[12px]">
         <div class="flex items-center text-[13px] font-[500]">
-            <a href="#" class="hover:text-gray-900">Haqqımızda</a>
+            <a href="{% url "about" %}" class="hover:text-gray-900">{% trans "Haqqımızda" %}</a>
             <span class="block w-px h-[10px] bg-gray-200 mx-2"></span>
-            <a href="#" class="hover:text-gray-900">Hesab</a>
+            <a href="{% if user.is_authenticated %}{% url "account" %}?tab=2{% else %}{% url "login" %}?next={% url "account" %}?tab=2{% endif %}" class="hover:text-gray-900">{% trans "Hesab" %}</a>
             <span class="block w-px h-[10px] bg-gray-200 mx-2"></span>
-            <a href="#" class="hover:text-gray-900">Sevimilər</a>
+            <a href="{% if user.is_authenticated %}{% url "wish_list" %}{% else %}{% url "login" %}?next={% url "wish_list" %}{% endif %}" class="hover:text-gray-900">{% trans "Sevimlilər" %}</a>
         </div>
         <div id="promotional-container" class="flex items-center space-x-4 text-[14px] font-[800]">
-            <div class="hidden">Yaşıl Cümə - Kətan yağı və çətənə toxumu - 25.00% endirim</div>
-            <div class="hidden">Qara Cümə - Səhər yeməyi üçün xüsusi təkliflər - 30.00% endirim</div>
-            <div class="hidden">Bazar ertəsi - Məhsul xərcləri - 20.00% endirim</div>
-            <div class="hidden">Çərşənbə axşamı - Sağlamlıq məhsulları - 15.00% endirim</div>
-            <div class="hidden">Cümə axşamı - Elektronika - 10.00% endirim</div>
+            {% for company in header_companies %}
+            <div class="hidden">{{company.product}} - {{company.discount|format_decimal:2}}% {% trans "endirim" %}</div>
+            {% endfor %}
         </div>
         <div class="flex items-center text-[13px]">
             <div>
-                <span>Zəng et: </span>
+                <span>{% trans "Zəng et" %}: </span>
                 <a href="tel:+994705413049" class="font-[600] text-[#039D2E] hover:text-green-600">+994 (70) 541-30-49</a>
             </div>
             <span class="block w-px h-[10px] bg-gray-200 mx-2"></span>
             <div class="relative inline-block text-left">
                 <div id="language-select" class="text-gray-700 font-medium px-4 cursor-pointer flex items-center">
-                    English
+                    {% if request.LANGUAGE_CODE == 'az' %}
+                        Azərbaycanca
+                    {% elif request.LANGUAGE_CODE == 'en' %}
+                        English
+                    {% elif request.LANGUAGE_CODE == 'ru' %}
+                        Русский
+                    {% endif %}
                     <svg class="w-4  ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </div>
                 <div id="language-menu" class="absolute z-50 right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
-                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">English</a>
-                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Français</a>
-                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Español</a>
+                    {% if not request.LANGUAGE_CODE == 'en' %}
+                    <a href="{% url 'set-language' 'en' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <img src="{% static 'assets/imgs/theme/flag-en.png' %}" alt="" class="inline-block w-4 h-4 mr-2"> English
+                    </a>
+                    {% endif %}
+                    {% if not request.LANGUAGE_CODE == 'az' %}
+                    <a href="{% url 'set-language' 'az' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <img src="{% static 'assets/imgs/theme/flag-az.png' %}" alt="" class="inline-block w-4 h-4 mr-2"> Azərbaycanca
+                    </a>
+                    {% endif %}
+                    {% if not request.LANGUAGE_CODE == 'ru' %}
+                    <a href="{% url 'set-language' 'ru' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <img src="{% static 'assets/imgs/theme/flag-ru.png' %}" alt="" class="inline-block w-4 h-4 mr-2"> Русский
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

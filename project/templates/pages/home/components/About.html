@@ -1,0 +1,14 @@
+{% load i18n %}
+{% if about %}
+<section class="lg:max-w-screen-xl container mx-auto px-[12px] my-[50px]">
+    <div class="grid sm:grid-cols-2 place-items-center sm:gap-[55px]">
+        <div>
+            <img src="{{about.image.url}}" alt="" class="border-radius-15 mb-md-3 mb-lg-0 mb-sm-4">
+        </div>
+        <div>
+            <h2 class="text-[40px] text-textColor font-[700]">{{about.title}}</h2>
+            <p class="text-[#7e7e7e] mt-[30px] font-[1rem] leading-6">{{about.description|striptags|safe|truncatechars:"500"}} {% if description|length < 500 %}<a class="text-first" href="{% url "about" %}">{% trans "daha çox" %}</a>{% endif %}</p>
+        </div>
+    </div>
+</section>
+{% endif %}

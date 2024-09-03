@@ -58,8 +58,11 @@ function addToBasket(product_id, quantity) {
             // Kullanıcıya bildirim göster
             fetchBasketItems();
             // Sepet ikonunu güncelle
-            $('#basket-item-count').text(data.basket_item_count);
-            showNotification(t.item_added_message)
+            if(window.location.pathname == "/" || window.location.pathname == "/en/" || window.location.pathname == "/ru/" || window.location.pathname == "/dev/" || window.location.pathname == "/en/dev/" || window.location.pathname == "/ru/dev/"){
+                showNotification('success', t.item_added_message)
+            }else{
+                showNotification(t.item_added_message)
+            }
         } else {
            console.log('Bir hata oluştu.');
         }
@@ -182,20 +185,23 @@ function fetchBasketItems(coupon_code) {
         .then(data => {
             updateNavbarBasket(data);
             if(window.location.pathname == "/basket/" || window.location.pathname == "/en/basket/" || window.location.pathname == "/ru/basket/"){
-            updateBasketTable(data);
+                updateBasketTable(data);
+                $('#basket-item-count').text(data.basket_item_count);
+
             }
+            saveDataToLocalStorage(data);
         })
         .catch(error => console.error('Error:', error));
 }
 
 function updateNavbarBasket(data){
     document.getElementById('header-basket-count').innerText = `${data.basketItemCount}`;
-    if (data.basketItems.length > 0){
+    if (data.basketItems.length >= 0){
         const basketItemsBody = document.getElementById('navbar-basket-items');
         document.getElementById('navbar-basket-total').innerText = `${data.totalPrice} AZN`;
         basketItemsBody.innerHTML = '';
         data.basketItems.forEach((item, count)=>{
-            if (window.location.pathname =='/dev/' || window.location.pathname =='/en/dev/' || window.location.pathname =='/ru/dev/'){
+            if (window.location.pathname =='/' || window.location.pathname =='/en/' || window.location.pathname =='/ru/'){
                 if (count<3) {
                     const div = document.createElement('div');
                     div.classList.add('flex', 'items-center', 'mb-4', 'gap-3')
@@ -205,7 +211,7 @@ function updateNavbarBasket(data){
                         </a>
                         <div class="flex flex-1 justify-between items-center">
                             <div class="">
-                                <h4 class="text-red-200"><a href="/products/${item.product.slug}/">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>
+                                <h4 class="text-textColor"><a href="/products/${item.product.slug}/">${item.product.title.length > 18 ? `${item.product.title.slice(0, 18)} ...` : item.product.title}</a></h4>
                                 <h4><span>${item.quantity} × </span>₼ ${item.product.price}</h4>
                             </div>
                             <div>
@@ -242,17 +248,6 @@ function updateNavbarBasket(data){
             document.getElementById("navbar-basket-checkout").disabled = true;
         }else{
             document.getElementById("navbar-basket-checkout").disabled = false;
-        }
-        if (window.location.pathname =='/dev/' || window.location.pathname =='/en/dev/' || window.location.pathname =='/ru/dev/'){
-            document.getElementById('navbar-basket').classList.remove("invisible");
-        }else{
-            document.getElementById('navbar-basket').classList.remove("d-none");
-        }
-    }else{
-        if (window.location.pathname =='/dev/' || window.location.pathname =='/en/dev/' || window.location.pathname =='/ru/dev/'){
-            document.getElementById('navbar-basket').classList.add("invisible");
-        }else{
-            document.getElementById('navbar-basket').classList.add("d-none");
         }
     }
 
@@ -380,7 +375,6 @@ function updateBasketTable(data) {
         </div>
     `;
 
-    saveDataToLocalStorage(data);
 
     const coupon_error = document.getElementById('coupon_error');
 
@@ -505,7 +499,7 @@ function toggleFavorite(productId) {
                 `;
             }
             
-            // favorite_count.innerText = `${Number(favorite_count.innerText)+1}`
+            favorite_count.innerText = `${Number(favorite_count.innerText)+1}`
             if (productHeart) {
                 productHeart.classList.remove("text-first", "ti-heart")
                 productHeart.classList.add("text-red-500", "ti-heart-filled")
@@ -521,7 +515,7 @@ function toggleFavorite(productId) {
                 productHeart.classList.add("text-first", "ti-heart")
                 productHeart.classList.remove("text-red-500", "ti-heart-filled")
             }
-            // favorite_count.innerText = `${Number(favorite_count.innerText)-1}`
+            favorite_count.innerText = `${Number(favorite_count.innerText)-1}`
         }
     })
     .catch(error => console.error('Error:', error));

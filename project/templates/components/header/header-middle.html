@@ -9,13 +9,13 @@
             <div class="header-right">
                 <div class="search-style-2">
                     <form action="{% url "shop" %}" method="get">
-                        <select name="category" class="select-active">
+                        {% comment %} <select name="category" class="select-active">
                             <option value="">{% trans "Kateqoriyalar" %}</option>
                             {% for category in categories %}
                             <option {% if request.GET.category == category.slug %}selected{% endif %} value="{{category.slug}}">{{category.title}}</option>
                             {% endfor %}
                             
-                        </select>
+                        </select> {% endcomment %}
                         <input type="text" name="search" value="{{request.GET.search}}" placeholder="{% trans "Axtar" %} ...">
                         <button type="submit" style="display:flex; align-items:center; padding: 0;"><img src="{% static "assets/imgs/theme/icons/search.png" %}" alt=""></button>
                     </form>

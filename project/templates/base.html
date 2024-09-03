@@ -83,13 +83,8 @@
 <body>
     {% include "components/basket-notification/notification.html" %}
      <!-- Loader -->
-     <div class="loader-container">
-        <div class="loader">
-            <div class="loader-dot"></div>
-            <div class="loader-dot"></div>
-            <div class="loader-dot"></div>
-        </div>
-    </div>
+    {% include "component/layout/loader/Loading.html" %}
+
 
     <!-- Modal -->
     {% comment %} <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
@@ -155,20 +150,7 @@
     {% block main %}{% endblock main %}
     </main>
     {% include "components/footer/footer.html" %}
-
-    <script>
-        document.onreadystatechange = function () {
-            if (document.readyState === "complete") {
-                setTimeout(function () {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("overlay").style.display = "none";
-                }, 10);
-            } else {
-                document.getElementById("loader").style.display = "block";
-                document.getElementById("overlay").style.display = "block";
-            }
-        };
-    </script>
+  
     {% if user.is_authenticated %}
         <script>
             var isAuthenticated = true;

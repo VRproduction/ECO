@@ -46,7 +46,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('web.urls')),
-    path('', include('apps.pages.home.urls')),
+    # path('', include('apps.pages.home.urls')),
     path('', include('apps.product.urls')),
     path('', include('apps.vacancies.urls')),
     path('api/', include('apps.vacancies.api.urls')),

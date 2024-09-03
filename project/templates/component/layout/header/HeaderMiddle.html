@@ -9,52 +9,79 @@
         <div class="flex items-center flex-1">
             <!-- This is an example component -->
                         
-            <div class="relative flex items-center border-2 border-[#BCE3C9] rounded py-1 max-w-2xl w-full mx-auto">
-                <input type="text" placeholder="Axtar ..." class="flex-grow px-4 py-2 border-none focus:ring-0 focus:outline-none" />
+            <form action="{% url "shop" %}" method="get" class="relative flex items-center border-2 border-[#BCE3C9] rounded py-1 max-w-2xl w-full mx-auto">
+                <input name="search" value="{{request.GET.search}}" type="text" placeholder="{% trans "Axtar" %} ..." class="flex-grow px-4 py-2 border-none focus:ring-0 focus:outline-none" />
                 <button class="px-4 py-2 text-gray-500 hover:text-gray-700 focus:outline-none">
                   <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </button>
-            </div>
+            </form>
 
             <div class="flex gap-5 items-center">
-                <a href="" class="relative flex items-center gap-2">
+                <a href="{% if user.is_authenticated %}{% url "wish_list" %}{% else %}{% url "login" %}?next={% url "wish_list" %}{% endif %}" class="relative flex items-center gap-2">
                     <div class="relative">
                         <img class="w-[25px] h-[25px]" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}">
-                        <span class="absolute top-[-8px] right-[-8px] bg-first text-white text-xs font-bold w-[18px] h-[18px] flex items-center justify-center rounded-full">6</span>
+                        <span id="favorite_count" class="absolute top-[-8px] right-[-8px] bg-first text-white text-xs font-bold w-[18px] h-[18px] flex items-center justify-center rounded-full">{% if user.is_authenticated %}{{favorite_count}}{% else %}0{% endif %}</span>
                     </div>
-                    <span>Sevimlilər</span>
+                    <span>{% trans "Sevimlilər" %}</span>
                 </a>
                 <div class="relative group">
                     <!-- Trigger Element -->
-                    <a class="relative flex items-center gap-2 cursor-pointer">
+                    <a href="{% if user.is_authenticated %}{% url "basket" %}{% else %}{% url "login" %}?next={% url "basket" %}{% endif %}" class="relative flex items-center gap-2 cursor-pointer">
                         <div class="relative">
                             <img class="w-[25px] h-[25px]" alt="Cart" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}">
-                            <span id="header-basket-count" class="absolute top-[-8px] right-[-8px] bg-first text-white text-xs font-bold w-[18px] h-[18px] flex items-center justify-center rounded-full">3</span>
+                            <span id="header-basket-count" class="absolute top-[-8px] right-[-8px] bg-first text-white text-xs font-bold w-[18px] h-[18px] flex items-center justify-center rounded-full">0</span>
                         </div>
-                        <span>Səbət</span>
+                        <span>{% trans "Səbət" %}</span>
                     </a>
-                
+                    
                     <!-- Dropdown Menu -->
-                    <div id="navbar-basket" class="hidden absolute right-0 z-[200] w-[400px] flex-col  py-1 px-4 text-gray-800  group-hover:flex">
+                    <div id="navbar-basket" class="hidden absolute right-0 z-[5200] w-[400px] flex-col  py-1 px-4 text-gray-800  {% if user.is_authenticated %}group-hover:flex{% endif %}">
                         <div class="p-4 bg-white border rounded-lg my-3">
                             <div id="navbar-basket-items">
                                
                             </div>
-                            <div class="font-bold">Ümumi qiymət: <span id="navbar-basket-total"></span></div>
+                            <div class="font-bold">{% trans "Ümumi qiymət" %}: <span id="navbar-basket-total"></span></div>
                             <div class="grid grid-cols-2 gap-2 mt-4 text-[14px]">
-                                <a href="#" class="text-center bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">Səbətə bax</a>
+                                <a href="{% url "basket" %}" class="text-center bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">{% trans "Səbətə bax" %}</a>
                                 <button id="navbar-basket-checkout" onclick="checkoutButton()" class="text-center bg-first hover:bg-first-hover text-white px-4 py-2 rounded">Tamamla</button>
                             </div>
                         </div>
                     </div>
                 </div>
-               
-                <a href="" class="flex items-center gap-1">
-                    <img class="w-6 h-6" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-user.svg' %}">
-                    <span>Hesab</span>
-                </a>
+                
+                <div class="relative group">
+                    <a href="{% url "account" %}" class="flex items-center gap-1">
+                        <img class="w-6 h-6" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-user.svg' %}">
+                        <span>{% trans "Hesab" %}</span>
+                    </a>
+                    <!-- Dropdown Menu -->
+                    <div id="navbar-basket" class="hidden absolute right-0 z-[5200] w-[200px] flex-col  py-1 px-4 text-gray-800 group-hover:flex">
+                        <div class="p-4 bg-white border rounded-lg my-3">
+                            {% if user.is_authenticated %}
+                            <ul class="gap-[5px] flex flex-col">
+                                <li>
+                                    <a href='{% url "account" %}'><i class="fi fi-rs-user mr-10"></i>{% trans "Hesab" %}</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "logout" %}'><i class="fi fi-rs-sign-out mr-10"></i>{% trans "Çıxış" %}</a>
+                                </li>
+                            </ul>
+                            {% else %}
+                            <ul class="gap-[5px] flex flex-col">
+                                <li>
+                                    <a class="text-textColor hover:text-first-hover" href='{% url "login" %}'>{% trans "Daxil ol" %}</a>
+                                </li>
+                                <li>
+                                    <a class="text-textColor hover:text-first-hover" href='{% url "register" %}'>{% trans "Qeydiyyatdan keç" %}</a>
+                                </li>
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             
         </div>

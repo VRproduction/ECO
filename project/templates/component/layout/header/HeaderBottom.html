@@ -1,12 +1,12 @@
 {% load i18n %}
 {% load static %}
-<header id="navbar" class="sticky top-0 z-[500] hidden lg:block py-[10px] border-b border-gray-200 text-[#7E7E7E] bg-white transition-all duration-300">
+<header id="navbar" class="sticky top-0 z-[300] hidden lg:block py-[10px] border-b border-gray-200 text-[#7E7E7E] bg-white transition-all duration-300">
     <div class="max-w-screen-xl mx-auto flex justify-between items-center px-[12px]">
         <div class="flex items-center gap-[24px]">
             <div class="relative">
                 <button id="categories-btn" class="flex items-center text-[16px] bg-first py-2 px-[20px] text-white rounded-[5px] gap-[5px]"> 
                     <img class="w-[20px] h-[20px] fill-white" src="{% static "assets/imgs/category.svg" %}" alt="">
-                    <span class="font-[600]">Kategoriyalar</span>
+                    <span class="font-[600]">{% trans "Kategoriyalar" %}</span>
                     <i class="fa-solid fa-angle-down" style="color: #ffffff;"></i>
                 </button>
                 <div id="categories-menu" class="hidden opacity-0 transition-opacity absolute w-[474px]">

@@ -3,16 +3,7 @@
     <div class="swiper heroSlider w-full h-full">
         <div class="swiper-wrapper">
             {% for slider in sliders %}
-            <div class="swiper-slide hidden lg:block relative justify-center items-center text-lg bg-white h-[350px] lg:h-[538px]">
-                <div class="absolute left-0 top-0 w-full h-full">
-                    <img class="w-full h-full object-cover"  src="{{slider.image.url}}" alt="">
-                </div>
-                <div class="absolute left-0 top-0 w-full h-full flex flex-col justify-evenly">
-                    <h1 class="text-[#253D4E] text-[24px] lg:text-[72px] font-[700] lg:leading-[70px]">{{slider.title|safe}}</h1>
-                    <p class="text-[16px] lg:text-[30px] text-[#7e7e7e] font-[400]">{{slider.description|safe}}</p>
-                    <a class="w-[152px] lg:w-[181px] text-center py-[7px] bg-first hover:bg-first-hover text-white text-[14px] font-[700] rounded-[4px]" href="{% url "shop" %}">{% trans "Alış-verişə başla" %}</a>
-                </div>
-            </div>
+            {% if request.user_agent.is_mobile %}
             <div class="swiper-slide relative flex lg:hidden justify-center items-center text-lg bg-white h-[350px] lg:h-[538px]">
                 <div class="absolute left-0 top-0 w-full h-full">
                     <img class="w-full h-full object-cover" src="{{slider.mobile_image.url}}" alt="">
@@ -23,6 +14,18 @@
                     <a class="w-[152px] lg:w-[181px] text-center py-[7px] bg-first hover:bg-first-hover text-white text-[14px] font-[700] rounded-[4px]" href="{% url "shop" %}">{% trans "Alış-verişə başla" %}</a>
                 </div>
             </div>
+            {% else %}
+            <div class="swiper-slide hidden lg:block relative justify-center items-center text-lg bg-white h-[350px] lg:h-[538px]">
+                <div class="absolute left-0 top-0 w-full h-full">
+                    <img class="w-full h-full object-cover"  src="{{slider.image.url}}" alt="">
+                </div>
+                <div class="absolute left-0 top-0 w-full h-full flex flex-col justify-evenly">
+                    <h1 class="text-[#253D4E] text-[24px] lg:text-[72px] font-[700] lg:leading-[70px]">{{slider.title|safe}}</h1>
+                    <p class="text-[16px] lg:text-[30px] text-[#7e7e7e] font-[400]">{{slider.description|safe}}</p>
+                    <a class="w-[152px] lg:w-[181px] text-center py-[7px] bg-first hover:bg-first-hover text-white text-[14px] font-[700] rounded-[4px]" href="{% url "shop" %}">{% trans "Alış-verişə başla" %}</a>
+                </div>
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
         <div class="swiper-pagination"></div>

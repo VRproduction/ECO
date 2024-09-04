@@ -64,6 +64,8 @@ THIRD_PARTY_APPS = [
     'rosetta',
     "corsheaders",
     'django_recaptcha',
+    'django_user_agents',
+
 
     "django_celery_results",
     "django_celery_beat",
@@ -98,6 +100,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'utils.middlewares.page_view.PageViewMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware', #new
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True

@@ -1383,6 +1383,10 @@ select {
   height: 65px;
 }
 
+.h-\[700px\] {
+  height: 700px;
+}
+
 .h-\[82px\] {
   height: 82px;
 }

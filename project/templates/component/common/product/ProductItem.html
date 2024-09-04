@@ -75,7 +75,7 @@
         <i id="product_heart_{{ product.id }}" class="ti {% if product|is_wished:request and user.is_authenticated %} ti-heart-filled  text-red-500 {% else %} ti-heart  text-first {% endif %} text-[15px] "></i>
     </button>
     {% else %}
-    <a href="{% url "login" %}" class="absolute top-[10px] right-[10px] w-[25px] h-[25px] rounded-full border-2 border-first grid place-items-center">
+    <a aria-label="Adding favourites" href="{% url "login" %}" class="absolute top-[10px] right-[10px] w-[25px] h-[25px] rounded-full border-2 border-first grid place-items-center">
         <i class="ti ti-heart text-[15px] text-first"></i>
     </a>
     {% endif %}

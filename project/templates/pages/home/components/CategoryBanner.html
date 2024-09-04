@@ -3,7 +3,7 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-[24px]">
         {% for banner in category_banners %}
             <div class="relative h-[224px] shadow-md hover:shadow-xl transition-shadow duration-300">
-                <img class="absolute w-full h-full object-contain" src="{{banner.image.url}}" alt="">
+                <img class="absolute w-full h-full object-contain" loading="lazy" src="{{banner.image.url}}" alt="">
                 <div class="absolute w-full h-full flex items-center">
                     <div class="h-[146px] w-[60%] flex flex-col justify-between pl-[15px]">
                         <h4 class="text-[24px] font-[700] leading-[1.2]">{{banner.title|safe}}</h4>

@@ -5,7 +5,7 @@
         <div class="swiper-wrapper">
             {% for partner in partners %}
             <div class="swiper-slide">
-                <img src="{{partner.image.url}}" alt="img" style="width: 100%">
+                <img src="{{partner.image.url}}" loading="lazy" alt="img" style="width: 100%">
             </div>
             {% endfor %}
         </div>

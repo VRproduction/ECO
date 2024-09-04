@@ -1,7 +1,7 @@
 {% load custom_filters %}
 <article class="flex items-center shadow-sm hover:shadow-lg transition-shadow gap-[24px] p-[5px]">
     <figure class="">
-        <a href="{{product.get_absolute_url}}"><img class="w-[82px] h-[82px] rounded-lg" src="{{product.image.url}}" alt=""></a>
+        <a href="{{product.get_absolute_url}}"><img loading="lazy" class="w-[82px] h-[82px] rounded-lg" src="{{product.image.url}}" alt=""></a>
     </figure>
     <div class="">
         <h6>

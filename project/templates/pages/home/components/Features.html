@@ -2,7 +2,7 @@
     <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[15px]">
         {% for feature in features %}
             <div class="bg-[#F4F6FA] rounded-[10px] flex items-center p-[18px] gap-[10px] leading-5 transition-transform transform hover:scale-105 hover:shadow-lg">
-                <img class="w-[50px] h-[50px]" src="{{feature.icon.url}}" alt="">
+                <img class="w-[50px] h-[50px]" loading="lazy" src="{{feature.icon.url}}" alt="">
                 <div class="">
                     <h3 class="text-[18px] text-textColor font-[600]">{{feature.title1}}</h3>
                     <p class="mt-[7px] text-[16px] text-[#adadad]">{{feature.title2}}</p>

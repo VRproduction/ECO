@@ -5,7 +5,7 @@
             {% for slider in sliders %}
             <div class="swiper-slide hidden lg:block relative justify-center items-center text-lg bg-white h-[350px] lg:h-[538px]">
                 <div class="absolute left-0 top-0 w-full h-full">
-                    <img class="w-full h-full object-cover" loading="lazy" src="{{slider.image.url}}" alt="">
+                    <img class="w-full h-full object-cover"  src="{{slider.image.url}}" alt="">
                 </div>
                 <div class="absolute left-0 top-0 w-full h-full flex flex-col justify-evenly">
                     <h1 class="text-[#253D4E] text-[24px] lg:text-[72px] font-[700] lg:leading-[70px]">{{slider.title|safe}}</h1>

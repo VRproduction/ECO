@@ -20,7 +20,7 @@
         {% endif %}
     </div>
     <!-- Product Image -->
-    <a href="{{product.get_absolute_url}}">
+    <a aria-label="{{product.title}}" href="{{product.get_absolute_url}}">
         <img class="w-full h-32 object-contain mt-4" loading="lazy" src="{{product.image.url}}" alt="">
     </a>
     <!-- Product Category -->
@@ -29,7 +29,7 @@
     </div>
     <!-- Product Title -->
     <h2 class="text-gray-800 text-sm font-semibold mt-2">
-        <a href="{{product.get_absolute_url}}">{{product.title}}</a>
+        <a aria-label="{{product.title}}" href="{{product.get_absolute_url}}">{{product.title}}</a>
     </h2>
     <!-- Product Brand -->
     <p class="text-first text-sm mt-2">

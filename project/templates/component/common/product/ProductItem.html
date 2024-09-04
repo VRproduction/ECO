@@ -25,7 +25,7 @@
     </a>
     <!-- Product Category -->
     <div class="text-[#7e7e7e] text-sm font-[400] mt-4">
-        <a href="{% url "shop" %}?category={{product.category.id}}">{{product.category}}</a>
+        <a aria-label="{{product.category}}"  href="{% url "shop" %}?category={{product.category.id}}">{{product.category}}</a>
     </div>
     <!-- Product Title -->
     <h2 class="text-gray-800 text-sm font-semibold mt-2">
@@ -33,7 +33,7 @@
     </h2>
     <!-- Product Brand -->
     <p class="text-first text-sm mt-2">
-        <a href="{% url "shop" %}?vendor={{product.vendor.slug}}">{{product.vendor}}</a>
+        <a aria-label="{{product.vendor}}" href="{% url "shop" %}?vendor={{product.vendor.slug}}">{{product.vendor}}</a>
     </p>
     <!-- Price and Button -->
     <div class="flex flex-1 items-end justify-between mt-4">

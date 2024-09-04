@@ -1,11 +1,11 @@
 {% load custom_filters %}
 <article class="flex items-center shadow-sm hover:shadow-lg transition-shadow gap-[24px] p-[5px]">
-    <figure class="">
-        <a href="{{product.get_absolute_url}}"><img loading="lazy" class="w-[82px] h-[82px] rounded-lg" src="{{product.image.url}}" alt=""></a>
+    <figure>
+        <a  aria-label="{{product.title}}" href="{{product.get_absolute_url}}"><img loading="lazy" class="w-[82px] h-[82px] rounded-lg" src="{{product.image.url}}" alt=""></a>
     </figure>
     <div class="">
         <h6>
-            <a class="text-[16px] font-[600]" href="{{product.get_absolute_url}}">{{product.title}}</a>
+            <a  aria-label="{{product.title}}" class="text-[16px] font-[600]" href="{{product.get_absolute_url}}">{{product.title}}</a>
         </h6>
         <div class="product-price">
             {% if product.stock > 0 %}

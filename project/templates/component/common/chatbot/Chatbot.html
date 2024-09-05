@@ -1,0 +1,30 @@
+{% load static %}
+{% load i18n %}
+
+<!-- Chatbot Icon -->
+<div id="chatbot-icon" class="" aria-label="Open Chatbot" role="button" tabindex="0">
+    <img src="{% static "assets/chatbot/images/chatbot.png" %}" alt="Chatbot Icon">
+</div>
+
+<!-- Chatbot Window -->
+<div id="chatbot-window" class="display-none">
+    <div id="chatbot-header">
+        <div class="chatbot-header-content">
+            <img src="{% static "assets/chatbot/images/chatbot.png" %}" alt="Chatbot Icon" class="chatbot-header-icon">
+            <div>
+                <h2>{% trans "ChatBot" %}</h2>
+                <p>{% trans "Onlayn" %}</p>
+            </div>
+            <button id="close-chatbot" aria-label="Close Chatbot">&times;</button>
+        </div>
+    </div>
+    <div id="chatbot-body">
+        <div id="chatbot-messages"></div>
+    </div>
+    {% comment %} <div id="chatbot-footer">
+        <input type="text" id="user-input" placeholder="Type a message..." aria-label="User Input">
+        <button id="send-message" aria-label="Send Message">
+            <i class="ti ti-send-2"></i>
+        </button>
+    </div>  {% endcomment %}
+</div>

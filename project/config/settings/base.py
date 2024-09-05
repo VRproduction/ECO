@@ -49,6 +49,7 @@ CUSTOM_APPS = [
     'apps.vacancies.apps.VacanciesConfig',
     'apps.customadmin.apps.CustomadminConfig',
     'apps.tracking.apps.TrackingConfig',
+    'apps.chat_bot.apps.ChatBotConfig',
 
     #pages
     'apps.pages.home.apps.HomeConfig',

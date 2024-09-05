@@ -48,6 +48,8 @@
     <link rel="stylesheet" href="{% static "assets/css/custom-modal-body.css" %}">
     <link rel="stylesheet" href="{% static "assets/css/faq.css" %}">
     <link rel="stylesheet" href="{% static "assets/css/notification.css" %}">
+    <link href="{% static 'assets/chatbot/css/chatbot.css' %}" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     
     <!-- Meta Pixel Code -->
@@ -149,6 +151,8 @@
     <main class="main">
     {% block main %}{% endblock main %}
     </main>
+    {% include "component/common/chatbot/Chatbot.html" %}
+
     {% include "components/footer/footer.html" %}
   
     {% if user.is_authenticated %}
@@ -187,6 +191,8 @@
 
     <script src="{% static "assets/js/delivery.js" %}"></script>
     <script src="{% static "assets/js/notification.js" %}"></script>
+    <script src="{% static "assets/chatbot/js/chatbot.js" %}"></script>
+
     {% comment %} <script src="{% static "assets/js/laoder.js" %}"></script> {% endcomment %}
     
     <script>

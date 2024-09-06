@@ -44,10 +44,10 @@
         left: 0; /* Sağdan sıfırlar */
         top: 0; /* Alttan sıfırlar */
         border-radius: 0; /* Kenarları yuvarlak yapıyordu, sıfırlıyoruz */
-        padding-bottom: 80px;
+        padding-bottom: 100px;
     }
     #chatbot-icon{
-        padding-bottom: 100px;
+        bottom: 80px;
     }
 }
 

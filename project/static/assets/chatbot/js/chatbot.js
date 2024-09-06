@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
             endChat: "Thank you for chatting with me. Have a great day!",
             nextStep: "What would you like to do next?",
             learnMore: "Learn more about our services.",
-            goBack: "Going back to the previous step."
+            goBack: "Going back to the previous step.",
+            joinChat: "Join the chat",
+            frequentlyAskedQuestions: "Frequently asked questions"
         },
         az: {
             welcomeMessage: "Salam! Sizə necə kömək edə bilərəm?",
@@ -54,7 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
             endChat: "Mənimlə söhbət etdiyiniz üçün təşəkkür edirəm. Gözəl bir gün arzulayıram!",
             nextStep: "Növbəti nə etmək istəyirsiniz?",
             learnMore: "Xidmətlərimiz haqqında daha çox öyrənin.",
-            goBack: "Əvvəlki mərhələyə qayıdın."
+            goBack: "Əvvəlki mərhələyə qayıdın.",
+            joinChat: "Çata qoşul",
+            frequentlyAskedQuestions: "Tez-tez soruşulan suallar"
         },
         ru: {
             welcomeMessage: "Здравствуйте! Чем могу помочь?",
@@ -63,7 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
             endChat: "Спасибо за беседу. Хорошего дня!",
             nextStep: "Что бы вы хотели сделать дальше?",
             learnMore: "Узнать больше о наших услугах.",
-            goBack: "Вернуться на предыдущий шаг."
+            goBack: "Вернуться на предыдущий шаг.",
+            joinChat: "Присоединяйтесь к чату",
+            frequentlyAskedQuestions: "Часто задаваемые вопросы"
         }
     };
 
@@ -95,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }));
             });
             
-            console.log(faqCategories);
             
         } catch (error) {
             console.error('Hata:', error);
@@ -123,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function showWelcomeMessage() {
         setTimeout(function() {
             addMessage(translateText('welcomeMessage'), 'bot-message');
-            setTimeout(showCategories, 500);
+            addDynamicOptions([translateText('frequentlyAskedQuestions'), translateText('joinChat')]);
         }, 500);
     }
 
@@ -167,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(function() {
                     addMessage(faq.answer, 'bot-message');
                     setTimeout(() => {
-                        addDynamicOptions([translateText('askAnotherQuestion')]);
+                        addDynamicOptions([translateText('askAnotherQuestion'), translateText('joinChat')]);
                     }, 500);
                 }, 500);
             });
@@ -208,14 +213,46 @@ document.addEventListener('DOMContentLoaded', function() {
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     }
 
+    async function joinChat() {
+        const link = await getChatLink();  // Wait for the link to be fetched
+        if (link) {
+            window.location.href = link;  // Redirect to the fetched link
+        } else {
+            console.log('Failed to fetch the chat link.');
+        }
+    }
+
+    async function getChatLink(){
+        try {
+            const response = await fetch('/api/v1/chat_bot/chat-link/', {
+                method: 'GET', // or 'POST', 'PUT', etc. based on your needs
+                headers: {
+                  'Content-Type': 'application/json'// Example header
+                }
+              });
+            if (!response.ok) {
+                throw new Error('Chat link not found: ' + response.status);
+            }
+            const apiData = await response.json(); 
+            const link = apiData[0]["link"];
+            return link;
+        } catch (error) {
+            console.error('Hata:', error);
+            // Hata mesajını kullanıcıya göster
+        }
+    }
+    
     // Handle the selected option after dynamic options appear
     function handleOptionSelection(option) {
         switch(option) {
             case translateText('askAnotherQuestion'):
                 showCategories();
                 break;
-            case translateText('returnToCategories'):
+            case translateText('frequentlyAskedQuestions'):
                 showCategories();
+                break;
+            case translateText('joinChat'):
+                joinChat();
                 break;
             case translateText('endChat'):
                 addMessage(translateText('endChat'), 'bot-message');

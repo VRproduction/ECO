@@ -14,3 +14,9 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+
+class ChatLink(models.Model):
+    link = models.URLField()
+
+    def __str__(self):
+        return 'Chat link'

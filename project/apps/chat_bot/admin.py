@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
-from .models import FAQCategory, FAQ
+from .models import FAQCategory, FAQ, ChatLink
 
 class FAQInline(TranslationTabularInline):
     model = FAQ
@@ -48,3 +48,15 @@ class FAQAdmin(TranslationAdmin):
         css = {
             'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
         }
+
+@admin.register(ChatLink)
+class ChatLinkAdmin(admin.ModelAdmin):
+    list_display = ('link', )
+
+
+    def has_add_permission(self, request):
+        if self.model.objects.count() >= 1:
+            return False
+        return super().has_add_permission(request)
+
+ 

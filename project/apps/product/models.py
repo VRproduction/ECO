@@ -125,7 +125,7 @@ class Product(ClickableModel):
         (3, _("Endirim")),
         (4, _("4-cü")),
     ]
-    title = models.CharField(max_length = 500, unique = True)
+    title = models.CharField(max_length = 500)
     slug = models.SlugField(blank=True, null=True, unique = True)
     description = RichTextUploadingField(null = True, blank = True)
     using_time = models.PositiveIntegerField(null = True, blank = True, verbose_name = "İstifadə müddəti")

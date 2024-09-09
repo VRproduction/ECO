@@ -11,8 +11,8 @@ class IPAddressInline(admin.TabularInline):
         return False
 
     # Disable deleting existing inlines
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
     
     def has_change_permission(self, request, obj=None):
         return False
@@ -29,8 +29,8 @@ class ClickTrackingAdmin(admin.ModelAdmin):
         return False
 
     # Disable deleting existing objects
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
     
     def has_change_permission(self, request, obj=None):
         return False
@@ -48,8 +48,8 @@ class IPAddressAdmin(admin.ModelAdmin):
         return False
 
     # Disable deleting existing objects
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
     
     def has_change_permission(self, request, obj=None):
         return False

@@ -11,62 +11,6 @@ from apps.config.models import APIKey
 
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.CharField()
-
-    class Meta:
-        model = Product
-        fields = ('id', 'title', 'slug', 'category', 'price', 'stock')
-        read_only_fields = ('slug',)
-
-    def validate_category(self, value):
-        """
-        Validate that the category exists and return the category instance.
-        """
-        try:
-            category = ProductCategory.objects.get(title=value)
-        except ProductCategory.DoesNotExist:
-            raise serializers.ValidationError(f"Category '{value}' does not exist.")
-        return category
-
-    def create(self, validated_data):
-        category = validated_data.pop('category')
-        api_key = self.context['request'].api_key
-
-        product = Product.objects.create(
-            category=category,
-            created_by_supporter=api_key.supporter,
-            is_active=False,
-            is_test=api_key.is_test,
-            **validated_data
-        )
-
-        if not api_key.is_test:
-            self.send_email_to_admin(product, api_key.supporter)
-        return product
-    
-    def send_email_to_admin(self, product: Product, supporter):
-        site = Site.objects.get_current()
-        site_url = site.domain
-        
-        title = f"Ecoproduct.az, {supporter} tərəfindən məhsul əlavə edildi"
-        
-        data = {
-            'title': title,
-            'product': product,
-            'site_url': site_url,
-        }
-
-        message = render_to_string('mails/supporter_product_mail.html', data)
-
-        send_mail(
-            title, 
-            message,
-            settings.EMAIL_HOST_USER,
-            [settings.DEFAULT_FROM_EMAIL],
-            fail_silently=False, html_message=message
-        ) 
-    
 class ProductCategorySerializer(ModelSerializer):
     class Meta:
         model = ProductCategory
@@ -108,3 +52,88 @@ class ProductCategorySerializer(ModelSerializer):
             [settings.DEFAULT_FROM_EMAIL],
             fail_silently=False, html_message=message
         ) 
+
+class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.CharField()
+
+    class Meta:
+        model = Product
+        fields = ('id', 'title', 'slug', 'category', 'price', 'stock')
+        read_only_fields = ('slug',)
+
+    def validate_category(self, value):
+        """
+        Validate if the category exists. If not, create a new one using ProductCategorySerializer with additional fields.
+        """
+        try:
+            # Check if the category with the given title exists
+            category = ProductCategory.objects.get(title=value)
+        except ProductCategory.DoesNotExist:
+            # If the category does not exist, use ProductCategorySerializer to create a new category
+            api_key = self.context['request'].api_key
+            category_data = {
+                'title': value, 
+                'is_active': False,  # New categories should not be active by default
+                'is_test': api_key.is_test,  # Set is_test based on API key
+                'created_by_supporter': api_key.supporter,  # Set the supporter who created the category
+            }
+
+            # Use the ProductCategorySerializer to create the new category
+            category_serializer = ProductCategorySerializer(data=category_data, context=self.context)
+            if category_serializer.is_valid():
+                category = category_serializer.save()
+            else:
+                raise serializers.ValidationError(category_serializer.errors)
+        
+        return category
+
+    def create(self, validated_data):
+        category = validated_data.pop('category')
+        api_key = self.context['request'].api_key
+
+        # Check if a product with the same title already exists
+        existing_product = Product.objects.filter(title=validated_data.get('title')).first()
+
+        if existing_product:
+            # If product exists, update price, stock, and category
+            existing_product.price = validated_data.get('price', existing_product.price)
+            existing_product.stock = validated_data.get('stock', existing_product.stock)
+            existing_product.category = category  # Update the category as well
+            existing_product.save()
+            return existing_product
+
+        # Create new product if not exists
+        product = Product.objects.create(
+            category=category,
+            created_by_supporter=api_key.supporter,
+            is_active=False,
+            is_test=api_key.is_test,
+            **validated_data
+        )
+
+        if not api_key.is_test:
+            self.send_email_to_admin(product, api_key.supporter)
+
+        return product
+    
+    def send_email_to_admin(self, product: Product, supporter):
+        site = Site.objects.get_current()
+        site_url = site.domain
+        
+        title = f"Ecoproduct.az, {supporter} tərəfindən məhsul əlavə edildi"
+        
+        data = {
+            'title': title,
+            'product': product,
+            'site_url': site_url,
+        }
+
+        message = render_to_string('mails/supporter_product_mail.html', data)
+
+        send_mail(
+            title, 
+            message,
+            settings.EMAIL_HOST_USER,
+            [settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False, html_message=message
+        )

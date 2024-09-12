@@ -189,7 +189,9 @@ function fetchBasketItems(coupon_code) {
                 $('#basket-item-count').text(data.basket_item_count);
 
             }
-            saveDataToLocalStorage(data);
+            if(window.location.pathname != "/payment/map/" && window.location.pathname != "/en/payment/map/"  && window.location.pathname != "/ru/payment/map/"){
+                saveDataToLocalStorage(data);
+            }
         })
         .catch(error => console.error('Error:', error));
 }

@@ -6,8 +6,8 @@ from .view_list.logix import test_logix_order
 
 urlpatterns = [
     path('', views.payment, name = 'payment'),
-    # path('success/', views.SuccessView.as_view(), name = 'success'),
-    path('success/', views.result, name = 'success'),
+    path('success/', views.SuccessView.as_view(), name = 'success'),
+    # path('success/', views.result, name = 'success'),
 
     path('failed/', views.failed, name = 'failed'),
     path('result/', views.result, name = 'result'),

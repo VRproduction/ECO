@@ -24,6 +24,7 @@ class Logix():
             "Method": "POST_ORDER",
             "Orders": orders
         }
+        print(data)
         
         try:
             # POST isteğini gönder
@@ -31,6 +32,7 @@ class Logix():
             
             # Yanıt durumunu kontrol et
             if response.status_code == 200:
+                print(response.json())
                 return response.json()  # Başarılı yanıt
             else:
                 return {"error": f"HTTP {response.status_code}", "message": response.text}

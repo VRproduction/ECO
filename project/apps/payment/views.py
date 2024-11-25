@@ -36,6 +36,7 @@ from urllib.parse import urlparse
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from .logistic.logix import Logix  # Logix sınıfını içe aktarın
 
 class SuccessView(LoginRequiredMixin, View):
 
@@ -167,14 +168,26 @@ class SuccessView(LoginRequiredMixin, View):
 
     def update_stock_and_order_items(self, order, basket_items):
         """Update the stock and add items to the order."""
+        orders = []  # Sipariş listesi için boş bir liste oluştur
         for item in basket_items:
             product = Product.objects.get(id=item.product.id)
-            order_item = OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
-            print(order_item)
+            OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
             # Decrease stock
             product.stock -= item.quantity
             product.sale_count += item.quantity
             product.save()
+
+            # orders listesine sözlük olarak ekle
+            if product.logix_product_id:
+                orders.append({
+                    "Product": product.logix_product_id,
+                    "Quantity": item.quantity,
+                    "Price": product.price,  # Fiyat bilgisi için product.price kullandım
+                })
+        logix = Logix()
+        if len(orders) > 0:
+            logix.send_post_order(orders)
+        
 
     def update_coupon_usage(self, coupon, user):
         """Update the usage count for the coupon."""

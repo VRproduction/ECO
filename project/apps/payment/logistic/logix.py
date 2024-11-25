@@ -6,52 +6,33 @@ import hashlib
 class Logix():
     def __init__(self):
         self.base_url = f"http://azews02.logixvps.cloud:3457/logix/pos/qupiec/db/post/request"
-        self.public_key = "i000200357"
-        self.private_key = "1GtBKUDrM4FNBzQu43NZ5Oqq"
+        self.autharization = "MTcyMzgxNTE5MTEyMzE3MjM4MTUxOTExMjMxNzIzODE1MTkxMTIz"
     
     def getHeaders(self):
         headers = {
+            'Authorization': f'{self.autharization}',
             'Content-Type': 'application/json'
         }
         return headers  
 
-    def get_data_and_signature(self, json_string):
-        json_string = json.dumps(json_string)
-
-        data = base64.b64encode(json_string.encode()).decode()
-
-        sgn_string = self.private_key + data + self.private_key
-
-        sha1_hash = hashlib.sha1(sgn_string.encode()).digest()
-
-        signature = base64.b64encode(sha1_hash).decode()
-
+    def send_post_order(self, orders):
+        # orders = [
+        #     {"Product": 1, "Quantity": 2, "Price": 8.60},
+        #     {"Product": 2, "Quantity": 2, "Price": 7.51},
+        # ]
         data = {
-            "data": data,
-            "signature": signature 
+            "Method": "POST_ORDER",
+            "Orders": orders
         }
-
-        return data
-
-    def checkout_request(self, amount, language):
-        json_string = {
-            "public_key": f'{self.public_key}',
-            # "amount": f"0.01",
-            "amount": f"{amount}",
-            "currency": "AZN",
-            "language": language,
-            "description": "test payment",
-            "order_id": "1"
-        }
-        response = requests.post(self.base_url+'request', json = self.get_data_and_signature(json_string), headers = self.getHeaders())
-        response_data = response.json()
-        return response_data
-
-    def get_payment_status(self, transaction):
-        json_string = {
-            "public_key": f'{self.public_key}',
-            "transaction": f"{transaction.value}",
-        }
-        response = requests.post(self.base_url+'get-status', json = self.get_data_and_signature(json_string), headers = self.getHeaders())
-        response_data = response.json()
-        return response_data
+        
+        try:
+            # POST isteğini gönder
+            response = requests.post(self.base_url, json=data, headers=self.getHeaders())
+            
+            # Yanıt durumunu kontrol et
+            if response.status_code == 200:
+                return response.json()  # Başarılı yanıt
+            else:
+                return {"error": f"HTTP {response.status_code}", "message": response.text}
+        except requests.exceptions.RequestException as e:
+            return {"error": "RequestException", "message": str(e)}

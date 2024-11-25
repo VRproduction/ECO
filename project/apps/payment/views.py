@@ -169,8 +169,8 @@ class SuccessView(LoginRequiredMixin, View):
         """Update the stock and add items to the order."""
         for item in basket_items:
             product = Product.objects.get(id=item.product.id)
-            OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
-
+            order_item = OrderItem.objects.create(order=order, product=product, quantity=item.quantity)
+            print(order_item)
             # Decrease stock
             product.stock -= item.quantity
             product.sale_count += item.quantity

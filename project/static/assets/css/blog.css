@@ -79,6 +79,7 @@
     height: 100%;    
 }
 .single-blog-style1 .img-holder .inner img {
+    height: 200px;
     width: 100%;
     -webkit-transform: scale(1);
     transform: scale(1);

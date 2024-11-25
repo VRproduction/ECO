@@ -36,6 +36,7 @@ class ProductViewSet(APIKeyMixin, viewsets.ModelViewSet):
             OpenApiExample(
                 'Single Item Request',
                 value={
+                    "logix_product_id": 0,
                     "title": "string",
                     "category": "string",  # Example category name
                     "price": 0,
@@ -48,12 +49,14 @@ class ProductViewSet(APIKeyMixin, viewsets.ModelViewSet):
                 'Multiple Item Request',
                 value=(
                     {
+                        "logix_product_id": 0,
                         "title": "string",
                         "category": "string",  # Example category name
                         "price": 0,
                         "stock": 0
                     },
                     {
+                        "logix_product_id": 0,
                         "title": "string",
                         "category": "string",  # Example category name
                         "price": 0,

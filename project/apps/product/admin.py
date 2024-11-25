@@ -67,7 +67,7 @@ class ProductImageInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
     inlines = [ProductImageInline, ]
-    list_display = ('title', 'category','id', 'price', 'stock', 'sale_count', 'click_count', 'is_active', 'is_test', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page', "created")
+    list_display = ('title', 'category', 'id', 'logix_product_id', 'price', 'stock', 'sale_count', 'click_count', 'is_active', 'is_test', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page', "created")
     list_filter = (ImageNullFilter, 'is_active', 'is_test', 'created_by_supporter', 'category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending', )
     search_fields = ('title', 'description')
     ordering = ('-stock',)
@@ -75,7 +75,7 @@ class ProductAdmin(TranslationAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('title', 'description', 'category', 'slug', 'created_by_supporter')
+            'fields': ('title', 'logix_product_id', 'description', 'category', 'slug', 'created_by_supporter')
         }),
         ('Product Information', {
             'fields': ('using_time', 'badges', 'image', 'vendor', 'price', 'discount', 'stock', 'sale_count', 'barcode_code', 'product_code')
@@ -94,12 +94,12 @@ class ProductAdmin(TranslationAdmin):
     #     return obj.get_click_count()
     # get_click_count.short_description = 'Click Count'
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        # Varsayılan olarak sadece 'active=True' olanları göster
-        if not request.GET.get('is_active__exact'):
-            qs = qs.filter(is_active=True)
-        return qs
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     # Varsayılan olarak sadece 'active=True' olanları göster
+    #     if not request.GET.get('is_active__exact'):
+    #         qs = qs.filter(is_active=True)
+    #     return qs
 
     class Media:
         js = (

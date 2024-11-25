@@ -55,10 +55,11 @@ class ProductCategorySerializer(ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField()
+    # product_id = serializers.CharField(source='logix_product_id')  # logix_product_id'yi product_id olarak adlandır
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'slug', 'category', 'price', 'stock')
+        fields = ('id', 'title', 'slug', 'category', 'price', 'stock', 'logix_product_id')
         read_only_fields = ('slug',)
 
     def validate_category(self, value):
@@ -98,6 +99,7 @@ class ProductSerializer(serializers.ModelSerializer):
             # If product exists, update price, stock, and category
             existing_product.price = validated_data.get('price', existing_product.price)
             existing_product.stock = validated_data.get('stock', existing_product.stock)
+            existing_product.logix_product_id = validated_data.get('logix_product_id', existing_product.logix_product_id)
             existing_product.category = category  # Update the category as well
             existing_product.save()
             return existing_product

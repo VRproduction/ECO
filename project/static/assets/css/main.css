@@ -2854,11 +2854,7 @@ input.qty-val {
 }
 
 /*custom amine*/
-.loader,
-.bar {
-  width: 100px;
-  height: 20px;
-}
+
 
 .bar {
   position: absolute;

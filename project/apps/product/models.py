@@ -17,8 +17,8 @@ from utils.models.clickable_model import ClickableModel
 User = get_user_model()
 
 class ProductCategory(models.Model):
-    title = models.CharField(max_length = 200, unique = True)
-    slug = models.SlugField(blank=True, null=True, unique = True)
+    title = models.CharField(max_length = 200)
+    slug = models.SlugField(blank=True, null=True)
     image = models.ImageField(upload_to = 'category')
     is_main_page = models.BooleanField(default = True)
 

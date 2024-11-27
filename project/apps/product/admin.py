@@ -129,7 +129,7 @@ class ProductAdmin(TranslationAdmin):
 
                 # Endirimi seçilmiş məhsullara tətbiq edirik
                 for product in selected_products:
-                    product.discount = product.price * (discount_percentage / 100)
+                    product.discount = discount_percentage
                     product.save()
 
                 # Sessiyanı təmizləyirik

@@ -154,7 +154,7 @@ class Product(ClickableModel):
     keywords = models.TextField(null=True, blank=True)
     meta_description = models.TextField(null=True, blank=True)
 
-    logix_product_id = models.PositiveBigIntegerField(null = True)
+    logix_product_id = models.PositiveBigIntegerField(null = True, blank = True)
 
     created = models.DateTimeField(auto_now_add = True, null = True)
     updated = models.DateTimeField(auto_now = True, null = True)

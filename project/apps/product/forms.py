@@ -35,3 +35,13 @@ class AccountUpdateForm(UserChangeForm):
         fields = ['first_name', 'last_name', 'email']
 
    
+
+
+class DiscountForm(forms.Form):
+    discount_percentage = forms.IntegerField(
+        label="Endirim faizi",
+        min_value=0,
+        max_value=100,
+        required=True,
+        widget=forms.NumberInput(attrs={"class": "form-control"})
+    )

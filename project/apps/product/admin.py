@@ -3,7 +3,11 @@ from .models import *
 from modeltranslation.admin import TranslationAdmin
 from django.contrib import messages  # Import messages
 from django.utils.translation import gettext_lazy as _
+from django.shortcuts import render, redirect
+from django.urls import path
+from django.db.models import F
 
+from .forms import DiscountForm
 User = get_user_model()
 
 MAX_OBJECTS = 1
@@ -67,7 +71,7 @@ class ProductImageInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
     inlines = [ProductImageInline, ]
-    list_display = ('title', 'category', 'id', 'logix_product_id', 'price', 'stock', 'sale_count', 'click_count', 'is_active', 'is_test', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page', "created")
+    list_display = ('title', 'category', 'id', 'logix_product_id', 'price', 'discount', 'stock', 'sale_count', 'click_count', 'is_active', 'is_test', 'is_best_seller', 'is_most_wonted', 'is_trending',  'is_main_page', "created")
     list_filter = (ImageNullFilter, 'is_active', 'is_test', 'created_by_supporter', 'category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending', )
     search_fields = ('title', 'description')
     ordering = ('-stock',)
@@ -100,6 +104,67 @@ class ProductAdmin(TranslationAdmin):
         if not request.GET.get('is_active__exact'):
             qs = qs.filter(is_active=True)
         return qs
+    
+    actions = ["apply_discount_to_selected"]
+
+    def apply_discount_to_selected(self, request, queryset):
+        # Seçilmiş məhsulları sessiyaya yazırıq
+        selected_ids = list(queryset.values_list("id", flat=True))
+        request.session["selected_products"] = selected_ids
+
+        # Endirim tətbiq edilməsi üçün yeni səhifəyə yönləndiririk
+        return redirect("admin:apply_discount_to_selected")
+    
+    apply_discount_to_selected.short_description = "Seçilmiş məhsullara endirim faizi tətbiq et"
+    
+    def discount_view(self, request):
+        if request.method == "POST":
+            form = DiscountForm(request.POST)
+            if form.is_valid():
+                discount_percentage = form.cleaned_data["discount_percentage"]
+
+                # Sessiyadan seçilmiş məhsulların ID-lərini alırıq
+                selected_ids = request.session.get("selected_products", [])
+                selected_products = Product.objects.filter(id__in=selected_ids)
+
+                # Endirimi seçilmiş məhsullara tətbiq edirik
+                for product in selected_products:
+                    product.discount = product.price * (discount_percentage / 100)
+                    product.save()
+
+                # Sessiyanı təmizləyirik
+                del request.session["selected_products"]
+
+                self.message_user(
+                    request,
+                    f"Seçilmiş {selected_products.count()} məhsula {discount_percentage}% endirim tətbiq edildi."
+                )
+                return redirect("..")
+        else:
+            form = DiscountForm()
+
+        return render(
+            request,
+            "admin/apply_discount.html",
+            {"form": form},
+        )
+
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "apply-discount/",
+                self.admin_site.admin_view(self.discount_view),
+                name="apply_discount_to_selected",
+            ),
+        ]
+        return custom_urls + urls
+
+
+
+    # Admin için custom template yolu tanımlayın
+  
 
     class Media:
         js = (

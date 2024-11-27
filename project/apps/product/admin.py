@@ -297,7 +297,16 @@ admin.site.register(ContactPage)
 class CouponUsageInline(admin.TabularInline):
     model = CouponUsage
 
+
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
+    list_display = ('id', 'coupon', 'order_count')
+    readonly_fields = ("order_count", )
+    inlines = [CouponUsageInline]
 
-    inlines = [CouponUsageInline, ]
+    def order_count(self, obj):
+        """Returns the number of orders associated with the coupon."""
+        return obj.orders.count()
+    order_count.short_description = 'Order Count'
+
+# The Order model has a ForeignKey relationship with the Coupon model through the `orders` field.

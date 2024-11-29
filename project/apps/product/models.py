@@ -126,7 +126,7 @@ class Product(ClickableModel):
         (4, _("4-cü")),
     ]
     title = models.CharField(max_length = 500)
-    slug = models.SlugField(blank=True, null=True, unique = True)
+    slug = models.SlugField(blank=True, null=True, unique = True, max_length = 255)
     description = RichTextUploadingField(null = True, blank = True)
     using_time = models.PositiveIntegerField(null = True, blank = True, verbose_name = "İstifadə müddəti")
     category = models.ForeignKey(ProductCategory, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'products')

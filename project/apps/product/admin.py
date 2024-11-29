@@ -75,7 +75,7 @@ class ProductAdmin(TranslationAdmin):
     list_filter = (ImageNullFilter, 'is_active', 'is_test', 'created_by_supporter', 'category', 'is_main_page', 'is_best_seller', 'is_most_wonted', 'is_trending', )
     search_fields = ('title', 'description')
     ordering = ('-stock',)
-    readonly_fields = ('sale_count', 'product_code', 'created', 'updated', 'click_count')
+    readonly_fields = ('sale_count', 'product_code', 'created', 'updated', 'click_count', 'logix_product_id')
 
     fieldsets = (
         (None, {

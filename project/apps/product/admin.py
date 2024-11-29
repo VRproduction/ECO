@@ -44,12 +44,12 @@ class ProductCategoryAdmin(TranslationAdmin):
         css = {
             'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
         }
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        # Varsayılan olarak sadece 'active=True' olanları göster
-        if not request.GET.get('is_active__exact'):
-            qs = qs.filter(is_active=True)
-        return qs
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     # Varsayılan olarak sadece 'active=True' olanları göster
+    #     if not request.GET.get('is_active__exact'):
+    #         qs = qs.filter(is_active=True)
+    #     return qs
 
 @admin.register(Vendor)
 class VendorAdmin(TranslationAdmin):
@@ -98,12 +98,12 @@ class ProductAdmin(TranslationAdmin):
     #     return obj.get_click_count()
     # get_click_count.short_description = 'Click Count'
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        # Varsayılan olarak sadece 'active=True' olanları göster
-        if not request.GET.get('is_active__exact'):
-            qs = qs.filter(is_active=True)
-        return qs
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     # Varsayılan olarak sadece 'active=True' olanları göster
+    #     if not request.GET.get('is_active__exact'):
+    #         qs = qs.filter(is_active=True)
+    #     return qs
     
     actions = ["apply_discount_to_selected"]
 

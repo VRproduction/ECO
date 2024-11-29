@@ -66,20 +66,16 @@ class ProductSerializer(serializers.ModelSerializer):
         """
         Validate if the category exists. If not, create a new one using ProductCategorySerializer with additional fields.
         """
-        try:
-            # Check if the category with the given title exists
-            category = ProductCategory.objects.get(title=value)
-        except ProductCategory.DoesNotExist:
-            # If the category does not exist, use ProductCategorySerializer to create a new category
+        category = ProductCategory.objects.filter(title=value).first()
+        if not category:
             api_key = self.context['request'].api_key
             category_data = {
                 'title': value, 
-                'is_active': False,  # New categories should not be active by default
-                'is_test': api_key.is_test,  # Set is_test based on API key
-                'created_by_supporter': api_key.supporter,  # Set the supporter who created the category
+                'is_active': False,
+                'is_test': api_key.is_test,
+                'created_by_supporter': api_key.supporter,
             }
 
-            # Use the ProductCategorySerializer to create the new category
             category_serializer = ProductCategorySerializer(data=category_data, context=self.context)
             if category_serializer.is_valid():
                 category = category_serializer.save()
@@ -87,6 +83,7 @@ class ProductSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(category_serializer.errors)
         
         return category
+
 
     def create(self, validated_data):
         category = validated_data.pop('category')
@@ -100,6 +97,7 @@ class ProductSerializer(serializers.ModelSerializer):
             existing_product.price = validated_data.get('price', existing_product.price)
             existing_product.stock = validated_data.get('stock', existing_product.stock)
             existing_product.logix_product_id = validated_data.get('logix_product_id', existing_product.logix_product_id)
+            existing_product.is_test = api_key.is_test
             existing_product.category = category  # Update the category as well
             existing_product.save()
             return existing_product

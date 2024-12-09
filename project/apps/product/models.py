@@ -178,6 +178,12 @@ class Product(ClickableModel):
     
     def clean(self):
         super().clean()
+        
+        if self.title:
+            product = Product.objects.filter(title=self.title).exists()
+            if product:
+                raise ValidationError("Bu adlı məhsul artıq movcuddur.")
+
         if self.is_best_seller:
             best_sellers_count = Product.objects.filter(is_best_seller=True).count()
             if best_sellers_count >= 3 and not Product.objects.filter(is_best_seller=True, pk = self.pk).exists():

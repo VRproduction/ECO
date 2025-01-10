@@ -37,15 +37,19 @@
                             <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                             <!-- MAIN SLIDES -->
                             <div class="product-image-slider">
+                                <figure class="border-radius-10"  style="display:flex; justify-content: center; align-items: center;">
+                                    <img src="{{product.image.url}}" alt="product image">
+                                </figure>
                                 {% for image in product.images.all %}
                                 <figure class="border-radius-10"  style="display:flex; justify-content: center; align-items: center;">
                                     <img src="{{image.image.url}}" alt="product image">
-                                </figure>
+                                </figure> 
                                 {% endfor %}
                             </div>
                             <!-- THUMBNAILS -->
-                            {% if product.images.count > 1 %}
+                            {% if product.images.count > 0 %}
                             <div class="slider-nav-thumbnails">
+                                <div><img src="{{product.image.url}}" alt="product image"></div>
                                 {% for image in product.images.all %}
                                 <div><img src="{{image.image.url}}" alt="product image"></div>
                                 {% endfor %}

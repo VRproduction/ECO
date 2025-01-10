@@ -207,11 +207,26 @@ class Product(ClickableModel):
         
         
     def save(self, *args, **kwargs):
-        self.slug = custom_az_slugify(self.title)
+        if not self.slug:
+            # İlk slug'ı title'dan oluştur
+            base_slug = custom_az_slugify(self.title)
+            slug = base_slug
+            counter = 1
+
+            # Aynı slug varsa benzersiz bir slug oluştur
+            while Product.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        # Barkod kodunu kontrol et ve product_code'u belirle
         if self.barcode_code:
             barcode_str = str(self.barcode_code)
             self.product_code = int(barcode_str[-4:])
+
         super(Product, self).save(*args, **kwargs)
+
 
     def get_absolute_url(self):
         return reverse("product-detail", args=[str(self.slug)])

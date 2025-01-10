@@ -78,13 +78,13 @@ class ProductViewSet(APIKeyMixin, viewsets.ModelViewSet):
             serializers = []
             
             # Collect all titles to check for duplicates
-            titles = [item.get('title', 'No Title') for item in data]
-            duplicate_titles = [title for title in set(titles) if titles.count(title) > 1]
+            # titles = [item.get('title', 'No Title') for item in data]
+            # duplicate_titles = [title for title in set(titles) if titles.count(title) > 1]
             
-            if duplicate_titles:
-                return Response({
-                    'error': f'Duplicate product titles found: {", ".join(duplicate_titles)}'
-                }, status=status.HTTP_400_BAD_REQUEST)
+            # if duplicate_titles:
+            #     return Response({
+            #         'error': f'Duplicate product titles found: {", ".join(duplicate_titles)}'
+            #     }, status=status.HTTP_400_BAD_REQUEST)
 
             # Validate all items first
             for item in data:

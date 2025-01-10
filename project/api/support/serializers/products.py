@@ -90,13 +90,13 @@ class ProductSerializer(serializers.ModelSerializer):
         api_key = self.context['request'].api_key
 
         # Check if a product with the same title already exists
-        existing_product = Product.objects.filter(title=validated_data.get('title')).first()
+        existing_product = Product.objects.filter(logix_product_id=validated_data.get('logix_product_id')).first()
 
         if existing_product:
             # If product exists, update price, stock, and category
             existing_product.price = validated_data.get('price', existing_product.price)
             existing_product.stock = validated_data.get('stock', existing_product.stock)
-            existing_product.logix_product_id = validated_data.get('logix_product_id', existing_product.logix_product_id)
+            existing_product.title = validated_data.get('title', existing_product.title)
             existing_product.is_test = api_key.is_test
             existing_product.category = category  # Update the category as well
             existing_product.save()

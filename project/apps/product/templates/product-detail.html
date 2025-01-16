@@ -37,11 +37,11 @@
                             <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                             <!-- MAIN SLIDES -->
                             <div class="product-image-slider">
-                                <figure class="border-radius-10"  style="display:flex; justify-content: center; align-items: center;">
+                                <figure class="border-radius-10"  style="display:flex; justify-content: center; align-items: center; padding:20px;">
                                     <img src="{{product.image.url}}" alt="product image">
                                 </figure>
                                 {% for image in product.images.all %}
-                                <figure class="border-radius-10"  style="display:flex; justify-content: center; align-items: center;">
+                                <figure class="border-radius-10"  style="display:flex; justify-content: center; align-items: center; padding:20px;">
                                     <img src="{{image.image.url}}" alt="product image">
                                 </figure> 
                                 {% endfor %}

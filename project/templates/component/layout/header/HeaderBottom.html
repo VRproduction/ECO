@@ -28,7 +28,7 @@
                         {% if categories.count > 10  %}
                         <ul id="many-categories" class="gap-[15px] grid-cols-2 hidden">
                             {% for category in categories %}
-                            {% if forloop.counter < 11 %}
+                            {% if forloop.counter > 11 %}
                             <li class="border rounded-[5px]">
                                 <a class="flex w-full items-center h-[50px] text-textColor hover:bg-gray-100 text-[14px] font-[600]" href='{% url "shop" %}?category={{category.slug}}'>
                                     <div class="w-[30%] flex items-center justify-center">

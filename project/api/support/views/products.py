@@ -40,7 +40,8 @@ class ProductViewSet(APIKeyMixin, viewsets.ModelViewSet):
                     "title": "string",
                     "category": "string",  # Example category name
                     "price": 0,
-                    "stock": 0
+                    "stock": 0,
+                    "barcode_code": 0
                 },
                 request_only=True,
                 response_only=False
@@ -53,14 +54,16 @@ class ProductViewSet(APIKeyMixin, viewsets.ModelViewSet):
                         "title": "string",
                         "category": "string",  # Example category name
                         "price": 0,
-                        "stock": 0
+                        "stock": 0,
+                        "barcode_code": 0
                     },
                     {
                         "logix_product_id": 0,
                         "title": "string",
                         "category": "string",  # Example category name
                         "price": 0,
-                        "stock": 0
+                        "stock": 0,
+                        "barcode_code": 0
                     },
                 ),
                 request_only=True,

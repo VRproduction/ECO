@@ -59,7 +59,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'slug', 'category', 'price', 'stock', 'logix_product_id')
+        fields = ('id', 'title', 'slug', 'category', 'price', 'stock', 'logix_product_id', 'barcode_code')
         read_only_fields = ('slug',)
 
     def validate_category(self, value):
@@ -97,6 +97,7 @@ class ProductSerializer(serializers.ModelSerializer):
             existing_product.price = validated_data.get('price', existing_product.price)
             existing_product.stock = validated_data.get('stock', existing_product.stock)
             existing_product.title = validated_data.get('title', existing_product.title)
+            existing_product.barcode_code = validated_data.get('barcode_code', existing_product.barcode_code)
             existing_product.is_test = api_key.is_test
             existing_product.category = category  # Update the category as well
             existing_product.save()

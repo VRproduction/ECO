@@ -52,10 +52,10 @@ MarkupSafe==2.1.5
 mdurl==0.1.2
 packaging==24.0
 pathspec==0.12.1
-pillow==10.2.0
+pillow
 polib==1.2.0
 prompt_toolkit==3.0.47
-psycopg2-binary==2.9.9
+psycopg2-binary
 Pygments==2.18.0
 python-crontab==3.2.0
 python-dateutil==2.9.0.post0

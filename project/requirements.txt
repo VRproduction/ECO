@@ -27,7 +27,7 @@ django-modeltranslation==0.18.11
 django-recaptcha==4.0.0
 django-redis==5.4.0
 django-rosetta==0.10.0
-django-tailwind==3.8.0
+django-tailwind
 django-timezone-field==7.0
 django-user-agents==0.4.0
 djangorestframework==3.14.0

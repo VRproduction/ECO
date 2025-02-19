@@ -184,9 +184,9 @@ class SuccessView(LoginRequiredMixin, View):
                     "Quantity": item.quantity,
                     "Price": product.price,  # Fiyat bilgisi için product.price kullandım
                 })
-        logix = Logix()
-        if len(orders) > 0:
-            logix.send_post_order(orders)
+        # logix = Logix()
+        # if len(orders) > 0:
+        #     logix.send_post_order(orders)
         
 
     def update_coupon_usage(self, coupon, user):

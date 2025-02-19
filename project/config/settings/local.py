@@ -6,7 +6,7 @@ ALLOWED_HOSTS = ["*"]
 
 # Append the BrowserReloadMiddleware only in local environment
 MIDDLEWARE += [
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 INSTALLED_APPS += [
